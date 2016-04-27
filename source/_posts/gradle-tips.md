@@ -7,7 +7,7 @@ tags: Gradle
 ## 依赖的 Scope
 * compile
 * runtime
-* compileOnly
+* compileOnly (新版才支持)
 * testCompile
 * testRuntime
 
