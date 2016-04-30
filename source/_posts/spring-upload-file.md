@@ -78,10 +78,7 @@ public class UploadController {
             // getRealPath() 取得 WEB-INF 所在文件夹路径
             // 如果参数是 "/temp", 当 temp 存在时返回 temp 的本地路径, 不存在时返回 null/temp (无效路径)
             String path = servletContext.getRealPath("") + File.separator + file.getOriginalFilename();
-            FileOutputStream out = new FileOutputStream(path);
-            FileCopyUtils.copy(file.getInputStream(), out);
-            out.flush();
-            out.close();
+            FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(path));
         }
     }
 }
