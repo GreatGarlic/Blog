@@ -55,13 +55,12 @@ public class UploadController {
     /**
      * 上传单个文件
      *
-     * @param file MultipartFile 的对象
+     * @param file 上传文件 MultipartFile 的对象
      * @return 上传的结果
-     * @throws IOException
      */
     @RequestMapping(value = "/upload-file", method = RequestMethod.POST)
     @ResponseBody
-    public String uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+    public String uploadFile(@RequestParam("file") MultipartFile file) {
         saveFile(file);
 
         return "Success";
@@ -71,15 +70,22 @@ public class UploadController {
      * 把 HTTP 请求中的文件流保存到本地
      *
      * @param file MultipartFile 的对象
-     * @throws IOException
      */
-    private void saveFile(MultipartFile file) throws IOException {
+    private boolean saveFile(MultipartFile file) {
         if (!file.isEmpty()) {
-            // getRealPath() 取得 WEB-INF 所在文件夹路径
-            // 如果参数是 "/temp", 当 temp 存在时返回 temp 的本地路径, 不存在时返回 null/temp (无效路径)
-            String path = servletContext.getRealPath("") + File.separator + file.getOriginalFilename();
-            FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(path));
+            try {
+                // getRealPath() 取得 WEB-INF 所在文件夹路径
+                // 如果参数是 "/temp", 当 temp 存在时返回 temp 的本地路径, 不存在时返回 null/temp (无效路径)
+                String path = servletContext.getRealPath("") + File.separator + file.getOriginalFilename();
+                FileCopyUtils.copy(file.getInputStream(), new FileOutputStream(path));
+
+                return true;
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
+        return false;
     }
 }
 ```
@@ -115,22 +121,21 @@ public class UploadController {
      * @return 页面的路径
      */
     @RequestMapping(value = "/upload-files", method = RequestMethod.GET)
-    public String uploadMultiFilesPage() {
+    public String uploadFilesPage() {
         return "upload-files.html";
     }
 
     /**
      * 上传多个文件
      *
-     * @param files MultipartFile 的对象数组
+     * @param files 上传文件 MultipartFile 的对象数组
      * @return 上传的结果
-     * @throws IOException
      */
     @RequestMapping(value = "/upload-files", method = RequestMethod.POST)
     @ResponseBody
-    public String uploadMultiFiles(@RequestParam("file") MultipartFile[] files) throws IOException {
-        for (int i = 0; i < files.length; ++i) {
-            saveFile(files[i]);
+    public String uploadFiles(@RequestParam("files") MultipartFile[] files) {
+        for (MultipartFile file : files) {
+            saveFile(file);
         }
 
         return "Success";
@@ -149,9 +154,9 @@ public class UploadController {
 <body style="padding: 50px">
 选择文件
 <form action="/upload-files" method="post" enctype="multipart/form-data">
-    <input type="file" name="file"/><br>
-    <input type="file" name="file"/><br>
-    <input type="file" name="file"/><br>
+    <input type="file" name="files"/><br>
+    <input type="file" name="files"/><br>
+    <input type="file" name="files"/><br>
     <button type="submit">上传</button>
 </form>
 </body>
