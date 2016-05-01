@@ -1,5 +1,5 @@
 ---
-title: SpringMVC 处理 AJAX 映射
+title: SpringMVC 处理 Ajax 映射
 date: 2016-04-17 21:51:01
 tags: [Spring, Ajax]
 ---

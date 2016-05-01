@@ -1,5 +1,5 @@
 ---
-title: spring-upload-file-ajax
+title: Spring Ajax 拖拽上传文件
 date: 2016-05-01 17:02:34
 tags: [Spring, Java, Util, Ajax]
 ---
@@ -130,7 +130,8 @@ public class UploadController {
 如果不需要验证文件大小和类型，则不需要引入这 2 个 JS
 
 > `<script src="/js/jquery.fileupload-process.js"></script>`  
-> `<script src="/js/jquery.fileupload-validate.js"></script>`
+> `<script src="/js/jquery.fileupload-validate.js"></script>`  
+> 注意: 他们必须在 jquery.fileupload.js 后面引用
 
 ### 上传文件的页面 ajax-file-upload.html
 
