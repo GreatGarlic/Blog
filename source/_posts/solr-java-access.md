@@ -71,7 +71,7 @@ SolrClient solr = new HttpSolrClient("http://localhost:8983/solr/ebag");
 ```
 
 ## 插入 Bean
-前面使用 `document.set(field, value)` 来创建 document，如果属性太多时，就容易出错，可以使用 Bean 的方式来进行插入。先定一个 Java Bean，需要插入到 Solr 的属性给其加上 `@Field` 注解，然后使用这个 Bean 创建对象 bean，调用 `solr.addBean(bean)` 插入到 Solr 里。
+前面使用 `document.set(field, value)` 来创建 document，如果属性太多时，就容易出错，可以使用 Bean 的方式来进行插入。先定义一个 Java Bean，需要插入到 Solr 的属性给其加上 `@Field` 注解，然后使用这个 Bean 创建对象 bean，调用 `solr.addBean(bean)` 插入到 Solr 里。
 
 ```java
     public void insertBean() throws IOException, SolrServerException {

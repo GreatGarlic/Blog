@@ -32,10 +32,10 @@ Solr 中默认的中文分词是用 Lucene 的一元分词包，下面介绍配�
     </fieldType>
     ```
 
-    字段需要使用 `text_smartcn` 的，增加下面的语句，比如 content 字段
+    给需要使用 `text_smartcn` 的字段，增加下面的语句，比如 content 字段
     
     ```xml
-    <field name="descriptioin" type="text_smartcn" indexed="true" stored="true"/>
+    <field name="content" type="text_smartcn" indexed="true" stored="true"/>
     ```
 
 3. 重启 Solr 服务: `bin/solr restart`
