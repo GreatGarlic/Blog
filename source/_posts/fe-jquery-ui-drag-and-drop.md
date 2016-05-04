@@ -4,7 +4,7 @@ date: 2016-05-02 14:06:11
 tags: FE
 ---
 
-`jQuery ui` 提供了拖拽元素，拖拽排序等功能，例如要让一个元素能够被拖拽，只要给它执行 `draggable()` 函数即可，要实现 `ul li` 拖拽排序，只要在 ui 上执行函数 `sortable()` 就能实现了，具体更多的例子请参考 [jQuery UI 实例 - 拖动](http://www.runoob.com/jqueryui/example-draggable.html)
+`jQuery ui` 提供了拖拽元素，拖拽排序等功能，例如要让一个元素能够被拖拽，只要给它执行 `draggable()` 函数即可，要实现 `ul li` 拖拽排序，只要在 ul 上执行函数 `sortable()` 就能实现了，具体更多的例子请参考 [jQuery UI 实例 - 拖动](http://www.runoob.com/jqueryui/example-draggable.html)
 
 <!--more-->
 

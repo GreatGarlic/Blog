@@ -100,11 +100,11 @@ bin/post -c ebag example/exampledocs/books.json
 * 多次对同一个文件做上面的索引操作，不会出现多个，只会更新，因为索引是以 id 来区分的(`uniqueKey`)，每个 Document 都有一个 id
 
 ## 常用搜索
-* 搜索所有 document 的所有 field，包含关系，大小写不敏感
+* 搜索所有 document 的所有 field，包含关系
     * <http://localhost:8983/solr/ebag/select?indent=on&wt=json&q=Greek>
-* 搜索指定的 field，精确匹配，大小写敏感，`q=field:value`
+* 搜索指定的 field，精确匹配，`q=field:value`
     * <http://localhost:8983/solr/ebag/select?indent=on&wt=json&q=name:Greek>
-* 搜索指定的 field，模糊匹配，大小写敏感
+* 搜索指定的 field，模糊匹配
     * <http://localhost:8983/solr/ebag/select?indent=on&wt=json&q=name:*Greek*>
 * 限定要显示的 field，`fl`
     * <http://localhost:8983/solr/ebag/select?wt=json&indent=true&q=Greek&fl=id>
