@@ -4,7 +4,7 @@ date: 2016-05-04 20:28:07
 tags: FE
 ---
 
-当连不上服务器(服务器没启动，网络有问题等)，或者连上了服务器，但是要访问的 URL 在服务器上没有提供(这时报 404 错误)，都会调用 `statusCode` 中 `404` 的方法。
+jQuery 的 `ajax` 能给不同的响应状态码指定回调函数，例如当连不上服务器(服务器没启动，网络有问题等)时调用 `statusCode` 中 `0` 的方法，连上了服务器，但是找不到要访问的 URL 则调用 `statusCode` 中 `404` 的方法。
 
 <!--more-->
 
@@ -21,8 +21,11 @@ tags: FE
             type: 'GET',
             dataType: 'json',
             statusCode: {
-                404: function() { // 连不上服务器，找不到页面都会调用这个方法
-                    console.log( "404: page not found" );
+                404: function() { // 找不到指定的 URL
+                    console.log('404: Page not found');
+                },
+                0: function() { // 连不上服务器
+                    console.log('0: Server is not started');
                 }
             }
         })
