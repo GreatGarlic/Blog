@@ -143,9 +143,9 @@ public class UploadController {
     <title>jQuery File Upload Demo - Basic version</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!-- Bootstrap styles 可选 -->
+    <!-- Bootstrap styles -->
     <link rel="stylesheet" href="/js/bootstrap/css/bootstrap.min.css">
-    <!-- CSS to style the file input field as button -->
+    <!-- CSS to style the filesystem input field as button -->
     <link rel="stylesheet" href="/css/jquery.fileupload.css">
     <link rel="stylesheet" href="/css/dropzone.css">
 
@@ -153,26 +153,36 @@ public class UploadController {
     .fileinput-button {
         width: 150px;
     }
+    .template {
+        display: none;
+    }
     </style>
 </head>
 
 <body style="padding: 50px">
-    <!-- The fileinput-button span is used to style the file input field as button -->
+    <!-- The fileinput-button span is used to style the filesystem input field as button -->
     <span class="btn btn-success fileinput-button">
         <i class="glyphicon glyphicon-plus"></i>
         <span>Select files...</span>
-        <!-- The file input field used as target for the file upload widget -->
+        <!-- The filesystem input field used as target for the filesystem upload widget -->
         <input id="fileupload" type="file" name="files" multiple>
     </span>
     <div id="dropzone">Drop files here</div>
-    <!-- The container for the uploaded files -->
-    <div id="uploaded-files" class="uploaded-files"></div>
+    <hr>
+
+    <h4>上传进度</h4>
+    <div id="progresses">
+        <div class="progress template">
+            <div class="progress-bar progress-bar-info progress-bar-striped" style="width: 0%">0%</div>
+        </div>
+    </div>
 
     <!-------------------------- JS -------------------------->
     <script src="/js/jquery.min.js"></script>
+    <!-- <script src="/js/bootstrap/js/bootstrap.min.js"></script> -->
     <!-- The jQuery UI widget factory, can be omitted if jQuery UI is already included -->
     <script src="/js/jquery.ui.widget.js"></script>
-    <!-- The Iframe Transport is required for browsers without support for XHR file uploads -->
+    <!-- The Iframe Transport is required for browsers without support for XHR filesystem uploads -->
     <script src="/js/jquery.iframe-transport.js"></script>
     <!-- The basic File Upload plugin -->
     <script src="/js/jquery.fileupload.js"></script>
@@ -181,64 +191,78 @@ public class UploadController {
     <script src="/js/jquery.fileupload-validate.js"></script>
 
     <script>
-    $(function () {
-        var url = '/ajax-upload-files';
+    $(function() {
+        var uploadUrl = '/ajax-upload-files';
+
         $('#fileupload').fileupload({
-            url: url,
+            url: uploadUrl,
             dataType: 'json',
-            maxFileSize: 1024000, // 允许上传的文件的最大大小 (1M)
-            acceptFileTypes: /(\.|\/)(gif|jpe?g|png)$/i, // 允许上传的文件类型
+            maxFileSize: 1000000, // 允许上传的文件的最大大小 (1M, 和磁盘的算法一样，不是用 1024)
+            acceptFileTypes: /(\.|\/)(gif|jpe?g|png|rar|zip)$/i, // 允许上传的文件类型
             dropZone: $('#dropzone'), // 限制拖拽到 dropzone 里才能上传文件, 如果没有这个参数, 拖拽到浏览器里任何地方就上传了
-            done: function(e, data) {
-                // 显示上传的结果
-                $.each(data.result, function(index, file) {
-                    $('<p/>').text(file.fileName).appendTo('#uploaded-files');
+            progressInterval: 10,
+            change: function(e, data) {
+                // 限制文件选择窗口中只能选择上传一个文件
+                if(data.files.length > 1){
+                    alert("Max 1 files are allowed")
+                    return false;
+                }
+            },
+            drop: function(e, data) {
+                // 限制只能拖拽上传一个文件
+                if(data.files.length > 1){
+                    alert("Max 1 files are allowed")
+                    return false;
+                }
+            },
+            progress: function (e, data) {
+                $.each(data.files, function(index, file) {
+                    var progress = parseInt(data.loaded / data.total * 100, 10);
+                    updateProgressBar(file.name, progress);
                 });
-            }
-        }).on('fileuploadprocessalways', function (e, data) {
-            if (data.files.error) {
-                alert(data.files[0].error); // 如果上传的文件验证不通过, 显示错误信息
-            } else {
-                data.submit(); // 执行上传操作, 上传多个文件时, 每个文件执行一次单独的上传
+            },
+            processfail: function(e, data) {
+                alert(data.files[0].error); // 上传的文件验证不通过, 显示错误信息
+            },
+            processdone: function (e, data) {
+                // 验证通过，开始上传时创建一个进度条
+                $.each(data.files, function (index, file) {
+                    createProgressBar(file.name);
+                });
+            },
+            done: function(e, data) {
+                // 上传完成
+                $.each(data.result, function(index, file) {
+                    // $('<p/>').text(file.fileName).appendTo('#uploaded-files');
+                });
             }
         });
 
-        enableDropEffect(); // 可选
+        enableDragAndDropEffect(); // 可选
     });
 
+    // 添加文件时创建进度条
+    function createProgressBar(fileName) {
+        var $progress = $('#progresses .template').clone().removeClass('template');
+        var $progressBar = $progress.find('.progress-bar');
+        $progress.attr('data-file-name', fileName);
+        $progressBar.text(fileName + ' 0%');
+        $progress.appendTo($('#progresses'));
+    }
+
+    // 更新进度条
+    function updateProgressBar(fileName, progress) {
+        var $progress = $('#progresses .progress[data-file-name="' + fileName + '"]');
+        var $progressBar = $progress.find('.progress-bar');
+        $progressBar.css('width', progress + '%').text(fileName + ' ' + progress + '%');
+    }
+
     // 当拖拽文件到 dropzone 上时给其添加效果
-    function enableDropEffect() {
-        $('#dropzone').bind('dragover', function(e) {
-            var dropZone = $('#dropzone');
-            var timeout = window.dropZoneTimeout;
-
-            if (!timeout) {
-                dropZone.addClass('in');
-            } else {
-                clearTimeout(timeout);
-            }
-
-            var found = false;
-            var node = e.target;
-
-            do {
-                if (node === dropZone[0]) {
-                    found = true;
-                    break;
-                }
-                node = node.parentNode;
-            } while (node != null);
-
-            if (found) {
-                dropZone.addClass('hover');
-            } else {
-                dropZone.removeClass('hover');
-            }
-
-            window.dropZoneTimeout = setTimeout(function () {
-                window.dropZoneTimeout = null;
-                dropZone.removeClass('in hover');
-            }, 100);
+    function enableDragAndDropEffect() {
+        $('#dropzone').on('dragover', function(e){
+            $('#dropzone').addClass('hover');
+        }).on('dragleave', function(e) {
+            $('#dropzone').removeClass('hover');
         });
     }
     </script>
