@@ -263,6 +263,8 @@ public class UploadController {
             $('#dropzone').addClass('hover');
         }).on('dragleave', function(e) {
             $('#dropzone').removeClass('hover');
+        }).on('drop', function() {
+            $('#dropzone').removeClass('hover');
         });
     }
     </script>
