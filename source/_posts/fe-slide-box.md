@@ -3,7 +3,7 @@ title: jQuery Slide Box
 date: 2016-05-21 18:31:00
 tags: FE
 ---
-如下图作为导航时，同时只有一个部分能够展开，例如点击 `访问数据库` 则展开 `访问数据库` 并收缩 `QSS`
+如下图作为导航时，同时只有一个部分能够展开，例如点击 `QSS` 则展开 `QSS` 并收缩 `访问数据库`
 
 ![](/img/fe/slide-box.png)
 
@@ -13,14 +13,18 @@ tags: FE
 
 ```js
 $(document).ready(function() {
-    // 非第一个 ul 下的 li 隐藏
+    // 隐藏非第一个 ul 下的 li
     $('#slide-box ul:gt(0) li').hide();
 
     // 点击 ul>a 展开点击的 ul，并隐藏其他 ul 下的 li
     $('#slide-box ul>a').click(function(e) {
         e.preventDefault();
-        $(this).parent().siblings().find('li').slideUp();
-        $(this).parent().find('li').slideDown();
+        $(this).parent().siblings().find('li').slideUp('fast');
+        $(this).parent().find('li').slideDown('fast');
+
+        // 修改添加样式
+        $('#slide-box ul>a').removeClass('expand').addClass('collapse');
+        $(this).removeClass('collapse').addClass('expand');
     });
 });
 ```
@@ -65,7 +69,7 @@ $(document).ready(function() {
 <body>
     <div id="slide-box">
         <ul>
-            <a href="#">Qt 绘图</a>
+            <a href="#" class="expand">Qt 绘图</a>
             <li><a href="#">绘图基础</a></li>
             <li><a href="#">用画家的思维绘制图形</a></li>
             <li><a href="#">绘制平滑曲线</a></li>
@@ -96,14 +100,18 @@ $(document).ready(function() {
     <script src="/js/jquery.min.js"></script>
     <script>
     $(document).ready(function() {
-        // 非第一个 ul 下的 li 隐藏
+        // 隐藏非第一个 ul 下的 li
         $('#slide-box ul:gt(0) li').hide();
-
+    
         // 点击 ul>a 展开点击的 ul，并隐藏其他 ul 下的 li
         $('#slide-box ul>a').click(function(e) {
             e.preventDefault();
-            $(this).parent().siblings().find('li').slideUp();
-            $(this).parent().find('li').slideDown();
+            $(this).parent().siblings().find('li').slideUp('fast');
+            $(this).parent().find('li').slideDown('fast');
+    
+            // 修改添加样式
+            $('#slide-box ul>a').removeClass('expand').addClass('collapse');
+            $(this).removeClass('collapse').addClass('expand');
         });
     });
     </script>
