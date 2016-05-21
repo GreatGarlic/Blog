@@ -35,13 +35,13 @@ $(document).ready(function() {
     <style>
     #slide-box {
         width: 256px;
-        border: 1px solid #BBB;
+        border: 1px solid rgba(0,0,0,0.7);
     }
 
     #slide-box ul > a {
         display: block;
         color: #EEE;
-        background: #AAA;
+        background: rgba(0,0,0,0.7);
         text-decoration: none;
         padding: 2px 5px;
     }
