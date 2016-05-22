@@ -9,7 +9,7 @@ tags: [Java, Util]
 * 日期格式化
 * 序列化和反序列化
 * 生成随机字符串
-* 字符串 join, 包含, 空判断, 缩写, 补全输出指定长度的字符串等
+* 字符串 join, 包含, 空判断, 缩写, 补全输出指定长度的字符串 (leftPad, center, rightPad) 等
 * 获取系统信息
 * 获取 Class 的信息
 * HTML escape and unescape
@@ -22,37 +22,17 @@ tags: [Java, Util]
 compile 'org.apache.commons:commons-lang3:3.4'
 ```
 
-## 程序
+## 日期格式化
 ```java
-import org.apache.commons.lang3.*;
-import org.apache.commons.lang3.math.NumberUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
-
-import java.util.Date;
-
-public class LangDemo {
-    public static void main(String[] args) {
-        LangDemo langDemo = new LangDemo();
-
-        langDemo.serializationUtilsDemo();
-        langDemo.randomStringUtilsDemo();
-        langDemo.stringUtilsDemo();
-        langDemo.systemUtilsDemo();
-        langDemo.classUtilsDemo();
-        langDemo.stringEscapeUtilsDemo();
-        langDemo.numberUtils();
-        langDemo.dateFormatUtilsDemo();
-
-    }
-    
-    // 日期格式化
     public void dateFormatUtilsDemo() {
         System.out.println(genHeader("DateFormatUtilsDemo"));
         System.out.println("格式化日期输出.");
         System.out.println(DateFormatUtils.format(System.currentTimeMillis(), "yyyy-MM-dd HH:mm:ss"));
     }
+```
 
-    // 序列化和反序列化
+## 序列化和反序列化
+```java
     public void serializationUtilsDemo() {
         String src = "道格拉斯二狗";
         byte[] result = SerializationUtils.serialize(src); // 序列化
@@ -60,8 +40,10 @@ public class LangDemo {
         String dst = SerializationUtils.deserialize(result); // 反序列化
         System.out.println(dst); // 输出: 道格拉斯二狗
     }
+```
 
-    // 生成随机字符串
+## 生成随机字符串
+```java
     public void randomStringUtilsDemo() {
         System.out.println("**RandomStringUtilsDemo**");
         System.out.println("生成指定长度的随机字符串,好像没什么用.");
@@ -74,8 +56,10 @@ public class LangDemo {
         System.out.println(RandomStringUtils.random(5, true, false));
         System.out.println(RandomStringUtils.random(5, false, true));
     }
+```
 
-    // 字符串 join, 包含, 空判断, 缩写等
+## 字符串 join, 包含, 空判断, 缩写等
+```java
     public void stringUtilsDemo() {
         System.out.println("**StringUtilsDemo**");
         System.out.println("将字符串重复n次，将文字按某宽度居中，将字符串数组用某字符串连接.");
@@ -122,8 +106,10 @@ public class LangDemo {
         System.out.println("左边加字符, 总长度为指定的长度 20, 格式化输出时用");
         System.out.println(StringUtils.leftPad("道格拉斯二狗", 20, " "));
     }
+```
 
-    // 获取系统信息
+## 获取系统信息
+```java
     public void systemUtilsDemo() {
         System.out.println(genHeader("SystemUtilsDemo"));
         System.out.println("获得系统文件分隔符.");
@@ -141,8 +127,10 @@ public class LangDemo {
         System.out.println("获得java厂商.");
         System.out.println(SystemUtils.JAVA_VENDOR);
     }
+```
 
-    // 获取 Class 的信息
+## 获取 Class 的信息
+```java
     public void classUtilsDemo() {
         System.out.println(genHeader("ClassUtilsDemo"));
         System.out.println("获取类实现的所有接口.");
@@ -161,16 +149,20 @@ public class LangDemo {
         System.out.println(ClassUtils.isAssignable(Date.class, Object.class));
         System.out.println(ClassUtils.isAssignable(Object.class, Date.class));
     }
+```
 
-    // HTML escape and unescape
+## HTML escape and unescape
+```java
     public void stringEscapeUtilsDemo() {
         System.out.println(genHeader("StringEscapeUtils"));
         System.out.println("转换特殊字符.");
         System.out.println("html:" + StringEscapeUtils.escapeHtml4("/n\n"));
         System.out.println("html:" + StringEscapeUtils.unescapeHtml4("<p>"));
     }
+```
 
-    // 数字相关, 如求数组中的最大最小值
+## 数字相关, 如求数组中的最大最小值
+```java
     public void numberUtils() {
         System.out.println(genHeader("NumberUtils"));
         System.out.println("字符串转为数字(不知道有什么用).");
@@ -184,6 +176,29 @@ public class LangDemo {
 
         System.out.println("判断字符串是否是有效数字.");
         System.out.println(NumberUtils.isNumber("0123.1"));
+    }
+```
+
+## 主程序
+```java
+import org.apache.commons.lang3.*;
+import org.apache.commons.lang3.math.NumberUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+
+import java.util.Date;
+
+public class LangDemo {
+    public static void main(String[] args) {
+        LangDemo langDemo = new LangDemo();
+
+        langDemo.serializationUtilsDemo();
+        langDemo.randomStringUtilsDemo();
+        langDemo.stringUtilsDemo();
+        langDemo.systemUtilsDemo();
+        langDemo.classUtilsDemo();
+        langDemo.stringEscapeUtilsDemo();
+        langDemo.numberUtils();
+        langDemo.dateFormatUtilsDemo();
     }
 
     private String genHeader(String head) {
