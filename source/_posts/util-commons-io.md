@@ -17,3 +17,10 @@ tags: [Java, Util]
 计算文件的 `check sum` | `FileUtils.checksumCRC32()`
 递归的创建目录 | `FileUtils.forceMkdir(new File("/Users/Biao/Desktop/a/b/c"))`
 还有更多文件相关的操作 | ……
+
+<!--more-->
+
+## 依赖
+```groovy
+compile 'commons-io:commons-io:2.4'
+```
