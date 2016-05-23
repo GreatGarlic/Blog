@@ -4,7 +4,7 @@ date: 2016-05-22 14:01:33
 tags: [Java, Util]
 ---
 
-可以使用 Apache Commons Lang3:
+可以使用 Apache Commons-Lang3:
 
 * 日期格式化
 * 序列化和反序列化
