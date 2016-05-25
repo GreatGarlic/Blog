@@ -6,7 +6,7 @@ tags: [Java, Util]
 
 可以使用 Apache Commons-IO 操作文件:
 
-说明 | 代码
+功能 | 代码
 ---- | ---
 获取文件名的后缀 | `FilenameUtils.getExtension(path)`
 获取文件名不包含后缀 | `FilenameUtils.getBaseName(path)`
