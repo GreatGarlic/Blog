@@ -1,5 +1,5 @@
 ---
-title: Java 读取 CSV
+title: Java 读写 CSV
 date: 2016-04-17 20:02:27
 tags: [Util, Java]
 ---
@@ -47,10 +47,48 @@ public class CsvReader {
 }
 ```
 
-## 输出
+输出
+
 ```
 [x: 1.1, y: 1.2]
 [x: 2.1, y: 2.2]
 [x: 3.1, y: 3.2]
 [x: 4.1, y: 4.2]
 ```
+
+## CsvWriter.java
+```java
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
+
+import java.io.IOException;
+
+public class CsvWriter {
+    public static void main(String[] args) throws IOException {
+        // Create the CSVFormat object with "\n" as a record delimiter
+        StringBuilder result = new StringBuilder();
+        CSVFormat csvFormat =  CSVFormat.DEFAULT.withRecordSeparator("\n");
+        CSVPrinter csvPrinter = new CSVPrinter(result, csvFormat);
+
+        csvPrinter.printRecord("ID", "username", "password");
+        csvPrinter.printRecord("1", "Alice", "Passw0rd");
+        csvPrinter.printRecord("2", "Bob", "123456");
+        csvPrinter.printRecord("3", "John", "Aloha");
+        csvPrinter.close();
+
+        System.out.println(result);
+    }
+}
+```
+
+输出
+
+```
+ID,username,password
+1,Alice,Passw0rd
+2,Bob,123456
+3,John,Aloha
+```
+
+## 参考
+* [Write/Read CSV Files with Apache Commons CSV Example](https://examples.javacodegeeks.com/core-java/apache/commons/csv-commons/writeread-csv-files-with-apache-commons-csv-example/)
