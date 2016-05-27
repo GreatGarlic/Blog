@@ -15,7 +15,7 @@ SpringMVC 返回 Json 数据给前端是件很简单的事，但是 SpringMVC �
 一、浏览器端 Ajax 请求
 
 * type 为 `GET`
-* contentType 为 `application/json'`
+* contentType 为 `application/json`
 * data 是 JSON 对象，不能使用 `JSON.stringify(data)` 序列化
 
 ```js
@@ -61,7 +61,7 @@ public String ajaxTest(@RequestParam int age) {
 一、浏览器端 AJAX 请求
 
 * type 为 `PUT`, `POST` 或 `DELETE`
-* contentType 为 `application/json'`
+* contentType 为 `application/json`
 * data 不是 JSON 对象，需要使用 JSON.stringify(data) 序列化一下
 
 ```js
