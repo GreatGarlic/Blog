@@ -52,7 +52,7 @@ Class Name | Description
 ConvertUtils | 类型转换工具类，功能强大
 PropertyUtils | 字段属性操作，提供了把一个 bean 转换 Map，设置获取 bean get set 方法等
 BeanUtils | populate 填充，把一个 Map 转换为 Bean，与 Spring core BeanUtils 对比，略显薄弱，可用性不强
-MethodUtils | 反射方法调用 invokeMethodinvokeMethod(Object object, String methodName,Object[] args) 大量重载
+MethodUtils | 反射方法调用 invokeMethod(Object object, String methodName,Object[] args) 大量重载
 
 ```groovy
 'commons-beanutils:commons-beanutils:1.9.2'

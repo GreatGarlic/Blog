@@ -24,7 +24,7 @@ build.gradle 中一般会使用下面的设置来设定编码
     systemProp.file.encoding=UTF-8
     ```
 
-* `<gradle>/bin/grable.bat` 里第 12 行左右设置 JVM 编码为 UTF-8，会影响所有项目
+* `<gradle>/bin/gradle.bat` 里第 12 行左右设置 JVM 编码为 UTF-8，会影响所有项目
 
     ```
     set DEFAULT_JVM_OPTS="-Dfile.encoding=UTF-8"
