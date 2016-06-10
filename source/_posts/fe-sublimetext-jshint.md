@@ -5,7 +5,7 @@ tags: FE
 ---
 
 ## 一、安装 jshint 的依赖
-1. 由于 `jshint` 都是依赖 `Node.js` 的，所以要先安装 `Node.js`，安装了 `brew` 的同学可以直接在 Terminal 使用以下命令
+1. 由于 `jshint` 是依赖 `Node.js` 的，所以要先安装 `Node.js`，安装了 `brew` 的同学可以直接在 Terminal 使用以下命令
 
     ```
     brew install node

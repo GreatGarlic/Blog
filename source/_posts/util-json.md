@@ -1,5 +1,5 @@
 ---
-title: Jackson 处理 JSON
+title: Jackson 处理 Json
 date: 2016-04-24 14:10:49
 tags: [Java, Util]
 ---
@@ -13,6 +13,20 @@ tags: [Java, Util]
 dependencies {
     compile 'com.fasterxml.jackson.core:jackson-databind:2.7.3'
 }
+```
+
+## Json to Map
+```java
+    ObjectMapper mapper = new ObjectMapper();
+    Map<String, String> map = null;
+
+    // 1. Map 中的类型是 built-in 的类型
+    map = mapper.readValue(json, Map.class);
+    System.out.println(map);
+
+    // 2. Map 中的类型可以是自己定义的类型，使用 TypeReference，这里我们仍然使用 String 来展示
+    map = mapper.readValue(json,  new TypeReference<Map<String, String>>(){});
+    System.out.println(map);
 ```
 
 ## JsonUtil
