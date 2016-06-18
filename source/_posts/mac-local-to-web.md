@@ -28,10 +28,10 @@ tags: Mac
 4. 从浏览器中访问 <http://3f506cbe.ngrok.io>，发现访问的是我们的网站
 5. 外网访问: 使用手机的 4G 网络，在手机的浏览器中访问 <http://3f506cbe.ngrok.io>，访问的也是我们的网站
 
-> Ngrok 的服务器在国外，速度有些慢，国内有 ngrok.cc 对齐封装了一下，速度快很多  
+> Ngrok 的服务器在国外，速度有些慢，国内有 ngrok.cc 对其封装了一下，速度快很多  
 > 同样的工具，有如`花生壳`
 
-## Ngrok.cc
+## Ngrok.cc 的使用
 1. 访问 <http://www.ngrok.cc/login> 注册
 2. 登陆，然后到域名列表里添加新的域名，例如 `xtuer` (不带 com，因为是作为 ngrok.cc 的子域名使用)
 3. 基本信息里有一个 token，是 ngrok.cc 给我们的授权码，一会配置文件里需要使用
@@ -52,7 +52,7 @@ tags: Mac
     Avg Conn Time                 0.00ms                         
     ```
 
-7. 启动本地的 Web 服务
+7. 启动本地的 Web 服务 (例如使用 8080 端口)
 8. 访问 <http://xtuer.ngrok.cc>，就访问了我们本地的 Web 服务
 
 
