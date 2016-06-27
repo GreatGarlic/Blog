@@ -34,3 +34,18 @@ atom-no-tab-close-button | 隐藏关闭按钮，避免误操作关闭 tab，使�
 显示所有函数        | `cmd + r`
 显示隐藏 tree-view | `cmd + \`
 拆分窗口           | 先按下 `cmd + k`，然后按下方向键
+
+自定义快捷键
+
+* 如果已经被使用了，先解绑，例如 `cmd + l`
+
+    ```js
+    'atom-text-editor':
+        'cmd-l': 'unset!'
+    ```
+* 绑定新的快捷键
+
+    ```js
+    '.platform-darwin, .platform-win32, .platform-linux':
+        'cmd-l': 'go-to-line:toggle'
+    ```

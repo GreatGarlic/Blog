@@ -4,7 +4,7 @@ date: 2016-06-13 11:34:40
 tags: Mac
 ---
 
-例如我们开发了一个网站，运行在我们自己的电脑上，本地访问地址是 <http://localhost.com:8080>，但是只能在自己的电脑和局域网访问，外网访问不了。如果需要外网能访问我们的网站，则需要:
+例如我们开发了一个网站，运行在我们自己的电脑上，本地访问地址是 <http://localhost.com:8080>，但是只能在自己的电脑和局域网访问，外网访问不了。如果想要外网能访问我们的网站，则需要:
 
 * 购买一个域名和空间，把我们的网站部署上去
 * 使用工具把本地的网站服务映射为外网可访问的，例如 [Ngrok](https://ngrok.com)，可支持 Mac，Windows，Linux
@@ -17,8 +17,8 @@ tags: Mac
 
     ```
     Version                       1.7/1.7                                                                                                                                             
-    Forwarding                    http://xtuer.ngrok.cc -> 127.0.0.1:8080                                                                                                             
-    Forwarding                    https://xtuer.ngrok.cc -> 127.0.0.1:8080                                                                                                            
+    Forwarding                    http://3f506cbe.ngrok.io -> 127.0.0.1:8080                                                                                                             
+    Forwarding                    https://3f506cbe.ngrok.io -> 127.0.0.1:8080                                                                                                            
     Web Interface                 127.0.0.1:4040                                                                                                                                      
     # Conn                        0                                                                                                                                                   
     Avg Conn Time                 0.00ms
