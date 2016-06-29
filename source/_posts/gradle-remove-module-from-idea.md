@@ -1,5 +1,5 @@
 ---
-title: IDEA 里删除 Gradle Module
+title: IDEA 删除 Gradle Module
 date: 2016-04-16 11:22:43
 tags: Gradle
 ---

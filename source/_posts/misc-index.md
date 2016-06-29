@@ -1,0 +1,14 @@
+---
+title: Miscellaneous
+date: 2016-06-29 10:06:53
+tags: [Misc, Index]
+---
+
+## 环境搭建
+* [IDEA 中创建 Gradle Module](/misc-gradle-idea)
+* [Gradle build 脚本](/misc-gradle-build)
+* [Gradle 创建 Web Module](/misc-gradle-web)
+* [Gradle 创建 App Module](/misc-gradle-app)
+* [Gradle 文件动态内容替换](/misc-gradle-resource)
+
+<!--more-->
