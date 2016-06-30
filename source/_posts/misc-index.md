@@ -12,3 +12,8 @@ tags: [Misc, Index]
 * [Gradle 文件动态内容替换](/misc-gradle-resource)
 
 <!--more-->
+
+## 工具软件
+* [常用命令](/misc-commands)
+* [ActiveMQ](/misc-activemq)
+* [Shuttle](/misc-shuttle)
