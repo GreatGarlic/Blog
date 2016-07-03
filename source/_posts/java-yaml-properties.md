@@ -4,7 +4,10 @@ date: 2016-07-03 20:04:12
 tags: [Java, Util]
 ---
 
-Java 可以使用 `PropertiesConfiguration` 来读取 properties 属性文件，Spring 4.3 后还支持了 Yaml 格式的 Properties。
+Java 可以使用 `PropertiesConfiguration` 来读取 properties 属性文件，Spring 4.3 后还支持了 `Yaml 格式的属性文件`
+
+* PropertiesConfiguration: 读取时可以自动进行类型转换，可以给定默认值
+* Yaml 格式的属性文件: 可以使用树形结构，方便分组，比 `.properties` 属性文件更灵活，但是以普通的 `java.util.Properties` 来读取
 
 <!--more-->
 
