@@ -18,7 +18,8 @@ redis-server redis.conf
 
 ## 启动 Redis (后台运行)
 ```
-daemonize yes
+1. 修改修改: daemonize yes
+2. 启动服务: redis-server redis.conf
 ```
 
 ## 关闭 Redis
