@@ -16,7 +16,7 @@ redis-server redis.conf
 
 <!--more-->
 
-## 启动 Redis (以后台方式运行)
+## 启动 Redis (后台运行)
 ```
 daemonize yes
 ```
