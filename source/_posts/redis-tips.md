@@ -9,7 +9,7 @@ tags: [Java, Util]
 redis-server
 ```
 
-## 启动 Redis (使用配置文件)
+## 启动 Redis (制定配置)
 ```
 redis-server redis.conf
 ```
