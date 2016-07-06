@@ -35,6 +35,16 @@ System.out.println(mapper.writeValueAsString(obj));
 Thread.currentThread().getStackTrace()[1].getMethodName()
 ```
 
+## Spring 获取 HttpServletRequest
+```java
+HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes()).getRequest();
+```
+
+## SpringSecurity 获取登陆用户名
+```java
+String username = SecurityContextHolder.getContext().getAuthentication().getName();
+```
+
 ## Servlet 获取客户端的 IP
 ```java
 /**
