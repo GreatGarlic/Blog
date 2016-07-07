@@ -43,7 +43,7 @@ tags: Index
 
 ## Index
 * [Miscellaneous](/misc-index)
-* [All Documents](/site-map)
+* [All Documents](/sitemap)
 
 ## Java
 * [How to change default Java version](/java-change-version)
@@ -51,6 +51,7 @@ tags: Index
 * [计算文件的 MD5](/java-file-md5)
 * [Java 使用 FTP](/java-ftp)
 * [Future](/java-future)
+* [Java 发邮件](/java-mail)
 * [微 Web 服务的 REST 框架 Spark Framework](/java-spark-framework)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
 * [Redis Tips](/redis-tips)
@@ -119,6 +120,7 @@ tags: Index
 ## Util
 * [Java Code Snippets](/java-code-snippets)
 * [Java 使用 FTP](/java-ftp)
+* [Java 发邮件](/java-mail)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
 * [Redis Tips](/redis-tips)
 * [Spring Ajax 拖拽上传文件](/spring-upload-file-ajax)
