@@ -18,7 +18,7 @@ compile('org.springframework.mobile:spring-mobile-device:1.1.5.RELEASE')
 ## 配置拦截器
 ```xml
 <mvc:interceptors>
-    <bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor" />
+    <bean class="org.springframework.mobile.device.DeviceResolverHandlerInterceptor"/>
 </mvc:interceptors>
 ```
 
@@ -26,7 +26,7 @@ compile('org.springframework.mobile:spring-mobile-device:1.1.5.RELEASE')
 ```xml
 <mvc:annotation-driven>
     <mvc:argument-resolvers>
-        <bean class="org.springframework.mobile.device.DeviceWebArgumentResolver" />
+        <bean class="org.springframework.mobile.device.DeviceWebArgumentResolver"/>
     </mvc:argument-resolvers>
 </mvc:annotation-driven>
 ```
