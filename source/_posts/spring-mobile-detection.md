@@ -57,6 +57,8 @@ public String help(Device device) {
     }
 }
 ```
+>
+> 如果要考虑 SEO 的话，那就同一个页面不同的设备使用不同的代码，并且 URL 也不一样，例如 http://www.xtuer.com/help 和 http://www.xtuer.com/m/help
 
 ## 参考文档
 * [Spring Mobile Device Module](http://docs.spring.io/spring-mobile/docs/current/reference/html/device.html)
