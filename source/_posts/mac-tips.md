@@ -49,3 +49,47 @@ set number
 
 ## 查找后使用 grep
 `find . -name "*.java" | xargs grep -n --color "topic"`
+
+## awk 输出列
+```
+// 输出第一列
+echo 1 2 3 4 5 | awk '{ print $1 }'
+
+// 输出第三列到最后一列
+echo 1 2 3 4 5 | awk '{ for (i=3; i<=NF; i++) print $i }'
+```
+
+## sort & uniq
+```
+// 按行排序，并去掉重复行
+sort | uniq
+
+// 按行排序，并去掉重复行，统计最后的行数
+sort | uniq -c
+```
+
+## unzip
+```
+// -d 指定输出目录
+// 如果没有 -d + targetDir，则解压到当前目录
+unzip signup.zip -d targetDir
+```
+
+## 查看不同状态的链接数量
+```
+netstat -n | awk '/^tcp/ {++state[$NF]} END {for(key in state) print key,"\t",state[key]}'
+
+输出:
+SYN_SENT    1
+CLOSE_WAIT  4
+ESTABLISHED 7
+```
+
+## 转换文件编码
+```
+// 单个文件转码
+iconv -f GB18030 -t UTF8 201607-data.txt > 201607.txt
+
+// 查找文件并转码
+find *.txt -exec sh -c "iconv -f GB18030 -t UTF8 {} > {}.txt" \;
+```

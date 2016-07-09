@@ -7,7 +7,7 @@ tags: Index
 
 ## Ajax
 * [SpringMVC 处理 Ajax 映射](/spring-ajax)
-* [Spring Ajax 拖拽上传文件](/spring-upload-file-ajax)
+* [SpringMVC Ajax 拖拽上传文件](/spring-upload-file-ajax)
 
 ## Default
 * [Shuttle](/misc-shuttle)
@@ -57,7 +57,7 @@ tags: Index
 * [Redis Tips](/redis-tips)
 * [Java 访问 Solr](/solr-java-access)
 * [Solr Tips](/solr-tips)
-* [Spring Ajax 拖拽上传文件](/spring-upload-file-ajax)
+* [SpringMVC Ajax 拖拽上传文件](/spring-upload-file-ajax)
 * [Spring 上传文件](/spring-upload-file)
 * [Apache Commons](/util-apache-commons)
 * [Commons-Codec 例子](/util-commons-codec)
@@ -104,7 +104,7 @@ tags: Index
 * [Spring 数据绑定之类型转换](/spring-conversion)
 * [Spring 中配置 CORS](/spring-cors)
 * [SpringMVC 数据绑定](/spring-data-bind)
-* [Spring Ajax 拖拽上传文件](/spring-upload-file-ajax)
+* [SpringMVC Ajax 拖拽上传文件](/spring-upload-file-ajax)
 * [Spring 上传文件](/spring-upload-file)
 * [Spring + Fastweixin 微信开发](/spring-weixin)
 
@@ -123,7 +123,7 @@ tags: Index
 * [Java 发邮件](/java-mail)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
 * [Redis Tips](/redis-tips)
-* [Spring Ajax 拖拽上传文件](/spring-upload-file-ajax)
+* [SpringMVC Ajax 拖拽上传文件](/spring-upload-file-ajax)
 * [Spring 上传文件](/spring-upload-file)
 * [Apache Commons](/util-apache-commons)
 * [Commons-Codec 例子](/util-commons-codec)

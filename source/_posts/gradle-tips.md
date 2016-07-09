@@ -140,7 +140,7 @@ project.afterEvaluate {
 推荐使用 -D 的方式
 
 ```groovy
-命令: gradle -Denv=develop clean assemble
+命令: gradle -Denv=development clean assemble
 获取: def environment = System.getProperty('env', 'development')
 
 命令: gradle -Penv=develop clean assemble

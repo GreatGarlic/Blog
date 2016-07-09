@@ -1,5 +1,5 @@
 ---
-title: Spring Ajax 拖拽上传文件
+title: SpringMVC Ajax 拖拽上传文件
 date: 2016-05-01 17:02:34
 tags: [Spring, Java, Util, Ajax]
 ---

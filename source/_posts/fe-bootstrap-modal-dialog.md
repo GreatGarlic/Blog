@@ -4,7 +4,7 @@ date: 2016-05-15 21:28:33
 tags: FE
 ---
 
-Bootstrap 的对话框用起来比较反复，例如
+Bootstrap 的对话框用起来比较繁复，例如
 
 ```html
 <div class="modal fade">
@@ -45,7 +45,7 @@ BootstrapDialog.confirm({
         // result will be true if button was click, while it will be false if users close the dialog directly.
         if(result) {
             alert('Yup.');
-        }else {
+        } else {
             alert('Nope.');
         }
     }
@@ -71,16 +71,16 @@ BootstrapDialog.show({
     title: 'Gut',
     message: 'Hello world!',
     type: BootstrapDialog.TYPE_WARNING,
-    onshow: function(dialogRef){
+    onshow: function(dialogRef) {
         alert('Dialog is popping up, its message is ' + dialogRef.getMessage());
     },
-    onshown: function(dialogRef){
+    onshown: function(dialogRef) {
         alert('Dialog is popped up.');
     },
-    onhide: function(dialogRef){
+    onhide: function(dialogRef) {
         alert('Dialog is popping down, its message is ' + dialogRef.getMessage());
     },
-    onhidden: function(dialogRef){
+    onhidden: function(dialogRef) {
         alert('Dialog is popped down.');
     }
 });
@@ -92,13 +92,13 @@ BootstrapDialog.show({
     message: $('#directories').show(),
     buttons: [{
         label: '取消',
-        action: function(dialogRef){
+        action: function(dialogRef) {
             dialogRef.close();
         }
     }, {
         label: '确定',
         cssClass: 'btn-primary',
-        action: function(dialogRef){
+        action: function(dialogRef) {
             dialogRef.close();
         }
     }]
