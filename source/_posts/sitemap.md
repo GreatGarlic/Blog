@@ -46,6 +46,7 @@ tags: Index
 * [All Documents](/sitemap)
 
 ## Java
+* [Git Tips](/git-tips)
 * [How to change default Java version](/java-change-version)
 * [Java Code Snippets](/java-code-snippets)
 * [计算文件的 MD5](/java-file-md5)
@@ -68,6 +69,7 @@ tags: Index
 * [Jackson 处理 Json](/util-json)
 
 ## Mac
+* [Git Tips](/git-tips)
 * [Linux Crontab](/linux-crontab)
 * [Atom 常用插件和快捷键](/mac-atom)
 * [本地服务映射为外网可访问](/mac-local-to-web)
@@ -120,6 +122,7 @@ tags: Index
 * [Spring Security Login Util](/spring-security-7-login-util)
 
 ## Util
+* [Git Tips](/git-tips)
 * [Java Code Snippets](/java-code-snippets)
 * [Java 使用 FTP](/java-ftp)
 * [Java 发邮件](/java-mail)
