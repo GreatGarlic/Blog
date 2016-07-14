@@ -4,7 +4,7 @@ date: 2016-07-14 07:54:44
 tags: FE
 ---
 
-JS 中有很多模版库，例如 `ArtTemplate`、doT、laytpl、Mustache、Underscore Templates、Embedded JS Templates、HandlebarsJS、Jade templating、baiduTemplate、kissyTemplate 等等，总的比较下来，语法上更喜欢的是 `ArtTemplate`，其性能也不错；`laytpl` 号称性能之王，比 ArtTemplate 和 doT 还快，如果追求性能，可以试试它 <http://laytpl.layui.com>。
+JS 中有很多模版库，例如 `ArtTemplate`、doT、juicer、laytpl、Mustache、Underscore Templates、Embedded JS Templates、HandlebarsJS、Jade templating、baiduTemplate、kissyTemplate 等等，总的比较下来，语法上更喜欢的是 `ArtTemplate`，其性能也不错；`laytpl` 号称性能之王，比 ArtTemplate 和 doT 还快，如果追求性能，可以试试它 <http://laytpl.layui.com>。
 
 <!--more-->
 

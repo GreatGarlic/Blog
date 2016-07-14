@@ -340,7 +340,7 @@ gradle.properties 里添加
 systemProp.file.encoding=UTF-8
 ```
 
-## 创建工程目录结构的任务
+## 创建应用程序工程目录结构的任务
 
 ```groovy
 // 创建目录结构的任务，执行后可删除
@@ -361,6 +361,29 @@ task "create-structure" << {
     └── test
         ├── java
         └── resources
+```
+
+## 使用 Spring 的应用程序打包
+```groovy
+apply plugin: 'java'
+apply plugin: 'application'
+apply plugin: 'com.github.johnrengelman.shadow'
+
+buildscript {
+    repositories { jcenter() }
+    dependencies { classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3' }
+}
+
+mainClassName = 'Foo'
+
+jar {
+    manifest { attributes 'Main-Class': mainClassName }
+}
+
+// 打包命令: gradle clean shadowJar
+shadowJar {
+    mergeServiceFiles('META-INF/spring.*')
+}
 ```
 
 ## 参考
