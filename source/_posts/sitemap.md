@@ -13,6 +13,7 @@ tags: Index
 * [Shuttle](/misc-shuttle)
 
 ## FE
+* [JS 模版](/fe-arttemplate)
 * [Bootstrap 模态对话框](/fe-bootstrap-modal-dialog)
 * [Bootstrap Progress Bar](/fe-bootstrap-progressbar)
 * [自定义 HTML5 播放器](/fe-custom-html5-player)

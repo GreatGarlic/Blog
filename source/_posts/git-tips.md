@@ -11,6 +11,8 @@ Git 的常用命令
 * untracked - 新增的文件，Git 根本不知道它的存在
 * not staged - 被索引过又被修改了的文件
 * staged - 通过 git add 后被即将被提交的文件
+* git reflog
+* 版本回退: git reset --hard versionId
 * 创建分支: git branch branchName
 * 切换分支: git checkout branchName
 * 创建并切换分支: git checkout -b branchName
@@ -30,6 +32,7 @@ Git 的常用命令
 
 ---
 
+![](/img/git/git-1.jpg)
 ![](/img/git/git-commands.png)
 ![](/img/git/git-commands.jpg)
 ![](/img/git/git-cheatsheet.png)
