@@ -93,3 +93,25 @@ iconv -f GB18030 -t UTF8 201607-data.txt > 201607.txt
 // 查找文件并转码
 find *.txt -exec sh -c "iconv -f GB18030 -t UTF8 {} > {}.txt" \;
 ```
+
+## 显示目录树
+1. 使用 brew 安装 tree: `brew install tree`
+2. 执行命令 `tree` 就能显示当前目录的树形结构
+
+    ```
+    .
+    ├── LICENSE.txt
+    ├── build.gradle
+    └── src
+        ├── main
+        │   ├── java
+        │   ├── resources
+        │   └── webapp
+        │       └── WEB-INF
+        │           └── web.xml
+        └── test
+            ├── java
+            └── resources
+    
+    9 directories, 3 files
+    ```

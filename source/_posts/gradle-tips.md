@@ -340,30 +340,40 @@ gradle.properties 里添加
 systemProp.file.encoding=UTF-8
 ```
 
-## 创建应用程序工程目录结构的任务
+## 创建工程目录结构
+Gradle 默认没有提供创建各种项目目录结构的任务，但是可以使用 `gradle-templates` 来创建工程的目录结构。
 
 ```groovy
-// 创建目录结构的任务，执行后可删除
-task "create-structure" << {
-   sourceSets*.java.srcDirs*.each { it.mkdirs() }
-   sourceSets*.resources.srcDirs*.each { it.mkdirs() }
+apply plugin: 'java'
+apply plugin: 'templates'
+
+repositories {
+    mavenCentral()
+}
+
+buildscript {
+    repositories {
+        maven {
+            url 'http://dl.bintray.com/cjstehno/public'
+        }
+    }
+
+    dependencies {
+        classpath 'gradle-templates:gradle-templates:1.5'
+    }
 }
 ```
 
-生成的目录结构
-    
-```
-├── build.gradle
-└── src
-    ├── main
-    │   ├── java
-    │   └── resources
-    └── test
-        ├── java
-        └── resources
-```
+运行 `gradle tasks` 可以看到有很多创建不同项目结构的任务
+
+* 使用 `gradle initJavaProject` 创建 Java 应用程序的目录结构
+* 使用 `gradle initWebappProject` 创建 Web 项目的目录结构
 
 ## 使用 Spring 的应用程序打包
+Gradle 默认的打包任务 `jar` 不能带上依赖的类，在有依赖 Spring 的项目中，最好是使用 `shadowJar` 来打包，其会合并 spring 冲突的配置文件，例如 fatJar 则不会。
+
+> 如果是可执行的 jar 包，配置 mainClassName 为 jar 包启动运行的类，否则可以忽略掉。
+
 ```groovy
 apply plugin: 'java'
 apply plugin: 'application'

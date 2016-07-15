@@ -137,7 +137,20 @@ bind 127.0.0.1 # 注释掉这一行，则监听所有 interface(网卡) 接收�
  -t <tests>         Only run the comma-separated list of tests. The test
                     names are the same as the ones produced as output.
  -I                 Idle mode. Just open N idle connections and wait.
- ```
+```
+
+## 查看有多少个 key
+* `dbsize`: 所有 key 的个数，包含过期未删除的 key
+
+    ```
+    (integer) 8
+    ```
+* `info keyspace`: 所有 key 的个数，过期未删除的 key 的个数
+
+    ```
+    # Keyspace
+    db0:keys=8,expires=0,avg_ttl=0
+    ```
 
 ## 参考资料
 * [Redis 入门](http://www.hubwiz.com/course/?type=Redis)
