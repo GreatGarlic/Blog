@@ -115,3 +115,16 @@ find *.txt -exec sh -c "iconv -f GB18030 -t UTF8 {} > {}.txt" \;
     
     9 directories, 3 files
     ```
+
+## 计算文件的 MD5
+```
+md5 fileName
+```
+
+## 计算字符串的 MD5
+```
+# 下面 3 种方式都可以
+echo -n Welcome | md5
+echo -n 'Welcome' | md5
+echo -n "Welcome" | md5
+```
