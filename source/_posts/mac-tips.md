@@ -128,3 +128,9 @@ echo -n Welcome | md5
 echo -n 'Welcome' | md5
 echo -n "Welcome" | md5
 ```
+
+## VI 内全局替换
+```
+# 使用 str2 替换 str1
+:%s/str1/str2/g
+```
