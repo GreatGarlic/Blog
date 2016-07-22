@@ -31,6 +31,8 @@ tags: Mac
     export PROMPT_COMMAND="powerline_shell; $PROMPT_COMMAND"
     ```
 
+    > 注意: `export PS1="$(~/powerline-shell/powerline-shell.py $? 2> /dev/null)"` 这里的路径必须是你系统上 Powerline-Shell 的路径
+
 ## 安装 Powerline 字体
 > Powerline 字体安装完成后会自动复制到 `~/Library/Fonts`，所以可以删除解压得到的文件
 
