@@ -34,7 +34,7 @@ tags: Mac
     > 注意: `export PS1="$(~/powerline-shell/powerline-shell.py $? 2> /dev/null)"` 这里的路径必须是你系统上 Powerline-Shell 的路径
 
 ## 安装 Powerline 字体
-1. 下载 Master 版: <http://mjj.logdown.com/posts/241370-help-terminal-on-mac-os-x-for-gorgeous-powerline-on-the-command-line>
+1. 下载 Master 版: <https://github.com/powerline/fonts>
 2. 安装字体:
 
     ```
