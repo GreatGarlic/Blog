@@ -10,8 +10,6 @@ tags: Mac
 <!--more-->
 
 ## 下載安裝 Powerline-Shell
-> Powerline-Shell 的文件不能删除，所以可以放到 `/Applications` 下
-
 1. 下载 Master 版: <https://github.com/banga/powerline-shell>
 2. 解压进入 `powerline-shell` 的目录
 3. 执行 `install.py`
@@ -19,6 +17,8 @@ tags: Mac
     ```
     $ /path/to/powerline/install.py
     ```
+
+    > Powerline-Shell 的文件不能删除，所以可以放到 `/Applications` 下
 
 ## 修改 Bash 的配置
 1. `vi ~/.bash_profile`
@@ -34,14 +34,14 @@ tags: Mac
     > 注意: `export PS1="$(~/powerline-shell/powerline-shell.py $? 2> /dev/null)"` 这里的路径必须是你系统上 Powerline-Shell 的路径
 
 ## 安装 Powerline 字体
-> Powerline 字体安装完成后会自动复制到 `~/Library/Fonts`，所以可以删除解压得到的文件
-
 1. 下载 Master 版: <http://mjj.logdown.com/posts/241370-help-terminal-on-mac-os-x-for-gorgeous-powerline-on-the-command-line>
 2. 安装字体:
 
     ```
     $ /path/to/powerline-fonts/install.sh
     ```
+
+    > Powerline 字体安装完成后会自动复制到 `~/Library/Fonts`，所以安装完成后可以删除解压得到的文件
 
 ## 设置 Terminal 的字体
 我选择了 `Sauce Code Powerline`，大小为 `13 pt`
