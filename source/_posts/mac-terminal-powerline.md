@@ -44,12 +44,12 @@ tags: Mac
     > Powerline 字体安装完成后会自动复制到 `~/Library/Fonts`，所以安装完成后可以删除解压得到的文件
 
 ## 设置 Terminal 的字体
-我选择了 `Sauce Code Powerline`，大小为 `13 pt`
+我选择了 `Source Code Pro Powerline`，大小为 `13 pt`，`Droid Sans Mono Dotted for Powerline 12pt` 也不错，需要在字体选择里调整 `Line Spacing`
 
 ![](/img/mac/terminal-font.png)
 
 ## 设置 Terminal 的背景
-由于 Powerline 字体对半透明的支持不好，为了 Power Shell 的效果好一些，设置 Terminal 的背景为不透明
+由于那个小三角形不支持半透明，为了 Powerline Shell 的效果好一些，设置 Terminal 的背景为不透明
 
 ## 设置 CMD 的样式
 下图在 Powershell 里叫 CMD，由于某些原因，显示效果有可能有问题
