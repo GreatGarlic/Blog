@@ -95,6 +95,14 @@ def add_root_segment(powerline):
     }
 ```
 
+```python
+# 加上 Git 的分支符号
+# segments/git.py, 79 行
+    if branch_info:
+        stats.ahead = branch_info["ahead"]
+        stats.behind = branch_info["behind"]
+        branch = u'\uE0A0 ' + branch_info['local']
+```
 
 
 
