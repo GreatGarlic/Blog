@@ -27,7 +27,7 @@ ESCAPED BY '"'
 LINES TERMINATED BY '\n'; 
 ```
 
-还可以在 `()` 部分指定导入指定的列:
+还可以在 `()` 部分指定导入的列:
 
 ```sql
 LOAD DATA INFILE '/Users/Biao/Desktop/a.csv' 
