@@ -86,10 +86,10 @@ HOME_BG = 32
 ```
 
 ```python
-# powerline-shell.py
+# segments/root.py
 def add_root_segment(powerline):
     root_indicators = {
-        'bash': '', # 修改这里
+        'bash': '', # 修改这里，去掉提示符中的 $
         'zsh': ' %# ',
         'bare': ' $ ',
     }
