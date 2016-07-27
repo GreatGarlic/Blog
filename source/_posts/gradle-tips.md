@@ -20,6 +20,11 @@ gradle dep
 gradle dependencies
 ```
 
+## 依赖其他子项目
+```
+compile project(':dependency-project')
+```
+
 ## 打包工程
 
 ```
