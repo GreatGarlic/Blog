@@ -234,3 +234,14 @@ encodeURIComponent('http://www.xtuer.com/foo?redirect-url=http://www.xtuer.com/p
 // http%3A%2F%2Fwww.xtuer.com%2Ffoo%3Fredirect-url%3Dhttp%3A%2F%2Fwww.xtuer.com%2Fproducts%26username%3DBibo
 // 整个 URL 有问题
 ```
+
+## 数组排序
+
+```js
+var ns = [5, 2, 3, 1, 4];
+ns.sort(function(a, b) { // 自定义比较函数，可以对复杂对象进行比较
+    return a - b;
+});
+
+console.log(ns); // 输出: [1, 2, 3, 4, 5]
+```
