@@ -1,7 +1,7 @@
 ---
 title: Redis Tips
 date: 2016-07-05 21:35:23
-tags: [Java, Util]
+tags: [Java, Util, Redis]
 ---
 
 ## 启动 Redis (默认配置)
