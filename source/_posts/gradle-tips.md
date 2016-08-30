@@ -203,7 +203,7 @@ buildscript {
         jcenter()
     }
     dependencies {
-        classpath 'org.akhikhl.gretty:gretty:1.2.4'
+        classpath 'org.akhikhl.gretty:gretty:1.4.0'
     }
 }
     
@@ -223,7 +223,7 @@ gretty {
     statusPort  = httpPort + 3
     httpsPort   = httpPort + 4
     httpsEnabled = true
-    contextPath  = '/'
+    contextPath  = ''
     jvmArgs = ['-Xmx1024M', '-XX:PermSize=128M', '-XX:MaxPermSize=256M']
     servletContainer = 'jetty7'
     scanInterval = 0

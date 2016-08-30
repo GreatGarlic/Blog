@@ -73,8 +73,10 @@ tags: Index
 * [Git Tips](/git-tips)
 * [Linux Crontab](/linux-crontab)
 * [Atom 常用插件和快捷键](/mac-atom)
+* [Mac Homebrew](/mac-homebrew)
 * [限制 TIME_WAIT 的连接数](/mac-limit-timewait-connection)
 * [本地服务映射为外网可访问](/mac-local-to-web)
+* [Mac 安装 Mysql 和 Nginx](/mac-mysql-nginx)
 * [Safari 插件](/mac-safari-extension)
 * [Spotlight 快捷键](/mac-spotlight-shortcut)
 * [Mac Terminal Powerline-Shell](/mac-terminal-powerline)
@@ -91,11 +93,16 @@ tags: Index
 * [Miscellaneous](/misc-index)
 
 ## MySQL
+* [Mac 安装 Mysql 和 Nginx](/mac-mysql-nginx)
 * [MySQL 导入导出 CSV](/mysql-csv)
 * [MySQL 中 datetime 和 timestamp 的区别](/mysql-datetime-timestamp)
 
+## PHP
+* [PHP 使用 PDO 访问数据库](/php-database-pdo)
+
 ## Redis
 * [Redis 客户端 Redis-Commander](/redis-client)
+* [Redis Tips](/redis-tips)
 * [Java 访问 Redis](/redis)
 
 ## Solr
