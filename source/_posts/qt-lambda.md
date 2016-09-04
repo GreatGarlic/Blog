@@ -101,11 +101,11 @@ int main(int argc, char *argv[]) {
     comboBox->addItem("武松");
     comboBox->show();
 
-    QObject::connect(comboBox, static_cast<void(QComboBox::*)(int)>(&QComboBox::activated), [](int index) {
+    QObject::connect(comboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), [](int index) {
         qDebug() << index;
     });
 
-    QObject::connect(comboBox, static_cast<void(QComboBox::*)(const QString &)>(&QComboBox::activated), [](const QString &text) {
+    QObject::connect(comboBox, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::activated), [](const QString &text) {
         qDebug() << text;
     });
 
