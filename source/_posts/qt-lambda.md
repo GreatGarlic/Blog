@@ -37,7 +37,7 @@ Lambda 表达式可以理解为匿名函数，比如代码里有一些小函数�
 下面列举一些 Lambda 表达式在 Qt 中的运用。
 
 ## 信号槽
-```c++
+```cpp
 #include <QApplication>
 #include <QDebug>
 #include <QPushButton>
@@ -58,7 +58,7 @@ int main(int argc, char *argv[]) {
 
 ## 信号槽(重载)
 
-```c++
+```cpp
 #include <QApplication>
 #include <QDebug>
 #include <QComboBox>
@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
 
 在进行信号槽绑定时，如果有重载，需要对成员函数进行类型转换，可以使用 C++ 的 `static_cast` 类型转换(编译时进行语法检查)，也可以使用传统的 C 语言的强制类型转换(编译时不进行语法检查，运行时才检查)
 
-```c++
+```cpp
 #include <QApplication>
 #include <QDebug>
 #include <QComboBox>
@@ -114,7 +114,7 @@ int main(int argc, char *argv[]) {
 ```
 
 ## 排序
-```c++
+```cpp
 #include <QDebug>
 #include <QList>
 #include <algorithm>
@@ -136,7 +136,7 @@ int main(int argc, char *argv[]) {
 ## 自定义函数参数为 Lambda 表达式
 使用 `std::function<>` 声明 Lambda 表达式
 
-```c++
+```cpp
 #include <QDebug>
 
 // 第二个参数为一个 Lambda 表达式，其参数是 int，返回值为 int
