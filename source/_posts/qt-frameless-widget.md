@@ -4,16 +4,23 @@ date: 2016-09-07 22:52:44
 tags: Qt
 ---
 
-这里展示的是使用 `QSS + QGraphicsDropShadowEffect` 来创建圆角、无边框、有阴影、可拖动的窗口:
+程序窗口的边框，标题栏等是系统管理的，Qt 不能对其进行定制，为了实现定制的边框、标题栏、关闭按钮等，需要把系统默认的边框、标题栏去掉，然后使用 Widget 来模拟它们。这里介绍使用 `QSS + QGraphicsDropShadowEffect` 来创建圆角、无边框、有阴影、可拖动的窗口。
 
-* QSS 创建圆角
-* QGraphicsDropShadowEffect 创建阴影
+**核心技术要点:**
 
-使用方法:
+* 我们继承 QWidget 实现的 Widget 默认是不启用 QSS 的，启用 QSS 需要调用 `setAttribute(Qt::WA_StyledBackground, true)`
+* 使用 `border-radius` 创建圆角效果。但是顶级窗口有些 QSS 不生效，例如 `border-radius`，所以把要圆角显示的 Widget 上放在另一个顶级 Widget 中，变为非顶级 Widget
+* 顶底窗口需要设置背景为透明，去掉边框
+    * 去掉边框: `setWindowFlags(Qt::FramelessWindowHint);`
+    * 背景透明: `setAttribute(Qt::WA_TranslucentBackground);`
+* 使用鼠标事件实现拖动
+* 使用 QGraphicsDropShadowEffect 创建阴影
+
+**使用方法:**
 
 * `FramelessWidget *window = new FramelessWidget(yourWidget)` 即可
 
-效果如图:
+**效果如图:**  
 ![](/img/qt/frameless-widget.png)
 
 <!--more-->
@@ -132,9 +139,9 @@ void FramelessWidget::mouseMoveEvent(QMouseEvent *e) {
 ```
 
 ## 思考
-实现圆角、带阴影的其它方式:
-
-* 绘图
-    * 绘制圆角矩形并且实现阴影的算法
-    * 使用一个圆角带阴影图片，利用九宫格技术绘制
-* Border-Image
+* 实现圆角、带阴影的其它方式:
+    * 绘图
+        * 绘制圆角矩形并且实现阴影的算法
+        * 使用一个圆角带阴影图片，利用九宫格技术绘制(border-image 的原理)
+    * QSS 的 `border-image`
+* 怎么实现拖动改变无边框窗口的大小
