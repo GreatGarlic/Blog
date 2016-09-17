@@ -212,7 +212,7 @@ var myOtherUrl = "http://example.com/index.html?url=" + encodeURIComponent(myUrl
 
 使用场景
 
-* `encodeURI`: 该函数对传入字符串中的所有非 `基本字符`、 `保留字符` 和 `Mark 字符` 进行转义编码，例如中文、字符空格(` ` 转换成为 `%20`)，用来对完整的 URI 字符串进行编码处理
+* `encodeURI`: 该函数对传入字符串中的所有非 `基本字符`、 `保留字符` 和 `Mark 字符` 进行转义编码，例如中文、空格(转换成为 `%20`)，用来对完整的 URI 字符串进行编码处理
 
 * `encodeURIComponent`: 和 encodeURI 只有一个不同点，那就是对于 `保留字符` 同样做转义编码，例如，字符 `:` 被转义字符 `%3A` 代替，例如编码 URL 的参数列表中的每一个部分时使用
 
@@ -234,6 +234,8 @@ encodeURIComponent('http://www.xtuer.com/foo?redirect-url=http://www.xtuer.com/p
 // http%3A%2F%2Fwww.xtuer.com%2Ffoo%3Fredirect-url%3Dhttp%3A%2F%2Fwww.xtuer.com%2Fproducts%26username%3DBibo
 // 整个 URL 有问题
 ```
+
+可以访问 <http://pressbin.com/tools/urlencode_urldecode/> 对 url 进行编码
 
 ## 数组排序
 
