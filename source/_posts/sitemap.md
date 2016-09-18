@@ -11,7 +11,6 @@ tags: Index
 
 ## Default
 * [Shuttle](/misc-shuttle)
-* [qt-frameless-window-resizable](/qt-frameless-window-resizable)
 
 ## FE
 * [JS 模版](/fe-arttemplate)
@@ -102,7 +101,10 @@ tags: Index
 * [PHP 使用 PDO 访问数据库](/php-database-pdo)
 
 ## Qt
+* [Qt 访问网络](/qt-access-network)
+* [Qt 调整无边框窗口的大小](/qt-frameless-window-resizable)
 * [Qt 创建圆角、无边框、有阴影、可拖动的窗口](/qt-frameless-window)
+* [Qt 访问网络的 HttpClient](/qt-httpclient)
 * [Lambda 在 Qt 中的运用](/qt-lambda)
 
 ## Redis
