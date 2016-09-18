@@ -13,29 +13,30 @@ HttpClient("http://localhost:8080/device").get([](const QString &response) {
 ```
 
 <!--more-->
-
-HttpClient 的实现为下面列出的 `HttpClient.h` 和 `HttpClient.cpp`
+更多的使用方法请参考 `main()` 里的例子。HttpClient 的实现为 `HttpClient.h` 和 `HttpClient.cpp` 部分。
 
 ## main.cpp
-`main()` 函数里展示了 HttpClient 的使用示例。
+`main()` 函数里展示了 `HttpClient` 的使用示例。
 
 ```cpp
 #include "HttpClient.h"
 
+#include <functional>
 #include <QDebug>
 #include <QApplication>
+#include <QNetworkAccessManager>
 
 int main(int argc, char *argv[]) {
     QApplication app(argc, argv);
 
     {
         // 在代码块里执行网络访问，是为了测试 HttpClient 对象在被析构后，网络访问的回调函数仍然能正常执行
-        // GET 请求无参数
+        // [[1]] GET 请求无参数
         HttpClient("http://localhost:8080/device").get([](const QString &response) {
             qDebug() << response;
         });
 
-        // GET 请求有参数，有自定义 header
+        // [[2]] GET 请求有参数，有自定义 header
         HttpClient("http://localhost:8080/signIn")
                 .addParam("id", "1")
                 .addParam("name", "诸葛亮")
@@ -44,7 +45,7 @@ int main(int argc, char *argv[]) {
             qDebug() << response;
         });
 
-        // POST 请求有参数，有自定义 header
+        // [[3]] POST 请求有参数，有自定义 header
         HttpClient("http://localhost:8080/signIn")
                 .addParam("id", "2")
                 .addParam("name", "卧龙")
@@ -53,9 +54,18 @@ int main(int argc, char *argv[]) {
                 .post([](const QString &response) {
             qDebug() << response;
         });
+
+        // [[4]] 每创建一个 QNetworkAccessManager 对象都会创建一个线程，当频繁的访问网络时，为了节省线程资源，调用 useManager()
+        // 使用共享的 QNetworkAccessManager，它不会被 HttpClient 删除。
+        // 如果下面的代码不传入 QNetworkAccessManager，从任务管理器里可以看到创建了几千个线程。
+        QNetworkAccessManager *manager = new QNetworkAccessManager();
+        for (int i = 0; i < 5000; ++i) {
+            HttpClient("http://localhost:8080/device").useManager(manager).get([=](const QString &response) {
+                qDebug() << response << ", " << i;
+            });
+        }
     }
 
-    qDebug() << "------";
     return app.exec();
 }
 ```
@@ -66,13 +76,24 @@ int main(int argc, char *argv[]) {
 #define HTTPCLIENT_H
 
 #include <functional>
-#include <QHash>
-#include <QUrlQuery>
+
+class QString;
+struct HttpClientPrivate;
+class QNetworkAccessManager;
 
 class HttpClient {
 public:
     HttpClient(const QString &url);
     ~HttpClient();
+
+    /**
+     * @brief 每创建一个 QNetworkAccessManager 对象都会创建一个线程，当频繁的访问网络时，为了节省线程资源，
+     *     可以使用传人的 QNetworkAccessManager，它不会被 HttpClient 删除。
+     *     如果没有使用 useManager() 传入一个 QNetworkAccessManager，则 HttpClient 会自动的创建一个，并且在网络访问完成后删除它。
+     * @param manager QNetworkAccessManager 对象
+     * @return 返回 HttpClient 的引用，可以用于链式调用
+     */
+    HttpClient& useManager(QNetworkAccessManager *manager);
 
     /**
      * @brief 增加参数
@@ -122,10 +143,7 @@ private:
                  std::function<void (const QString &)> successHandler,
                  std::function<void (const QString &)> errorHandler,
                  const char *encoding);
-
-    QString url; // 请求的 URL
-    QUrlQuery params; // 请求的参数
-    QHash<QString, QString> headers; // 请求的头
+    HttpClientPrivate *d;
 };
 
 #endif // HTTPCLIENT_H
@@ -135,28 +153,47 @@ private:
 ```cpp
 #include "HttpClient.h"
 
+#include <QDebug>
+#include <QHash>
+#include <QUrlQuery>
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QNetworkAccessManager>
-#include <QDebug>
 
-HttpClient::HttpClient(const QString &url) : url(url) {
-    qDebug() << "HttpClient";
+struct HttpClientPrivate {
+    HttpClientPrivate(const QString &url) : url(url), networkAccessManager(NULL), useInternalNetworkAccessManager(true) {}
+
+    QString url; // 请求的 URL
+    QUrlQuery params; // 请求的参数
+    QHash<QString, QString> headers; // 请求的头
+    QNetworkAccessManager *networkAccessManager;
+    bool useInternalNetworkAccessManager; // 是否使用内部的 QNetworkAccessManager
+};
+
+HttpClient::HttpClient(const QString &url) : d(new HttpClientPrivate(url)) {
+    //    qDebug() << "HttpClient";
 }
 
 HttpClient::~HttpClient() {
-    qDebug() << "~HttpClient";
+    //    qDebug() << "~HttpClient";
+    delete d;
+}
+
+HttpClient &HttpClient::useManager(QNetworkAccessManager *manager) {
+    d->networkAccessManager = manager;
+    d->useInternalNetworkAccessManager = false;
+    return *this;
 }
 
 // 增加参数
 HttpClient &HttpClient::addParam(const QString &name, const QString &value) {
-    params.addQueryItem(name, value);
+    d->params.addQueryItem(name, value);
     return *this;
 }
 
 // 增加访问头
 HttpClient &HttpClient::addHeader(const QString &header, const QString &value) {
-    headers[header] = value;
+    d->headers[header] = value;
     return *this;
 }
 
@@ -180,29 +217,23 @@ void HttpClient::execute(bool posted,
                          std::function<void (const QString &)> errorHandler,
                          const char *encoding) {
     // 如果是 GET 请求，并且参数不为空，则编码请求的参数，放到 URL 后面
-    if (!posted && !params.isEmpty()) {
-        url += "?" + params.toString(QUrl::FullyEncoded);
+    if (!posted && !d->params.isEmpty()) {
+        d->url += "?" + d->params.toString(QUrl::FullyEncoded);
     }
 
-    QUrl urlx(url);
+    QUrl urlx(d->url);
     QNetworkRequest request(urlx);
 
     // 把请求的头添加到 request 中
-    QHashIterator<QString, QString> iter(headers);
+    QHashIterator<QString, QString> iter(d->headers);
     while (iter.hasNext()) {
         iter.next();
         request.setRawHeader(iter.key().toUtf8(), iter.value().toUtf8());
     }
 
-    QNetworkAccessManager *manager = new QNetworkAccessManager();
-    QNetworkReply *reply = posted ? manager->post(request, params.toString(QUrl::FullyEncoded).toUtf8()) : manager->get(request);
-
-    // 请求错误处理
-    QObject::connect(reply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), [=] {
-        if (NULL != errorHandler) {
-            errorHandler(reply->errorString());
-        }
-    });
+    // 如果不使用外部的 manager 则创建一个新的，在访问完成后会自动删除掉
+    QNetworkAccessManager *manager = d->useInternalNetworkAccessManager ? new QNetworkAccessManager() : d->networkAccessManager;
+    QNetworkReply *reply = posted ? manager->post(request, d->params.toString(QUrl::FullyEncoded).toUtf8()) : manager->get(request);
 
     // 请求结束时一次性读取所有响应数据
     QObject::connect(reply, &QNetworkReply::finished, [=] {
@@ -210,8 +241,8 @@ void HttpClient::execute(bool posted,
             // 读取响应数据
             QTextStream in(reply);
             QString result;
-
             in.setCodec(encoding);
+
             while (!in.atEnd()) {
                 result += in.readLine();
             }
@@ -219,8 +250,18 @@ void HttpClient::execute(bool posted,
             successHandler(result);
         }
 
+        // 释放资源
         reply->deleteLater();
-        manager->deleteLater();
+        if (d->useInternalNetworkAccessManager) {
+            manager->deleteLater();
+        }
+    });
+
+    // 请求错误处理
+    QObject::connect(reply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), [=] {
+        if (NULL != errorHandler) {
+            errorHandler(reply->errorString());
+        }
     });
 }
 ```
