@@ -21,13 +21,13 @@ HttpClient("http://localhost:8080/device").get([](const QString &response) {
 ```cpp
 #include "HttpClient.h"
 
-#include <functional>
 #include <QDebug>
+#include <QFile>
 #include <QApplication>
 #include <QNetworkAccessManager>
 
 int main(int argc, char *argv[]) {
-    QApplication app(argc, argv);
+    QApplication a(argc, argv);
 
     {
         // 在代码块里执行网络访问，是为了测试 HttpClient 对象在被析构后，网络访问的回调函数仍然能正常执行
@@ -64,9 +64,23 @@ int main(int argc, char *argv[]) {
                 qDebug() << response << ", " << i;
             });
         }
+
+        // [[5]] 下载
+        QFile *file = new QFile("dog.png");
+        if (file->open(QIODevice::WriteOnly)) {
+            HttpClient("http://xtuer.github.io/img/dog.png").setDebug(true).download([=](const QByteArray &data) {
+                file->write(data);
+            }, [=] {
+                file->flush();
+                file->close();
+                file->deleteLater();
+
+                qDebug() << "Download file finished";
+            });
+        }
     }
 
-    return app.exec();
+    return a.exec();
 }
 ```
 
@@ -78,6 +92,7 @@ int main(int argc, char *argv[]) {
 #include <functional>
 
 class QString;
+class QByteArray;
 struct HttpClientPrivate;
 class QNetworkAccessManager;
 
@@ -90,10 +105,17 @@ public:
      * @brief 每创建一个 QNetworkAccessManager 对象都会创建一个线程，当频繁的访问网络时，为了节省线程资源，
      *     可以使用传人的 QNetworkAccessManager，它不会被 HttpClient 删除。
      *     如果没有使用 useManager() 传入一个 QNetworkAccessManager，则 HttpClient 会自动的创建一个，并且在网络访问完成后删除它。
-     * @param manager QNetworkAccessManager 对象
+     * @param  manager QNetworkAccessManager 对象
      * @return 返回 HttpClient 的引用，可以用于链式调用
      */
     HttpClient& useManager(QNetworkAccessManager *manager);
+
+    /**
+     * @brief  参数 debug 为 true 则使用 debug 模式，请求执行时输出请求的 URL 和参数等
+     * @param  debug 是否启用调试模式
+     * @return 返回 HttpClient 的引用，可以用于链式调用
+     */
+    HttpClient& setDebug(bool debug);
 
     /**
      * @brief 增加参数
@@ -131,6 +153,16 @@ public:
              std::function<void (const QString &)> errorHandler = NULL,
              const char *encoding = "UTF-8");
 
+    /**
+     * @brief 使用 GET 进行下载，当有数据可读取时回调 readyRead(), 大多数情况下应该在 readyRead() 里把数据保存到文件
+     * @param readyRead     有数据可读取时的回调 lambda 函数
+     * @param finishHandler 请求处理完成后的回调 lambda 函数
+     * @param errorHandler  请求失败的回调 lambda 函数
+     */
+    void download(std::function<void (const QByteArray &)> readyRead,
+                  std::function<void ()> finishHandler = NULL,
+                  std::function<void (const QString &)> errorHandler = NULL);
+
 private:
     /**
      * @brief 执行请求的辅助函数
@@ -161,13 +193,14 @@ private:
 #include <QNetworkAccessManager>
 
 struct HttpClientPrivate {
-    HttpClientPrivate(const QString &url) : url(url), networkAccessManager(NULL), useInternalNetworkAccessManager(true) {}
+    HttpClientPrivate(const QString &url) : url(url), networkAccessManager(NULL), useInternalNetworkAccessManager(true), debug(false) {}
 
     QString url; // 请求的 URL
     QUrlQuery params; // 请求的参数
     QHash<QString, QString> headers; // 请求的头
     QNetworkAccessManager *networkAccessManager;
     bool useInternalNetworkAccessManager; // 是否使用内部的 QNetworkAccessManager
+    bool debug;
 };
 
 HttpClient::HttpClient(const QString &url) : d(new HttpClientPrivate(url)) {
@@ -182,6 +215,12 @@ HttpClient::~HttpClient() {
 HttpClient &HttpClient::useManager(QNetworkAccessManager *manager) {
     d->networkAccessManager = manager;
     d->useInternalNetworkAccessManager = false;
+    return *this;
+}
+
+// 传入 debug 为 true 则使用 debug 模式，请求执行时输出请求的 URL 和参数等
+HttpClient &HttpClient::setDebug(bool debug) {
+    d->debug = debug;
     return *this;
 }
 
@@ -211,6 +250,51 @@ void HttpClient::post(std::function<void (const QString &)> successHandler,
     execute(true, successHandler, errorHandler, encoding);
 }
 
+// 使用 GET 进行下载，当有数据可读取时回调 readyRead(), 大多数情况下应该在 readyRead() 里把数据保存到文件
+void HttpClient::download(std::function<void (const QByteArray &)> readyRead,
+                          std::function<void ()> finishHandler,
+                          std::function<void (const QString &)> errorHandler) {
+    // 如果是 GET 请求，并且参数不为空，则编码请求的参数，放到 URL 后面
+    if (!d->params.isEmpty()) {
+        d->url += "?" + d->params.toString(QUrl::FullyEncoded);
+    }
+
+    if (d->debug) {
+        qDebug() << d->url;
+    }
+
+    QUrl urlx(d->url);
+    QNetworkRequest request(urlx);
+    bool internal = d->useInternalNetworkAccessManager;
+    QNetworkAccessManager *manager = internal ? new QNetworkAccessManager() : d->networkAccessManager;
+    QNetworkReply *reply = manager->get(request);
+
+    // 有数据可读取时回调 readyRead()
+    QObject::connect(reply, &QNetworkReply::readyRead, [=] {
+        readyRead(reply->readAll());
+    });
+
+    // 请求结束
+    QObject::connect(reply, &QNetworkReply::finished, [=] {
+        if (reply->error() == QNetworkReply::NoError && NULL != finishHandler) {
+            finishHandler();
+        }
+
+        // 释放资源
+        reply->deleteLater();
+        if (internal) {
+            manager->deleteLater();
+        }
+    });
+
+    // 请求错误处理
+    QObject::connect(reply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), [=] {
+        if (NULL != errorHandler) {
+            errorHandler(reply->errorString());
+        }
+    });
+}
+
 // 执行请求的辅助函数
 void HttpClient::execute(bool posted,
                          std::function<void (const QString &)> successHandler,
@@ -219,6 +303,10 @@ void HttpClient::execute(bool posted,
     // 如果是 GET 请求，并且参数不为空，则编码请求的参数，放到 URL 后面
     if (!posted && !d->params.isEmpty()) {
         d->url += "?" + d->params.toString(QUrl::FullyEncoded);
+    }
+
+    if (d->debug) {
+        qDebug() << d->url;
     }
 
     QUrl urlx(d->url);
