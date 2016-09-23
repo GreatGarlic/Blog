@@ -1,7 +1,13 @@
 <article id="<%= post.layout %>-<%= post.slug %>" class="article article-type-<%= post.layout %>" itemscope itemprop="blogPost">
   <%if(post.noDate != "true"){%>
     <div class="article-meta">
-      <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
+        <% if (!index) { %>
+            <a href="javascript: void(0)" id="toc-button">目录</a>
+        <%}%>
+
+        <% if (index) { %>
+            <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
+        <%}%>
     </div>
   <%}%>
   <div class="article-inner">
@@ -65,6 +71,24 @@
 <% } %>
 
 <% if (!index && post.comments && config.duoshuo_shortname){ %>
+<section id="comments" class="duoshuo">
+    <!-- 多说评论框 start -->
+    <div class="ds-thread" data-thread-key="<%= post.layout %>-<%= post.slug %>" data-title="<%= post.title %>" data-url="<%= page.permalink %>"></div>
+    <!-- 多说评论框 end -->
+
+    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+    <script type="text/javascript">
+        var duoshuoQuery = {short_name:'<%= config.duoshuo_shortname %>'};
+        (function() {
+            var ds = document.createElement('script');
+            ds.type = 'text/javascript';ds.async = true;
+            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+            ds.charset = 'UTF-8';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
+        })();
+    </script>
+    <!-- 多说公共JS代码 end -->
+</section>
 
 <style>
     #mask {
@@ -96,42 +120,52 @@
     #mask .toc li a {
         color: rgb(43, 43, 43);
     }
+
+    #toc-button {
+        float: right;
+        margin-right: 28px;
+        color: #AAA;
+        text-decoration: none;
+    }
+    #toc-button:hover {
+        color: #999;
+    }
 </style>
-<section id="comments" class="duoshuo">
-    <!-- 多说评论框 start -->
-    <div class="ds-thread" data-thread-key="<%= post.layout %>-<%= post.slug %>" data-title="<%= post.title %>" data-url="<%= page.permalink %>"></div>
-    <!-- 多说评论框 end -->
 
-    <!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-    <script type="text/javascript">
-        var duoshuoQuery = {short_name:'<%= config.duoshuo_shortname %>'};
-        (function() {
-            var ds = document.createElement('script');
-            ds.type = 'text/javascript';ds.async = true;
-            ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-            ds.charset = 'UTF-8';
-            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(ds);
-        })();
+<!-- Toc -->
+<script type="text/javascript">
+$(document).ready(function() {
+    createMask();
 
-        $(document).ready(function() {
-            createMask();
-
-            $(document).keyup(function(e) {
-                if (e.keyCode == 49) {
-                    $('#mask').toggle();
-                }
-            });
-        });
-
-        function createMask() {
-            var $mask = $('<div id="mask"><div id="toc-container"></div></div>');
-            var $toc = $('#toc');
-            $mask.find('#toc-container').append($toc);
-            $toc.show();
-            $mask.hide();
-            $('body').prepend($mask);
+    $(document).keyup(function(e) {
+        if (e.keyCode == 49) {
+            $('#mask').toggle();
         }
-    </script>
-    <!-- 多说公共JS代码 end -->
-</section>
+    });
+
+    $(document).on('click', '#toc-button', function() {
+        $('#mask').toggle();
+    });
+
+    // 隐藏 Mask
+    $(document).on('click', '#mask', function() {
+        $('#mask').hide();
+    });
+
+    // 禁止 Toc 上的鼠标点击事件冒泡
+    $(document).on('click', '#toc-container', function(e) {
+        e.stopPropagation();
+        $('#mask').hide();
+    });
+});
+
+function createMask() {
+    var $mask = $('<div id="mask"><div id="toc-container"></div></div>');
+    var $toc = $('#toc');
+    $mask.find('#toc-container').append($toc);
+    $toc.show();
+    $mask.hide();
+    $('body').prepend($mask);
+}
+</script>
 <% } %>
