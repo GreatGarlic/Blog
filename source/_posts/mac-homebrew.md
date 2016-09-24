@@ -61,3 +61,13 @@ brew list
 ```
 man brew
 ```
+
+## 列出所有安装的软件里可以升级的
+```
+brew outdated
+```
+
+## 清理不需要的版本极其安装包缓存
+```
+brew cleanup
+```
