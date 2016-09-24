@@ -233,6 +233,29 @@ gretty {
     managedClassReload = true
 }
 ```
+> Tomcat 的 GET 请求的默认编码是 ISO8859-1，如果 GET 需要使用 UTF-8 的话，需要在 `server.xml` 中设置 `URIEncoding` 为 UTF-8:
+> 
+```
+<Connector port="8080" protocol="HTTP/1.1"
+         connectionTimeout="20000"
+         redirectPort="8443"
+         URIEncoding="UTF-8"/>
+```
+> 在 Gretty 中没有提供设置 `URIEncoding` 的选项，但是可以设置 `serverConfigFile` 引用 Tomcat 的 `server.xml` 来达到目的，例如:
+> 
+```
+gretty {
+    httpPort = 8080
+    contextPath = ''
+    servletContainer = 'tomcat7'
+    serverConfigFile = "server.xml"
+
+    inplaceMode = 'hard'
+    debugSuspend = false
+    managedClassReload      = true
+    recompileOnSourceChange = false
+}
+```
 
 ## Gretty 热部署优化
 
@@ -400,6 +423,8 @@ shadowJar {
     mergeServiceFiles('META-INF/spring.*')
 }
 ```
+
+
 
 ## 参考
 * [Gradle 替代 Maven](http://my.oschina.net/enyo/blog/369843)

@@ -232,3 +232,6 @@ public class HelloController {
 > appStop 指在终端输入 gradle appStop 结束 Tomcat，或者 按下 Ctrl + C 结束 Tomcat
 
 ![](/img/misc/Greety-Commands.png)
+
+## 7. Gretty 配置
+* [Gretty configuration](http://akhikhl.github.io/gretty-doc/Gretty-configuration.html)
