@@ -225,7 +225,33 @@ public class HelloController {
 ## 6. 使用 Debug 模式启动 Tomcat
 执行 `gradle debug`，使用 `suspend` 的模式监听 `5005` 端口
 
-## 7. Greety 的命令
+## 7. 设置 URIEncoding
+Tomcat 的 GET 请求的默认编码是 ISO8859-1，如果 GET 需要使用 UTF-8 的话，需要在 `server.xml` 中设置 `URIEncoding` 为 UTF-8:
+
+```
+<Connector port="8080" protocol="HTTP/1.1"
+         connectionTimeout="20000"
+         redirectPort="8443"
+         URIEncoding="UTF-8"/>
+```
+
+在 Gretty 中没有提供设置 `URIEncoding` 的选项，但是可以设置 `serverConfigFile` 引用 Tomcat 的 `server.xml` 来达到目的，例如:
+
+```
+gretty {
+    httpPort = 8080
+    contextPath = ''
+    servletContainer = 'tomcat7'
+    serverConfigFile = "server.xml"
+
+    inplaceMode = 'hard'
+    debugSuspend = false
+    managedClassReload      = true
+    recompileOnSourceChange = false
+}
+```
+
+## 8. Greety 的命令
 [Gretty tasks](http://webcache.googleusercontent.com/search?q=cache:oswRB8fKZCoJ:akhikhl.github.io/gretty-doc/Gretty-tasks+&cd=1&hl=de&ct=clnk&gl=us)，截图为部分:
 
 > keypress 为按下任意键就结束 Tomcat  
@@ -233,5 +259,5 @@ public class HelloController {
 
 ![](/img/misc/Greety-Commands.png)
 
-## 7. Gretty 配置
+## 9. Gretty 配置
 * [Gretty configuration](http://akhikhl.github.io/gretty-doc/Gretty-configuration.html)
