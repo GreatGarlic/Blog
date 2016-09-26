@@ -15,6 +15,13 @@ C++ 中比较不错的日志工具有 `log4cxx`，`log4qt` 等，但是它们都
 * LogHandler.h: 自定义日志相关类的头文件
 * LogHandler.cpp: 自定义日志相关类的实现文件
 
+## 定义 QT_MESSAGELOGCONTEXT
+`qDebug` 其实是一个宏: `#define qDebug QMessageLogger(QT_MESSAGELOG_FILE, QT_MESSAGELOG_LINE, QT_MESSAGELOG_FUNC).debug`，在 Debug 版本的时候会输出行号，文件名，函数名等，但是在 Release 版本的时候不会输出，为了输出它们，需要在 .pro 文件里加入下面的定义:
+
+```
+DEFINES += QT_MESSAGELOGCONTEXT
+```
+
 ## main.cpp
 ```cpp
 #include "LogHandler.h"
@@ -209,6 +216,10 @@ void LogHandlerPrivate::openAndBackupLogFile() {
         logFile = new QFile(logPath);
         logOut  = (logFile->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Append)) ?  new QTextStream(logFile) : NULL;
 
+        if (NULL != logOut) {
+            logOut->setCodec("UTF-8");
+        }
+
         // [[2]] 如果文件是第一次创建，则创建日期是无效的，把其设置为当前日期
         if (logFileCreatedDate.isNull()) {
             logFileCreatedDate = QDate::currentDate();
@@ -231,6 +242,10 @@ void LogHandlerPrivate::openAndBackupLogFile() {
         logFile = new QFile(logPath);
         logOut  = (logFile->open(QIODevice::WriteOnly | QIODevice::Text | QIODevice::Truncate)) ?  new QTextStream(logFile) : NULL;
         logFileCreatedDate = QDate::currentDate();
+
+        if (NULL != logOut) {
+            logOut->setCodec("UTF-8");
+        }
     }
 }
 
@@ -266,8 +281,8 @@ void LogHandlerPrivate::messageHandler(QtMsgType type, const QMessageLogContext 
     }
 
     // 输出到标准输出
-    QByteArray localMsg = msg.toUtf8();
-    fprintf(stderr, "%s\n", localMsg.constData());
+    QByteArray localMsg = msg.toLocal8Bit();
+    std::cout << std::string(localMsg) << std::endl;
 
     if (NULL == LogHandlerPrivate::logOut) {
         return;
@@ -275,7 +290,7 @@ void LogHandlerPrivate::messageHandler(QtMsgType type, const QMessageLogContext 
 
     // 输出到日志文件, 格式: 时间 - [Level] (文件名:行数, 函数): 消息
     QString fileName = context.file;
-    int index = fileName.lastIndexOf('/');
+    int index = fileName.lastIndexOf(QDir::separator());
     fileName = fileName.mid(index + 1);
 
     (*LogHandlerPrivate::logOut) << QString("%1 - [%2] (%3:%4, %5): %6\n")
