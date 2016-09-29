@@ -92,6 +92,5 @@ subprojects {
 > `settings.gradle`: include 包含子模块的名字
 
 ```
-rootProject.name = 'SpringIntegration'
 include 'Tutorial'
 ```

@@ -106,6 +106,7 @@ tags: Index
 * [Qt 创建圆角、无边框、有阴影、可拖动的窗口](/qt-frameless-window)
 * [Qt 访问网络的 HttpClient](/qt-httpclient)
 * [Lambda 在 Qt 中的运用](/qt-lambda)
+* [Qt 自定义日志工具](/qt-logger)
 
 ## Redis
 * [Redis 客户端 Redis-Commander](/redis-client)

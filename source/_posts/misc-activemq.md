@@ -20,7 +20,7 @@ ActiveMQ 的常用命令和功能。
     
     也可以使用 netstat: netstat -an | grep 61616 | wc -l
     ```
-4. 查看 ActiveMQ 的信息，如有多少个 queues, topics, connections 等:
+4. 网页中查看 ActiveMQ 的信息，如有多少个 queues, topics, connections 等:
     
     ```
     URL: http://localhost:8161/admin
@@ -67,12 +67,12 @@ ActiveMQ 的常用命令和功能。
     ```
 7. Broker status
 
-    > activemq-admin query --objname  
+    > activemq-admin query \--objname  
     > type=Broker,  
     > brokerName=localhost  
 8. Connection Stats
 
-    > activemq-admin query --objname  
+    > activemq-admin query \--objname  
     > type=Broker,   
     > brokerName=localhost,  
     > connector=clientConnectors,  
