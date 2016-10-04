@@ -10,6 +10,11 @@ ScribeJava Github 仓库：<https://github.com/scribejava/scribejava>
 
 <!--more-->
 
+## 注册 QQ 互联账号
+1. 在开发前，需要在 `QQ 互联` 注册一个开发者账号: <https://connect.qq.com>
+2. 然后点击 `应用管理`: <https://connect.qq.com/manage.html>
+3. 创建 `网站应用`，里面有开发需要的 `APP ID` 和 `APP Key`
+
 ## 修改 hosts
 例如我们在 QQ 互联中填写的回调 URL 为 <http://open.qtdebug.com:8080/oauth/qq/callback>，很显然 QQ 服务器是不能访问这个地址的，因为这是我们本地的地址，只有我们机器上能访问，为了在 QQ 登陆成功后 QQ 服务器能访问这个地址，需要在系统的 `hosts` 文件里添加 `127.0.0.1 open.qtdebug.com`。
 
@@ -29,7 +34,7 @@ compile 'com.alibaba:fastjson:1.2.17'
 ```
 
 ## QQApi
-由于 `ScribeJava` 没有提供 QQ 登陆需要的 API，可以使用 `ada.young` 实现的 `QQApi`，在 <http://git.oschina.net/cng1985/scribejava> 上下载，把 `QQApi.java` 和 `OsChinaOAuthServiceImpl.java` 放到我们的工程中即可。
+`ScribeJava` 已经集成了了几十个网站登陆的 Service，不幸的是没有提供 QQ 的，不过没关系，我们可以使用 `ada.young` 实现的 `QQApi`，在 <http://git.oschina.net/cng1985/scribejava> 上下载，把 `QQApi.java` 和 `OsChinaOAuthServiceImpl.java` 放到我们的工程中即可。
 
 ## QQ 登陆的代码
 先放上 QQ 登陆的代码 `QQOAuthController.java` 和 `QQOAuthService.java`，然后再对其进行讲解。

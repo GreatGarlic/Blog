@@ -21,9 +21,14 @@ public class EncryptPassword {
     @Test
     public void encrypt() {
         PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-        
-        // 每次生成的密码都不一样
-        System.out.println(passwordEncoder.encode("Passw0rd")); 
+
+        for (int i = 0; i < 5; ++i) {
+            // 每次生成的密码都不一样
+            String encryptedPassword = passwordEncoder.encode("Passw0rd");
+            System.out.println(encryptedPassword);
+            System.out.println(passwordEncoder.matches("Passw0rd", encryptedPassword)); // true
+            System.out.println(passwordEncoder.matches("Password", encryptedPassword)); // false
+        }
     }
 }
 ```
@@ -31,9 +36,21 @@ public class EncryptPassword {
 输出:
 
 ```
-$2a$10$gtaxGaHMfxMRj6rqK/kp0.5TPF13CBvnXhvD7teUmeftH1cX0Mb6S  
-$2a$10$9oM.yzb5rLaEetkIYIdtHefnKDKC4De6RunHMpnALg0lZs3tRrJmO  
-...
+$2a$10$l7vPVeqwb9GiVjURV5J2QO1CM5qxwk00/Ra5qEog0WgP7O5XV0Ble
+true
+false
+$2a$10$jeyMfHF88mNJb9v.mQ7YiuZ8oTU.pHaiKdT1NLOM38eXj7heHZHg2
+true
+false
+$2a$10$ux43/3JcHUC1hszyoJaH0eQhv7LkIVfL7p1cW80WxfxeTr2dUY6kO
+true
+false
+$2a$10$KdUmhaJOJ30klEcKiYT25.fIRPrMs4xONHOQh4JvmpKSjJ8d9.QKG
+true
+false
+$2a$10$gQKUOoFuevnCkoej3.AvAO9YzHKCKYmKuiSfEGHL22piY2FfNDQYu
+true
+false
 ```
 
 随意取其中任意一个都可以，因为每次生成都是不一样的，所以取第一个就可以了。
