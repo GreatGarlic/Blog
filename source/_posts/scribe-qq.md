@@ -36,6 +36,9 @@ compile 'com.alibaba:fastjson:1.2.17'
 ## QQApi
 `ScribeJava` 已经集成了了几十个网站登陆的 Service，不幸的是没有提供 QQ 的，不过没关系，我们可以使用 `ada.young` 实现的 `QQApi`，在 <http://git.oschina.net/cng1985/scribejava> 上下载，把 `QQApi.java` 和 `OsChinaOAuthServiceImpl.java` 放到我们的工程中即可。
 
+## OAuth 的流程
+![](/img/spring/oauth20-flow.png)
+
 ## QQ 登陆的代码
 先放上 QQ 登陆的代码 `QQOAuthController.java` 和 `QQOAuthService.java`，然后再对其进行讲解。
 

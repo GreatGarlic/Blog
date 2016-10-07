@@ -11,8 +11,8 @@ tags: Spring-Security
 ## spring-security.xml
 | Config | Description |
 | ------ | ----------- |
-| login-page | 登陆页面的 URL |
-| login-processing-url | 登陆表单提交的 URL |
+| login-page | GET: 登陆页面的 URL |
+| login-processing-url | POST: 登陆表单提交的 URL |
 | default-target-url | 直接访问 login 页面登陆成功后重定向的 URL |
 | authentication-failure-url | 登陆失败重定向的 URL |
 | error-page | 访问权限不够时的 URL |
