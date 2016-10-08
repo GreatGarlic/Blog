@@ -1,6 +1,6 @@
 ---
 title: Qt 绘制平滑曲线
-date: 2016-09-29 20:12:02
+date: 2016-09-29 14:26:21
 tags: Qt
 ---
 Qt 中可以使用 `QPainterPath::cubicTo()` 函数绘制如下的平滑曲线
