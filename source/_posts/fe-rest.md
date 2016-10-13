@@ -23,7 +23,7 @@ $.ajax({
 为了方便使用和减少错误的发生，我们可以把它简单的封装为一个 jQuery 的插件，使用更有语义的函数进行 RESTful 风格的访问，例如:
 
 ```js
-$.rest.get({url: '/rest', data: {name: 'Alice'}, done: function(result) {
+$.rest.get({url: '/rest', data: {name: 'Alice'}, success: function(result) {
     console.log(result);
 }});
 ```

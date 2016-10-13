@@ -247,3 +247,38 @@ ns.sort(function(a, b) { // 自定义比较函数，可以对复杂对象进行�
 
 console.log(ns); // 输出: [1, 2, 3, 4, 5]
 ```
+
+## 数组调用 map(method) 方法
+对数组里的每个元素调用 method() 方法，返回值组成一个新的数组，新数组的元素个数和原来数组的个数一样，原来的数组不受影响。
+
+```js
+var str = [1, 2, 3].map(formatNumber).join(':'); // 输出 01:02:03
+```
+
+## 格式化日期
+把日期格式化为 `yyyy-MM-dd hh:mm:ss` 的格式
+
+```js
+<script>
+    var str = formatDate(new Date());
+    console.log(str); // 输出 2016-10-11 11:13:59
+
+    function formatDate(date) {
+        var year   = date.getFullYear()
+        var month  = date.getMonth() + 1
+        var day    = date.getDate()
+
+        var hour   = date.getHours()
+        var minute = date.getMinutes()
+        var second = date.getSeconds()
+
+        return [year, month, day].map(formatNumber).join('-') + ' ' + [hour, minute, second].map(formatNumber).join(':')
+    }
+
+    function formatNumber(n) {
+        n = n.toString();
+        return n[1] ? n : '0' + n;
+    }
+</script>
+```
+
