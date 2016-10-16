@@ -14,6 +14,11 @@ redis-server
 redis-server redis.conf
 ```
 
+## 启动 Redis (非保护模式)
+```
+redis-server --protected-mode no
+```
+
 <!--more-->
 
 ## 启动 Redis (后台运行)
@@ -25,6 +30,11 @@ redis-server redis.conf
 ## 关闭 Redis
 ```
 redis-cli shutdown
+```
+
+## 测试链接 Redis
+```
+telnet redis-server-ip 6379
 ```
 
 ## 设置密码

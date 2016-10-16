@@ -20,16 +20,27 @@ gradle dep
 gradle dependencies
 ```
 
+## 依赖 Maven 仓库
+```
+compile 'groupId:artifactId:version'
+```
+
 ## 依赖其他子项目
 ```
 compile project(':dependency-project')
 ```
 
+## 依赖本地 jar 包
+```
+compile fileTree(dir: 'src/main/webapp/WEB-INF/lib', include: ['*.jar'])
+```
+> dir 可以是绝对路径，也可以是相对于工程目录的项目路径
+
 ## 打包工程
 
 ```
 gradle assemble // 编译，打包
-gradle build // 编译，执行测试，打包
+gradle build    // 编译，执行测试，打包
 ```
 
 ## 定制包名
