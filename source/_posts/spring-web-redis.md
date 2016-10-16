@@ -100,3 +100,53 @@ flushdb
 * 查看数据库链接的非活跃时间，查询到数据，并且活跃时间越来越长，说明缓存生效了
     * `MySQL` 执行 `show full processlist`  
     ![](/img/spring-web/mysql-connection-status.png)
+
+## 重构
+观察从 Redis 取数据，没有再从数据库取，然后放入 Redis 的代码，除了 `d = JSON.parseObject(json, Demo.class);` 这一句根据不同的业务不同外，其他的都是不变的，所以可以使用策略模式进行重构，引入了 2 个类: `Executor` 和 `RedisUtils`。
+
+```java
+public interface Executor<T> {
+    public T execute();
+}
+```
+
+```java
+public class RedisUtils {
+    public static <T> T get(Class<T> clazz, StringRedisTemplate redisTemplate, String redisKey, Executor<T> executor) {
+        T d = null;
+        String json = redisTemplate.opsForValue().get(redisKey);
+
+        if (json != null) {
+            // 如果解析发生异常，有可能是 Redis 里的数据无效，故把其从 Redis 删除
+            try {
+                d = JSON.parseObject(json, clazz);
+            } catch (Exception ex) {
+                redisTemplate.delete(redisKey);
+            }
+        }
+
+        if (d == null) {
+            d = (T)executor.execute();
+
+            if (d != null) {
+                redisTemplate.opsForValue().set(redisKey, JSON.toJSONString(d));
+            }
+        }
+
+        return d;
+    }
+}
+```
+
+```java
+@GetMapping("/demos/{id}")
+@ResponseBody
+public Demo findDemoById(@PathVariable int id) {
+    String redisKey = "demo_" + id;
+    Demo d = RedisUtils.get(Demo.class, redisTemplate, redisKey, () -> demoMapper.findDemoById(id));
+
+    return d;
+}
+```
+
+不同业务场景可以使用 Lambda 表达式实现 RedisUtils.get() 的最后一个参数 Executor。
