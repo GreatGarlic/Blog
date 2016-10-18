@@ -105,14 +105,11 @@ flushdb
 观察从 Redis 取数据，没有再从数据库取，然后放入 Redis 的代码，除了 `d = JSON.parseObject(json, Demo.class);` 这一句根据不同的业务不同外，其他的都是不变的，所以可以使用策略模式进行重构，引入了 2 个类: `Executor` 和 `RedisUtils`。
 
 ```java
-public interface Executor<T> {
-    public T execute();
-}
-```
+import com.alibaba.fastjson.JSON;
+import org.springframework.data.redis.core.StringRedisTemplate;
 
-```java
 public class RedisUtils {
-    public static <T> T get(Class<T> clazz, StringRedisTemplate redisTemplate, String redisKey, Executor<T> executor) {
+    public static <T> T get(Class<T> clazz, StringRedisTemplate redisTemplate, String redisKey, Supplier<T> supplier) {
         T d = null;
         String json = redisTemplate.opsForValue().get(redisKey);
 
@@ -126,7 +123,7 @@ public class RedisUtils {
         }
 
         if (d == null) {
-            d = (T)executor.execute();
+            d = supplier.get();
 
             if (d != null) {
                 redisTemplate.opsForValue().set(redisKey, JSON.toJSONString(d));
@@ -149,4 +146,4 @@ public Demo findDemoById(@PathVariable int id) {
 }
 ```
 
-不同业务场景可以使用 Lambda 表达式实现 RedisUtils.get() 的最后一个参数 Executor。
+不同业务场景可以使用 Lambda 表达式实现 RedisUtils.get() 的最后一个参数 Supplier，不需要再关心从 Redis 取数据和存储数据到 Redis 的代码了。
