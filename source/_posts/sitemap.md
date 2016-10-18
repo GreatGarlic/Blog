@@ -167,6 +167,7 @@ tags: Index
 * [使用 REST](/spring-web-rest)
 * [Web 项目框架](/spring-web-skelton)
 * [View Controller](/spring-web-view-controller)
+* [防止 XSS 攻击](/spring-web-xss)
 
 ## Util
 * [Git Tips](/git-tips)

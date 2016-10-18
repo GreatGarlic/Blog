@@ -18,3 +18,4 @@ tags: Index
 11. [乱码处理](/spring-web-messy-code)
 12. [Gradle 文件动态内容替换](/misc-gradle-resource)
 13. [Redis 集成](/spring-web-redis)
+14. [防止 XSS 攻击](/spring-web-xss)
