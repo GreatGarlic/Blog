@@ -5,5 +5,5 @@ tags: FE
 ---
 比较好用的静态文件 CDN 有:
 
-* BootCDN: 稳定、快速、免费的开源项目 CDN 服务，共收录了 2560 个开源项目
-* Staticfile CDN: 搜索比较方便
+* [BootCDN](http://www.bootcdn.cn): 稳定、快速、免费的开源项目 CDN 服务，共收录了 2560 个开源项目
+* [Staticfile CDN](http://www.staticfile.org): 搜索比较方便

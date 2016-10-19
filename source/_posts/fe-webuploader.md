@@ -3,7 +3,7 @@ title: Webuploader 拖拽上传文件
 date: 2016-10-17 22:26:14
 tags: FE
 ---
-[SpringMVC Ajax 拖拽上传文件](/spring-upload-file-ajax) 一文介绍了使用 `jQuery File Upload` 拖拽上传文件，也挺简单的，只不过使用的 js 文件比较多，这里介绍使用百度的 `Webuploader 拖拽上传文件` 来上传文件，只需要引入 2 个文件:
+[SpringMVC Ajax 拖拽上传文件](/spring-upload-file-ajax) 一文介绍了使用 `jQuery File Upload` 拖拽上传文件，也挺简单的，只不过使用的 js 文件比较多，这里介绍使用百度的 `Webuploader` 实现拖拽上传文件，只需要引入 2 个文件:
 
 * webuploader.css
 * webuploader.js
@@ -157,3 +157,9 @@ public class WebUploaderController {
     }
 }
 ```
+
+> 别忘了把 `commons-fileupload` 加入工程，还要在 Spring 的配置文件里创建 `multipartResolver`
+> 
+> ```
+> <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+> ```
