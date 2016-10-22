@@ -48,6 +48,8 @@ JS 中有很多模版库，例如 `artTempalte `、doT、juicer、laytpl、Musta
     <div id="zoo">
         <!-- [1]. 定义模版 -->
         <script id="templateId" type="text/html">
+            Boolean: {{valid}} - {{valid?'Valid':'Invalid'}}
+            
             <ul data-name="{{name}}" data-city="{{city}}">
                 <!--遍历基础类型数组-->
                 {{each animals as animal}}
@@ -67,22 +69,28 @@ JS 中有很多模版库，例如 `artTempalte `、doT、juicer、laytpl、Musta
     <script type="text/javascript">
         // [2]. 模版使用的数据
         var data = {
+            valid: false,
             name: 'Zoologischer Garten',
             city: 'Berlin',
             animals: ['大象', '老虎', '狮子', '猴子'], // 基础类型数组
-            staffs: [{ name: 'Alice', age: 20 }, { name: 'Bob', age: 22 }] // 对象数组
+            staffs: [{
+                    name: 'Alice',
+                    age: 20
+                }, {
+                    name: 'Bob',
+                    age: 22
+                }] // 对象数组
         };
 
         // [3]. 使用模版生成 HTML，默认对输出进行转义，不转义使用 {{#value}}
         var html = template('templateId', data);
-        
-        // [4]. 添加生成的 HTML 到 DOM
-        document.getElementById('zoo').innerHTML = html; 
+        document.getElementById('zoo').innerHTML = html; // [4]. 添加生成的 HTML 到 DOM
     </script>
 </body>
 
 </html>
 ```
+> 在模版里直接 `{{boolean}}` 变量不会输出任何东西，需要判断后再输出，例如 `{{valid?'Valid':'Invalid'}}`
 
 ## ArtTemplate Github
 更多的详细说明和使用案例请参考 <https://github.com/aui/artTemplate>
