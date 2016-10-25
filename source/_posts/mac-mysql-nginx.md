@@ -1,7 +1,7 @@
 ---
 title: Mac 安装 Mysql 和 Nginx
 date: 2016-07-26 22:48:02
-tags: [Mac, MySQL]
+tags: [Mac, DB]
 ---
 
 Mac 上安装 MySQL 和 Nginx 有很多种方法，例如安装 MAMP 就可以了，也可以单独下载安装包安装，也可以使用 brew 在终端里安装，下面介绍使用 brew 安装的方法。

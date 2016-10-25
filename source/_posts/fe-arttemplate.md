@@ -90,7 +90,17 @@ JS 中有很多模版库，例如 `artTempalte `、doT、juicer、laytpl、Musta
 
 </html>
 ```
-> 在模版里直接 `{{boolean}}` 变量不会输出任何东西，需要判断后再输出，例如 `{{valid?'Valid':'Invalid'}}`
+> 在模版里直接 boolean 变量不会输出任何东西
+> 
+```
+{{boolean}} 输出为空白
+```
+> 
+> 需要判断后再输出，例如 
+> 
+```
+{{valid?'Valid':'Invalid'}}
+```
 
 ## ArtTemplate Github
 更多的详细说明和使用案例请参考 <https://github.com/aui/artTemplate>

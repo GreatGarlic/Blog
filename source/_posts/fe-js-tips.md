@@ -282,3 +282,19 @@ var str = [1, 2, 3].map(formatNumber).join(':'); // 输出 01:02:03
 </script>
 ```
 
+## Radio Button 的选中与取消
+```js
+// [1] 选中的 Radio Button
+$('#xform input:radio:checked')
+
+// [2] 判断是否选中
+if ($('#xform input:radio').get(0).checked)
+if ($('#xform input:radio[name="name"]').is(':checked'))
+
+// [3] 取消选中
+$('#xform input:radio').removeAttr('checked')
+
+// [4] 选中
+$('#xform input:radio').attr("checked", 'checked')
+```
+> checkbox 也是一样的

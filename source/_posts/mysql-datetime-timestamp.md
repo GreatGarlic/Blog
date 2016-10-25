@@ -1,7 +1,7 @@
 ---
 title: MySQL 中 datetime 和 timestamp 的区别
 date: 2016-05-04 09:34:46
-tags: MySQL
+tags: DB
 ---
 
 最佳实践：每个表都应该有一列使用 `timestamp` 用于自动记录更新时间，这一列不需要在 Java 类中出现，如果需要记录创建时间，则使用 `datetime`。

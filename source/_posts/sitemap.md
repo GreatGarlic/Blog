@@ -9,6 +9,11 @@ tags: Index
 * [SpringMVC 处理 Ajax 映射](/spring-ajax)
 * [SpringMVC Ajax 拖拽上传文件](/spring-upload-file-ajax)
 
+## DB
+* [Mac 安装 Mysql 和 Nginx](/mac-mysql-nginx)
+* [MySQL 导入导出 CSV](/mysql-csv)
+* [MySQL 中 datetime 和 timestamp 的区别](/mysql-datetime-timestamp)
+
 ## Default
 * [Shuttle](/misc-shuttle)
 
@@ -16,12 +21,16 @@ tags: Index
 * [JS 模版 artTempalte](/fe-arttemplate)
 * [Bootstrap 模态对话框](/fe-bootstrap-modal-dialog)
 * [Bootstrap Progress Bar](/fe-bootstrap-progressbar)
+* [静态文件 CDN](/fe-cdn)
 * [自定义 HTML5 播放器](/fe-custom-html5-player)
+* [时间选择器 Laydate](/fe-date-picker)
+* [解析身份证](/fe-id-card)
 * [jQuery 404 时调用的方法](/fe-jquery-404)
 * [jQuery 中 fadeIn() 和 slideDown() 同时执行](/fe-jquery-slidedown-and-fadein)
 * [jQuery ui 拖拽](/fe-jquery-ui-drag-and-drop)
 * [jQuery 表单验证插件 validate](/fe-jquery-validate)
 * [JavaScript Tips](/fe-js-tips)
+* [Lean Modal](/fe-leanmodal)
 * [jQuery 的 REST 插件](/fe-rest)
 * [jQuery Slide Box](/fe-slide-box)
 * [JS 解析 SRT 格式的字幕](/fe-srt)
@@ -99,11 +108,6 @@ tags: Index
 * [Gradle 文件动态内容替换](/misc-gradle-resource)
 * [Gradle 创建 Web 项目 + Greety](/misc-gradle-web)
 * [Miscellaneous](/misc-index)
-
-## MySQL
-* [Mac 安装 Mysql 和 Nginx](/mac-mysql-nginx)
-* [MySQL 导入导出 CSV](/mysql-csv)
-* [MySQL 中 datetime 和 timestamp 的区别](/mysql-datetime-timestamp)
 
 ## PHP
 * [PHP Curl](/php-curl)
