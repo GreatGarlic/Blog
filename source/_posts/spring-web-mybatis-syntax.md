@@ -4,6 +4,23 @@ date: 2016-10-15 22:32:37
 tags: Spring-Web
 ---
 
+## 使用 MySQL 自动生成的主键
+```xml
+<insert id="insert" parameterType="Person" useGeneratedKeys="true" keyProperty="id">
+    INSERT INTO person(name, password) VALUES(#{name}, #{password})
+</insert>
+```
+
+## 使用 Oracle 序列生成的主键
+```xml
+<insert id="insertEnrollment" parameterType="EnrollmentForm">
+    <selectKey resultType="long" order="BEFORE" keyProperty="enrollId">
+        SELECT S_ENR_ID.Nextval from DUAL
+    </selectKey>
+    INSERT INTO enrollment (id, address) VALUES (#{enrollId}, #{address})
+</insert>
+```
+
 ## 使用 LIKE 语句
 ```
 MySql:
