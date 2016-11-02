@@ -36,7 +36,12 @@ LeanModal 是一个用于创建模式对话框的超级简单 jQuery插件。可
     ```js
     $('#modal-trigger').leanModal();
     ```
-5. 如果想要一个 Mask 层，定义 `<div id="lean_overlay"></div>` 并使用 `CSS` 给它添加样式(id 必须是 `lean_overlay`)
+5. 如果需要显示半透明的 Mask 层，给 `#lean_overlay` 定义 CSS 样式，这个 Mask 是自动生成的，摘自源码
+
+    ```js
+    var overlay=$("<div id='lean_overlay'></div>");
+    $("body").append(overlay);
+    ```
 
 6. 关闭有 Mask 层的 Lean Modal
 
@@ -68,6 +73,7 @@ LeanModal 是一个用于创建模式对话框的超级简单 jQuery插件。可
             overflow: scroll;
         }
 
+        /* lean_overlay 是自动生成的 */
         #lean_overlay {
             position: fixed;
             z-index: 100;
@@ -101,9 +107,6 @@ LeanModal 是一个用于创建模式对话框的超级简单 jQuery插件。可
         <p>You can define new user types in QStandardItem subclasses to ensure that custom items are treated specially; for example, when items are sorted.
         </p>
     </div>
-    
-    <!-- LeanModal 对话框的 Mask -->
-    <div id="lean_overlay"></div>
 
     <script>
         $(document).ready(function() {
