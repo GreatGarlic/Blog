@@ -97,19 +97,33 @@ flushdb
 
 ## 查看 Redis 缓存是否生效
 * 打印日志
-* 查看数据库链接的非活跃时间，查询到数据，并且活跃时间越来越长，说明缓存生效了
+* 查看数据库链接的非活跃时间，查询到数据，并且时间越来越长，说明缓存生效了
     * `MySQL` 执行 `show full processlist`  
     ![](/img/spring-web/mysql-connection-status.png)
 
 ## 重构
-观察从 Redis 取数据，没有再从数据库取，然后放入 Redis 的代码，除了 `d = JSON.parseObject(json, Demo.class);` 这一句根据不同的业务不同外，其他的都是不变的，所以可以使用策略模式进行重构，引入了 2 个类: `Executor` 和 `RedisUtils`。
+观察从 Redis 取数据，没有再从数据库取，然后放入 Redis 的代码，除了 `d = JSON.parseObject(json, Demo.class);` 这一句会根据不同的业务逻辑不同外，其他的代码都是不变的，所以可以使用策略模式进行重构。
 
 ```java
 import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.TypeReference;
 import org.springframework.data.redis.core.StringRedisTemplate;
 
+import java.util.function.Supplier;
+
 public class RedisUtils {
-    public static <T> T get(Class<T> clazz, StringRedisTemplate redisTemplate, String redisKey, Supplier<T> supplier) {
+    private StringRedisTemplate redisTemplate;
+
+    /**
+     * 缓存优先读取 JavaBean
+     *
+     * @param clazz 实体类型
+     * @param redisKey key
+     * @param supplier 缓存失败时的数据提供器， supplier == null 时 return null
+     * @param <T>   类型约束
+     * @return 实体对象
+     */
+    public <T> T get(Class<T> clazz, String redisKey, Supplier<T> supplier) {
         T d = null;
         String json = redisTemplate.opsForValue().get(redisKey);
 
@@ -122,7 +136,7 @@ public class RedisUtils {
             }
         }
 
-        if (d == null) {
+        if (d == null && supplier != null) {
             d = supplier.get();
 
             if (d != null) {
@@ -131,6 +145,48 @@ public class RedisUtils {
         }
 
         return d;
+    }
+
+    /**
+     * 缓存优先读取 Collections Or Map
+     *
+     * @param typeReference 使用泛型时 FastJson 需要用 TypeReference 来指定类型，例如类型为 List<Demo>
+     * @param redisKey key
+     * @param supplier 缓存失败时的数据提供器， supplier == null 时 return null
+     * @param <T>   类型约束
+     * @return 实体对象
+     */
+    public <T> T get(TypeReference<T> typeReference, String redisKey, Supplier<T> supplier) {
+        T d = null;
+        String json = redisTemplate.opsForValue().get(redisKey);
+
+        if (json != null) {
+            // 如果解析发生异常，有可能是 Redis 里的数据无效，故把其从 Redis 删除
+            try {
+                d = JSON.parseObject(json, typeReference);
+            } catch (Exception ex) {
+                redisTemplate.delete(redisKey);
+            }
+        }
+
+        if (d == null && supplier != null) {
+            d = supplier.get();
+
+            if (d != null) {
+                redisTemplate.opsForValue().set(redisKey, JSON.toJSONString(d));
+            }
+        }
+
+        return d;
+    }
+
+
+    public StringRedisTemplate getRedisTemplate() {
+        return redisTemplate;
+    }
+
+    public void setRedisTemplate(StringRedisTemplate redisTemplate) {
+        this.redisTemplate = redisTemplate;
     }
 }
 ```

@@ -1,5 +1,5 @@
 ---
-title: Webuploader 拖拽上传文件
+title: Webuploader 上传文件
 date: 2016-10-17 22:26:14
 tags: FE
 ---
@@ -67,9 +67,9 @@ tags: FE
     <script type="text/javascript">
         var uploader = WebUploader.create({
             auto: true,               // 自动上传
-            dnd: '#drop-area',        // 拖拽到 #drop-area 进行上传
+            dnd: '#drop-area',        // 拖拽到 #drop-area 进行上传，可选
             swf: '/lib/Uploader.swf', // swf 文件路径
-            server: '/webuploader',   // 文件接收服务端
+            server: '/webuploader',   // 文件接收服务端 URL
             pick: '#filePicker',      // 选择文件的按钮，内部根据当前运行时创建，可能是 input 元素，也可能是 flash.
             resize: false,            // 不压缩 image, 默认如果是 jpeg，文件上传前会压缩一把再上传！
             accept: { // 只允许上传图片
@@ -77,11 +77,11 @@ tags: FE
                 extensions: 'gif,jpg,jpeg,bmp,png',
                 mimeTypes: 'image/*'
             },
-            compress: { // 对上传的图片进行裁剪处理
+            compress: { // 对上传的图片进行裁剪处理，大于这个分辨率的图片会被压缩到此分辨率
                 width: 300,
                 height: 300,
                 allowMagnify: false,
-                crop: false
+                crop: false // 是否等比缩放，false 为等比缩放
             }
         });
 
@@ -138,7 +138,7 @@ tags: FE
 ```
 
 ## 服务器端
-没啥好说的，就一普通的 Spring 上传文件，就算前端选择了多个文件，后台也是一次接收到一个，逐个处理。
+没啥好说的，就一普通的 Spring 上传文件，就算前端选择了多个文件，默认时后台也是一次接收到一个，逐个处理。
 
 ```java
 @Controller
@@ -158,8 +158,20 @@ public class WebUploaderController {
 }
 ```
 
-> 别忘了把 `commons-fileupload` 加入工程，还要在 Spring 的配置文件里创建 `multipartResolver`
+> 别忘了把 `commons-fileupload` 加入工程，还要在 Spring 的配置文件里创建 `multipartResolver`，否则会报 file 为空指针，怎么都找不到原因
 > 
-> ```
-> <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
-> ```
+```
+<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+```
+
+## 只允许选择上传 jpg 格式的图片
+```js
+accept: { // 只允许上传图片
+    title: 'Images',
+    extensions: 'jpg,jpeg',
+    // mimeTypes: 'image/*'
+    mimeTypes: 'image/jpg,image/jpeg'
+}
+```
+
+> extensions 指定为 jpg,jpeg，但是如果 mimeTypes 为 image/*，仍然可以在文件选择框中选择其他类型的图片，例如 png，虽然最终是不会上传的，但是这样的行为比较怪异，设置 `mimeTypes: 'image/jpg,image/jpeg'` 后，在文件选择框里就只能选择 jpg, jpeg 的图片了
