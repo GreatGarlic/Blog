@@ -70,7 +70,7 @@ compile 'org.freemarker:freemarker:2.3.23'
 需要配置 `freemarkerVariables`
 
 ```xml
-<!-- Freemarker 文件放在目录 WEB-INF/view/ftl 下 -->
+<!-- Freemarker 文件放在目录 WEB-INF/view/fm 下 -->
 <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
     <property name="templateLoaderPath" value="/WEB-INF/view/fm/"/>
     <property name="freemarkerSettings">

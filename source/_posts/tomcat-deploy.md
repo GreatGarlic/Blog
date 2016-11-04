@@ -24,8 +24,8 @@ tags: Java
 3. 在 `<tomcat>/conf/Catalina/localhost` 下创建文件 `ROOT.xml`，内容为
 
     ```xml
-    <Context path ="/" docBase ="/Users/Biao/Desktop/data/web-mix"
-        debug ="0" privileged ="true" reloadable ="false">
+    <Context path="/" docBase="/Users/Biao/Desktop/data/web-mix"
+        debug="0" privileged="true" reloadable="false">
     </Context>
     ```
 

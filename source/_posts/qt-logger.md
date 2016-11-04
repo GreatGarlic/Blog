@@ -162,6 +162,7 @@ LogHandlerPrivate::LogHandlerPrivate() {
     // 日志文件创建的时间
     // QFileInfo::created(): On most Unix systems, this function returns the time of the last status change.
     // 所以不能运行时使用这个函数检查创建时间，因为会在运行时变化，所以在程序启动时保存下日志文件创建的时间
+    // 在 Windows 又遇到一 Bug，log.txt 的创建时间总是过去的某一天，就算新创建的也不会变，其实这里使用 lastModified() 代替 created() 也是可以的，因为这个时间在程序启动时记录的
     logFileCreatedDate = QFileInfo(logPath).created().date();
 
     // 打开日志文件，如果不是当天创建的，备份已有日志文件

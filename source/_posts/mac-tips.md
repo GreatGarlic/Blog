@@ -141,3 +141,11 @@ echo -n "Welcome" | md5
 # 一个或多个用 '\+' 而不是 '+'
 :%s/\t\+/,/g
 ```
+
+## 重新加载声卡驱动
+合上盖子后再打开有时候可能会没声，注销再登陆后就有声音了，或者用命令重新加载声卡驱动也可以解决
+
+```
+sudo kextunload /System/Library/Extensions/AppleHDA.kext
+sudo kextload /System/Library/Extensions/AppleHDA.kext
+```

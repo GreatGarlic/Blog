@@ -62,7 +62,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @Controller
 public class DemoController {
     // 1. 创建 logger 对象
-    private static Logger logger = LoggerFactory.getLogger(DemoController.class.getName());
+    private static Logger logger = LoggerFactory.getLogger(DemoController.class);
 
     @GetMapping("/logback")
     @ResponseBody

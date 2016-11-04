@@ -263,12 +263,11 @@ public class QQOAuthService {
 ## 思考
 拿到用户的 open id 和昵称等后怎么用呢？
 
-一般都会在用户登陆成功后回调 `QQOAuthController.qqLoginCallback()` 中得到 access token，然后取得用户的 open id，用它在我们的系统中查看此 open id 是否有对应的账号，如果有则提示登陆成功，如果没有，则进入账号绑定页面，询问是创建新账号还是绑定已有账号，其中又有可能需要获取用户的昵称，大致逻辑如下:
+一般都会在用户登陆成功后回调 `QQOAuthController.qqLoginCallback()` 中得到 access token，然后取得用户的 open id，用它在我们的系统中查看此 open id 是否有对应的账号，如果有则进行自动登录，如果没有，则进入账号绑定页面，询问是创建新账号还是绑定已有账号，其中又有可能需要获取用户的昵称，大致逻辑如下:
 
 ```java
 // QQ 成功登陆后的回调
 @GetMapping("/oauth/qq/callback")
-@ResponseBody
 public String qqLoginCallback(@RequestParam("code") String code, HttpServletResponse response) throws IOException {
     String accessToken = qqOAuthService.getAccessToken(code); // 5943BF2461ED97237B878BECE78A8744
 
@@ -285,15 +284,17 @@ public String qqLoginCallback(@RequestParam("code") String code, HttpServletResp
         // 1. Navigate to binding account page
         // 2. Create new account or binding with existing account
         return "redirect:/bindingAccountPage.html";
+    } else {
+        // 进行自动登录: 用 openId 查找本地的对应账号，用此账号进行自动登陆
     }
 
-    return "登陆成功.html";
+    return "登陆结果.html";
 }
 ```
 
 > 第三方账号和本地的用户账号一般也会使用一个中间表进行关联，例如  
 > 
-> id | use_id | third_account_id | type
+> id | use_id | third_party_account_id | type
 > -- | ------ | -------- | ----
 > 1  | 100000 | QQ_AS23DCF3 | QQ
 > 2  | 100001 | WX_BDAD1D3F | Weixin
