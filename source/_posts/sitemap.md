@@ -38,7 +38,7 @@ tags: Index
 * [JavaScript 里格式化字符串](/fe-string-format)
 * [Sublimetext 安装 jshint](/fe-sublimetext-jshint)
 * [HTML 树的实现](/fe-tree)
-* [Webuploader 拖拽上传文件](/fe-webuploader)
+* [Webuploader 上传文件](/fe-webuploader)
 * [Atom 常用插件和快捷键](/mac-atom)
 
 ## Gradle
@@ -69,6 +69,7 @@ tags: Index
 * [Future](/java-future)
 * [使用 Lombok 自动生成 Getter and Setter](/java-lombok)
 * [Java 发邮件](/java-mail)
+* [HttpServletResponse 返回图片](/java-response-image)
 * [Java 绘制平滑曲线](/java-smooth-curve)
 * [微 Web 服务的 REST 框架 Spark Framework](/java-spark-framework)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
@@ -116,6 +117,7 @@ tags: Index
 
 ## Qt
 * [Qt 访问网络](/qt-access-network)
+* [QSS 实现的扁平滚动条](/qt-flat-scrollbar)
 * [Qt 调整无边框窗口的大小](/qt-frameless-window-resizable)
 * [Qt 创建圆角、无边框、有阴影、可拖动的窗口](/qt-frameless-window)
 * [Qt 访问网络的 HttpClient](/qt-httpclient)
@@ -179,6 +181,7 @@ tags: Index
 * [Java Code Snippets](/java-code-snippets)
 * [Java 使用 FTP](/java-ftp)
 * [Java 发邮件](/java-mail)
+* [HttpServletResponse 返回图片](/java-response-image)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
 * [Redis Tips](/redis-tips)
 * [SpringMVC Ajax 拖拽上传文件](/spring-upload-file-ajax)
