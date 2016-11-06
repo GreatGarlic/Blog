@@ -27,7 +27,7 @@ Widget::Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Widget) {
         QString text = i%2==0? "东邪西毒\n南帝北丐":"中神通"; // 可以多行显示
         QStandardItem *item = new QStandardItem(QIcon(iconPath), text);
         item->setToolTip("天地不仁, 以万物为刍狗<br>圣人不仁, 以百姓为刍狗<br>"
-                         "<font color=\"red\">结刍为狗, 用之祭祀, 既毕事则弃而践之</font><br>"
+                         "<font color=\"darkred\">结刍为狗, 用之祭祀, 既毕事则弃而践之</font><br>"
                          "<img src=\"/Users/Biao/Desktop/Estas-Tonne.jpg\">");
         model->appendRow(item);
     }
