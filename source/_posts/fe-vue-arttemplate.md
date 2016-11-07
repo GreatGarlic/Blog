@@ -3,7 +3,7 @@ title: Vue-ArtTemplate-jQuery 一起使用
 date: 2016-11-07 20:11:05
 tags: FE
 ---
-Vue 和 ArtTemplate 绑定数据的格式都是 `{{ }}`，但是 Vue 有个缺点，例如使用类选择器选择 element 时，只有第一个匹配的 element 会生效，还有如树的节点是 Ajax 动态加载的话，用 Vue 也不能多级的显示节点，而这些恰恰 ArtTemplate 能做到，当然 ArtTemplate 不是 MVVM 模式的，所以 Vue 的优点也是 ArtTemplate 不能比的，所以把它们一起结合起来灵活使用看起来不错。
+Vue 和 ArtTemplate 绑定数据的格式都是 ```{{ }}```，但是 Vue 有个缺点，例如使用类选择器选择 element 时，只有第一个匹配的 element 会生效，还有如树的节点是 Ajax 动态加载的话，用 Vue 也不能多级的显示节点，而这些恰恰 ArtTemplate 能做到，当然 ArtTemplate 不是 MVVM 模式的，所以 Vue 的优点也是 ArtTemplate 不能比的，所以把它们一起结合起来灵活使用看起来不错。
 
 <!--more-->
 
