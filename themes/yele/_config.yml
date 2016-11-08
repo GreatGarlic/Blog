@@ -25,7 +25,7 @@ fancybox: true
 mathjax: true
 
 # 是否开启动画效果
-animate: true
+animate: false
 
 # 是否在新窗口打开链接
 open_in_new: false
@@ -59,4 +59,4 @@ friends:
 #不开启——
 #aboutme: false
 #开启——
-aboutme: 我是谁，我从哪里来，我到哪里去？我就是我，是颜色不一样的吃货…
+aboutme: 天地不仁，以万物为刍狗；圣人不仁，以百姓为刍狗。天地之间，其犹橐籥乎？虚而不淈，动而愈出。多言数穷，不若守于中。
