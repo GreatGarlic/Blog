@@ -11,8 +11,7 @@ Qt 里 `线程一的上下文中` 调用 `线程二的上下文中` 的函数的
 void MyThread::run()
 {
     ...
-    QMetaObject::invokeMethod(label, SLOT(setText(const QString &)),
-                              Q_ARG(QString, "Hello"));
+    QMetaObject::invokeMethod(label, SLOT(setText(const QString &)), Q_ARG(QString, "Hello"));
     ...
 }
 ```
