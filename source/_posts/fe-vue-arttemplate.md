@@ -5,6 +5,8 @@ tags: FE
 ---
 Vue 和 ArtTemplate 绑定数据的格式都是一样的 `{ { } }`，但是 Vue 有个缺点，例如使用类选择器选择 element 时，只有第一个匹配的 element 会生效，还有如树的节点是 Ajax 动态加载的话，用 Vue 也不能多级的显示节点，而这些恰恰 ArtTemplate 能做到，当然 ArtTemplate 不是 MVVM 模式的，所以 Vue 的优点也是 ArtTemplate 不能比的，所以把它们一起结合起来灵活使用看起来不错。
 
+不过，Vue 连 IE 8 都不兼容，移动端还好，PC 端的很多业务还是不能用 Vue 的，做做管理端的功能还行。
+
 <!--more-->
 
 ```html
