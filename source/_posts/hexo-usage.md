@@ -9,7 +9,7 @@ This is your very first post. Check [documentation](https://hexo.io/docs/) for m
 
 <!--more-->
 
-## Install Node and npm
+## Install Node
 Hexo 需要 Node
 
 * Mac 安装 Node，可以使用 Homebrew 安装: `brew install node`
@@ -18,7 +18,7 @@ Hexo 需要 Node
 > Node 就是 Node.js
 
 ## 使用 Node 的淘宝镜像
-由于网络的问题，访问 Node 的默认仓库有可能会有问题，很多东西都下载不下来，所以可以使用淘宝的 Node.js 的镜像，命令行里执行 
+由于网络的问题，访问 Node 的默认仓库有可能会有问题，很多东西都下载不下来，所以可以使用淘宝的 Node 的镜像，命令行里执行 
 
 ```
 npm install -g cnpm --registry=https://registry.npm.taobao.org
