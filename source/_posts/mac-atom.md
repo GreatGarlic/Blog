@@ -25,7 +25,7 @@ atom-beautify          | 格式化插件, 支持很多语言，HTML，JS，CSS �
 atom-icons             | 给文件加上图标
 jquery-snippets        | jQuery API 代码片段
 set-syntax             | 方便的使用 `Command Palette` (cmd + shift + p 打开) 修改当前文件的语法
-browser-plus           | 在 Atom 里实时的预览 HTML 的内容，`Command Palette` 搜索 `browser open`，或者使用快捷键 `ctrl + alt + o`
+atom-html-preview           | 在 Atom 里实时的预览 HTML 的内容，`Command Palette` 搜索 `preview`，或者使用快捷键 `ctrl + shift + h`
 regex-railroad-diagram | 正则表达式可视化: 鼠标放到正则表达式上面自动可视化，例如在 JS 文件里 `/\d+/g`
 atom-no-tab-close-button | 隐藏关闭按钮，避免误操作关闭 tab，使用 `cmd + w` 来关闭 tab
 docblockr                | 函数名前输入 `/**` 按下回车生成文档的模版
