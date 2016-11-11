@@ -51,22 +51,6 @@ qDebug() << result;
 
 <!--more-->
 
-## 创建 JsonReader 对象
-JsonReader 支持从文件中读取 Json，也支持字符串格式的 Json
-
-* 使用 Json 文件创建 JsonReader
-
-    ```cpp
-    JsonReader reader("x.json", true);
-    ```
-* 使用 Json 字符串创建 JsonReader
-
-    ```cpp
-    JsonReader reader2("{\"data\": {\"userId\": 12345}}");
-    ```
-
----
-
 ## x.json
 
 ```json
@@ -91,6 +75,20 @@ JsonReader 支持从文件中读取 Json，也支持字符串格式的 Json
     }]
 }
 ```
+
+## 创建 JsonReader 对象
+JsonReader 支持从文件中读取 Json，也支持字符串格式的 Json
+
+* 使用 Json 文件创建 JsonReader
+
+    ```cpp
+    JsonReader reader("x.json", true);
+    ```
+* 使用 Json 字符串创建 JsonReader
+
+    ```cpp
+    JsonReader reader2("{\"data\": {\"userId\": 12345}}");
+    ```
 
 ## main.cpp
 ```cpp
