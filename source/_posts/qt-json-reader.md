@@ -4,7 +4,7 @@ date: 2016-11-10 19:42:17
 tags: Qt
 ---
 
-读取下面 Json 文件 x.json 中的 roles 属性，使用工具类 JsonReader，代码如下
+读取下面 Json 文件 x.json 中 admin 属性下的 roles 属性，使用工具类 JsonReader，支持带 "." 的路径格式，代码如下
 
 ```cpp
 JsonReader reader("x.json", true);
