@@ -24,7 +24,7 @@ Qt 的信号槽在解耦方面做的非常好，sender 和 receiver 不需要互
     Singleton<NotificationCenter>::getInstance().notify(1, QString("Two").toUtf8()); // 同线程发送消息
     NOTIFY_CROSS_THREAD(2, QString("Two").toUtf8()); // 跨线程发送消息，也可同线程
     ```
-* 删除监听器，但不再需要的时候，需要从 NotificationCenter 删除监听器
+* 删除监听器，不再需要的时候，从 NotificationCenter 删除监听器，以免造成野指针异常
 
     ```cpp
     Singleton<NotificationCenter>::getInstance().removeObserver(&foo);
