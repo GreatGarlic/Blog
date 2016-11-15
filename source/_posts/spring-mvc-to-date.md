@@ -39,25 +39,6 @@ SpringMvc 的请求中的参数默认(字符串)是不能自动地转换为日�
 
     ```xml
     <mvc:annotation-driven conversion-service="customConversionService">
-        <mvc:message-converters register-defaults="true">
-            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
-                <constructor-arg value="UTF-8" />
-            </bean>
-            <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
-                <property name="objectMapper">
-                    <bean class="com.fasterxml.jackson.databind.ObjectMapper">
-                        <property name="dateFormat">
-                            <bean class="java.text.SimpleDateFormat">
-                                <constructor-arg type="java.lang.String" value="yyyy-MM-dd HH:mm:ss"/>
-                            </bean>
-                        </property>
-                    </bean>
-                </property>
-            </bean>
-        </mvc:message-converters>
-        <mvc:argument-resolvers>
-            <bean class="org.springframework.mobile.device.DeviceWebArgumentResolver"/>
-        </mvc:argument-resolvers>
     </mvc:annotation-driven>
 
     <bean id="customConversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
