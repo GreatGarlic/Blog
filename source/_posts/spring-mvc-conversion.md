@@ -1,7 +1,7 @@
 ---
 title: Spring 数据绑定之类型转换
 date: 2016-04-18 23:03:04
-tags: Spring
+tags: Spring-Mvc
 ---
 
 Spring 里常用的类型转换工具有

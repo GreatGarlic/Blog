@@ -1,7 +1,7 @@
 ---
 title: SpringMVC 获取 Request 和 Response
 date: 2016-10-07 12:09:35
-tags: Spring
+tags: Spring-Mvc
 ---
 
 SpringMVC 中在任意地方取得 `HttpServletRequest` 和 `HttpServletResponse`

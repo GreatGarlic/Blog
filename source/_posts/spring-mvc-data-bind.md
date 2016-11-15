@@ -1,7 +1,7 @@
 ---
 title: SpringMVC 数据绑定
 date: 2016-04-17 08:57:33
-tags: Spring
+tags: Spring-Mvc
 ---
 
 SpringMVC 中提供了多种数据绑定，可以把请求中的数据绑定为简单类型，简单数组，对象，对象的数组等。

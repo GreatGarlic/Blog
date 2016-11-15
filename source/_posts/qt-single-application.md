@@ -3,7 +3,19 @@ title: Single Application
 date: 2016-11-15 14:44:01
 tags: Qt
 ---
-如果限制一个程序同时只能启动一个实例，以前可以使用 `QtSingleApplication`，后来只有商业版能里能用，不过在 Github 上也有一个 LGPL 协议的实现，地址为 <https://github.com/qtproject/qt-solutions/tree/master/qtsingleapplication>。这里介绍的是另一个使用共享内存、简单、轻量化的实现，缺点是程序间不能通信，双击程序图标的时候不会激活已运行的实例显示到最前面。
+如果限制一个程序同时只能启动一个实例，有几个可以使用的库
+
+* QtSingleApplication
+
+    > 以前可以免费使用，后来只有商业版能里能用，在 Github 上也有一个 LGPL 协议的实现，地址为 <https://github.com/qtproject/qt-solutions/tree/master/qtsingleapplication>
+
+* SingleApplication
+
+    > This is a replacement of the QSingleApplication for Qt5，地址为 <https://github.com/itay-grudev/SingleApplication>
+
+* RunGuard
+
+    > 使用共享内存、简单、轻量化的实现，缺点是程序间不能通信，双击程序图标的时候不会激活已运行的实例显示到最前面，下面介绍 RunGuard 的使用
 
 <!--more-->
 
