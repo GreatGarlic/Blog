@@ -59,7 +59,7 @@ environments {
 > `environments` 的内容使用 `ConfigSlurper` 读取
 
 ## 3. build.gradle
-在 build.gradle 中定义替换的任务
+在 build.gradle 中定义替换的任务 `processResources`
 
 ```java
 import org.apache.tools.ant.filters.ReplaceTokens

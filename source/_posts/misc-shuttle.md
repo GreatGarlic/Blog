@@ -11,7 +11,7 @@ tags:
 <!--more-->
 
 ## 支持的终端程序
-* 默认情况下`，使用系统自带的终端 `Terminal.app`
+* 默认情况下，使用系统自带的终端 `Terminal.app`
 * 切换到 `iTerm2`，edit ~/.shuttle.json，并且改变 `terminal` 的属性
 
 ## 配置
@@ -41,10 +41,10 @@ tags:
 
     "hosts": [{
         "name": "Server 1",
-        "cmd": "echo '    登陆 XXX; ssh root@219.146.255.179"
+        "cmd": "echo '    登陆 XXX'; ssh root@219.146.255.179"
     }, {
         "name": "Server 2",
-        "cmd": "echo '    登陆 YYY; ssh root@219.146.255.179"
+        "cmd": "echo '    登陆 YYY'; ssh root@219.146.255.179"
     }]
 }
 ```
