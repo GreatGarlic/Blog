@@ -23,12 +23,18 @@ compile(
     "mysql:mysql-connector-java:5.1.21",         
     "org.mybatis:mybatis:3.2.1",            
     "org.mybatis:mybatis-spring:1.2.2", 
-    "org.apache.commons:commons-dbcp2:2.1.1" 
+    "com.alibaba:druid:1.0.26" 
 )
 ```
 
 ## datasource.xml
 保存在 `resources/config/datasource.xml`
+
+> 连接池使用 Druid，可以监控数据库访问的性能，参考文档
+> 
+> * <https://github.com/alibaba/druid/wiki/常见问题>
+> * <https://github.com/alibaba/druid/wiki/DruidDataSource配置> 
+> * <https://github.com/alibaba/druid/wiki/DruidDataSource配置属性列表>
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -38,41 +44,33 @@ compile(
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <!-- Data Source using DBCP. -->
-    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+    <!-- Data Source using Druid. -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8"/>
         <property name="username" value="root"/>
         <property name="password" value="root"/>
 
-        <!-- 连接池启动时的初始值 -->
-        <property name="initialSize" value="10"/>
-        <!-- 连接池的最大值 -->
-        <property name="maxTotal" value="100"/>
-        <!-- 最大空闲值.当经过一个高峰时间后，连接池可以慢慢将已经用不到的连接慢慢释放一部分，一直减少到maxIdle为止 -->
-        <property name="maxIdle" value="50"/>
-        <!-- 最小空闲值.当空闲的连接数少于阀值时，连接池就会预申请去一些连接，以免洪峰来时来不及申请 -->
-        <property name="minIdle" value="5"/>
+        <property name="maxActive" value="600"/>
+        <property name="initialSize" value="1"/>
+        <property name="maxWait" value="60000"/>
+        <property name="minIdle" value="1"/>
 
-        <property name="poolPreparedStatements"    value="true"/>
-        <property name="maxOpenPreparedStatements" value="10"/>
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
 
-        <!-- 给出一条简单的sql语句进行验证 -->
         <property name="validationQuery" value="select NOW()"/>
-        <!-- 在取出连接时进行有效验证, 实现如服务器重启后自动重连 -->
-        <property name="testOnBorrow"  value="false"/>
         <property name="testWhileIdle" value="true"/>
-        <property name="logAbandoned"  value="true"/>
-        <property name="removeAbandonedTimeout" value="120"/>
-        <!-- 运行判断连接超时任务的时间间隔，单位为毫秒，默认为-1，即不执行任务 -->
-        <property name="timeBetweenEvictionRunsMillis" value="3600000"/>
-        <!-- 连接的超时时间，默认为半小时 -->
-        <property name="minEvictableIdleTimeMillis" value="3600000"/>
+        <property name="testOnBorrow" value="false"/>
+        <property name="testOnReturn" value="false"/>
+
+        <property name="poolPreparedStatements" value="true"/>
+        <property name="maxOpenPreparedStatements" value="20"/>
     </bean>
 </beans>
 ```
 
-> 如果 testOnBorrow 为 false，服务器重启后链接都会无效，访问数据库就会报错，为了实现服务器重启后能够自动重连，需要把 testOnBorrow 设置为 true。
+> **testOnBorrow** 为 false，服务器重启后也会自动重连。  
+> **driverClassName** 可以不写，能够根据 url 自动识别 dbType
 
 ## mybatis.xml
 保存在 `resources/config/mybatis.xml `
@@ -324,3 +322,52 @@ public Demo findDemoById(@PathVariable int id) {
 
 > 一对一使用 `association`  
 > 一对多使用 `collection`
+
+## 使用 DBCP2 作为数据源
+```groovy
+compile 'org.apache.commons:commons-dbcp2:2.1.1'
+```
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+            http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Data Source using DBCP. -->
+    <bean id="dataSource" class="org.apache.commons.dbcp2.BasicDataSource" destroy-method="close">
+        <property name="driverClassName" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8"/>
+        <property name="username" value="root"/>
+        <property name="password" value="root"/>
+
+        <!-- 连接池启动时的初始值 -->
+        <property name="initialSize" value="10"/>
+        <!-- 连接池的最大值 -->
+        <property name="maxTotal" value="100"/>
+        <!-- 最大空闲值.当经过一个高峰时间后，连接池可以慢慢将已经用不到的连接慢慢释放一部分，一直减少到maxIdle为止 -->
+        <property name="maxIdle" value="50"/>
+        <!-- 最小空闲值.当空闲的连接数少于阀值时，连接池就会预申请去一些连接，以免洪峰来时来不及申请 -->
+        <property name="minIdle" value="5"/>
+
+        <property name="poolPreparedStatements"    value="true"/>
+        <property name="maxOpenPreparedStatements" value="10"/>
+
+        <!-- 给出一条简单的sql语句进行验证 -->
+        <property name="validationQuery" value="select NOW()"/>
+        <!-- 在取出连接时进行有效验证, 实现如服务器重启后自动重连 -->
+        <property name="testOnBorrow"  value="false"/>
+        <property name="testWhileIdle" value="true"/>
+        <property name="logAbandoned"  value="true"/>
+        <property name="removeAbandonedTimeout" value="120"/>
+        <!-- 运行判断连接超时任务的时间间隔，单位为毫秒，默认为-1，即不执行任务 -->
+        <property name="timeBetweenEvictionRunsMillis" value="3600000"/>
+        <!-- 连接的超时时间，默认为半小时 -->
+        <property name="minEvictableIdleTimeMillis" value="3600000"/>
+    </bean>
+</beans>
+```
+
+> 如果 testOnBorrow 为 false，服务器重启后链接都会无效，访问数据库就会报错，为了实现服务器重启后能够自动重连，需要把 testOnBorrow 设置为 true。
