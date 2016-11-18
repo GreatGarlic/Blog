@@ -89,7 +89,7 @@ public class User {
 }
 ```
 
-##3. 用反射解析出 Annotation 的元数据
+## 3. 用反射解析出 Annotation 的元数据
 
 ```java
     public static void main(String[] args) {

@@ -20,3 +20,4 @@ tags: [Misc, Index]
 
 ## 知识概要
 * [Annotation](/misc-annotation)
+* [JNDI 数据源](/misc-jndi-datasource)
