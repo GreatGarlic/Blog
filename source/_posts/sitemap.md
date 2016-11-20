@@ -58,6 +58,7 @@ tags: Index
 ## Hexo
 * [Hexo 多说评论](/hexo-duoshuo)
 * [Hexo 环境搭建](/hexo-usage)
+* [Markdown 入门](/mk-intro)
 
 ## Index
 * [Miscellaneous](/misc-index)
@@ -108,6 +109,7 @@ tags: Index
 
 ## Misc
 * [ActiveMQ](/misc-activemq)
+* [Annotation - 注解](/misc-annotation)
 * [常用命令](/misc-commands)
 * [Gradle 创建 App Module](/misc-gradle-app)
 * [Gradle build 脚本](/misc-gradle-build)
@@ -115,6 +117,8 @@ tags: Index
 * [Gradle 文件动态内容替换](/misc-gradle-resource)
 * [Gradle 创建 Web 项目 + Greety](/misc-gradle-web)
 * [Miscellaneous](/misc-index)
+* [JMS + ActiveMQ](/misc-jms-activemq)
+* [JNDI 数据源](/misc-jndi-datasource)
 
 ## PHP
 * [PHP Curl](/php-curl)
@@ -122,6 +126,7 @@ tags: Index
 
 ## Qt
 * [Qt 访问网络](/qt-access-network)
+* [Qt 应用程序的图标](/qt-app-icon)
 * [线程一调用线程二中函数的正确姿势](/qt-call-in-different-thread)
 * [QSS 实现的扁平滚动条](/qt-flat-scrollbar)
 * [Qt 调整无边框窗口的大小](/qt-frameless-window-resizable)
@@ -133,6 +138,7 @@ tags: Index
 * [自定义 QListView](/qt-listview)
 * [Qt 自定义日志工具](/qt-logger)
 * [观察者模式的 NotificationCenter](/qt-notification-center)
+* [qmake 时复制文件](/qt-qmake-copy-file)
 * [Single Application](/qt-single-application)
 * [Qt 绘制平滑曲线](/qt-smooth-curve)
 * [升级 Xcode8 后 Qt 出错](/qt-xcode8-error)
