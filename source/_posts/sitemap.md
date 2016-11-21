@@ -119,6 +119,7 @@ tags: Index
 * [Miscellaneous](/misc-index)
 * [JMS + ActiveMQ](/misc-jms-activemq)
 * [JNDI 数据源](/misc-jndi-datasource)
+* [Spring Event](/misc-spring-event)
 
 ## PHP
 * [PHP Curl](/php-curl)
@@ -158,6 +159,9 @@ tags: Index
 * [Java 访问 Redis](/redis)
 * [JUnit + Spring Test](/spring-test)
 * [Spring + Fastweixin 微信开发](/spring-weixin)
+
+## Spring-Core
+* [Spring Event](/misc-spring-event)
 
 ## Spring-Mvc
 * [SpringMVC 处理 Ajax 映射](/spring-mvc-ajax)

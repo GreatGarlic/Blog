@@ -22,3 +22,4 @@ tags: [Misc, Index]
 * [Annotation](/misc-annotation)
 * [JNDI 数据源](/misc-jndi-datasource)
 * [JMS + ActiveMQ](/misc-jms-activemq)
+* [Spring Event](/misc-spring-event)
