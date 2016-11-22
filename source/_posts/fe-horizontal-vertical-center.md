@@ -18,6 +18,7 @@ tags: FE
             position: relative; /* 很重要，也可以是 absolute */
             height: 150px;
             border: 2px solid pink;
+            margin: 50px auto;
         }
         .inner {
             position: absolute;
@@ -26,8 +27,8 @@ tags: FE
             right: 0;
             bottom: 0;
             width: 80%;
+            height: 25px; /* 很重要，需要有高度 */
             margin: auto; /* 很重要 */
-            display: table; /* 高度为内容的高度，这里即为按钮的高度 */
             text-align: center; /* 内容水平居中，这里即按钮水平居中 */
             border: 2px dashed gray;
         }
