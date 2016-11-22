@@ -16,7 +16,7 @@ tags: FE
     <style media="screen">
         .outter {
             position: relative; /* 很重要，也可以是 absolute */
-            height: 300px;
+            height: 150px;
             border: 2px solid pink;
         }
         .inner {
