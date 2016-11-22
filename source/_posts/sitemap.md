@@ -25,6 +25,7 @@ tags: Index
 * [静态文件 CDN](/fe-cdn)
 * [JS 关闭当前标签页](/fe-close-window)
 * [自定义 HTML5 播放器](/fe-custom-html5-player)
+* [Div 在另一个 Div 中同时水平垂直居中](/fe-horizontal-vertical-center)
 * [解析身份证](/fe-id-card)
 * [jQuery 404 时调用的方法](/fe-jquery-404)
 * [jQuery 中 fadeIn() 和 slideDown() 同时执行](/fe-jquery-slidedown-and-fadein)
@@ -47,6 +48,7 @@ tags: Index
 
 ## Gradle
 * [Gradle 编码](/gradle-encoding)
+* [Gradle 修改 Maven 仓库](/gradle-maven-repo)
 * [IDEA 删除 Gradle Module](/gradle-remove-module-from-idea)
 * [Gradle Tips](/gradle-tips)
 * [Gradle 创建 App Module](/misc-gradle-app)
@@ -120,6 +122,7 @@ tags: Index
 * [JMS + ActiveMQ](/misc-jms-activemq)
 * [JNDI 数据源](/misc-jndi-datasource)
 * [Spring Event](/misc-spring-event)
+* [Spring O/X Mapping](/misc-spring-oxm)
 
 ## PHP
 * [PHP Curl](/php-curl)
@@ -162,6 +165,7 @@ tags: Index
 
 ## Spring-Core
 * [Spring Event](/misc-spring-event)
+* [Spring O/X Mapping](/misc-spring-oxm)
 
 ## Spring-Mvc
 * [SpringMVC 处理 Ajax 映射](/spring-mvc-ajax)

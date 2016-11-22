@@ -23,3 +23,4 @@ tags: [Misc, Index]
 * [JNDI 数据源](/misc-jndi-datasource)
 * [JMS + ActiveMQ](/misc-jms-activemq)
 * [Spring Event](/misc-spring-event)
+* [Spring O/X Mapping](/misc-spring-oxm)
