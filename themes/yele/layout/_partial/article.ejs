@@ -2,7 +2,9 @@
   <%if(post.noDate != "true"){%>
     <div class="article-meta">
         <% if (!index) { %>
-            <a href="javascript: void(0)" id="toc-button">目录</a>
+            <span id="access-counter"></span>
+            <a href="javascript: void(0)" id="toc-button">列表</a>
+            <div style="display:none"><%- partial('post/date', {class_name: 'article-date', date_format: null}) %></div>
         <%}%>
 
         <% if (index) { %>
@@ -129,6 +131,11 @@
     }
     #toc-button:hover {
         color: #999;
+    }
+
+    #access-counter {
+        color: #999;
+        font-size: 12px;
     }
 </style>
 

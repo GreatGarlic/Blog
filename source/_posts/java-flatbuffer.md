@@ -208,8 +208,9 @@ root_type Person;
 这里只是介绍了 FlatBuffers 的入门程序，演示了怎么使用 FlatBuffers，更多的内容请参考:
 
 * [FlatBuffers 主页](https://google.github.io/flatbuffers/index.html)
-* [高效数据序列化的工具 FlatBuffers 的初体验]()
 * [FlatBuffers 使用简介](http://www.jianshu.com/p/6eb04a149cd8)
+* [高效数据序列化的工具 FlatBuffers 的初体验]()
+
 
 
 
