@@ -72,6 +72,7 @@ tags: Index
 * [How to change default Java version](/java-change-version)
 * [Java Code Snippets](/java-code-snippets)
 * [计算文件的 MD5](/java-file-md5)
+* [FlatBuffers 入门之 Java + Qt 版](/java-flatbuffer)
 * [Java 使用 FTP](/java-ftp)
 * [Future](/java-future)
 * [使用 Lombok 自动生成 Getter and Setter](/java-lombok)
@@ -129,6 +130,7 @@ tags: Index
 * [PHP 使用 PDO 访问数据库](/php-database-pdo)
 
 ## Qt
+* [FlatBuffers 入门之 Java + Qt 版](/java-flatbuffer)
 * [Qt 访问网络](/qt-access-network)
 * [Qt 应用程序的图标](/qt-app-icon)
 * [线程一调用线程二中函数的正确姿势](/qt-call-in-different-thread)

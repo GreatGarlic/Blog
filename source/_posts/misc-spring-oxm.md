@@ -191,3 +191,6 @@ public class TestOxm {
 ```
 {"id":12,"password":"Passw0rd","username":"Alice"}
 ```
+
+## 问题
+上面例子中 User 的属性都是简单属性，没有数组，List，Map，Set，复杂对象等，在网络上找到的资料基本都是用的简单属性，实际开发中肯定是不够用的，还需要进一步研究相关内容。
