@@ -73,25 +73,26 @@ $(document).ready(function() {
        addCount(Counter);
     }
 
-    var query = new AV.Query(Counter);
-    query.descending("time");
-    // the sum of popular posts
-    query.limit(10);
-    query.find({
-        success: function(results) {
-            for(var i=0; i<results.length; i++) {
-                var counter = results[i];
-                title = counter.get("title");
-                url   = counter.get("url");
-                time  = counter.get("time");
-                // add to the popularlist widget
-                showcontent = title+" ("+time+")";
-                $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
-            }
-        },
-        error: function(error){
-            alert("Error:"+error.code+" "+error.message);
-        }
-    });
+    // Top 10
+    // var query = new AV.Query(Counter);
+    // query.descending("time");
+    // // the sum of popular posts
+    // query.limit(10);
+    // query.find({
+    //     success: function(results) {
+    //         for(var i=0; i<results.length; i++) {
+    //             var counter = results[i];
+    //             title = counter.get("title");
+    //             url   = counter.get("url");
+    //             time  = counter.get("time");
+    //             // add to the popularlist widget
+    //             showcontent = title+" ("+time+")";
+    //             $('.popularlist').append('<li><a href="'+url+'">'+showcontent+'</a></li>');
+    //         }
+    //     },
+    //     error: function(error){
+    //         alert("Error:"+error.code+" "+error.message);
+    //     }
+    // });
 });
 </script>
