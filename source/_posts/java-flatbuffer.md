@@ -89,56 +89,59 @@ root_type Person;
                 └── Person.java
     ```
 
-1. 复制上面生成的 `com` 目录到项目中  
-2. 复制 FlatBuffers 源码中 `java` 目录下的 `com` 目录到项目中  
-3. 创建测试用的类 TestFlatBuffer
+2. 复制上面生成的 `com` 目录到项目中  
 
-    ```java
-    import com.google.flatbuffers.FlatBufferBuilder;
-    import com.xtuer.bean.Person;
-    import org.junit.Test;
-    
-    import java.io.FileInputStream;
-    import java.io.FileOutputStream;
-    import java.nio.ByteBuffer;
-    
-    public class TestFlatBuffer {
-        private static final String FILE_NAME = "/Users/Biao/Desktop/person.data";
-    
-        @Test
-        public void testWrite() throws Exception {
-            // [1] 创建 Person 对象
-            FlatBufferBuilder builder = new FlatBufferBuilder();
-            int orc = Person.createPerson(builder, builder.createString("道格拉斯·狗"), 30);
-            builder.finish(orc);
-    
-            // [2] 序列化 Person 对象为字节码
-            byte[] buffer = builder.sizedByteArray();
-    
-            // [3] 保存字节码到文件，也可以进行网络传输
-            FileOutputStream out = new FileOutputStream(FILE_NAME);
-            out.write(buffer);
-            out.close();
-        }
-    
-        @Test
-        public void testRead() throws Exception {
-            // [1] 从文件读取字节码，也可以是使用 Socket 传输得到的
-            byte[] buf = new byte[1024];
-            FileInputStream in = new FileInputStream(FILE_NAME);
-            in.read(buf);
-            in.close();
-    
-            // [2] 把字节码反序列化为 Person 对象
-            ByteBuffer buffer = ByteBuffer.wrap(buf);
-            Person person = Person.getRootAsPerson(buffer);
-            System.out.println("Name: " + person.name() + ", Age: " + person.age());
-        }
-    }
-    ```
+3. 复制 FlatBuffers 源码中 `java` 目录下的 `com` 目录到项目中  
 
-6. 执行 `testWrite()`，序列化 Person 对象生成 `/Users/Biao/Desktop/person.data`
-7. 执行 `testRead()`，反序列化得到 Person 对象，输出: 
+4. 创建测试用的类 TestFlatBuffer
+
+   ```java
+   import com.google.flatbuffers.FlatBufferBuilder;
+   import com.xtuer.bean.Person;
+   import org.junit.Test;
+
+   import java.io.FileInputStream;
+   import java.io.FileOutputStream;
+   import java.nio.ByteBuffer;
+
+   public class TestFlatBuffer {
+       private static final String FILE_NAME = "/Users/Biao/Desktop/person.data";
+
+       @Test
+       public void testWrite() throws Exception {
+           // [1] 创建 Person 对象
+           FlatBufferBuilder builder = new FlatBufferBuilder();
+           int root = Person.createPerson(builder, builder.createString("道格拉斯·狗"), 30);
+           builder.finish(root);
+
+           // [2] 序列化 Person 对象为字节码
+           byte[] buffer = builder.sizedByteArray();
+
+           // [3] 保存字节码到文件，也可以进行网络传输
+           FileOutputStream out = new FileOutputStream(FILE_NAME);
+           out.write(buffer);
+           out.close();
+       }
+
+       @Test
+       public void testRead() throws Exception {
+           // [1] 从文件读取字节码，也可以是使用 Socket 传输得到的
+           byte[] buf = new byte[1024];
+           FileInputStream in = new FileInputStream(FILE_NAME);
+           in.read(buf);
+           in.close();
+
+           // [2] 把字节码反序列化为 Person 对象
+           ByteBuffer buffer = ByteBuffer.wrap(buf);
+           Person person = Person.getRootAsPerson(buffer);
+           System.out.println("Name: " + person.name() + ", Age: " + person.age());
+       }
+   }
+   ```
+
+5. 执行 `testWrite()`，序列化 Person 对象生成 `/Users/Biao/Desktop/person.data`
+
+6. 执行 `testRead()`，反序列化得到 Person 对象，输出: 
 
     ```
     Name: 道格拉斯·狗, Age: 30
@@ -160,36 +163,79 @@ root_type Person;
     ```
     Person_generated.h
     ```
+
 2. 复制上面生成的 `Person_generated.h` 到项目中
+
 3. 复制 FlatBuffers 源码中 `include` 目录 下的 `flatbuffers/flatbuffers.h` 目录到项目中
+
 4. 创建 main.cpp
 
-    ```cpp
-    #include "flatbuffers/flatbuffers.h"
-    #include "Person_generated.h"
-    
-    #include <QString>
-    #include <QDebug>
-    #include <QFile>
-    
-    int main(int argc, char *argv[]) {
-        Q_UNUSED(argc)
-        Q_UNUSED(argv)
-    
-        QFile file("/Users/Biao/Desktop/person.data");
-        if (!file.open(QIODevice::ReadOnly)) { return -10086; }
-        QByteArray buffer = file.readAll();
-    
-        const com::xtuer::bean::Person *p = com::xtuer::bean::GetPerson(buffer.constData());
-        qDebug() << QString("Name: %1, Age: %2").arg(QString(p->name()->c_str())).arg(p->age());
-    
-        qDebug() << QString::fromUtf8(p->name()->c_str());      // OK: 证明 FlatBuffer 使用的是 UTF-8 存储字符串
-        qDebug() << QString::fromLocal8Bit(p->name()->c_str()); // OK: Mac 默认就是使用 UTF-8
-        qDebug() << QString::fromLatin1(p->name()->c_str());    // Error: 因为不是使用 Latin1 存储字符串
-    
-        return 0;
-    }
-    ```
+   ```cpp
+   #include "flatbuffers/flatbuffers.h"
+   #include "Person_generated.h"
+
+   #include <QString>
+   #include <QDebug>
+   #include <QFile>
+
+   void testRead();
+   void testWrite();
+   void writeToFile(const char *data, int size);
+   QByteArray readFromFile();
+
+   int main(int argc, char *argv[]) {
+       Q_UNUSED(argc)
+       Q_UNUSED(argv)
+
+       testRead();
+
+       return 0;
+   }
+
+   void testWrite() {
+       flatbuffers::FlatBufferBuilder builder;
+
+       // [1] 创建 Person 对象
+       QByteArray nameBA = QString("道格拉斯·狗").toUtf8();
+       auto name = builder.CreateString(nameBA.constData()); // 不能直接用 QString("道格拉斯·狗").toUtf8().constData()
+       auto root = com::xtuer::bean::CreatePerson(builder, name, 30);
+       com::xtuer::bean::FinishPersonBuffer(builder, root);
+
+       // [2] 序列化 Person 对象为字节码
+       const char *buffer = reinterpret_cast<const char *>(builder.GetBufferPointer());
+
+       // [3] 保存字节码到文件，也可以进行网络传输
+       writeToFile(buffer, builder.GetSize());
+   }
+
+   void testRead() {
+       // [1] 从文件读取字节码，也可以是使用 Socket 传输得到的
+       QByteArray data = readFromFile();
+
+       // [2] 把字节码反序列化为 Person 对象
+       const com::xtuer::bean::Person *p = com::xtuer::bean::GetPerson(data.constData());
+
+       qDebug() << QString("Name: %1, Age: %2").arg(QString(p->name()->c_str())).arg(p->age()); // OK: 默认使用 UTF-8 创建 QString
+       qDebug() << QString::fromUtf8(p->name()->c_str());      // OK: 证明 FlatBuffer 使用的是 UTF-8 存储字符串
+       qDebug() << QString::fromLocal8Bit(p->name()->c_str()); // OK: Mac 默认就是使用 UTF-8
+       qDebug() << QString::fromLatin1(p->name()->c_str());    // Error: 因为不是使用 Latin1 存储字符串
+   }
+
+   void writeToFile(const char *data, int size) {
+       QFile file("/Users/Biao/Desktop/person.data");
+       if (!file.open(QIODevice::WriteOnly)) { return; }
+
+       file.write(data, size);
+   }
+
+   QByteArray readFromFile() {
+       QFile file("/Users/Biao/Desktop/person.data");
+       if (!file.open(QIODevice::ReadOnly)) { return QByteArray(); }
+
+       return file.readAll();
+   }
+   ```
+
 5. 运行程序，输出(中文也没问题，太棒了)
 
     ```
@@ -199,10 +245,12 @@ root_type Person;
     "é\u0081\u0093æ ¼æ\u008B\u0089æ\u0096¯Â·ç\u008B\u0097"
     ```
 
+6. 执行 Qt 的 `testWrite()`，然后执行 Java 的 `testRead()`，都能正常的序列化和反序列化
 ## 思考
+
 上面的例子展示了 Java 使用 FlatBuffers 序列化对象存储到文件，然后 Qt 在从文件反序列化得到数据，或许有人要问，我还是不知道 TcpSocket 中怎么使用 FlatBuffers 传输数据啊？
 
-其实不管像上面使用文件交互数据还是使用 TcpSocket 传输交互数据，他们交互的都是 FlatBuffers 生成的二进制数据，所以 TcpSocket 的话直接传输 FlatBuffers 生成的二进制数据就可以了，当接收到数据后用 FlatBuffers 反序列化，文件或者 TcpSocket 只是交互的方式，交互的内容都是数据，当然 TcpSocket 通讯中帧的格式，粘包等问题就不属于 FlatBuffers 的范畴了。
+其实不管像上面使用文件交互数据还是使用 TcpSocket 传输交互数据，他们交互的都是 FlatBuffers 生成的二进制数据，所以 TcpSocket 的话直接传输 FlatBuffers 生成的二进制数据就可以了(一般存储的都是消息本身，即 payload)，当接收到数据后用 FlatBuffers 反序列化，文件或者 TcpSocket 只是交互的方式，交互的内容都是数据，当然 TcpSocket 通讯中帧的格式，粘包等问题就不属于 FlatBuffers 的范畴了。
 
 ## 参考资料
 这里只是介绍了 FlatBuffers 的入门程序，演示了怎么使用 FlatBuffers，更多的内容请参考:

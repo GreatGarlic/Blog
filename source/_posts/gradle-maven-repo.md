@@ -22,7 +22,7 @@ allprojects {
 ```xml
 allprojects {
     repositories {
-        def REPOSITORY_URL = 'http://maven.oschina.net/content/groups/public'
+        def REPOSITORY_URL = 'http://maven.aliyun.com/nexus/content/groups/public/'
         all { ArtifactRepository repo ->
             if(repo instanceof MavenArtifactRepository) {
                 def url = repo.url.toString()
