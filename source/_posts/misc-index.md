@@ -25,3 +25,5 @@ tags: [Misc, Index]
 * [Spring Event](/misc-spring-event)
 * [Spring O/X Mapping](/misc-spring-oxm)
 * [Ehcache](/misc-ehcache)
+* [Spring 集成 Groovy](/misc-spring-groovy)
+

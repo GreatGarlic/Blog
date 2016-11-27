@@ -124,6 +124,7 @@ tags: Index
 * [JMS + ActiveMQ](/misc-jms-activemq)
 * [JNDI 数据源](/misc-jndi-datasource)
 * [Spring Event](/misc-spring-event)
+* [Spring 集成 Groovy](/misc-spring-groovy)
 * [Spring O/X Mapping](/misc-spring-oxm)
 
 ## PHP
@@ -214,6 +215,7 @@ tags: Index
 * [Java 发邮件](/java-mail)
 * [HttpServletResponse 返回图片](/java-response-image)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
+* [Spring 集成 Groovy](/misc-spring-groovy)
 * [Redis Tips](/redis-tips)
 * [SpringMVC Ajax 拖拽上传文件](/spring-mvc-upload-file-ajax)
 * [Spring 上传文件](/spring-mvc-upload-file)
