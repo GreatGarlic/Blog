@@ -246,8 +246,9 @@ root_type Person;
     ```
 
 6. 执行 Qt 的 `testWrite()`，然后执行 Java 的 `testRead()`，都能正常的序列化和反序列化
-## 思考
 
+
+## 思考
 上面的例子展示了 Java 使用 FlatBuffers 序列化对象存储到文件，然后 Qt 在从文件反序列化得到数据，或许有人要问，我还是不知道 TcpSocket 中怎么使用 FlatBuffers 传输数据啊？
 
 其实不管像上面使用文件交互数据还是使用 TcpSocket 传输交互数据，他们交互的都是 FlatBuffers 生成的二进制数据，所以 TcpSocket 的话直接传输 FlatBuffers 生成的二进制数据就可以了(一般存储的都是消息本身，即 payload)，当接收到数据后用 FlatBuffers 反序列化，文件或者 TcpSocket 只是交互的方式，交互的内容都是数据，当然 TcpSocket 通讯中帧的格式，粘包等问题就不属于 FlatBuffers 的范畴了。
