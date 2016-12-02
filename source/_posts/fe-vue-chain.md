@@ -1,12 +1,12 @@
 ---
-title: Vue 的省市多级连动效果
+title: Vue 的省市多级联动效果
 date: 2016-12-01 11:06:30
 tags: FE
 ---
 使用 Vue 实现多级连动效果，需要了解 
 
-* `v-model`, 
-* 属性绑定 `:value`, 
+* `v-model`
+* 属性绑定 `:value`
 * change 事件处理 `@change`
 * Ajax 请求 `$.getJSON()`
 
@@ -94,7 +94,7 @@ tags: FE
                         this.countres = [];
                         this.villages = [];
 
-                        // 请求市
+                        // 请求县
                         $.getJSON('http://localhost:8080/areas-of/' + cityId, function(countres) {
                             app.countres = countres;
                         });
@@ -102,7 +102,7 @@ tags: FE
                     countryChanged: function(countryId) {
                         this.villages = [];
 
-                        // 请求市
+                        // 请求乡
                         $.getJSON('http://localhost:8080/areas-of/' + countryId, function(villages) {
                             app.villages = villages;
                         });
@@ -171,7 +171,7 @@ tags: FE
 
 
 
-## 数据库结构
+## 数据库表结构
 
 | id   | name | parent_id | level |
 | ---- | ---- | --------- | ----- |
@@ -187,6 +187,24 @@ tags: FE
 ## 服务器端代码
 
 服务器端使用 SpringMvc + MyBatis 实现
+
+### Area
+
+```java
+package com.xtuer.bean;
+
+import lombok.Getter;
+import lombok.Setter;
+
+@Getter
+@Setter
+public class Area {
+    private int id;
+    private String name;
+    private int level;
+    private int parentId;
+}
+```
 
 ### AreaController
 
