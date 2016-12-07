@@ -1,5 +1,5 @@
 ---
-title: QQ 登陆的 ScribeJava 实现
+title: QQ 登陆的 Scribe-Java 实现
 date: 2016-10-04 15:23:07
 tags: Java
 ---
@@ -10,13 +10,15 @@ ScribeJava Github 仓库：<https://github.com/scribejava/scribejava>
 
 <!--more-->
 
+下面就介绍使用 Scribe-Java 实现使用 QQ 的第三方登录。
+
 ## 注册 QQ 互联账号
 1. 在开发前，需要在 `QQ 互联` 注册一个开发者账号: <https://connect.qq.com>
 2. 然后点击 `应用管理`: <https://connect.qq.com/manage.html>
 3. 创建 `网站应用`，里面有开发需要的 `APP ID` 和 `APP Key`
 
 ## 修改 hosts
-例如我们在 QQ 互联中填写的回调 URL 为 <http://open.qtdebug.com:8080/oauth/qq/callback>，很显然 QQ 服务器是不能访问这个地址的，因为这是我们本地的地址，只有我们机器上能访问，为了在 QQ 登陆成功后 QQ 服务器能访问这个地址，需要在系统的 `hosts` 文件里添加 `127.0.0.1 open.qtdebug.com`。
+例如我们在 QQ 互联中填写的回调 URL 为 <http://open.qtdebug.com:8080/oauth/qq/callback>，很显然 QQ 服务器是不能访问这个地址的，因为这个地址不存在，为了在 QQ 登陆成功后 QQ 服务器能访问这个地址，需要在系统的 `hosts` 文件里添加 `127.0.0.1 open.qtdebug.com`。
 
 还有另一种方式是使用如 `Ngrok` 把本地映射为外网可访问。
 
@@ -42,7 +44,7 @@ compile 'com.alibaba:fastjson:1.2.17'
 ## QQ 登陆的代码
 先放上 QQ 登陆的代码 `QQOAuthController.java` 和 `QQOAuthService.java`，然后再对其进行讲解。
 
-`QQOAuthController.java`
+### QQOAuthController.java
 
 ```java
 package com.xtuer.controller;
@@ -101,7 +103,7 @@ public class QQOAuthController {
 }
 ```
 
-`QQOAuthService.java`
+### QQOAuthService.java
 
 ```java
 package com.xtuer.service;
@@ -220,24 +222,24 @@ public class QQOAuthService {
 ```
 
 ## 代码讲解
-* 创建 OAuth20Service 对象，用于访问 QQ 服务
+*   创建 OAuth20Service 对象，用于访问 QQ 服务
 
     ```java
-    oauthService = new ServiceBuilder().apiKey(apiKey).apiSecret(apiSecret)
-                .scope(scope).callback(callbackUrl).build(QQApi.instance());
+      oauthService = new ServiceBuilder().apiKey(apiKey).apiSecret(apiSecret)
+                  .scope(scope).callback(callbackUrl).build(QQApi.instance());
     ```
-* 登陆访问 <http://open.qtdebug.com:8080/oauth/qq>，自动重定向到 QQ 登陆页面，登陆 URL 调用 `oauthService.getAuthorizationUrl()` 获得。
-* QQ 登陆成功后，回调到 `QQOAuthController.qqLoginCallback()`，调用 `qqOAuthService.getAccessToken(code)` 取得 `access token`，有效期为 3 个月。为了方便以后使用这个 access token，所以把它存储到 cookie。
-* ScribeJava 只提供了登陆和获取 accessToken 的功能，例如想要获取用户的 open id 等其他信息就必须我们自己实现了，所以上面的代码封装了 `QQOAuthService.request()`，用于访问 OAuth Server，具体使用请参考 `QQOAuthService.getOpenId()` 和 `QQOAuthService. getUserInfo()`:
+*   登陆访问 <http://open.qtdebug.com:8080/oauth/qq>，自动重定向到 QQ 登陆页面，登陆 URL 调用 `oauthService.getAuthorizationUrl()` 获得。
+*   QQ 登陆成功后，回调到 `QQOAuthController.qqLoginCallback()`，调用 `qqOAuthService.getAccessToken(code)` 取得 `access token`，有效期为 3 个月。为了方便以后使用这个 access token，所以把它存储到 cookie。
+*   ScribeJava 只提供了登陆和获取 accessToken 的功能，例如想要获取用户的 open id 等其他信息就必须我们自己实现了，所以上面的代码封装了 `QQOAuthService.request()`，用于访问 OAuth Server，具体使用请参考 `QQOAuthService.getOpenId()` 和 `QQOAuthService. getUserInfo()`:
     * `QQOAuthService.getOpenId()` 返回的数据格式为
 
-        ```json
+      ```json
         callback( {"client_id":"101292272","openid":"4584E3AAABFC5F052971C278790E9FCF"} );
-        ```
+      ```
 
     * `QQOAuthService. getUserInfo()` 返回的数据格式为
 
-        ```json
+      ```json
         {
             "ret": 0,
             "msg": "",
@@ -258,7 +260,7 @@ public class QQOAuthService {
             "level": "0",
             "is_yellow_year_vip": "0"
         }
-        ```
+      ```
 
 ## 思考
 拿到用户的 open id 和昵称等后怎么用呢？
@@ -293,9 +295,9 @@ public String qqLoginCallback(@RequestParam("code") String code, HttpServletResp
 ```
 
 > 第三方账号和本地的用户账号一般也会使用一个中间表进行关联，例如  
-> 
-> id | use_id | third_party_account_id | type
-> -- | ------ | -------- | ----
-> 1  | 100000 | QQ_AS23DCF3 | QQ
-> 2  | 100001 | WX_BDAD1D3F | Weixin
+>
+> | id   | use_id | third_party_account_id | type   |
+> | ---- | ------ | ---------------------- | ------ |
+> | 1    | 100000 | QQ_AS23DCF3            | QQ     |
+> | 2    | 100001 | WX_BDAD1D3F            | Weixin |
 

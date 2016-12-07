@@ -34,7 +34,7 @@
       <% } else { %>
         <% if (!index && config.toc){ %>
         <div id="toc" class="article-toc" style="display: none;">
-          <%- toc(post.content) %>
+          <%- toc(post.content, {list_number: false}) %>
           <!-- <hr/> -->
         </div>
         <% } %>
