@@ -81,7 +81,7 @@ public Demo findDemoById(@PathVariable int id) {
     if (d == null) {
         d = demoMapper.findDemoById(id);
 
-        if (d != null) {
+        if (d != null) { // 这里需要考虑，null 对象如果不放缓存，如果这个对象被大量访问，会导致缓存穿透，增加数据库的压力
             redisTemplate.opsForValue().set(redisKey, JSON.toJSONString(d));
         }
     }
@@ -99,7 +99,7 @@ flushdb
 * 打印日志
 * 查看数据库链接的非活跃时间，查询到数据，并且时间越来越长，说明缓存生效了
     * `MySQL` 执行 `show full processlist`  
-    ![](/img/spring-web/mysql-connection-status.png)
+      ![](/img/spring-web/mysql-connection-status.png)
 
 ## 重构
 观察从 Redis 取数据，没有再从数据库取，然后放入 Redis 的代码，除了 `d = JSON.parseObject(json, Demo.class);` 这一句会根据不同的业务逻辑不同外，其他的代码都是不变的，所以可以使用策略模式进行重构。
@@ -111,7 +111,7 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 
 import java.util.function.Supplier;
 
-public class RedisUtils {
+public class RedisDao {
     private StringRedisTemplate redisTemplate;
 
     /**
@@ -139,6 +139,7 @@ public class RedisUtils {
         if (d == null && supplier != null) {
             d = supplier.get();
 
+            // 这里需要考虑，null 对象如果不放缓存，如果这个对象被大量访问，会导致缓存穿透，增加数据库的压力
             if (d != null) {
                 redisTemplate.opsForValue().set(redisKey, JSON.toJSONString(d));
             }
@@ -172,6 +173,7 @@ public class RedisUtils {
         if (d == null && supplier != null) {
             d = supplier.get();
 
+            // 这里需要考虑，null 对象如果不放缓存，如果这个对象被大量访问，会导致缓存穿透，增加数据库的压力
             if (d != null) {
                 redisTemplate.opsForValue().set(redisKey, JSON.toJSONString(d));
             }
@@ -196,10 +198,10 @@ public class RedisUtils {
 @ResponseBody
 public Demo findDemoById(@PathVariable int id) {
     String redisKey = "demo_" + id;
-    Demo d = RedisUtils.get(Demo.class, redisTemplate, redisKey, () -> demoMapper.findDemoById(id));
+    Demo d = RedisDao.get(Demo.class, redisTemplate, redisKey, () -> demoMapper.findDemoById(id));
 
     return d;
 }
 ```
 
-不同业务场景可以使用 Lambda 表达式实现 RedisUtils.get() 的最后一个参数 Supplier，不需要再关心从 Redis 取数据和存储数据到 Redis 的代码了。
+不同业务场景可以使用 Lambda 表达式实现 RedisDao.get() 的最后一个参数 Supplier，不需要再关心从 Redis 取数据和存储数据到 Redis 的代码了。
