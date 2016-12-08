@@ -5,7 +5,7 @@ tags: Qt-Book
 ---
 画笔 QPen 用来绘制轮廓，和画笔相关也有很多概念，要理解好画笔也需要下很多工夫的，先看个简单的例子，直观的理解一下什么是 Cap Style, Join Style, Pattern 等上图。:
 
-![](/img/qt-book/paint/Paint-Base-PenDemo.png)
+![](/img/qtbook/paint/Paint-Base-PenDemo.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
@@ -39,31 +39,31 @@ void MainWidget::paintEvent(QPaintEvent *) {
 
 ## Pen Style  
 
-![](/img/qt-book/paint/Paint-Base-PenStyle.png)
+![](/img/qtbook/paint/Paint-Base-PenStyle.png)
 
 ## Cap Style 和 Join Style
 
-![](/img/qt-book/paint/Paint-Base-PenCapJoinStyle.png)
+![](/img/qtbook/paint/Paint-Base-PenCapJoinStyle.png)
 
 ## 画笔的宽和矩形的边框
 
 其实我一直不明白设置画笔的宽度后，画出的矩形的边框是怎么计算的，是边框包围住整个图形还是边框整个在图形内部，直到看到下图时才明白（又是截图自 Qt 的帮助文档，里面真是包罗万象啊，希望大家多多阅读 Qt 的帮助文档），以矩形为例（逻辑上来说矩形是没有边框的）：
 
-![](/img/qt-book/paint/Paint-Base-PenWidth-1.png)
+![](/img/qtbook/paint/Paint-Base-PenWidth-1.png)
 
 最终绘制出来的矩形的宽度为给定矩形的宽度加上画笔的宽度，高度为给定矩形的高度加上画笔的宽度，就用程序来验证上面的说法吧，放大程序的截图，就能看到各边边框的宽度：
 
-![](/img/qt-book/paint/Paint-Base-PenWidth-3.png)
+![](/img/qtbook/paint/Paint-Base-PenWidth-3.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.translate(40, 40);
 
-    painter.setPen(QPen(Qt::darkGray, 
+    painter.setPen(QPen(Qt::darkGray,
                         31, // 边框宽 31 像素
-                        Qt::SolidLine, 
-                        Qt::SquareCap, 
+                        Qt::SolidLine,
+                        Qt::SquareCap,
                         Qt::MiterJoin));
     painter.drawRect(0, 0, 100, 100);
 
@@ -82,7 +82,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 
 宽度为 0 的画笔称为修饰画笔，当画笔的宽度设置为 0 和 1 在不使用 scale, shear 等 transform 的时候画出的边框看上去是一样的，都是 1 个像素，例如有 scale 的时候，缩放后宽为 0 的边框还是一个像素，宽为 1 的边框根据缩放比例进行缩放：
 
-![](/img/qt-book/paint/Paint-Base-PenWidth-2.png)
+![](/img/qtbook/paint/Paint-Base-PenWidth-2.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {

@@ -9,7 +9,7 @@ QPen 已经提供了一些默认的 style，如 SolidLine, DashLine 等，但是
 
 动物的一种本能现象，领头的蚂蚁以随机的路线走向食物或洞穴，第二只蚂蚁紧跟其后以相同的路线行走，每一个后来的蚂蚁紧跟前面蚂蚁行走，排成一条线的现象。在图像影像软件中表示选区的动态虚线，因为虚线闪烁的样子像是一群蚂蚁在跑，所以俗称蚂蚁线。在 Photoshop 中建立选区后，选区的边线就叫蚂蚁线：
 
-![](/img/qt-book/paint/Paint-Base-Pen-PSSelection.png)
+![](/img/qtbook/paint/Paint-Base-Pen-PSSelection.png)
 
 前面的例子中也使用了自定义 style，但有点简单，有没有复杂点的应用呢？下面我们就用自定义 style 实现蚂蚁线。
 
@@ -151,5 +151,4 @@ void AnimationDashPatternWidget::paintEvent(QPaintEvent *) {
 
 程序运行后就像下图这样，蚂蚁线会不停的运动：
 
-![](/img/qt-book/paint/Paint-Base-PenAnimationDashPattern.png)
-
+![](/img/qtbook/paint/Paint-Base-PenAnimationDashPattern.png)

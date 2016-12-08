@@ -12,7 +12,7 @@ tags: Qt-Book
 >
 > The drawing capabilities of QPaintDevice are currently implemented by the QWidget, QImage, QPixmap, QGLPixelBuffer, QPicture, and QPrinter subclasses.
 
-上面的内容来自于 Qt 的帮助文档，在 QPaintDevice 的子类里用 QPainter 绘图，最常见的就是在 QWidget, QPixmap, QPixture, QPrinter 上面绘图。
+上面的内容来自于 Qt 的帮助文档，在 QPaintDevice 的子类里用 QPainter 绘图，最常见的就是在 QWidget, QPixmap, QPixture, QPrinter 上面绘图。<!--more-->
 
 ## 在哪里绘图
 
@@ -74,7 +74,7 @@ void PandoraWidget::paintEvent(QPaintEvent *) {
 莫急莫急，这里传大家本人秘藏多年的一绝技，就能在 PandoraWidget 的函数里给 magicLabel 绘图了：在事件过滤器 `eventFilter()` 中拦截 magicLabel 的 `QEvent::Paint` 事件，用 magicLabel 创建 QPainter，就可以在 magicLabel 上绘图了，上代码，否则估计有人要把我画在圈圈里了：
 
 ```cpp
-PandoraWidget::PandoraWidget(QWidget *parent) 
+PandoraWidget::PandoraWidget(QWidget *parent)
     : QWidget(parent), ui(new Ui::PandoraWidget) {
     ui->setupUi(this);
     ui->magicLabel->installEventFilter(this);
@@ -99,14 +99,14 @@ void PandoraWidget::magicTime() {
 ## 怎么绘图
 下图来自《C++ GUI Programming with Qt 4》，列出了 QPainter 常用的画图方法，都是以 `draw` 开头，非常直观的列出了绘图函数和绘制出来的图形：
 
-![](/img/qt-book/paint/Paint-Base-Draw-Methods.png)
+![](/img/qtbook/paint/Paint-Base-Draw-Methods.png)
 
 下面具体的介绍这些函数的使用，它们中很多都有重载的函数，这里只使用其中的一种，其它的用法都差不多，就不一一介绍，需要时查看帮助文档就可以了。
 
 ## 坐标系
 数学中使用的坐标系是笛卡尔坐标系，X 轴正向向右，Y 轴正向向上。但是，QPainter 也有自己的坐标系，和笛卡尔坐标系有点不一样，原点在 widget 的左上角而不是正中心，X 轴正向向右，Y 轴正向向下。注意: 每个 widget 都有自己独立的坐标系。
 
-![](/img/qt-book/paint/Paint-Base-Coordinate-System.png)
+![](/img/qtbook/paint/Paint-Base-Coordinate-System.png)
 
 ## 画线 - drawLine()
 
@@ -120,7 +120,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 ```
 
 drawLine() 有什么用？例如可以用来画网格线:  
-![](/img/qt-book/paint/Paint-Base-Grid.png)
+![](/img/qtbook/paint/Paint-Base-Grid.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
@@ -208,7 +208,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 
 可以用 drawPolygon() 来画圆，其实本没有圆，正多边形的边多了，便成了圆，这正是计算机里绘制曲线的原理，`插值逼近`，在曲线上取 N 个点，点之间用线段连接起来，当 N 越大时，连接出来的图形就越平滑，越接近曲线。
 
-![](/img/qt-book/paint/Paint-Base-Polygon-Circle.png)  
+![](/img/qtbook/paint/Paint-Base-Polygon-Circle.png)  
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
@@ -261,7 +261,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 有意思的是，在 QSS 中圆角半径大于对应边长的一半，圆角效果就没了，但是使用 drawRoundedRect() 时，圆角的半径大于对应边长的一半时，圆角效果仍然有效，个人认为这个是 QSS 的 bug，但是已经存在很久了。
 
 下面使用不同的参数绘制了 3 个圆角矩形，便于比较他们之间的异同：  
-![](/img/qt-book/paint/Paint-Base-RoundRect.png)
+![](/img/qtbook/paint/Paint-Base-RoundRect.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
@@ -282,7 +282,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 
 当然，画圆的方法很多，上面我们就使用了 drawPolygon()，drawRounedRect() 的方法画圆，不过从语义上来说，用 drawEllipse() 来画圆显得更适合一些。
 
-![](/img/qt-book/paint/Paint-Base-Ellipse.png)
+![](/img/qtbook/paint/Paint-Base-Ellipse.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
@@ -293,7 +293,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
     painter.drawRect(0, 0, 200, 100);    // 椭圆的包围矩形
     painter.setBrush(Qt::lightGray);
     painter.drawEllipse(0, 0, 200, 100); // 椭圆
-    
+
     painter.drawEllipse(230, 0, 100, 100); // 圆
 }
 ```
@@ -311,7 +311,7 @@ void QPainter::drawArc(const QRectF & rectangle, int startAngle, int spanAngle)
 void QPainter::drawPie(const QRectF & rectangle, int startAngle, int spanAngle)
 void QPainter::drawChord(const QRectF & rectangle, int startAngle, int spanAngle)
 ```
-![](/img/qt-book/paint/Paint-Base-Arc-Chord-Pie.png)
+![](/img/qtbook/paint/Paint-Base-Arc-Chord-Pie.png)
 
 * rectangle: 包围矩形
 * startAngle: 开始的角度，单位是十六分之一度，如果要从 45 度开始画，则 startAngle 为 45 * 16
@@ -320,7 +320,7 @@ void QPainter::drawChord(const QRectF & rectangle, int startAngle, int spanAngle
 * 角度的正方向为逆时针方向
 
 下面程序的结果如图：  
-![](/img/qt-book/paint/Paint-Base-Arc-Chord-Pie-1.png)
+![](/img/qtbook/paint/Paint-Base-Arc-Chord-Pie-1.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
@@ -367,36 +367,36 @@ Pixmap 的绘制有下面四种方式（每种方式都有几个重载的函数�
 2.  在指定的矩形内绘制 pixmap，pixmap 被缩放填充到此矩形内
 
     ```cpp
-           /* target 是 widget 上要绘制 pixmap 的矩形区域 */
-           void QPainter::drawPixmap(int x, int y, int width, int height, const QPixmap &pixmap)
-           void QPainter::drawPixmap(const QRect &target, const QPixmap &pixmap)
+            /* target 是 widget 上要绘制 pixmap 的矩形区域 */
+            void QPainter::drawPixmap(int x, int y, int width, int height, const QPixmap &pixmap)
+            void QPainter::drawPixmap(const QRect &target, const QPixmap &pixmap)
     ```
 3.  绘制 pixmap 的一部分，可以称其为 sub-pixmap
 
     ```cpp
-           /* source 是 sub-pixmap 的 rectangle */
-           void QPainter::drawPixmap(const QPoint &point, const QPixmap &pixmap, const QRect &source)
-           void QPainter::drawPixmap(const QRect &target, const QPixmap &pixmap, const QRect &source)
-           void QPainter::drawPixmap(int x, int y, const QPixmap &pixmap, 
-                                     int sx, int sy, int sw, int sh)
+            /* source 是 sub-pixmap 的 rectangle */
+            void QPainter::drawPixmap(const QPoint &point, const QPixmap &pixmap, const QRect &source)
+            void QPainter::drawPixmap(const QRect &target, const QPixmap &pixmap, const QRect &source)
+            void QPainter::drawPixmap(int x, int y, const QPixmap &pixmap,
+                                      int sx, int sy, int sw, int sh)
     ```
 4.  平铺绘制 pixmap，水平和垂直方向都会同时使用平铺的方式
 
     ```cpp
-           void QPainter::drawTiledPixmap(const QRect &rectangle, 
-                                          const QPixmap &pixmap, 
-                                          const QPoint &position = QPoint())
-           void QPainter::drawTiledPixmap(int x, int y, int width, int height, 
-                                          const QPixmap & pixmap, 
-                                          int sx = 0, int sy = 0)
+            void QPainter::drawTiledPixmap(const QRect &rectangle,
+                                           const QPixmap &pixmap,
+                                           const QPoint &position = QPoint())
+            void QPainter::drawTiledPixmap(int x, int y, int width, int height,
+                                           const QPixmap & pixmap,
+                                           int sx = 0, int sy = 0)
     ```
     > drawTiledPixmap() 比我们自己计算 pixmap 的长宽，然后重复的绘制实现平铺的效率高一些：Calling drawTiledPixmap() is similar to calling drawPixmap() several times to fill (tile) an area with a pixmap, but is potentially much more efficient depending on the underlying window system.
 
-![](/img/qt-book/paint/Paint-Base-Bufferfly.png)  
+![](/img/qtbook/paint/Paint-Base-Bufferfly.png)  
 
 使用上面这张图来演示 drawPixmap() 的各种用法，左上角绘制原始大小的 pixmap，右上角缩放绘制 pixmap 到指定的矩形内 QRect(225, 20, 250, 159)，中间绘制 sub-pixmap，底部则使用平铺的方式绘制，最后结果如下图（文字是标记上去帮助理解的）：
 
-![](/img/qt-book/paint/Paint-Base-Pixmap.png)
+![](/img/qtbook/paint/Paint-Base-Pixmap.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {

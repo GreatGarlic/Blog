@@ -11,7 +11,7 @@ save() 用于保存 QPainter 的状态，restore() 用于恢复 QPainter 的状�
 
 使用 save() 和 restore() 有什么好处呢？例如我们要写这么一个程序，把 QPainter 的坐标中心从左上角移动到 (100, 100)，然后画出坐标轴，接下来顺时针选择坐标轴 45 度，设置画笔，画刷，字体，画一个矩形和字符串，最后恢复 QPainter 到最开始的状态，再画一个矩形和字符串，就像下图这样：
 
-![](/img/qt-book/paint/Paint-Base-SaveRestore.png)
+![](/img/qtbook/paint/Paint-Base-SaveRestore.png)
 
 如果我们不知道 QPainter 提供了 save() 和 restore() 来保存和恢复它的状态，那么就只好定义变量一个一个的保存好所有的状态，需要的时候再逐一恢复：
 
@@ -68,7 +68,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
     painter.setPen(Qt::red);
     painter.setBrush(Qt::blue);
     painter.setFont(QFont("Monaco", 30));
-    
+
     painter.drawRect(-50, -50, 100, 100);
     painter.drawText(0, 0, "Hello");
 

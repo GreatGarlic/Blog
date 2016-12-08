@@ -17,7 +17,7 @@ QLinearGradient(qreal x1, qreal y1, qreal x2, qreal y2)
 // 设置渐变的颜色，position 的取值范围是 [0.0, 1.0]
 setColorAt(qreal position, const QColor &color)
 
-// 超出渐变范围后的填充方式，默认使用 PadSpread: 
+// 超出渐变范围后的填充方式，默认使用 PadSpread:
 //     QGradient::PadSpread
 //     QGradient::RepeatSpread
 //     QGradient::ReflectSpread
@@ -29,11 +29,11 @@ QBrush(const QGradient &gradient)
 
 下图来自 QLinearGradient 的帮助文档，两个灰色的点表示渐变的起始和结束位置，从黄色渐变到有点发灰的黄色，同时展示了超出渐变范围时的三种填充方式：
 
-![](/img/qt-book/paint/Paint-Base-LinearGradient.png)
+![](/img/qtbook/paint/Paint-Base-LinearGradient.png)
 
 为了介绍 QLinearGradient 的使用，下面的程序使用线性渐变，在垂直方向从红色渐变到蓝色，填充矩形 QRect(20, 20, 200, 200)：
 
-![](/img/qt-book/paint/Paint-Base-LinearGradient-Demo-1.png)
+![](/img/qtbook/paint/Paint-Base-LinearGradient-Demo-1.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
@@ -58,7 +58,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 如果不用 QLinearGradient，怎么实现上面的渐变效果呢？也既是线性渐变的原理是什么呢？  
 以求线段上任意点的坐标为例，如图，已知线段的两端点 A(x1, y1)，B(x2, y2)，求线段上任意一点 M 的坐标 (x, y)，则
 
-![](/img/qt-book/paint/Paint-Base-LinearGradient-Coordinate.png)
+![](/img/qtbook/paint/Paint-Base-LinearGradient-Coordinate.png)
 
 ```
 根据两点的距离公式可以求出线段的长度 |AB|（用 || 表示线段的长度）
@@ -68,7 +68,7 @@ x = x1 + t * length
 y = y1 + t * length
 
 t 为 0.0 时 M 和 A 重合，t 为 1.0 时 M 和 B 重合。
-因为 t 的值为 0 到 1 之间，所以可以用循环求出 AB 上任意点的坐标 
+因为 t 的值为 0 到 1 之间，所以可以用循环求出 AB 上任意点的坐标
 
 for (float t = 0.0; rate <= 1.0; t += 0.1) {
     x = x1 + t * length;
@@ -85,7 +85,7 @@ for (float t = 0.0; rate <= 1.0; t += 0.1) {
 for (float t = 0.0; rate <= 1.0; t += 0.1) {
     x = x1 + t * length;
     y = y1 + t * length;
-    
+
     r = r1 + t * (r2-r1);
     g = g1 + t * (g2-g1);
     b = b1 + t * (b2-b1);
@@ -94,11 +94,11 @@ for (float t = 0.0; rate <= 1.0; t += 0.1) {
 
 也既是说，如果知道某个点对应的 t，那么就能计算出此点的颜色。如下图，要在矩形内沿着 AB 进行渐变填充，已知点 A，B 的坐标和颜色，在矩形内任意一点 N 的坐标也是已知的（循环遍历矩形内所有的点），那么就可以求出点 N 在 AB 上的投影 M（MN 垂直于 AB），t=|AM|/|AB|，使用上面的方法求出点 M 的颜色，点 M 的颜色就是点 N 的颜色。
 
-![](/img/qt-book/paint/Paint-Base-LinearGradient-Color.png)
+![](/img/qtbook/paint/Paint-Base-LinearGradient-Color.png)
 
 对于下图垂直方向的渐变来说，点 A(x1, y1) 为矩形的左上角，点 B(x2, y2) 为矩形的坐下角，矩形内任意一点 N(x, y) 在 AB 上的投影 M 的坐标为 (x1, y)，所以 t = (y-y1)/(y2-y1)，知道了 t，那么就能计算出对应的颜色了。
 
-![](/img/qt-book/paint/Paint-Base-LinearGradient-Demo-1.png)
+![](/img/qtbook/paint/Paint-Base-LinearGradient-Demo-1.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
@@ -140,7 +140,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 
 对于下图这样指定渐变的开始和结束位置，非垂直和水平方向渐变的实现，关键是求任意一点在另一条线上的投影，有很多方法和公式可以使用，这里我们使用 QTransform 进行移动，旋转求出 t，计算出对应的颜色，由于 QTransform 的知识比较复杂，这里就不作深入介绍，有兴趣的可以自行查看相关文档。
 
-![](/img/qt-book/paint/Paint-Base-LinearGradient-Demo-2.png)
+![](/img/qtbook/paint/Paint-Base-LinearGradient-Demo-2.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
@@ -196,7 +196,7 @@ t<0 或 t>1 时，即超出渐变范围后的填充方式是需要考虑的，�
 QRadialGradient 名为 `径向渐变`，在圆的范围内进行渐变，有三个主要参数：圆心、半径、焦点：
 
 ```cpp
-QRadialGradient(const QPointF &center, qreal radius, 
+QRadialGradient(const QPointF &center, qreal radius,
                 const QPointF &focalPoint)
 QRadialGradient(const QPointF & center, qreal radius)
 ```
@@ -205,7 +205,7 @@ QRadialGradient(const QPointF & center, qreal radius)
 
 如图，我们故意设置圆心和焦点不在同一个位置，这样就能很明显的看到渐变的范围，开始和结束的位置，连接焦点和圆周的线上的点的颜色做线性渐变（是不是知道怎么实现 QRadialGradient 了？）。
 
-![](/img/qt-book/paint/Paint-Base-RadialGradient.png)
+![](/img/qtbook/paint/Paint-Base-RadialGradient.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
@@ -244,7 +244,7 @@ QConicalGradient(qreal cx, qreal cy, qreal angle)
 
 经过线性渐变和径向渐变的学习，相信现在大家都能很容易的推断得出角度渐变的原理，这里就不作解释，作为悬念留给大家吧。
 
-![](/img/qt-book/paint/Paint-Base-ConicalGradient.png)
+![](/img/qtbook/paint/Paint-Base-ConicalGradient.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {

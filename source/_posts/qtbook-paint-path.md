@@ -15,7 +15,7 @@ tags: Qt-Book
 
 下面的程序画了一个很奇怪的图形，用来演示 QPainterPath 添加线、贝塞尔曲线、矩形、扣去其他 QPainterPath 等，只要发挥你的想像，就可以用 QPainterPath 组合出很多复杂有趣的图形：
 
-![](/img/qt-book/paint/Paint-Base-PainterPath-Operations.png)
+![](/img/qtbook/paint/Paint-Base-PainterPath-Operations.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
@@ -45,7 +45,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 
 QPainterPath 还可以描绘和填充文字，这种效果在开发音乐播放器时，显示歌词常用到：
 
-![](/img/qt-book/paint/Paint-Base-PainterPath-Text.png)
+![](/img/qtbook/paint/Paint-Base-PainterPath-Text.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
@@ -83,7 +83,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 
 `QPainterPath::pointAtPercent(qreal t)` 是一个很有用的函数，t 的值为 [0, 1.0]，可以取得路径上任意一点的坐标，在动画一节里会使用这个函数来实现动画的插值函数，让物体沿着任意的路径运动，这里没有用 Qt 的动画框架实现了让物体沿着任意的路径运动：
 
-![](/img/qt-book/paint/Paint-Base-PointAtPercent.png)
+![](/img/qtbook/paint/Paint-Base-PointAtPercent.png)
 
 ```cpp
 // 文件名：BezierCurveAnimationWidget.h

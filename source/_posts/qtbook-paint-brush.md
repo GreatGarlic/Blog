@@ -10,7 +10,7 @@ tags: Qt-Book
 
 下图在来自 QBrush 的帮助文档内容，列出了 Qt 自带的 brush：
 
-![](/img/qt-book/paint/Paint-Base-Brush.png)
+![](/img/qtbook/paint/Paint-Base-Brush.png)
 
 画刷还可以使用 QPixmap，渐变等来创建。
 

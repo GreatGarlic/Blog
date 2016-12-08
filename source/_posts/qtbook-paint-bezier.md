@@ -13,27 +13,27 @@ QPainterPath 可以用来画贝塞尔曲线，什么是贝塞尔曲线呢？开�
 贝塞尔曲线还是很抽象的，如果不是看了下面的这些动态图，演示了贝塞尔曲线的生成过程，估计仍然很难明白贝塞尔曲线是什么样的，控制点是什么，有什么用。
 
 塞尔曲线的通用公式为：  
-![](/img/qt-book/paint/Paint-Base-Bezier-NM.png)
+![](/img/qtbook/paint/Paint-Base-Bezier-NM.png)
 
 看上去是不是很复杂，难以理解？谁都一样，开始时看到这么复杂的公式，都会头大，但是看完下面的一阶，二阶，三阶贝塞尔曲线的方程和生成动画后就明白了，原来大名鼎鼎的贝塞尔曲线也不难嘛。
 
 `一阶贝塞尔曲线` 就是线段，没有控制点，其参数方程为  
-![](/img/qt-book/paint/Paint-Base-Bezier-1M.png)  
+![](/img/qtbook/paint/Paint-Base-Bezier-1M.png)  
 下图是生成一阶贝塞尔曲线的动画：  
-![](/img/qt-book/paint/Paint-Base-Bezier-1M.gif)
+![](/img/qtbook/paint/Paint-Base-Bezier-1M.gif)
 
 `二阶贝塞尔曲线` 只有一个控制点，为 P1，其参数方程为  
-![](/img/qt-book/paint/Paint-Base-Bezier-2M.png)  
+![](/img/qtbook/paint/Paint-Base-Bezier-2M.png)  
 下图是生成二阶贝塞尔曲线的动画：  
-![](/img/qt-book/paint/Paint-Base-Bezier-2M.gif)
+![](/img/qtbook/paint/Paint-Base-Bezier-2M.gif)
 
 把其中的任意一帧拿出来分析，可以看到 MP0/MP1，NP1/Np2，KM/KN 都为 t/(1-t)，是不是一下又明白了很多，其他阶的贝塞尔曲线也是这样的。  
-![](/img/qt-book/paint/Paint-Base-Bezier-Theory.png)
+![](/img/qtbook/paint/Paint-Base-Bezier-Theory.png)
 
 `三阶贝塞尔曲线` 有两个控制点，为 P1, P2，其参数方程为  
-![](/img/qt-book/paint/Paint-Base-Bezier-3M.png)  
+![](/img/qtbook/paint/Paint-Base-Bezier-3M.png)  
 下图是生成三阶贝塞尔曲线的动画：  
-![](/img/qt-book/paint/Paint-Base-Bezier-3M.gif)
+![](/img/qtbook/paint/Paint-Base-Bezier-3M.gif)
 
 贝塞尔曲线的更多介绍和动画请参考 <http://bbs.csdn.net/topics/390358020>。
 
@@ -53,7 +53,7 @@ void QPainterPath::cubicTo(const QPointF &c1, const QPointF &c2, const QPointF &
 
 这里演示一个小程序，QPainterPath 添加了三条贝塞尔曲线，每条曲线有两个控制点，如图显示的 0 到 5 个共 6 个控制点，拖动控制点就会改变它的坐标，然后生成新的贝塞尔曲线并显示出来，实时的看到变化的结果。通过拖动控制点，可以生成各种不同的平滑曲线，这就是贝塞尔曲线的魅力所在。
 
-![](/img/qt-book/paint/Paint-Base-Bezier-Demo.png)
+![](/img/qtbook/paint/Paint-Base-Bezier-Demo.png)
 
 ```cpp
 // 文件名：BezierCurveWidget.h

@@ -18,8 +18,8 @@ tags: Qt-Book
 2.  在指定的矩形内绘制文本，设置 flags 能够实现自动换行，对齐等
 
     ```cpp
-       void QPainter::drawText(const QRect& rectangle, 
-                               int flags, 
+       void QPainter::drawText(const QRect& rectangle,
+                               int flags,
                                const QString &text,
                                QRect *boundingRect = 0)
     ```
@@ -54,7 +54,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 }
 ```
 
-![](/img/qt-book/paint/Paint-Base-FontMetrics-1.png)
+![](/img/qtbook/paint/Paint-Base-FontMetrics-1.png)
 
 …… 出师不利，本以为是很简单的一件事，那还不手到擒来么，不曾想结果却让人大跌眼镜，只显示出了 j 的小尾巴。如果把 y 的值设置大一些，如 150，则就可以完全显示出来了。但是，y 要多大才合适？不能一点一点的试吧，否则字体变了，y 的值又不合适了，完全不科学，这要如何是好？
 
@@ -62,7 +62,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 
 相信大多数人和我一样，刚开始的时候都认为 drawText() 的 x, y 是字符串左上角的坐标，其实不然，它是字符串的第一个字符的 origin 的坐标，y 是字体的 base line 的 y 坐标，什么是 origin，base line? 看完下图基本上就明白了：
 
-![](/img/qt-book/paint/Paint-Base-FontMetrics.png)
+![](/img/qtbook/paint/Paint-Base-FontMetrics.png)
 
 文本是基于 base line 绘制的，而不是文本的左上角，所以上面的文本显示不全就很好理解了。
 
@@ -85,7 +85,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 
 考虑一个问题，像下图这样，在一个矩形里居中显示字符串，应该怎么做呢？
 
-![](/img/qt-book/paint/Paint-Base-FontMetrics-2.png)
+![](/img/qtbook/paint/Paint-Base-FontMetrics-2.png)
 
 有了 QFontMetrics，想必对大家来说问题已经不大，得到字符串的宽、高、ascent，简单的居中计算，就可以得到 origin 的坐标了。
 
@@ -118,7 +118,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 
 开始的时候说过，drawText() 绘制文本有两种方式，不会自动换行和在给定的矩形中自动换行，下面就举例说明，先绘制一行很长但不会自动换行的文本，然后在给定的矩形 QRect(20, 35, 200, 80) 里绘制会自动换行，向右靠齐的文本，效果如下图（发现超出矩形的字符不显示）：
 
-![](/img/qt-book/paint/Paint-Base-Text.png)
+![](/img/qtbook/paint/Paint-Base-Text.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
@@ -150,7 +150,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 
 虽然我们已经知道了自适应显示消息的原理，但是如果是我们自己来计算实现，难度还是不小的，其实 Qt 已经给我们提供了相关的 API，使用 `QFontMetrics::boundingRect()` 可以计算出包围文本的矩形，然后在用上面的方法绘制文本就可以了，下面的程序，改变窗口的宽度，能动态的计算出显示文本所有内容的包围矩形，解决了上面提到的在给定的矩形中，文本太长时显示不全的问题：
 
-![](/img/qt-book/paint/Paint-Base-Text-BoundingRect.png)
+![](/img/qtbook/paint/Paint-Base-Text-BoundingRect.png)
 
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
