@@ -6,6 +6,8 @@ tags: [Java, Cas]
 
 到此，Tomcat 启用了 https，并且在 Tomcat 里部署了 CAS Server，也了解了 Spring Security 的入门，下面就集成 CAS 到 Spring Security 里实现单点登陆。
 
+<!--more-->
+
 ## 1. 导出证书
 
 使用在 [Tomcat 启用 https](/java-tomcat-https/) 一节中生成的 `server.keystore` 文件生成证书 `server.cer` 
@@ -35,6 +37,8 @@ Trust this certificate? [no]: // 输入 yes
 ```
 
 > 证书导入到 `<JAVA_HOME>`/jre/lib/security/cacerts，替换为自己电脑上对应的目录 
+>
+> 删除已有证书: keytool -delete -alias xtuer -keystore `<JAVA_HOME>`/jre/lib/security/cacerts
 
 ## 3. 注册使用 CAS 的站点
 
@@ -134,7 +138,10 @@ Trust this certificate? [no]: // 输入 yes
 * **Application Not Authorized to Use CAS**  
   The application you attempted to authenticate to is not authorized to use CAS.
 
-  > 解决方法: 修改 `<cas>`/WEB-INF/classes/services/Apereo-10000002.json 中的 `"serviceId" : "^https://www.apereo.org"` 为 `"serviceId" : "^http.*"`
+  > 解决方法: `<cas>`/WEB-INF/classes/services/Apereo-10000002.json 中修改  
+  > `"serviceId" : "^https://www.apereo.org"`   
+  > 为  
+  > `"serviceId" : "^http.*"`
 
 * PKIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target
 
