@@ -1,7 +1,7 @@
 ---
 title: 绘制文本
 date: 2016-12-08 22:05:09
-tags: Qt-Book
+tags: QtBook
 ---
 绘制文本非常常见，QPushButton，QLabel，QTableView 等等都得用，看似简单，其实里面有很多的学问，要掌握好还是挺不容易的。<!--more-->
 

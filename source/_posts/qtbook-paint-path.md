@@ -1,7 +1,7 @@
 ---
 title: 绘制路径
 date: 2016-12-08 22:23:42
-tags: Qt-Book
+tags: QtBook
 ---
 路径 QPainterPath，先引用一段 Qt 帮助文档里对路径的描述吧：
 

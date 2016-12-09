@@ -1,7 +1,7 @@
 ---
 title: 画笔
 date: 2016-12-08 22:38:03
-tags: Qt-Book
+tags: QtBook
 ---
 画笔 QPen 用来绘制轮廓，和画笔相关也有很多概念，要理解好画笔也需要下很多工夫的，先看个简单的例子，直观的理解一下什么是 Cap Style, Join Style, Pattern 等上图。:
 

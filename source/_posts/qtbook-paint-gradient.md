@@ -1,7 +1,7 @@
 ---
 title: 渐变及原理
 date: 2016-12-08 23:17:42
-tags: Qt-Book
+tags: QtBook
 ---
 
 渐变有三种：QLinearGradient, QConicalGradient and QRadialGradient，接下来将介绍它们的使用和实现原理。<!--more-->

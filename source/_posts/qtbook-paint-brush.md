@@ -1,7 +1,7 @@
 ---
 title: 画刷
 date: 2016-12-08 23:12:40
-tags: Qt-Book
+tags: QtBook
 ---
 画刷 QBrush 是用来填充图形用的
 

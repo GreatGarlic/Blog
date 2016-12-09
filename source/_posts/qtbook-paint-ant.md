@@ -1,7 +1,7 @@
 ---
 title: 蚂蚁线
 date: 2016-12-08 22:58:10
-tags: Qt-Book
+tags: QtBook
 ---
 蚂蚁线是一个典型的 QPen 自定义 style 的应用，这里将介绍怎么使用 Qt 实现蚂蚁线。
 
