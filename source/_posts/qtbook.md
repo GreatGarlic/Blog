@@ -22,7 +22,7 @@ tags: [QtBook, Index]
   * [QPainter 的状态保存与恢复](/qtbook-paint-status/)
   * [用画家的思维绘制图形](/qtbook-paint-artist/)
   * [绘制平滑曲线](/qtbook-paint-smooth-curve/)
-  * [实时动态曲线](http://qtdebug.com/Paint-RealTime-Curve.html)
+  * [实时动态曲线](/qtbook-paint-realtime-curve/)
   * 仿射变换原理
   * 巧妙的运用clip实现复杂效果
   * 访问QImage的像素，用算法实现各种效果的原理与实例，例如镜面反射
