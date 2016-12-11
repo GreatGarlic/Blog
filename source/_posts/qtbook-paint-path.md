@@ -18,7 +18,7 @@ tags: QtBook
 ![](/img/qtbook/paint/Paint-Base-PainterPath-Operations.png)
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void ComplicatedPathWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
@@ -48,7 +48,7 @@ QPainterPath 还可以描绘和填充文字，这种效果在开发音乐播放�
 ![](/img/qtbook/paint/Paint-Base-PainterPath-Text.png)
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void TextPathWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
@@ -86,19 +86,18 @@ void MainWidget::paintEvent(QPaintEvent *) {
 ![](/img/qtbook/paint/Paint-Base-PointAtPercent.png)
 
 ```cpp
-// 文件名：BezierCurveAnimationWidget.h
-#ifndef BEZIERCURVEANIMATIONWIDGET_H
-#define BEZIERCURVEANIMATIONWIDGET_H
+#ifndef ANIMATIONALONGPATHWIDGET_H
+#define ANIMATIONALONGPATHWIDGET_H
 
 #include <QWidget>
 #include <QPainterPath>
 
-class BezierCurveAnimationWidget : public QWidget {
+class AnimationAlongPathWidget : public QWidget {
     Q_OBJECT
 
 public:
-    explicit BezierCurveAnimationWidget(QWidget *parent = 0);
-    ~BezierCurveAnimationWidget();
+    explicit AnimationAlongPathWidget(QWidget *parent = 0);
+    ~AnimationAlongPathWidget();
 
 protected:
     void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
@@ -111,19 +110,18 @@ private:
     int timerId;
 };
 
-#endif // BEZIERCURVEANIMATIONWIDGET_H
+#endif // ANIMATIONALONGPATHWIDGET_H
+
 ```
 ```cpp
-// 文件名：BezierCurveAnimationWidget.cpp
-#include "BezierCurveAnimationWidget.h"
+#include "AnimationAlongPathWidget.h"
 
 #include <QPainter>
 #include <QtGlobal>
 #include <QTimerEvent>
 
-BezierCurveAnimationWidget::BezierCurveAnimationWidget(QWidget *parent) :
-    QWidget(parent) {
-    step = 0.03;
+AnimationAlongPathWidget::AnimationAlongPathWidget(QWidget *parent) : QWidget(parent) {
+    step = 0.02;
     percent = 0;
 
     // 构造一个任意的曲线
@@ -132,19 +130,20 @@ BezierCurveAnimationWidget::BezierCurveAnimationWidget(QWidget *parent) :
     path.cubicTo(150, 100, 250, 0, 300, 140);
     path.quadTo(150, 310, 150, 100);
 
+    // 启动定时器
     timerId = startTimer(60);
 }
 
-BezierCurveAnimationWidget::~BezierCurveAnimationWidget() {
+AnimationAlongPathWidget::~AnimationAlongPathWidget() {
 }
 
-void BezierCurveAnimationWidget::timerEvent(QTimerEvent *event) {
+void AnimationAlongPathWidget::timerEvent(QTimerEvent *event) {
     // 不停的更新 percent 的值，刷新界面，实现动画效果
     if (event->timerId() == timerId) {
         percent += step;
 
         if (percent < 0 || percent > 1) {
-            step = -step;
+            step = -step; // 运动方向取反
             percent = qMin(percent, 1.0F);
             percent = qMax(percent, 0.0F);
         }
@@ -153,12 +152,13 @@ void BezierCurveAnimationWidget::timerEvent(QTimerEvent *event) {
     }
 }
 
-void BezierCurveAnimationWidget::paintEvent(QPaintEvent *) {
+void AnimationAlongPathWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
-    painter.translate(20, 20);
 
+    painter.translate(20, 20);
     painter.drawPath(path);
+
     painter.setBrush(Qt::red);
     painter.drawEllipse(path.pointAtPercent(percent), 4, 4);
 }

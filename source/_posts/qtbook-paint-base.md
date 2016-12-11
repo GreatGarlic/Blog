@@ -123,7 +123,7 @@ drawLine() 有什么用？例如可以用来画网格线:
 ![](/img/qtbook/paint/Paint-Base-Grid.png)
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void GridWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.translate(30, 30);
 
@@ -148,7 +148,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 给定 N 个点，第 1 和第 2 个点连成线，第 3 和第 4 个点连成线，……，N 个点练成 (N+1)/2 条线，如果 N 是奇数，第 N 个点和 (0,0) 连成线。
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void MultipleLinesWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.translate(20, 20);
@@ -168,7 +168,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 给定 N 个点，第 1 和第 2 个点连成线，第 2 和第 3 个点连成线，……，第 N-1 和第 N 个点连成线，N 个点共连成 N-1 条线。
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void PolylineWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.translate(20, 20);
@@ -190,7 +190,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 > drawPolygon() 和 drawPolyline() 很像，但是 drawPolygon() 画的是一个封闭的区域，可以填充颜色，而 drawPolyline() 画的是一些线段，即使它们连成一个封闭的区域也不能填充颜色。
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void PolygonWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.translate(20, 20);
@@ -202,6 +202,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
         QPointF(120.0, 100.0)
     };
 
+    painter.setBrush(Qt::yellow);
     painter.drawPolygon(points, 4);
 }
 ```
@@ -211,7 +212,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 ![](/img/qtbook/paint/Paint-Base-Polygon-Circle.png)  
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void PolygonCircleWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing); // 启用抗锯齿效果
     painter.translate(width() / 2, height() / 2); // 把坐标原点移动到 widget 的中心
@@ -264,7 +265,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 ![](/img/qtbook/paint/Paint-Base-RoundRect.png)
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void RoundRectWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setBrush(Qt::lightGray);
@@ -285,7 +286,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 ![](/img/qtbook/paint/Paint-Base-Ellipse.png)
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void EllipseWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.translate(30, 30);
@@ -323,7 +324,7 @@ void QPainter::drawChord(const QRectF & rectangle, int startAngle, int spanAngle
 ![](/img/qtbook/paint/Paint-Base-Arc-Chord-Pie-1.png)
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void ArcChordPieWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
@@ -354,66 +355,21 @@ void MainWidget::paintEvent(QPaintEvent *) {
 > 修改 startAngle 和 spanAngle 为负值看看是什么效果。
 
 ## 绘制 QPixmap - drawPixmap()
-
-Pixmap 的绘制有下面四种方式（每种方式都有几个重载的函数，没有全部列举出来）：
-
-1.  在指定位置绘制 pixmap，pixmap 不会被缩放
-
-    ```cpp
-     /* pixmap 的左上角和 widget 上 x, y 处重合 */
-     void QPainter::drawPixmap(int x, int y, const QPixmap & pixmap)
-     void QPainter::drawPixmap(const QPointF &point, const QPixmap &pixmap)
-    ```
-2.  在指定的矩形内绘制 pixmap，pixmap 被缩放填充到此矩形内
-
-    ```cpp
-            /* target 是 widget 上要绘制 pixmap 的矩形区域 */
-            void QPainter::drawPixmap(int x, int y, int width, int height, const QPixmap &pixmap)
-            void QPainter::drawPixmap(const QRect &target, const QPixmap &pixmap)
-    ```
-3.  绘制 pixmap 的一部分，可以称其为 sub-pixmap
-
-    ```cpp
-            /* source 是 sub-pixmap 的 rectangle */
-            void QPainter::drawPixmap(const QPoint &point, const QPixmap &pixmap, const QRect &source)
-            void QPainter::drawPixmap(const QRect &target, const QPixmap &pixmap, const QRect &source)
-            void QPainter::drawPixmap(int x, int y, const QPixmap &pixmap,
-                                      int sx, int sy, int sw, int sh)
-    ```
-4.  平铺绘制 pixmap，水平和垂直方向都会同时使用平铺的方式
-
-    ```cpp
-            void QPainter::drawTiledPixmap(const QRect &rectangle,
-                                           const QPixmap &pixmap,
-                                           const QPoint &position = QPoint())
-            void QPainter::drawTiledPixmap(int x, int y, int width, int height,
-                                           const QPixmap & pixmap,
-                                           int sx = 0, int sy = 0)
-    ```
-    > drawTiledPixmap() 比我们自己计算 pixmap 的长宽，然后重复的绘制实现平铺的效率高一些：Calling drawTiledPixmap() is similar to calling drawPixmap() several times to fill (tile) an area with a pixmap, but is potentially much more efficient depending on the underlying window system.
-
-![](/img/qtbook/paint/Paint-Base-Bufferfly.png)  
-
-使用上面这张图来演示 drawPixmap() 的各种用法，左上角绘制原始大小的 pixmap，右上角缩放绘制 pixmap 到指定的矩形内 QRect(225, 20, 250, 159)，中间绘制 sub-pixmap，底部则使用平铺的方式绘制，最后结果如下图（文字是标记上去帮助理解的）：
-
-![](/img/qtbook/paint/Paint-Base-Pixmap.png)
-
 ```cpp
 void MainWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
-    painter.setRenderHint(QPainter::Antialiasing);
-
-    QPixmap pixmap(":/resources/Paint-Base-Bufferfly.png"); // 从资源文件读取 pixmap
-
-    painter.drawPixmap(20, 20, pixmap); // 按原始尺寸绘制 pixmap
-    painter.drawPixmap(225, 20, 250, 159, pixmap); // 缩放绘制 pixmap
-    painter.drawPixmap(20, 133, pixmap, 128, 0, 57, 46); // 绘制 pixmap 的一部分
-
-    painter.translate(0, 199);
-    painter.drawTiledPixmap(0, 0, width(), height(), pixmap);
+    QPixmap pixmap(":/img/Butterfly.png"); // 从资源文件读取 pixmap
+    
+    painter.drawPixmap(0, 0, pixmap); // 绘制 pixmap
 }
 ```
 
 ## 绘制 QImage - drawImage()
+```cpp
+void MainWidget::paintEvent(QPaintEvent *) {
+    QPainter painter(this);
+    QImage image(":/img/Butterfly.png"); // 从资源文件读取 image
 
-绘制 QImage 使用 drawImage()，其用法和 drawPixmap() 的很像，就不多做介绍了。
+    painter.drawImage(0, 0, image); // 绘制 image
+}
+```

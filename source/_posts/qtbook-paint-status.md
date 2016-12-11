@@ -12,7 +12,7 @@ tags: QtBook
 再不了解 QPainter 的 save() 和 restore() 之前，我们可能会下面这样做：
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void CodeStatusWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
 
     // [*] 保存 QPainter 的状态
@@ -76,7 +76,7 @@ save() 用于保存 QPainter 的状态，restore() 用于恢复 QPainter 的状�
 下面就使用 QPainter 提供的功能保存和恢复它的状态，看看代码会是怎么样的
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void ApiStatusWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
 
     // [*] 保存 QPainter 的状态

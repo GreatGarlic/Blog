@@ -14,19 +14,19 @@ QPen 已经提供了一些默认的 style，如 SolidLine, DashLine 等，但是
 前面的例子中也使用了自定义 style，但有点简单，有没有复杂点的应用呢？下面我们就用自定义 style 实现蚂蚁线。
 
 ```cpp
-// 文件名：AnimationDashPatternWidget.h
-#ifndef ANIMATIONDASHPATTERNWIDGET_H
-#define ANIMATIONDASHPATTERNWIDGET_H
+// 文件名：AntLineWidget.h
+#ifndef ANTLINEWIDGET_H
+#define ANTLINEWIDGET_H
 
 #include <QWidget>
 #include <QVector>
 
-class AnimationDashPatternWidget : public QWidget {
+class AntLineWidget : public QWidget {
     Q_OBJECT
 
 public:
-    explicit AnimationDashPatternWidget(QWidget *parent = 0);
-    ~AnimationDashPatternWidget();
+    explicit AntLineWidget(QWidget *parent = 0);
+    ~AntLineWidget();
 
 protected:
     void timerEvent(QTimerEvent *event) Q_DECL_OVERRIDE;
@@ -42,20 +42,19 @@ private:
     QVector<qreal> dashPattern;
 };
 
-#endif // ANIMATIONDASHPATTERNWIDGET_H
+#endif // ANTLINEWIDGET_H
 ```
 <br>
 
 ```cpp
-// 文件名：AnimationDashPatternWidget.cpp
-#include "AnimationDashPatternWidget.h"
+// 文件名：AntLineWidget.cpp
+#include "AntLineWidget.h"
 #include <QTimerEvent>
 #include <QPainter>
 #include <QPen>
 #include <QPainterPath>
 
-AnimationDashPatternWidget::AnimationDashPatternWidget(QWidget *parent) :
-    QWidget(parent), PATTERN_LENGTH(4) {
+AntLineWidget::AntLineWidget(QWidget *parent) : QWidget(parent), PATTERN_LENGTH(4) {
     dashes = PATTERN_LENGTH;
     spaces = PATTERN_LENGTH;
 
@@ -66,17 +65,17 @@ AnimationDashPatternWidget::AnimationDashPatternWidget(QWidget *parent) :
     timerId = startTimer(150);
 }
 
-AnimationDashPatternWidget::~AnimationDashPatternWidget() {
+AntLineWidget::~AntLineWidget() {
 }
 
-void AnimationDashPatternWidget::timerEvent(QTimerEvent *event) {
+void AntLineWidget::timerEvent(QTimerEvent *event) {
     if (event->timerId() == timerId) {
         advanceDashes();
         update(); // 更好的方式是更新蚂蚁线的所在的范围，而不是整个界面都刷新，用 update(rect)
     }
 }
 
-void AnimationDashPatternWidget::advanceDashes() {
+void AntLineWidget::advanceDashes() {
     if (PATTERN_LENGTH == dashes && PATTERN_LENGTH == spaces) {
         dashes = 0;
         spaces = 0;
@@ -92,7 +91,7 @@ void AnimationDashPatternWidget::advanceDashes() {
     dashPattern[1] = spaces;
 }
 
-void AnimationDashPatternWidget::paintEvent(QPaintEvent *) {
+void AntLineWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
@@ -122,10 +121,10 @@ void AnimationDashPatternWidget::paintEvent(QPaintEvent *) {
 
 * 第一个数字是开始的 dash 长度
 * 第二个数字是 dash 后面跟着的 space 的长度
-* 第三个数是 dash 的长度
-* 第四个数是 space 的长度
-* 第五个数是 dash 的长度
-* 第六个数是 space 的长度
+* 第三个数是 dash 的长度，总是 4
+* 第四个数是 space 的长度，总是 4
+* 第五个数是 dash 的长度，总是 4
+* 第六个数是 space 的长度，总是 4
 * ……
 
 ```

@@ -18,9 +18,10 @@ tags: [QtBook, Index]
   * [蚂蚁线](/qtbook-paint-ant/)
   * [画刷](/qtbook-paint-brush/)
   * [渐变及原理](/qtbook-paint-gradient/)
+  * [Pixmap](/qtbook-paint-pixmap/)
   * [QPainter 的状态保存与恢复](/qtbook-paint-status/)
-  * [用画家的思维绘制图形](http://qtdebug.com/Paint-Artist.html)
-  * [绘制平滑曲线](http://qtdebug.com/Paint-SmoothCurve.html)
+  * [用画家的思维绘制图形](/qtbook-paint-artist/)
+  * [绘制平滑曲线](/qtbook-paint-smooth-curve/)
   * [实时动态曲线](http://qtdebug.com/Paint-RealTime-Curve.html)
   * 仿射变换原理
   * 巧妙的运用clip实现复杂效果

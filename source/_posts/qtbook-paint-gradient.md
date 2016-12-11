@@ -36,7 +36,7 @@ QBrush(const QGradient &gradient)
 ![](/img/qtbook/paint/Paint-Base-LinearGradient-Demo-1.png)
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void LinearGradientWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     QRect rect(20, 20, 200, 200);
@@ -101,7 +101,7 @@ for (float t = 0.0; rate <= 1.0; t += 0.1) {
 ![](/img/qtbook/paint/Paint-Base-LinearGradient-Demo-1.png)
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void LinearGradientAlgorithmWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
@@ -143,7 +143,7 @@ void MainWidget::paintEvent(QPaintEvent *) {
 ![](/img/qtbook/paint/Paint-Base-LinearGradient-Demo-2.png)
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void LinearGradientAlgorithm2Widget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
 
@@ -208,7 +208,7 @@ QRadialGradient(const QPointF & center, qreal radius)
 ![](/img/qtbook/paint/Paint-Base-RadialGradient.png)
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void RadialGradientWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.translate(width() / 2, height() / 2);
@@ -247,7 +247,7 @@ QConicalGradient(qreal cx, qreal cy, qreal angle)
 ![](/img/qtbook/paint/Paint-Base-ConicalGradient.png)
 
 ```cpp
-void MainWidget::paintEvent(QPaintEvent *) {
+void ConicalGradientWidget::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.translate(width() / 2, height() / 2);
