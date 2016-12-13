@@ -9,6 +9,13 @@ tags: Index
 * [SpringMVC 处理 Ajax 映射](/spring-mvc-ajax)
 * [SpringMVC Ajax 拖拽上传文件](/spring-mvc-upload-file-ajax)
 
+## Cas
+* [安装 CAS-Server](/java-cas-1-install)
+* [Spring Security 入门](/java-cas-2-security-intro)
+* [使用 CAS 单点登陆](/java-cas-3-use-cas)
+* [Spring Security 使用 CAS 实现单点登陆](/java-cas-index)
+* [Tomcat 启用 https](/java-tomcat-https)
+
 ## DB
 * [Mac 安装 Mysql 和 Nginx](/mac-mysql-nginx)
 * [MySQL 导入导出 CSV](/mysql-csv)
@@ -25,6 +32,7 @@ tags: Index
 * [静态文件 CDN](/fe-cdn)
 * [JS 关闭当前标签页](/fe-close-window)
 * [自定义 HTML5 播放器](/fe-custom-html5-player)
+* [FlatShadow](/fe-flat-shadow)
 * [Div 在另一个 Div 中同时水平垂直居中](/fe-horizontal-vertical-center)
 * [解析身份证](/fe-id-card)
 * [jQuery 404 时调用的方法](/fe-jquery-404)
@@ -42,6 +50,7 @@ tags: Index
 * [Sublimetext 安装 jshint](/fe-sublimetext-jshint)
 * [HTML 树的实现](/fe-tree)
 * [Vue-ArtTemplate-jQuery 一起使用](/fe-vue-arttemplate)
+* [Vue 的省市多级联动效果](/fe-vue-chain)
 * [Vue 使用 v-for 和设置属性及事件处理](/fe-vue-for-attribute)
 * [Webuploader 上传文件](/fe-webuploader)
 * [Atom 常用插件和快捷键](/mac-atom)
@@ -63,12 +72,18 @@ tags: Index
 * [Markdown 入门](/mk-intro)
 
 ## Index
+* [Spring Security 使用 CAS 实现单点登陆](/java-cas-index)
 * [Miscellaneous](/misc-index)
+* [Qt 之入门提高与实战](/qtbook)
 * [All Documents](/sitemap)
 * [Spring Web 项目开发](/spring-web-index)
 
 ## Java
 * [Git Tips](/git-tips)
+* [安装 CAS-Server](/java-cas-1-install)
+* [Spring Security 入门](/java-cas-2-security-intro)
+* [使用 CAS 单点登陆](/java-cas-3-use-cas)
+* [Spring Security 使用 CAS 实现单点登陆](/java-cas-index)
 * [How to change default Java version](/java-change-version)
 * [Java Code Snippets](/java-code-snippets)
 * [计算文件的 MD5](/java-file-md5)
@@ -81,9 +96,10 @@ tags: Index
 * [HttpServletResponse 返回图片](/java-response-image)
 * [Java 绘制平滑曲线](/java-smooth-curve)
 * [微 Web 服务的 REST 框架 Spark Framework](/java-spark-framework)
+* [Tomcat 启用 https](/java-tomcat-https)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
 * [Redis Tips](/redis-tips)
-* [QQ 登陆的 ScribeJava 实现](/scribe-qq)
+* [QQ 登陆的 Scribe-Java 实现](/scribe-qq)
 * [Java 访问 Solr](/solr-java-access)
 * [Solr Tips](/solr-tips)
 * [Spring 判断设备信息](/spring-mvc-mobile-detection)
@@ -124,6 +140,7 @@ tags: Index
 * [Miscellaneous](/misc-index)
 * [JMS + ActiveMQ](/misc-jms-activemq)
 * [JNDI 数据源](/misc-jndi-datasource)
+* [ActiveMQ 的 MQTT](/misc-mqtt)
 * [Spring Event](/misc-spring-event)
 * [Spring 集成 Groovy](/misc-spring-groovy)
 * [Spring O/X Mapping](/misc-spring-oxm)
@@ -137,6 +154,7 @@ tags: Index
 * [Qt 访问网络](/qt-access-network)
 * [Qt 应用程序的图标](/qt-app-icon)
 * [线程一调用线程二中函数的正确姿势](/qt-call-in-different-thread)
+* [集成自定义类型到 MetaType 系统](/qt-custom-type-metatype)
 * [QSS 实现的扁平滚动条](/qt-flat-scrollbar)
 * [Qt 调整无边框窗口的大小](/qt-frameless-window-resizable)
 * [Qt 创建圆角、无边框、有阴影、可拖动的窗口](/qt-frameless-window)
@@ -151,6 +169,23 @@ tags: Index
 * [Single Application](/qt-single-application)
 * [Qt 绘制平滑曲线](/qt-smooth-curve)
 * [升级 Xcode8 后 Qt 出错](/qt-xcode8-error)
+
+## QtBook
+* [蚂蚁线](/qtbook-paint-ant)
+* [用画家的思维绘制图形](/qtbook-paint-artist)
+* [绘图基础](/qtbook-paint-base)
+* [贝塞尔曲线](/qtbook-paint-bezier)
+* [画刷](/qtbook-paint-brush)
+* [渐变及原理](/qtbook-paint-gradient)
+* [绘制路径](/qtbook-paint-path)
+* [画笔](/qtbook-paint-pen)
+* [Pixmap](/qtbook-paint-pixmap)
+* [实时动态曲线](/qtbook-paint-realtime-curve)
+* [绘制平滑曲线](/qtbook-paint-smooth-curve)
+* [QPainter 的状态保存与恢复](/qtbook-paint-status)
+* [绘制文本](/qtbook-paint-text)
+* [绘图](/qtbook-paint)
+* [Qt 之入门提高与实战](/qtbook)
 
 ## Redis
 * [Redis 客户端 Redis-Commander](/redis-client)
@@ -217,6 +252,7 @@ tags: Index
 * [OkHttp](/java-okhttp)
 * [HttpServletResponse 返回图片](/java-response-image)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
+* [ActiveMQ 的 MQTT](/misc-mqtt)
 * [Spring 集成 Groovy](/misc-spring-groovy)
 * [Redis Tips](/redis-tips)
 * [SpringMVC Ajax 拖拽上传文件](/spring-mvc-upload-file-ajax)
