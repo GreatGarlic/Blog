@@ -27,7 +27,7 @@ compile 'ch.qos.logback:logback-classic:1.1.2'
     <appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <file>${log.base}/log.txt</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${log.base}/log_%d{yyyyMMdd}.log</fileNamePattern>
+            <fileNamePattern>${log.base}/log_%d{yyyy-MM-dd}.log</fileNamePattern>
             <maxHistory>30</maxHistory>
         </rollingPolicy>
         <encoder>
@@ -46,7 +46,37 @@ compile 'ch.qos.logback:logback-classic:1.1.2'
 </configuration>
 ```
 
+## 按小时生成日志
+上面的配置 logback 是按天生成日志文件的，如果在访问量大的系统，需要按小时生成日志文件，则只需要修改 fileNamePattern 即可，例如 
+
+```
+<fileNamePattern>${log.base}/log_%d{yyyy-MM-dd_HH}.log</fileNamePattern>
+```
+`_HH` 表示按小时生成
+
+## 按大小生成日志
+
+把 appender 换为下面的配置即可
+
+```xml
+<appender name="file" class="ch.qos.logback.core.rolling.RollingFileAppender">
+    <file>${log.base}/log.txt</file>
+    <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+        <!-- rollover daily -->
+        <fileNamePattern>${log.base}/log_%d{yyyyMMdd}.%i.log</fileNamePattern>
+        <!-- each file should be at most 500MB, keep 30 days worth of history, but at most 30GB -->
+        <maxFileSize>500MB</maxFileSize>
+        <maxHistory>30</maxHistory>
+        <totalSizeCap>30GB</totalSizeCap>
+    </rollingPolicy>
+    <encoder>
+        <pattern>[%d{yyyy-MM-dd HH:mm:ss}] [%-5level] [%F-%M:%L] - %msg%n</pattern>
+    </encoder>
+</appender>
+```
+
 ## 使用 logback 输出日志
+
 通过前面 2 步，logback 就配置好了，接下来就可以在代码里像下面这么使用 logback。
 
 ```java
@@ -98,12 +128,12 @@ compile 'org.slf4j:jcl-over-slf4j:1.7.21'
 
 ## Logback 的日志级别：
 1. `ALL`: 是最低等级的，用于打开所有日志记录。 
-1. `DEBUG`: 指出细粒度信息事件对调试应用程序是非常有帮助的。
-2. `INFO`: 表明消息在粗粒度级别上突出强调应用程序的运行过程。 
-3. `WARN`: 表明会出现潜在错误的情形。
-4. `ERROR`: 指出虽然发生错误事件，但仍然不影响系统的继续运行。
-5. `FATAL`: 指出每个严重的错误事件将会导致应用程序的退出。
-6. `OFF`: 是最高等级的，用于关闭所有日志记录。
+2. `DEBUG`: 指出细粒度信息事件对调试应用程序是非常有帮助的。
+3. `INFO`: 表明消息在粗粒度级别上突出强调应用程序的运行过程。 
+4. `WARN`: 表明会出现潜在错误的情形。
+5. `ERROR`: 指出虽然发生错误事件，但仍然不影响系统的继续运行。
+6. `FATAL`: 指出每个严重的错误事件将会导致应用程序的退出。
+7. `OFF`: 是最高等级的，用于关闭所有日志记录。
 
 ## 优先级
 `优先级`从低到高分别是 ALL、DEBUG、INFO、WARN、ERROR、FATAL、OFF
@@ -131,5 +161,7 @@ Logback 还支持`过滤器`，例如将过滤器的日志级别配置为 ERROR�
 这一行就将org包下面的所有日志级别设为了ERROR，不会再打扰我们的 DEBUG。
 
 ## 参考文档：
+<http://logback.qos.ch/manual/appenders.html#SizeAndTimeBasedFNATP>
 <http://blog.csdn.net/mydeman/article/details/6716925>
 <http://www.360doc.com/content/12/0321/13/203871_196275021.shtml>
+

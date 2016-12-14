@@ -88,9 +88,10 @@ public static String getClientIp(HttpServletRequest request) {
 ```
 
 > Nginx 的配置参考:
-> 
+>
 > ```
-  location / {
+>   location / {
+> ```
       proxy_redirect   off;
       proxy_set_header Host $host;
       proxy_set_header X-Real-IP $remote_addr;
@@ -109,3 +110,18 @@ public static String getClientIp(HttpServletRequest request) {
 ## 依赖
 * Apache Commons Lang3: `org.apache.commons:commons-lang3:3.4`
 * Jackson: `com.fasterxml.jackson.core:jackson-databind:2.7.3`
+
+  ```
+
+## 生成 MD5
+
+```java
+import org.apache.commons.codec.digest.DigestUtils;
+
+public class Test {
+    public static void main(String[] args) throws Exception {
+        System.out.println(DigestUtils.md5Hex("Who are you?"));
+    }
+}
+```
+
