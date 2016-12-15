@@ -11,6 +11,6 @@ QDialog *dlg = new QDialog(NULL, Qt::Dialog | Qt::Popup | Qt::FramelessWindowHin
 dlg->show();
 ```
 
-> Qt::Popup 是个小技巧，只有先点击对话框后才能对话框后面的 widget
+> Qt::Popup 是个小技巧，只有先点击对话框后才能点击对话框后面的 widget
 
 <!--more-->

@@ -28,10 +28,11 @@ FlatBuffers 是一个 Google 开源的跨平台序列化工具，支持 C, C++, 
 4. Java 使用 FlatBuffers
     1. FlatBuffers 编译 schema 文件生成 Java 的 Person 类
     2. 序列化 Person
-    3. 反序列化 Person
+    3. 反序列化 Person (可以是 Qt 生成的)
 5. Qt 使用 FlatBuffers
     1. FlatBuffers 编译 schema 文件生成 cpp 的 Person 类
-    2. 反序列化 Person
+    2. 反序列化 Person (可以是 Java 生成的)
+    3. 序列化 Person
 
 ## 安装 FlatBuffers 代码生成工具
 需要使用 FlatBuffers 的 `flatc` 把 schema 文件生成对应的代码，例如 Java 的类:

@@ -76,10 +76,11 @@ tags: [QtBook, Index]
     * [组播：Multicast](http://qtdebug.com/Network-UDP-Multicast.html)
   * TCP 编程
 
-* [单例 Singleton](http://qtdebug.com/Singleton.html)
-  * [单例的简单实现](http://qtdebug.com/Singleton-1-Simple.html)
-  * [单例的智能指针实现](http://qtdebug.com/Singleton-2-AutoPointer.html)
-  * [单例的智能指针＋宏的实现](http://qtdebug.com/Singleton-3-AutoPointerMacro.html)
-  * [单例的模版实现](http://qtdebug.com/Singleton-4-Template.html)
-  * [单例的模版＋宏的实现](http://qtdebug.com/Singleton-5-TemplateMacro.html)
-  * [单例的其他实现](http://qtdebug.com/Singleton-6-Other.html)
+* [单例 Singleton](/qtbook-singleton/)
+  * [单例的简单实现](/qtbook-singleton-1-simple)
+  * [单例的智能指针实现](/qtbook-singleton-2-auto-pointer)
+  * [单例的智能指针＋宏的实现](/qtbook-singleton-3-auto-pointer-macro)
+  * [单例的模版实现](/qtbook-singleton-4-template)
+  * [单例的模版＋宏的实现](/qtbook-singleton-5-template-macro)
+  * [单例的其他实现](/qtbook-singleton-6-other)
+
