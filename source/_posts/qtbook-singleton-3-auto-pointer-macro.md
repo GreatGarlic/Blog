@@ -3,7 +3,7 @@ title: 单例的智能指针＋宏的实现
 date: 2016-12-15 19:19:15
 tags: QtBook
 ---
-如果要创建一个单例的数据库连接池 ConnectionPool，那么实现单例部分的代码和 ConfigUtil 的几乎一样，声明 private 的构造函数，拷贝构造函数，析构函数，赋值操作符，QScopedPointer instance，friend struct QScopedPointerDeleter，几乎完全一样的 getInstance() 等，这些代码几乎都是重复的，每个单例的类这些内容都重复一遍，违背了代码的复用原则。为了实现代码复用，可以用继承、函数、宏定义、模版等。对于单例，继承很难达到目的，这里我们选择使用宏来实现代码复用的目的，后面的章节会介绍使用模版的实现。
+如果要创建一个单例的数据库连接池 ConnectionPool，那么实现单例部分的代码和 ConfigUtil 的几乎一样，声明 private 的构造函数，拷贝构造函数，析构函数，赋值操作符，QScopedPointer instance，friend struct QScopedPointerDeleter，几乎完全一样的 getInstance() 等，这些代码几乎都是重复的，每个单例的类这些内容都重复一遍，违背了代码的复用原则。为了实现代码复用，可以用继承、函数、宏定义、模版等。对于单例，继承很难达到目的，这里我们选择使用宏来实现代码复用的目的，后面的章节会介绍使用模版的实现。<!--more-->
 
 ## Singleton.h
 

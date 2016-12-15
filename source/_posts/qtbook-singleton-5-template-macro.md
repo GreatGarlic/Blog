@@ -3,7 +3,7 @@ title: 单例的模版＋宏的实现
 date: 2016-12-15 19:42:35
 tags: QtBook
 ---
-下面，对 `单例的模版实现` 使用宏进一步简化。
+下面，对 `单例的模版实现` 使用宏进一步简化。<!--more-->
 
 ## Singleton.h
 在 Singleton.h 的最后面添加宏 `SINGLETON`

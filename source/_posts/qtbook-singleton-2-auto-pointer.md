@@ -3,7 +3,7 @@ title: 单例的智能指针实现
 date: 2016-12-15 18:41:23
 tags: QtBook
 ---
-前面提出了一个问题：可不可以不需要我们手动的调用 release() 函数，程序结束前自动的删除单例类的对象呢？答案是可以，使用智能指针可以达到这个目的，这里我们使用的是 Qt 的 `QScopedPointer` 来实现，也可以使用标准的 C++ 的智能指针。
+前面提出了一个问题：可不可以不需要我们手动的调用 release() 函数，程序结束前自动的删除单例类的对象呢？答案是可以，使用智能指针可以达到这个目的，这里我们使用的是 Qt 的 `QScopedPointer` 来实现，也可以使用标准的 C++ 的智能指针。<!--more-->
 
 Qt 的帮助文档里对 `QScopedPointer` 的描述是
 > The QScopedPointer class stores a pointer to a dynamically allocated object, and deletes it upon destruction.

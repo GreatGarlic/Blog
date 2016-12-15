@@ -13,7 +13,7 @@ tags: QtBook
   * 拷贝构造函数定义为 private 的，是为了防止通过拷贝构造函数创建新的 ConfigUtil 对象
   * 赋值运算操作符定义为 private 的，是为了防止通过赋值操作创建新的 ConfigUtil 对象
 * 通过 `ConfigUtil::getInstance()` 获取 ConfigUtil 的对象
-* 当程序结束的时候调用 `ConfigUtil::release()` 删除它的对象，否则会造成内存泄漏。虽然程序结束了，内存会被系统回收，但是理论上还是要保证谁分配的内存谁回收
+* 当程序结束的时候调用 `ConfigUtil::release()` 删除它的对象，否则会造成内存泄漏。虽然程序结束了，内存会被系统回收，但是理论上还是要保证谁分配的内存谁回收<!--more-->
 
 ## ConfigUtil.h
 
