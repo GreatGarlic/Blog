@@ -168,14 +168,19 @@ tags: Index
 * [qmake 时复制文件](/qt-qmake-copy-file)
 * [Single Application](/qt-single-application)
 * [Qt 绘制平滑曲线](/qt-smooth-curve)
+* [Qt Tips](/qt-tips)
 * [升级 Xcode8 后 Qt 出错](/qt-xcode8-error)
 
 ## QtBook
+* [单播](/qtbook-network-udp-unicast)
+* [UDP 编程](/qtbook-network-udp)
+* [网络编程](/qtbook-network)
 * [蚂蚁线](/qtbook-paint-ant)
 * [用画家的思维绘制图形](/qtbook-paint-artist)
 * [绘图基础](/qtbook-paint-base)
 * [贝塞尔曲线](/qtbook-paint-bezier)
 * [画刷](/qtbook-paint-brush)
+* [Clip 实现复杂绘图效果](/qtbook-paint-clip)
 * [渐变及原理](/qtbook-paint-gradient)
 * [绘制路径](/qtbook-paint-path)
 * [画笔](/qtbook-paint-pen)
@@ -187,6 +192,13 @@ tags: Index
 * [QPainter 的状态保存与恢复](/qtbook-paint-status)
 * [绘制文本](/qtbook-paint-text)
 * [绘图](/qtbook-paint)
+* [单例的简单实现](/qtbook-singleton-1-simple)
+* [单例的智能指针实现](/qtbook-singleton-2-auto-pointer)
+* [单例的智能指针＋宏的实现](/qtbook-singleton-3-auto-pointer-macro)
+* [单例的模版实现](/qtbook-singleton-4-template)
+* [单例的模版＋宏的实现](/qtbook-singleton-5-template-macro)
+* [单例的其他实现](/qtbook-singleton-6-other)
+* [单例](/qtbook-singleton)
 * [Qt 之入门提高与实战](/qtbook)
 
 ## Redis

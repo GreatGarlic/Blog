@@ -25,6 +25,7 @@ tags: [QtBook, Index]
   * [实时动态曲线](/qtbook-paint-realtime-curve/)
   * [使用 QChart 创建平滑曲线](/qtbook-paint-smooth-curve-qchart/)
   * [使用 QChart 显示实时动态曲线](/qtbook-paint-realtime-curve-qchart/)
+  * [Clip 实现复杂绘图效果](/qtbook-paint-clip/)
   * 仿射变换原理
   * 巧妙的运用clip实现复杂效果
   * 访问QImage的像素，用算法实现各种效果的原理与实例，例如镜面反射
@@ -69,11 +70,11 @@ tags: [QtBook, Index]
   * Model And View
   * 动态加载数据的 Model
 
-* [网络编程](http://qtdebug.com/Network.html)
-  * [UDP 编程](http://qtdebug.com/Network-UDP.html)
-    * [单播：Unicast](http://qtdebug.com/Network-UDP-Unicast.html)
-    * [广播：Broadcast](http://qtdebug.com/Network-UDP-Broadcast.html)
-    * [组播：Multicast](http://qtdebug.com/Network-UDP-Multicast.html)
+* [网络编程](/qtbook-network)
+  * [UDP 编程](/qtbook-network-udp)
+    * [单播：Unicast](/qtbook-network-udp-unicast)
+    * [广播：Broadcast](/qtbook-network-udp-broadcast)
+    * [组播：Multicast](/qtbook-network-udp-multicast)
   * TCP 编程
 
 * [单例 Singleton](/qtbook-singleton/)
