@@ -76,7 +76,7 @@ allprojects {
             url 'http://maven.edu-edu.com.cn/content/groups/public/'
             credentials {
                 username 'admin'
-                password 'admin123'
+                password '*****'
             }
         }
     }
@@ -94,7 +94,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             repository(url: "http://maven.edu-edu.com.cn/nexus/content/repositories/releases/") {
-                authentication(userName: "admin", password: "admin123")
+                authentication(userName: "admin", password: "*****")
             }
             
             // 以下三项可选
@@ -150,7 +150,7 @@ project.afterEvaluate {
         }
     }
 }
-    ```
+```
 
 ## 获取命令中的参数
 推荐使用 -D 的方式
@@ -245,7 +245,7 @@ gretty {
 }
 ```
 > Tomcat 的 GET 请求的默认编码是 ISO8859-1，如果 GET 需要使用 UTF-8 的话，需要在 `server.xml` 中设置 `URIEncoding` 为 UTF-8:
-> 
+>
 ```
 <Connector port="8080" protocol="HTTP/1.1"
          connectionTimeout="20000"
@@ -253,7 +253,7 @@ gretty {
          URIEncoding="UTF-8"/>
 ```
 > 在 Gretty 中没有提供设置 `URIEncoding` 的选项，但是可以设置 `serverConfigFile` 引用 Tomcat 的 `server.xml` 来达到目的，例如:
-> 
+>
 ```
 gretty {
     httpPort = 8080
@@ -276,11 +276,11 @@ gretty {
 > * `reloadOnClassChange` // Class 文件变化后 reload
 > * `reloadOnConfigChange` // 配置文件如 web.xml 变化后 reload
 > * `reloadOnLibChange` // lib 目录下的 jar 变化后 reload
-> 
+>
 > 例如 Java 文件修改保存后会自动编译，导致 Class 文件变化，然后 gretty 会重新加载整个 Web 应用，例如应用启动时要执行计划任务，检查数据库的结构等，这样的热部署效率太低。
 >
 > 如果 Class 文件变化后，能不能只加载 Class 文件，而不是重新加载整个 Web 应用呢？设置 `managedClassReload=true` 即可 (使用的是 SpringLoaded 来进行热加载，并自动设置 reloadOnClassChange=false):
-    
+
 ```groovy
 gretty {
     port = 80

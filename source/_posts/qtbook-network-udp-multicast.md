@@ -6,7 +6,7 @@ tags: QtBook
 夜深人静，一个小黑屋子里发出神秘的嘀嘀嘀……嗒嗒嗒……嘀嘀嘀…… 的声音，谍战剧必不可少的画面  
 ![](/img/qtbook/network/Network-UDP-Multicast-Movie-1.jpg)
 
-Multicast 和发电报有相似之处，一条消息发送给多个既定的目标群体。
+Multicast 和发电报有相似之处，一条消息发送给多个既定的目标群体。<!--more-->
 
 下面一段话对 Multicast 的描述比我能描述的好很多：
 > Multicasting identifies logical groups of computers. A single message can then be sent to the group.
