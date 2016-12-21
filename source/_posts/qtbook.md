@@ -39,13 +39,13 @@ tags: [QtBook, Index]
   * [QSS Subcontrol](http://qtdebug.com/QSS-Subcontrol.html)
   * [QSS CalendarWidget](http://qtdebug.com/QSS-CalendarWidget.html)
 
-* [访问数据库](http://qtdebug.com/DB.html)
-  * [数据库驱动](http://qtdebug.com/DB-Driver.html)
-  * [访问 SQLite](http://qtdebug.com/DB-AccessSQLite.html)
-  * [访问 MySql](http://qtdebug.com/DB-AccessMySQL.html)
-  * [数据库常用操作](http://qtdebug.com/DB-Common.html)
-  * [数据库连接池](http://qtdebug.com/DB-ConnectionPool.html)
-  * [数据库访问工具 DBUtl](http://qtdebug.com/DB-DBUtil.html)
+* [访问数据库](/qtbook-db)
+  * [数据库驱动](/qtbook-db-driver)
+  * [访问 SQLite](/qtbook-db-sqlite)
+  * [访问 MySql](/qtbook-db-mysql)
+  * [数据库常用操作](/qtbook-db-common)
+  * [数据库连接池](/qtbook-db-connection-pool)
+  * [数据库访问工具 DBUtl](/qtbook-db-util)
 
 * 动画
   * QPropertyAnimation

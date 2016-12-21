@@ -149,3 +149,10 @@ echo -n "Welcome" | md5
 sudo kextunload /System/Library/Extensions/AppleHDA.kext
 sudo kextload /System/Library/Extensions/AppleHDA.kext
 ```
+
+## 递归创建目录
+
+```
+mkdir -p a/b/c
+```
+
