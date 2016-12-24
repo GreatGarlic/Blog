@@ -54,6 +54,7 @@ tags: Index
 * [Vue 使用 v-for 和设置属性及事件处理](/fe-vue-for-attribute)
 * [Webuploader 上传文件](/fe-webuploader)
 * [Atom 常用插件和快捷键](/mac-atom)
+* [在线预览 PDF](/pdf-online)
 
 ## Gradle
 * [Gradle 编码](/gradle-encoding)
@@ -126,6 +127,7 @@ tags: Index
 * [Spotlight 快捷键](/mac-spotlight-shortcut)
 * [Mac Terminal Powerline-Shell](/mac-terminal-powerline)
 * [Mac Tips](/mac-tips)
+* [在线预览 PDF](/pdf-online)
 
 ## Misc
 * [ActiveMQ](/misc-activemq)
@@ -172,6 +174,15 @@ tags: Index
 * [升级 Xcode8 后 Qt 出错](/qt-xcode8-error)
 
 ## QtBook
+* [数据库常用操作](/qtbook-db-common)
+* [数据库连接池](/qtbook-db-connection-pool)
+* [数据库驱动](/qtbook-db-driver)
+* [访问 MySql](/qtbook-db-mysql)
+* [访问 SQLite](/qtbook-db-sqlite)
+* [数据库访问工具 DBUtl](/qtbook-db-util)
+* [数据库](/qtbook-db)
+* [广播](/qtbook-network-udp-broadcast)
+* [组播](/qtbook-network-udp-multicast)
 * [单播](/qtbook-network-udp-unicast)
 * [UDP 编程](/qtbook-network-udp)
 * [网络编程](/qtbook-network)
@@ -268,6 +279,7 @@ tags: Index
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
 * [ActiveMQ 的 MQTT](/misc-mqtt)
 * [Spring 集成 Groovy](/misc-spring-groovy)
+* [在线预览 PDF](/pdf-online)
 * [Redis Tips](/redis-tips)
 * [SpringMVC Ajax 拖拽上传文件](/spring-mvc-upload-file-ajax)
 * [Spring 上传文件](/spring-mvc-upload-file)
