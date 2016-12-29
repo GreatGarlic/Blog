@@ -26,6 +26,7 @@ tags: [QtBook, Index]
   * [使用 QChart 创建平滑曲线](/qtbook-paint-smooth-curve-qchart/)
   * [使用 QChart 显示实时动态曲线](/qtbook-paint-realtime-curve-qchart/)
   * [Clip 实现复杂绘图效果](/qtbook-paint-clip/)
+  * 绘制按钮
   * 仿射变换原理
   * 巧妙的运用clip实现复杂效果
   * 访问QImage的像素，用算法实现各种效果的原理与实例，例如镜面反射

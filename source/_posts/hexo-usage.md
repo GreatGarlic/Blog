@@ -43,11 +43,14 @@ $ hexo server
 ```
 
 ## Create a new post
+
 ```
 $ hexo new "My New Post"
 ```
 
 ## Run server
+
+本地运行我们的博客系统，方便查看效果，运行 `hexo server` 后浏览器里访问 [http://127.0.0.1:4000](http://127.0.0.1:4000) 就可以了
 
 ``` bash
 $ hexo server
@@ -60,33 +63,33 @@ $ hexo generate
 ```
 
 ## Deploy to git
-* 申请 Github 账号，例如名字为 `xtuer`
-* 在 Github 创建一个名字为 `xtuer.github.io` 的仓库
-* 我们博客的网站自动为 <http://xtuer.github.io>
-* 安装 hexo 的 git 插件
+*   申请 Github 账号，例如名字为 `xtuer`
+*   在 Github 创建一个名字为 `xtuer.github.io` 的仓库
+*   我们博客的网站自动为 <http://xtuer.github.io>
+*   安装 hexo 的 git 插件
 
-    ```
-    $ npm install hexo-deployer-git --save
-    ```
+                ​```
+                $ npm install hexo-deployer-git --save
+                ​```
 
-* 在 `Blog/_config.yml` 中配置 git
+*   在 `Blog/_config.yml` 中配置 git
 
-    ```
-    deploy:
-      type: git
-      repo: git@github.com:xtuer/xtuer.github.io.git
-    ```
+                ​```
+                deploy:
+                  type: git
+                  repo: git@github.com:xtuer/xtuer.github.io.git
+                ​```
 
-* 发布时需要执行下面三步
+*   发布时需要执行下面三步
 
-    ```
-    $ hexo clean
-    $ hexo generate
-    $ hexo deploy
-    ```
+                ​```
+                $ hexo clean
+                $ hexo generate
+                $ hexo deploy
+                ​```
 
     > 注意，有时候发布时会提示你没有权限访问 Github 的仓库，那是因为 ssh 访问需要的验证文件无效了，需要更新一下，最简单的就是用 Github 的客户端先访问一下，然后再发布就可以了
-* 使用上面的命令发布好博客后，访问 <http://xtuer.github.io>，可以看到我们创建的博客能从网络上访问了
+*   使用上面的命令发布好博客后，访问 <http://xtuer.github.io>，可以看到我们创建的博客能从网络上访问了
 
 More info: [Deployment](https://hexo.io/docs/deployment.html)
 
@@ -119,7 +122,18 @@ alias hs='hexo server -g'
 * 本地预览用 `hs`
 * 发布时使用 `hd`
 
+## 自定义域名
+
+博客发布到 Github 后访问的地址如上面的 <http://xtuer.github.io> 不是很好记忆，如果你买了一个新的域名如 **qmake.win**，可以把这个域名指向这个博客，以在万网买的域名为例:
+
+1. 在万网的域名解析中把 **qmake.win** 解析道 **192.30.252.154**
+2. 在 Hexo 博客的 **source** 目录下创建文件 **CNAME**，其内容为 **qmake.win**
+3. 发布博客到 Github
+
+> 在 Github 上博客仓库的 Settings 中也可以设置自定义的域名，但是每次发布后会被重置，所以使用上面 CNAME 来保存域名就不用担心被重置了。
+
 ## 参考
+
 * [Hexo + Github, 搭建属于自己的博客](http://www.jianshu.com/p/465830080ea9)
 * [Hexo 搭建 Github 静态博客](http://www.cnblogs.com/zhcncn/p/4097881.html)
 * [Hexo 主题 Light 修改教程](http://www.jianshu.com/p/70343b7c2fd3)

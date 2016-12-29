@@ -166,6 +166,7 @@ tags: Index
 * [Lambda 在 Qt 中的运用](/qt-lambda)
 * [自定义 QListView](/qt-listview)
 * [Qt 自定义日志工具](/qt-logger)
+* [Qt5 乱码与 BOM](/qt-messy-code)
 * [观察者模式的 NotificationCenter](/qt-notification-center)
 * [qmake 时复制文件](/qt-qmake-copy-file)
 * [Single Application](/qt-single-application)
