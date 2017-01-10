@@ -10,12 +10,14 @@ tags: [Java, Cas]
 
 ## 1. 生成 keystore
 
+cert 证书的密码大家基本上都使用 `changeit`，JVM 的 **security/cacerts** 的密码也是 changeit，虽然下面演示使用的密码是 123456，但是为了方便最好还是用 changeit 的好，否则在后面 cas 一节中导入 cert 证书时会报错，当然也有办法解决。
+
 ```java
 执行命令:
 keytool -genkey -alias xtuer -keyalg RSA -keystore server.keystore
 
 按照提示来:
-Enter keystore password: // 输入 keystore 密码: 123456
+Enter keystore password: // 输入 keystore 密码: 123456，密码最好使用 changeit
 Re-enter new password:   // 再次输入 keystore 密码: 123456
 What is your first and last name?
   [Unknown]:             // 输入域名，如 www.xtuer.com, 注意这里不要写 IP 地址
