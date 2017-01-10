@@ -8,6 +8,14 @@ tags: [Java, Util]
 
 <!--more-->
 
+## OkHttp
+
+### Gradle 依赖
+
+```groovy
+compile 'com.squareup.okhttp3:okhttp:3.4.2'
+```
+
 ```java
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
@@ -31,9 +39,28 @@ public class OkHttpTest {
 }
 ```
 
-## Gradle 依赖
+但是如果用上面的代码访问 https 的网站如 https://www.baidu.com 则会报错，因为 https 需要加入证书信息，可以使用 OkHttp 的封装 `EasyOkHttp` 可以简化很多
+
+## EasyOkHttp
+
+### Gradle 依赖
 
 ```groovy
-compile 'com.squareup.okhttp3:okhttp:3.4.2'
+compile 'com.mzlion:easy-okhttp:1.0.7-beta'
 ```
+
+```java
+import com.mzlion.easyokhttp.HttpClient;
+
+public class OkHttpEasyTest {
+    public static void main(String[] args) {
+        String responseData = HttpClient.get("https://www.baidu.com").execute().asString(); // 自动处理证书信息
+        System.out.println(responseData);
+    }
+}
+```
+
+## 参考资料
+
+[对 OkHttp 网络框架的封装 EasyOkHttp](http://www.oschina.net/p/easy-okhttp?fromerr=vg7BzejC)
 

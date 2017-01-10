@@ -1,5 +1,5 @@
 ---
-title: https-pkix
+title: Https PKIX
 date: 2017-01-10 17:30:04
 tags: [Mac, Java]
 ---
