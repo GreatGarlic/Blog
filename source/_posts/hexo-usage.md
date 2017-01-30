@@ -63,13 +63,14 @@ $ hexo generate
 ```
 
 ## Deploy to git
-*   在 Github 创建一个名字为 `xtuer.github.io` 的仓库
-*   我们博客的网站自动为 <http://xtuer.github.io>
-*   安装 hexo 的 git 插件
 
-                ​```
-                $ npm install hexo-deployer-git --save
-                ​```
+* 在 Github 创建一个名字为 `xtuer.github.io` 的仓库
+* 我们博客的网站自动为 <http://xtuer.github.io>
+* 安装 hexo 的 git 插件
+
+    ```
+    $ npm install hexo-deployer-git --save
+    ```
 
 *   在 `Blog/_config.yml` 中配置 git
 
@@ -79,8 +80,13 @@ $ hexo generate
         repo: git@github.com:xtuer/xtuer.github.io.git
     ```
 
-*   发布时需要执行下面三步
+* 发布时需要执行下面三步
 
+    ​```
+    $ hexo clean
+    $ hexo generate
+    $ hexo deploy
+    ​```
 
     > 注意，有时候发布时会提示你没有权限访问 Github 的仓库，那是因为 ssh 访问需要的验证文件无效了，需要更新一下，最简单的就是用 Github 的客户端先访问一下，然后再发布就可以了
 *   使用上面的命令发布好博客后，访问 <http://xtuer.github.io>，可以看到我们创建的博客能从网络上访问了
