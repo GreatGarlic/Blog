@@ -63,7 +63,6 @@ $ hexo generate
 ```
 
 ## Deploy to git
-*   申请 Github 账号，例如名字为 `xtuer`
 *   在 Github 创建一个名字为 `xtuer.github.io` 的仓库
 *   我们博客的网站自动为 <http://xtuer.github.io>
 *   安装 hexo 的 git 插件
@@ -74,19 +73,14 @@ $ hexo generate
 
 *   在 `Blog/_config.yml` 中配置 git
 
-                ​```
-                deploy:
-                  type: git
-                  repo: git@github.com:xtuer/xtuer.github.io.git
-                ​```
+    ```
+    deploy:
+        type: git
+        repo: git@github.com:xtuer/xtuer.github.io.git
+    ```
 
 *   发布时需要执行下面三步
 
-                ​```
-                $ hexo clean
-                $ hexo generate
-                $ hexo deploy
-                ​```
 
     > 注意，有时候发布时会提示你没有权限访问 Github 的仓库，那是因为 ssh 访问需要的验证文件无效了，需要更新一下，最简单的就是用 Github 的客户端先访问一下，然后再发布就可以了
 *   使用上面的命令发布好博客后，访问 <http://xtuer.github.io>，可以看到我们创建的博客能从网络上访问了
@@ -126,7 +120,7 @@ alias hs='hexo server -g'
 
 博客发布到 Github 后访问的地址如上面的 <http://xtuer.github.io> 不是很好记忆，如果你买了一个新的域名如 **qmake.win**，可以把这个域名指向这个博客，以在万网买的域名为例:
 
-1. 在万网的域名解析中把 **qmake.win** 解析道 **192.30.252.154**
+1. 在万网的域名解析中把 **qmake.win** 解析到 **192.30.252.154**
 2. 在 Hexo 博客的 **source** 目录下创建文件 **CNAME**，其内容为 **qmake.win**
 3. 发布博客到 Github
 

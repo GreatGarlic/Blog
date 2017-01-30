@@ -74,4 +74,6 @@ theme: yele
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:xtuer/xtuer.github.io.git
+##  repo: git@github.com:xtuer/xtuer.github.io.git
+  repo: git@git.coding.net:xtuer/xtuer.git
+  branch: master
