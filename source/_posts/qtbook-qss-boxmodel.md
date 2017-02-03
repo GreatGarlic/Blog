@@ -16,6 +16,8 @@ QWidget 的 content, padding, border, margin 的矩形区域都是一样大的�
 Margin，Border，Padding 都分为 4 个部分：上、右、下、左，它们的值可以不同：  
 ![](/img/qtbook/qss/QSS-BoxModel-2.png)
 
+<!--more-->
+
 ## padding 的语法
 `padding: 2px 3px 4px 5px`，表示:
 

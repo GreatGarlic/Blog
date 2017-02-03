@@ -5,7 +5,7 @@ tags: QtBook
 ---
 QCalendarWidget 是一个比较复杂的 widget，由几个 QToolButton, QSpinBox, QMenu, QTableView 等组成，Qt 的帮助文档里没有其 QSS 的相关文档，当要修改其样式的时候应该怎么办呢？
 
-我们这里采用的方法是分析组成 QCalendarWidget 的 widget 的 className 和 objectName，然后 QSS 每个 widget，最终达到修改 QCalendarWidget 样式的目的。
+我们这里采用的方法是分析组成 QCalendarWidget 的 widget 的 className 和 objectName，然后 QSS 每个 widget，最终达到修改 QCalendarWidget 样式的目的。<!--more-->
 
 ```cpp
 MainWidget::MainWidget(QWidget *parent) : QWidget(parent), ui(new Ui::MainWidget) {

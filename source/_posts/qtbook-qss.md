@@ -20,4 +20,4 @@ Qt 提供的 widget 的默认外观很多时候都不符合项目的界面需求
 * [QSS 选择器](/qtbook-qss-selector)
 * [Border-Image](/qtbook-qss-border-image)
 * [QSS Subcontrol](/qtbook-qss-subcontrol)
-* [QSS CalendarWidget](QSS-CalendarWidget.html)
+* [QSS CalendarWidget](/qtbook-qss-calendar)

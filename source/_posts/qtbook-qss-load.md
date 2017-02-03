@@ -10,6 +10,7 @@ tags: QtBook
 1. Widget 的对象调用 `setStyleSheet(qss)` 函数加载 QSS，QSS 的作用域是 widget 自己和它的所有子 widget
 2. QApplication 的对象 `setStyleSheet(qss)` 函数加载 QSS，QSS 的作用域是整个程序里的所有 widget
 3. 在 Qt Designer 的 `Change styleSheet...` 打开的 QSS 编辑器中添加 QSS，在哪个 widget 上添加的，QSS 的作用域是那个 widget 自己和它的所有子 widget，其实和 `1` 是一样的，只不这里过是在 Qt Designer 里添加，不是我们自己手动写 C++ 代码添加而已。打开 ui 文件生成的代码(ui_xxxx.h)，可以看到里面也是自动生成代码调用 `setStyleSheet(qss)` 添加 QSS 的，和我们写代码添加没有区别，只是在 Qt Designer 里添加的话，有时候方便一些，也可以实时看到 QSS 的效果
+<!--more-->
 
 ## Widget 加载 QSS
 

@@ -11,7 +11,7 @@ tags: QtBook
 
 Subcontrol 的 QSS 和大多数 widget 的差不多，也支持盒子模型，可以自定义 color, background, background-color, background-image, border, padding, margin, width, height 等，也支持 Pseudo-States。
 
-Subcontrol 的绘制位置由 subcontrol-origin、subcontrol-position, top, left 来指定，就先从这几个属性开始入手。
+Subcontrol 的绘制位置由 subcontrol-origin、subcontrol-position, top, left 来指定，就先从这几个属性开始入手。<!--more-->
 
 ## Subcontrol-Origin
 `subcontrol-origin` 定义在 parent widget 中绘制 subcontrol 的参考矩形，默认在 padding 的矩形中绘制。
