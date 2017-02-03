@@ -31,14 +31,14 @@ tags: [QtBook, Index]
   * 巧妙的运用clip实现复杂效果
   * 访问QImage的像素，用算法实现各种效果的原理与实例，例如镜面反射
 
-* [Qt Style Sheet (QSS)](http://qtdebug.com/QSS.html)
-  * [QSS 基础](http://qtdebug.com/QSS-Base.html)
-  * [加载 QSS](http://qtdebug.com/QSS-Load.html)
-  * [盒子模型](http://qtdebug.com/QSS-BoxModel.html)
-  * [QSS 选择器](http://qtdebug.com/QSS-Selector.html)
-  * [Border-Image](http://qtdebug.com/QSS-BorderImage.html)
-  * [QSS Subcontrol](http://qtdebug.com/QSS-Subcontrol.html)
-  * [QSS CalendarWidget](http://qtdebug.com/QSS-CalendarWidget.html)
+* [Qt Style Sheet (QSS)](/qtbook-qss)
+  * [QSS 基础](/qtbook-qss-base)
+  * [加载 QSS](/qtbook-qss-load)
+  * [盒子模型](/qtbook-qss-boxmodel)
+  * [QSS 选择器](/qtbook-qss-selector)
+  * [Border-Image](/qtbook-qss-border-image)
+  * [QSS Subcontrol](/qtbook-qss-subcontrol)
+  * [QSS CalendarWidget](/qtbook-qss-calendar)
 
 * [访问数据库](/qtbook-db)
   * [数据库驱动](/qtbook-db-driver)
