@@ -81,6 +81,7 @@ tags: Index
 
 ## Java
 * [Git Tips](/git-tips)
+* [Https PKIX](/https-pkix)
 * [安装 CAS-Server](/java-cas-1-install)
 * [Spring Security 入门](/java-cas-2-security-intro)
 * [使用 CAS 单点登陆](/java-cas-3-use-cas)
@@ -99,6 +100,7 @@ tags: Index
 * [微 Web 服务的 REST 框架 Spark Framework](/java-spark-framework)
 * [Tomcat 启用 https](/java-tomcat-https)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
+* [Perlin Noise](/perlin-noise)
 * [Redis Tips](/redis-tips)
 * [QQ 登陆的 Scribe-Java 实现](/scribe-qq)
 * [Java 访问 Solr](/solr-java-access)
@@ -116,6 +118,7 @@ tags: Index
 
 ## Mac
 * [Git Tips](/git-tips)
+* [Https PKIX](/https-pkix)
 * [Linux Crontab](/linux-crontab)
 * [Atom 常用插件和快捷键](/mac-atom)
 * [ForkLift 记住 FTP 密码](/mac-forklift)
@@ -204,6 +207,14 @@ tags: Index
 * [QPainter 的状态保存与恢复](/qtbook-paint-status)
 * [绘制文本](/qtbook-paint-text)
 * [绘图](/qtbook-paint)
+* [QSS 基础](/qtbook-qss-base)
+* [Border Image](/qtbook-qss-border-image)
+* [盒子模型](/qtbook-qss-boxmodel)
+* [QSS QCalendarWidget](/qtbook-qss-calendar)
+* [加载 QSS](/qtbook-qss-load)
+* [QSS 选择器](/qtbook-qss-selector)
+* [QSS Subcontrol](/qtbook-qss-subcontrol)
+* [QSS](/qtbook-qss)
 * [单例的简单实现](/qtbook-singleton-1-simple)
 * [单例的智能指针实现](/qtbook-singleton-2-auto-pointer)
 * [单例的智能指针＋宏的实现](/qtbook-singleton-3-auto-pointer-macro)
@@ -281,6 +292,7 @@ tags: Index
 * [ActiveMQ 的 MQTT](/misc-mqtt)
 * [Spring 集成 Groovy](/misc-spring-groovy)
 * [在线预览 PDF](/pdf-online)
+* [Perlin Noise](/perlin-noise)
 * [Redis Tips](/redis-tips)
 * [SpringMVC Ajax 拖拽上传文件](/spring-mvc-upload-file-ajax)
 * [Spring 上传文件](/spring-mvc-upload-file)
