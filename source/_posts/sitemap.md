@@ -55,6 +55,9 @@ tags: Index
 * [Webuploader 上传文件](/fe-webuploader)
 * [Atom 常用插件和快捷键](/mac-atom)
 * [在线预览 PDF](/pdf-online)
+* [小程序布局](/wx-flex)
+* [小程序滚动](/wx-scroll)
+* [小程序轮播](/wx-swiper)
 
 ## Gradle
 * [Gradle 编码](/gradle-encoding)
