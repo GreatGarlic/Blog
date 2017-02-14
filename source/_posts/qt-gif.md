@@ -1,5 +1,5 @@
 ---
-title: Qt 显示 Gif
+title: Qt 显示 GIF
 date: 2017-02-13 14:05:39
 tags: Qt
 ---
