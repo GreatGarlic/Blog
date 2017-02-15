@@ -24,7 +24,7 @@ keytool -export -alias xtuer -file server.crt -keystore server.keystore
 
 ## 2. 导入证书
 
-在使用 CAS 登陆的项目所在的电脑上导入上面生成的证书 `server.cer`
+在使用 CAS 登陆的项目所在的电脑上导入上面生成的证书 `server.cer` (不是 CAS Server 所在电脑，而是 CAS Client 所在电脑)
 
 ```
 命令行 cd 进入 server.cer 所在目录
@@ -42,7 +42,13 @@ Trust this certificate? [no]: // 输入 yes
 
 ## 3. 注册使用 CAS 的站点
 
-修改 `<cas>`/WEB-INF/classes/services/Apereo-10000002.json 中的 `"serviceId" : "^https://www.apereo.org"` 为 `"serviceId" : "^http.*"`
+修改 `<cas>`/WEB-INF/classes/services/Apereo-10000002.json
+
+```
+"serviceId" : "^https://www.apereo.org" 
+修改为 
+"serviceId" : "^http.*"
+```
 
 ## 4. 修改 spring-security.xml
 
