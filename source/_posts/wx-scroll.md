@@ -3,7 +3,16 @@ title: 小程序滚动
 date: 2017-02-07 17:49:57
 tags: FE
 ---
-微信小程序使用 **scroll-view** 实现滚动区域，有水平滚动和垂直滚动，设置 WXSS 的时候，需要注意使用 `font-size: 0 和 white-space: nowrap`。
+微信小程序使用 **scroll-view** 实现滚动区域，有水平滚动和垂直滚动，scroll-view 的结构如下:
+
+```html
+<scroll-view>
+    <view></view>
+    ...
+    <view></view>
+</scroll-view>
+```
+设置 WXSS 的时候，需要注意使用 `font-size: 0 和 white-space: nowrap`。
 
 ![](/img/fe/wx-scroll.png)
 <!--more-->
@@ -90,6 +99,8 @@ button {
     background-color: #2FE8A1;
 }
 ```
+水平 scroll-view 需要使用 `white-space: nowrap` 防止 view 换行。  
+垂直 scroll-view 需要使用 `font-size: 0` 去掉 view 之间的空格占据的空间。
 
 ```js
 // 文件名: scroll.js
