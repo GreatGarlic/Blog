@@ -35,7 +35,7 @@ MainWidget::MainWidget(QWidget *parent)
 }
 ```
 
-在非 widget 上绘图，如上面的 QPixmap，在什么地方都可以，但是在 QWidget 及其子类里绘图却没有这么自由，通常都是要在哪个 widget 上绘图，就需要在它的 `paintEvent()` 函数里绘图，即重载 paintEvent() 函数。
+在非 widget 上绘图，如上面的 QPixmap，在什么地方都可以，但是在 QWidget 及其子类里绘图却没有这么自由，通常都是要在哪个 widget 上绘图，就需要在它的 `paintEvent()` 函数里绘图，即重写 paintEvent() 函数。
 
 例如类 PandoraWidget 是 QWidget 的子类，要在它上面画一个矩形，它的 paintEvent() 函数如下：
 

@@ -54,3 +54,6 @@ int main(int argc, char *argv[]) {
 如果查看 QMovie API，会发现 `QMovie::loopCount()` 能够返回 GIF 动画的循环次数，但是这个次数是创建 GIF 时设置的次数，QMovie 没有提供 API 来设置动画循环的次数，不过我们可以监听动画执行时的 frameChanged 信号，如果当前帧是 GIF 的最后一帧时则说明一次动画播放完成，需要停止动画播放时调用 `QMovie::stop()` 即可。上面的例子中 GIF 动画执行完一次的时候就停止，如果需要执行完 3 次时才停止，应该怎么修改呢？
 
 QMovie 中 GIF 动画帧的序号从 0 开始计数，例如共有 200 帧的 GIF 动画的最后一帧的下标是 199，`QMovie::frameCount()` 返回 GIF 的帧数。
+
+## 性能
+QMovie 显示 GIF 的性能还是非常强劲的，在项目中显示一个 200 帧，50M 大小的 GIF，和显示普通的图片速度一样非常快，没有任何延迟的感觉，Mac 和 Windows 都测试过。
