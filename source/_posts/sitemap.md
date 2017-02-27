@@ -56,6 +56,7 @@ tags: Index
 * [Atom 常用插件和快捷键](/mac-atom)
 * [在线预览 PDF](/pdf-online)
 * [小程序布局](/wx-flex)
+* [小程序中显示 HTML](/wx-html)
 * [小程序滚动](/wx-scroll)
 * [小程序轮播](/wx-swiper)
 
@@ -158,14 +159,15 @@ tags: Index
 * [PHP 使用 PDO 访问数据库](/php-database-pdo)
 
 ## Qt
+* [C++ 查看预处理后的源文件](/cpp-macro)
 * [FlatBuffers 入门之 Java + Qt 版](/java-flatbuffer)
 * [Qt 访问网络](/qt-access-network)
 * [Qt 应用程序的图标](/qt-app-icon)
 * [线程一调用线程二中函数的正确姿势](/qt-call-in-different-thread)
 * [集成自定义类型到 MetaType 系统](/qt-custom-type-metatype)
 * [QSS 实现的扁平滚动条](/qt-flat-scrollbar)
-* [Qt 调整无边框窗口的大小](/qt-frameless-window-resizable)
 * [Qt 创建圆角、无边框、有阴影、可拖动的窗口](/qt-frameless-window)
+* [Qt 显示 GIF](/qt-gif)
 * [Qt 访问网络的 HttpClient](/qt-httpclient)
 * [鼠标放到 View 的 item 上时显示 tool tip](/qt-item-hover-tooltip)
 * [Qt 的 Json 读写工具类 Json](/qt-json)
@@ -173,8 +175,10 @@ tags: Index
 * [自定义 QListView](/qt-listview)
 * [Qt 自定义日志工具](/qt-logger)
 * [Qt5 乱码与 BOM](/qt-messy-code)
+* [去掉 Windows 中控件的虚线框](/qt-no-focus-rect)
 * [观察者模式的 NotificationCenter](/qt-notification-center)
 * [qmake 时复制文件](/qt-qmake-copy-file)
+* [Qt 正则表达式](/qt-regex)
 * [Single Application](/qt-single-application)
 * [Qt 绘制平滑曲线](/qt-smooth-curve)
 * [Qt Tips](/qt-tips)
@@ -267,6 +271,7 @@ tags: Index
 * [Spring Security Remember Me](/spring-security-5-rememberme)
 * [Spring Security 集群](/spring-security-6-cluster)
 * [Spring Security Login Util](/spring-security-7-login-util)
+* [Spring Security 自动登录](/spring-security-8-auto-login)
 
 ## Spring-Web
 * [处理 Ajax 请求](/spring-web-ajax)
