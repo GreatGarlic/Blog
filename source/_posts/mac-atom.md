@@ -8,35 +8,34 @@ Atom 以前很慢，所以一直不想用，在 1.0 版本后启动差不多需�
 
 <!--more-->
 
-<style>
-table td {
-    min-width: 200px;
-}
-</style>
+## 常用插件
 
-插件                    |         说明
----------------------- | ----------------------
-atom-ternjs            | 这是 Tern 项目的 Atom 插件，提供了了比较精确的代码补全功能，不止是匹配输入过的关键字，还可以提示 ECMAScript、DOM/BOM、NodeJS 的方法和属性，也能自动分析依赖的模块，给出补全提示，这样Atom 用起来就有点 IDE 的感觉了。
-highlight-selected     | 高亮所有和当前选中单词一样的单词，IDE 标配。
-quick-highlight        | 和 `highlight-selected` 相似，但是能高亮多个选择的词
-pigments               | CSS 颜色可视化，例如显示 rgba(0,0,0,0.8) 对应的颜色
-jshint                 | JavaScript 代码实时错误提示
-atom-beautify          | 格式化插件, 支持很多语言，HTML，JS，CSS 等等<br>如果从包管理器里安装不了，就试试从命令行里 `apm install atom-beautify`<br>使用: `cmd + shift + p`, 输入 `beatify`，或者使用快捷键 `ctrl + alt + b`
-atom-icons             | 给文件加上图标
-jquery-snippets        | jQuery API 代码片段
-set-syntax             | 方便的使用 `Command Palette` (cmd + shift + p 打开) 修改当前文件的语法
-atom-html-preview           | 在 Atom 里实时的预览 HTML 的内容，`Command Palette` 搜索 `preview`，或者使用快捷键 `ctrl + shift + h`
-regex-railroad-diagram | 正则表达式可视化: 鼠标放到正则表达式上面自动可视化，例如在 JS 文件里 `/\d+/g`
-atom-no-tab-close-button | 隐藏关闭按钮，避免误操作关闭 tab，使用 `cmd + w` 来关闭 tab
-docblockr                | 函数名前输入 `/**` 按下回车生成文档的模版
+| 插件                       | 说明                                       |
+| ------------------------ | ---------------------------------------- |
+| atom-ternjs              | 这是 Tern 项目的 Atom 插件，提供了了比较精确的代码补全功能，不止是匹配输入过的关键字，还可以提示 ECMAScript、DOM/BOM、NodeJS 的方法和属性，也能自动分析依赖的模块，给出补全提示，这样Atom 用起来就有点 IDE 的感觉了。 |
+| highlight-selected       | 高亮所有和当前选中单词一样的单词，IDE 标配。                 |
+| quick-highlight          | 和 `highlight-selected` 相似，但是能高亮多个选择的词    |
+| pigments                 | CSS 颜色可视化，例如显示 rgba(0,0,0,0.8) 对应的颜色     |
+| jshint                   | JavaScript 代码实时错误提示                      |
+| atom-beautify            | 格式化插件, 支持很多语言，HTML，JS，CSS 等等<br>如果从包管理器里安装不了，就试试从命令行里 `apm install atom-beautify`<br>使用: `cmd + shift + p`, 输入 `beatify`，或者使用快捷键 `ctrl + alt + b` |
+| atom-icons               | 给文件加上图标                                  |
+| jquery-snippets          | jQuery API 代码片段                          |
+| set-syntax               | 方便的使用 `Command Palette` (cmd + shift + p 打开) 修改当前文件的语法 |
+| atom-html-preview        | 在 Atom 里实时的预览 HTML 的内容，`Command Palette` 搜索 `preview`，或者使用快捷键 `ctrl + shift + h` |
+| regex-railroad-diagram   | 正则表达式可视化: 鼠标放到正则表达式上面自动可视化，例如在 JS 文件里 `/\d+/g` |
+| atom-no-tab-close-button | 隐藏关闭按钮，避免误操作关闭 tab，使用 `cmd + w` 来关闭 tab  |
+| docblockr                | 函数名前输入 `/**` 按下回车生成文档的模版                 |
+| tree-view-open-files     | Show open files in a list above the tree view. |
 
-功能              |        快捷键
------------------ | -----------------
-显示所有函数        | `cmd + r`
-显示隐藏 tree-view | `cmd + \`
-拆分窗口           | 先按下 `cmd + k`，然后按下方向键
+## 快捷键
 
-自定义快捷键
+| 功能             | 快捷键                   |
+| -------------- | --------------------- |
+| 显示所有函数         | `cmd + r`             |
+| 显示隐藏 tree-view | `cmd + \`             |
+| 拆分窗口           | 先按下 `cmd + k`，然后按下方向键 |
+
+## 自定义快捷键
 
 * 如果已经被使用了，先解绑，例如 `cmd + l`
 
@@ -50,3 +49,24 @@ docblockr                | 函数名前输入 `/**` 按下回车生成文档的�
     '.platform-darwin, .platform-win32, .platform-linux':
         'cmd-l': 'go-to-line:toggle'
     ```
+
+## 自定义文件的类型
+
+比如微信小程序的样式文件扩展名是 wxss，在 Atom 中打开默认是纯文本的样式，没有使用 CSS 的语法高亮，可以渲染它的修改语法规则为 CSS，但是只是一次生效的，下次打开工程又无效了。
+
+可以手动的修改 config.cson(Atom -> Config)，在 core 下面创建 customFileTypes 来配置文件的打开类型:
+
+```properties
+core:
+  customFileTypes:
+    "source.css": [
+      "wxss"
+    ]
+    "text.html.basic": [
+      "wxml"
+    ]
+```
+
+### 怎么查找 key，例如 text.html.basic 呢？
+
+在 Packages 里搜索 **language-html**，点击打开，可以看到 `Scope: text.html.basic`，也即是在 Package 里搜索 **language- + 文件类型**，然后找到 **Scope** 即可。

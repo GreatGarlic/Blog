@@ -59,6 +59,7 @@ tags: Index
 * [小程序中显示 HTML](/wx-html)
 * [小程序滚动](/wx-scroll)
 * [小程序轮播](/wx-swiper)
+* [小程序 Tips](/wx-tips)
 
 ## Gradle
 * [Gradle 编码](/gradle-encoding)
@@ -81,6 +82,7 @@ tags: Index
 * [Miscellaneous](/misc-index)
 * [Qt 之入门提高与实战](/qtbook)
 * [All Documents](/sitemap)
+* [Spring Security](/spring-security-index)
 * [Spring Web 项目开发](/spring-web-index)
 
 ## Java

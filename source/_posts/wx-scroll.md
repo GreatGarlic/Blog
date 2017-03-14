@@ -64,7 +64,7 @@ tags: FE
 
 /* 垂直滚动 */
 #vertical-scroll-view {
-    height: 150px;
+    height: 150px; /* 必须设置固定的高度才能出现滚动效果 */
     font-size: 0; /* 去掉 item 之间的空白，因为有一个空格 */
 }
 
@@ -100,7 +100,7 @@ button {
 }
 ```
 水平 scroll-view 需要使用 `white-space: nowrap` 防止 view 换行。  
-垂直 scroll-view 需要使用 `font-size: 0` 去掉 view 之间的空格占据的空间。
+垂直 scroll-view 需要使用 `font-size: 0` 去掉 view 之间的空格占据的空间，并且需要给  scroll-view 设置一个固定的高度，否则看不到滚动效果。
 
 ```js
 // 文件名: scroll.js
