@@ -42,7 +42,6 @@ Semantic Ui 中创建 Tab，需要 2 步:
 
     <script>
         $(document).ready(function() {
-            // http://omqpd0pt4.bkt.clouddn.com/ade.jpg
             $('.tabular.menu .item').tab(); // [2] 使能够点击切换 tab
         });
     </script>
