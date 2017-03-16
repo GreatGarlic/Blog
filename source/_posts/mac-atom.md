@@ -70,3 +70,17 @@ core:
 ### 怎么查找 key，例如 text.html.basic 呢？
 
 在 Packages 里搜索 **language-html**，点击打开，可以看到 `Scope: text.html.basic`，也即是在 Package 里搜索 **language- + 文件类型**，然后找到 **Scope** 即可。
+
+## 自定义 CSS
+
+例如修改 **highlight-selected** 选中文本的背景色:
+
+1. **Atom > Stylesheets...**
+
+2. ```css
+   atom-text-editor .highlights .highlight-selected.background .region {
+       background-color: #3E4450;
+   }
+   ```
+
+

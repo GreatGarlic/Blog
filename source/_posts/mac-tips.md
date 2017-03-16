@@ -53,7 +53,14 @@ set number
 ## 查找后使用 grep
 `find . -name "*.java" | xargs grep -n --color "topic"`
 
+## 查找后打开文件
+
+```
+find . -name mac-tips.md | xargs open
+```
+
 ## awk 输出列
+
 ```
 // 输出第一列
 echo 1 2 3 4 5 | awk '{ print $1 }'
@@ -115,7 +122,7 @@ find *.txt -exec sh -c "iconv -f GB18030 -t UTF8 {} > {}.txt" \;
         └── test
             ├── java
             └── resources
-    
+
     9 directories, 3 files
     ```
 
