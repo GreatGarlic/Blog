@@ -103,6 +103,8 @@ tags: FE
 ![](/img/fe/less-2.png)
 
 > 上面的 Less 解析为 CSS 花了大概 14 毫秒，性能应该不是问题，而且是在浏览器端解析的，对服务器没有任何影响。
+>
+> If you're using a 3rd party CMS, have limited control of server side, and don't want to worry about syncing issues with the produced CSS, it's an option. As the stack overflow discussions point out, Less caches the translated CSS in newer browsers. But our site also requires JavaScript to function anyway, so if JS is turned off, they can't really use the site anyway. Don't get me wrong, we're still looking for a preprocessing method, **but so far performance hasn't really been an issue**.
 
 ## Less 语法简介
 
