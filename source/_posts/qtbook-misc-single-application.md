@@ -1,7 +1,7 @@
 ---
 title: Single Application
 date: 2016-11-15 14:44:01
-tags: Qt
+tags: QtBook
 ---
 如果限制一个程序同时只能启动一个实例，有几个可以使用的库
 

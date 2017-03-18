@@ -1,7 +1,7 @@
 ---
 title: SpringMvc 接收日期参数
 date: 2016-11-15 19:49:22
-tags: Spring-Mvc
+tags: [Spring-Mvc, Spring-Web]
 ---
 SpringMvc 的请求中的参数默认(字符串)是不能自动地转换为日期的，需要使用 Converter, InitBinder 或者 Formatter 来把请求中的参数转换为日期。
 
@@ -14,23 +14,23 @@ SpringMvc 的请求中的参数默认(字符串)是不能自动地转换为日�
     package com.xtuer.converter;
 
     import org.springframework.core.convert.converter.Converter;
-    
+
     import java.text.ParseException;
     import java.text.SimpleDateFormat;
     import java.util.Date;
-    
+
     public class DateConverter implements Converter<String, Date> {
         @Override
         public Date convert(String source) {
             String pattern = source.length()==10 ? "yyyy-MM-dd" : "yyyy-MM-dd HH:mm:ss";
             SimpleDateFormat format = new SimpleDateFormat(pattern);
-    
+
             try {
                 return format.parse(source);
             } catch (ParseException e) {
                 e.printStackTrace();
             }
-    
+
             return null;
         }
     }
@@ -87,5 +87,5 @@ SpringMvc 的请求中的参数默认(字符串)是不能自动地转换为日�
     ```
 
 > 注意: @InitBinder("date") 中 date 必须和 toDate(Date date) 中的 date 名字一样，当然，请求的参数中也必须有名为 date 的参数。
-> 
+>
 > @InitBinder 只能在当前 Controller 中使用，当有多个地方都需要把参数转换为日期对象，则使用 Converter 更适合。

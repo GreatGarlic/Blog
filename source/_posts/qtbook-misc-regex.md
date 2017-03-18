@@ -1,7 +1,7 @@
 ---
 title: 实用正则表达式
 date: 2017-02-24 15:28:14
-tags: Qt
+tags: QtBook
 ---
 Qt 里正则表达式使用 **QRegularExpression**，可以使用正则表达式查找字符串，QString 中可以使用正则表达式 **QRegularExpression** 进行字符串替换，拆分等。<!--more-->
 

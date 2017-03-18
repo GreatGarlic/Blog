@@ -1,7 +1,7 @@
 ---
 title: 自定义类与 QVariant
 date: 2017-03-18 11:18:33
-tags: Qt
+tags: QtBook
 ---
 
 **QVariant** 非常重要，可以存储很多种不同的类型，例如 **int, QString, QRect, QPoint** 等，其构造函数有很多个，参数是很多种不同的常用类型，还内置了可以直接转换 QVaraint 到某些类型的函数，如 **toInt(), toString(), toPoint(), toSize()** 等，还是 QObject 动态 property 机制的关键，除了支持内置的类型外，QVariant 还被设计成可以存储我们自己定义的类型。

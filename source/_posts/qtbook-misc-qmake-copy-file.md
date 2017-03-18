@@ -1,7 +1,7 @@
 ---
 title: qmake 时复制文件
 date: 2016-11-16 12:50:55
-tags: Qt
+tags: QtBook
 ---
 有时在编译前需要准备一些文件，例如修改了 QtCreator 的编译输出目录: `Build & Run > Default build directory`，使用 Promote 后需要在编译前把相应 Widget 的头文件复制到 `.o` 文件所在的目录，这时就可以在 `.pro` 文件中使用复制文件的命令(其实就是执行系统命令)，让 qmake 执行这些命令来复制文件，而不是手动的复制需要的文件。
 
