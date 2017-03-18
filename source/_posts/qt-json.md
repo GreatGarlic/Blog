@@ -164,7 +164,7 @@ QJsonValue(object, QJsonObject({"avatar":"Sparta"}))
 ```
 
 > 查看保存的 Json 文件，比 x.json 中多出了下面的内容，说明修改与保存成功
-> 
+>
 ```json
 "foo": {
     "bar": {
@@ -273,7 +273,7 @@ public:
 #endif // JSON_H
 ```
 
-## JsonReader.cpp
+## Json.cpp
 ```cpp
 #include "Json.h"
 #include <QFile>

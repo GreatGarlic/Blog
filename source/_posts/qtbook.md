@@ -30,7 +30,6 @@ tags: [QtBook, Index]
   * 仿射变换原理
   * 巧妙的运用clip实现复杂效果
   * 访问QImage的像素，用算法实现各种效果的原理与实例，例如镜面反射
-
 * [Qt Style Sheet (QSS)](/qtbook-qss)
   * [QSS 基础](/qtbook-qss-base)
   * [加载 QSS](/qtbook-qss-load)
@@ -39,7 +38,6 @@ tags: [QtBook, Index]
   * [Border-Image](/qtbook-qss-border-image)
   * [QSS Subcontrol](/qtbook-qss-subcontrol)
   * [QSS CalendarWidget](/qtbook-qss-calendar)
-
 * [访问数据库](/qtbook-db)
   * [数据库驱动](/qtbook-db-driver)
   * [访问 SQLite](/qtbook-db-sqlite)
@@ -47,14 +45,12 @@ tags: [QtBook, Index]
   * [数据库常用操作](/qtbook-db-common)
   * [数据库连接池](/qtbook-db-connection-pool)
   * [数据库访问工具 DBUtl](/qtbook-db-util)
-
 * 动画
   * QPropertyAnimation
   * 动画插值函数与高级运用
   * 传统动画实现、缓冲动画原理
   * 状态机与Qt动画一起使用
   * 与Layout一起使用时实现动画效果的展开与关闭标签页
-
 * 多线程编程
   * 继承 QThread
   * 线程池 QThreadPool
@@ -66,18 +62,15 @@ tags: [QtBook, Index]
     * QWaitCondition
     * 多种方式实现生产者消费者问题
   * 线程和 UI 的交互：汉诺塔动画实现
-
 * Qt 的 MVC
   * Model And View
   * 动态加载数据的 Model
-
 * [网络编程](/qtbook-network)
   * [UDP 编程](/qtbook-network-udp)
     * [单播：Unicast](/qtbook-network-udp-unicast)
     * [广播：Broadcast](/qtbook-network-udp-broadcast)
     * [组播：Multicast](/qtbook-network-udp-multicast)
   * TCP 编程
-
 * [单例 Singleton](/qtbook-singleton/)
   * [单例的简单实现](/qtbook-singleton-1-simple)
   * [单例的智能指针实现](/qtbook-singleton-2-auto-pointer)
@@ -85,4 +78,10 @@ tags: [QtBook, Index]
   * [单例的模版实现](/qtbook-singleton-4-template)
   * [单例的模版＋宏的实现](/qtbook-singleton-5-template-macro)
   * [单例的其他实现](/qtbook-singleton-6-other)
+* 其他
+  * [自定义类与 QVariant](/qtbook-misc-qvariant)
+  * [qmake 时复制文件](/qtbook-misc-qmake-copy-file)
+  * [Single Application](/qtbook-misc-single-application)
+  * [Qt5 中文乱码](/qtbook-misc-messy-code)
+  * [实用正则表达式](/qtbook-misc-regex)
 
