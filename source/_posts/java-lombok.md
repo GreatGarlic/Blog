@@ -5,13 +5,25 @@ tags: Java
 ---
 根据 `Java Bean` 的规范，Bean 就是一个简单的类，主要是属性和访问函数 Getter and Setter 等，都是模版性的代码，虽然有 IDE 帮助我们自动生成，但是代码打开后全是一大堆的访问函数，看上去也不爽，更郁闷的是，有时候 Bean 有几十个属性，添加一个新的属性后也很容易忘了添加相应的访问函数，而 Java 的很多框架对属性的访问都是使用反射和访问函数来查找的，由于缺少访问函数导致有时候后端得到了数据，但是前端始终缺几个数据，逻辑看上去又没问题，很难得一下发现问题在哪里(已经发生过好几次)。现在好了，我们可以使用 `Lombok` 来自动的为 Bean 生成访问函数。
 
-> Lombok 不会影响程序的性能，它使用 javac 的插件机制在编译阶段生成访问函数到 class 的字节码里，和我们直接写没有什么区别。
+一般使用下面 3 个注解就足够了，没必要搞得更麻烦:
+
+* @Getter
+* @Setter
+* @Accessors(chain=true)
+
+> 虽然 @Data 的功能很强大，但是阅读上不够直观，所以不推荐使用。
+>
+> @Data is equivalent to @Getter, @Setter, @RequiredArgsConstructor, @ToString and  @EqualsAndHashCode.
+>
+> 
+>
+> Lombok 不会影响程序的运行性能，它使用 javac 的插件机制在编译阶段生成访问函数到 class 的字节码里，和我们直接写没有什么区别，反编译一下生成的 class 文件就一目了然了。
 
 <!--more-->
 
 ## Gradle 依赖
 ```groovy
-compile 'org.projectlombok:lombok:1.16.10'
+compile 'org.projectlombok:lombok:1.16.14'
 ```
 
 ## 使用 Lombok 的 Bean
@@ -24,6 +36,7 @@ import lombok.Setter;
 
 @Getter
 @Setter
+@Accessors(chain=true) // 可以链式调用 setter
 public class User {
     private int id;
     private String username;
@@ -52,6 +65,8 @@ public class Test {
         User user = new User(1, "Alice", "alice@gmail.com");
         System.out.println(user.getUsername());
         System.out.println(user.getEmail());
+        // 可以链式调用 setter，当有很多个属性需要设置时非常方便
+        user.setUsername("Bob").setEmail("bob@gmail.com");
     }
 }
 ```
@@ -143,7 +158,7 @@ public class User {
 ```
 
 > 如果 `@Builder` 作用在类名上，会自动的创建一个包含所有属性为参数的构造函数，这时如果想自己创建一个无参的构造函数，就必须同时自定义一个包含所有属性为参数的构造函数，而且参数的顺序必须和属性定义的顺序一致，否则会出问题，还是有点复杂的，为了简单起见，还是不要在类名上用 `@Builder`。
-> 
+>
 > 如果 `@Builder` 只作用于构造函数上，那就相对容易了，参数的个数和顺序都是随意的。
 
 ## 参考资料
