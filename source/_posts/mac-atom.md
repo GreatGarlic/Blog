@@ -26,6 +26,8 @@ Atom 以前很慢，所以一直不想用，在 1.0 版本后启动差不多需�
 | atom-no-tab-close-button | 隐藏关闭按钮，避免误操作关闭 tab，使用 `cmd + w` 来关闭 tab  |
 | docblockr                | 函数名前输入 `/**` 按下回车生成文档的模版                 |
 | tree-view-open-files     | Show open files in a list above the tree view. |
+| less-autocompile         | 保存的时候把 Less 自动编译为 CSS                    |
+| OOOOOOOOOOOOOOOO         | OOO                                      |
 
 ## 快捷键
 

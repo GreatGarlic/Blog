@@ -11,7 +11,7 @@ tags: QtBook
 * 图形界面的本质都是一样的，就是一张静态的画
 * 点击按钮，看到按钮动了
 
-这里我们就用 QPainter 绘图来模拟实现一个系统的界面原型，为了简单说明问题，只绘制了 Button 和 CheckBox，其他的控件同理。当然 Button 是能够点击的，点击 CheckBox 也能够切换选中状态，效果如下图:
+这里我们就用 QPainter 绘图来模拟实现一个系统的界面原型，为了简单说明问题，只绘制了 Button 和 CheckBox，其他的控件同理。当然 Button 是能够点击的，点击 CheckBox 也能够切换选中状态，没有点击到 Button 和 CheckBox 的时候它们不会接收到鼠标事件，点击一个控件也不会影响另一个控件，效果如下图:
 
 ![](/img/qtbook/paint/Paint-OSUi-1.png) ![](/img/qtbook/paint/Paint-OSUi-2.png)
 
@@ -355,7 +355,8 @@ int main(int argc, char *argv[]) {
 3. 鼠标事件发生时选择控件也是遍历了所有的控件，Qt Graphics/View 框架使用 binary space partition 算法来选择控件，大幅的提升了效率，所以它能够高效的处理上百万个图元。
 4. 如果控件放在了界面上不可见的地方，是不是就不需要绘制出来了呢？
 5. 怎么实现像 QPushButton 的 clicked 信号，响应点击事件？
-6. 鼠标事件处理的时候没有把鼠标的坐标信息传给 Widget
+6. 鼠标事件处理的时候没有把鼠标的坐标信息传给 Widget。
+7. 如果多个控件重叠到一起，鼠标移动到它们上时，它们都应该做出响应还是只有最上面那个作出响应？可以参考 QGraphicsItem 的 zValue。
 
 还有太多太多的问题，这里就不一一列举了，说了这么多，只是希望大家能够理解系统界面的本质画出来的，不要感觉很神秘，大道至简。
 

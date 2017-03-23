@@ -6,7 +6,9 @@ tags: FE
 
 使用 Less 最直接的好处是可以使用层级的风格写样式，当然它还可以定义变量、函数等，比 CSS 好管理，而且语法和 CSS 差别不大，这里介绍 HTML 里使用 Less 代替 CSS:
 
-1. 书写 Less 文件
+**方法一: less.js 解析 Less 文件为 CSS**
+
+1. 写 Less 样式
 
 2. HTML 中引入 Less 文件
 
@@ -14,11 +16,33 @@ tags: FE
    <link href="style.less" rel="stylesheet/less" type="text/css"/>
    ```
 
-3. HTML 中引入 less.js，它的作用是把上面引入的 Less 文件解析为 CSS，放到 HTML 的 head 中
+3. HTML 中引入 less.js，它的作用是把上面引入的 Less 文件解析为 CSS，放到 HTML 的 head 中，less.js 会自动的把 Less 样式翻译为 css
 
    ```html
    <script src="https://cdn.staticfile.org/less.js/2.7.1/less.min.js"></script>
    ```
+
+**方法二: Atom 在保存 Less 文件时自动编译为 CSS 文件**
+
+使用 Atom 的插件 **less-autocompile**，在保存 less 文件时 Atom 会自动生成对应的 css 文件，那么就可以直接在 HTML 里引用 css 了，这样就不需要担心像上面这个方法造成的性能，网络访问等问题了，90% 的情况下没啥问题，只是理论上的问题而已。
+
+需要在 Less 文件的第一行添加下面的内容，告诉生成文件的路径，规则等:
+
+```js
+// out: style.css, sourcemap: false, compress: false
+
+// 定义变量
+@borderWidth: 2px;
+@borderColor: #BBB;
+
+.card {
+    padding: 10px;
+    border: @borderWidth solid @borderColor;
+    border-radius: 4px;
+    ......
+```
+
+
 
 <!--more-->
 

@@ -237,6 +237,46 @@ encodeURIComponent('http://www.xtuer.com/foo?redirect-url=http://www.xtuer.com/p
 
 可以访问 <http://pressbin.com/tools/urlencode_urldecode/> 对 url 进行编码
 
+## 数组插入、更新、删除
+
+数组的插入、更新、删除使用 `splice(index, count [, newElement])` 来实现:
+
+* index: 操作的下标
+* count: 从 index 起需要删除的元素个数
+* newElement: 替换上面删除的 count 个元素的新元素
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+</head>
+
+<body>
+    <script>
+        // splice(index, count, [newElement]);
+        var ns = [1, 2, 3, 4, 6];
+
+        // 插入一个元素
+        ns.splice(4, 0, 5); // count 为 0 因为插入不需要删除元素，插入 5
+        console.log(ns); // [1, 2, 3, 4, 5, 6]
+
+        // 更新第一个元素
+        ns.splice(0, 1, 99); // count 为 1 说明需要删除一个元素，然后插入 99
+        console.log(ns); // [99, 2, 3, 4, 5, 6]
+
+        // 删除第一个元素
+        ns.splice(0, 1); // count 为 1 且没有第三个参数，说明删除一个元素
+        console.log(ns); // [2, 3, 4, 5, 6]
+    </script>
+</body>
+
+</html>
+```
+
+> 添加到数组最后面可以使用 push(newElement) 
+
 ## 数组排序
 
 ```js
@@ -256,6 +296,7 @@ var str = [1, 2, 3].map(formatNumber).join(':'); // 输出 01:02:03
 ```
 
 ## 格式化日期
+
 把日期格式化为 `yyyy-MM-dd hh:mm:ss` 的格式
 
 ```js
