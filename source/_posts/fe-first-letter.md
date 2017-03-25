@@ -13,15 +13,15 @@ tags: FE
 <head>
     <meta charset="utf-8">
     <style media="screen">
-      	/* 首字母缩进 */
+        body {
+            font-family: 'Arial'
+        }
         div {
             text-indent: 2em;
         }
-      
-        /* 首字母样式 */
         div:first-letter {
             font-size: 3em;
-            color: purple;
+            color: gray;
         }
     </style>
 </head>

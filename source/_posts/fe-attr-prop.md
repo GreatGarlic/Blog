@@ -7,7 +7,7 @@ jQuery 中可以使用 attr 和 prop 获取的属性，它们的区别是什么�
 
 > The segregation of [`attr()`](http://api.jquery.com/attr) and [`prop()`](http://api.jquery.com/prop) should help alleviate some of the confusion between HTML attributes and DOM properties. `$.fn.prop()` grabs the specified DOM property, while `$.fn.attr()` grabs the specified HTML attribute.
 
-HTML attributes 在网页的代码中可以看到，DOM properties 是内存数据，在 HTML 代码中看不到。**attr** 操作的是 HTML attributes, **prop** 操作的是 DOM properties，它们可以是重叠的，例如 img 的 src 既可以了使用 attr 访问，也可以使用 prop 访问，但是 checkbox 的 checked 应该使用 prop 访问，attr 访问会有奇怪的问题。大多数时候 attr 和 prop 的效果都一样，但是访问 boolean 的属性时切记要使用 prop。<!--more-->
+HTML attributes 在网页的代码中可以看到，DOM properties 是内存数据，在 HTML 代码中看不到。**attr** 操作的是 HTML attributes, **prop** 操作的是 DOM properties，它们可以是重叠的，例如 img 的 src 既可以使用 attr 访问，也可以使用 prop 访问，但是 checkbox 的 checked 应该使用 prop 访问，attr 访问会有奇怪的问题。大多数时候 attr 和 prop 的效果都一样，但是访问 boolean 的属性时切记要使用 prop。<!--more-->
 
 * 读写 HTML 元素本身就带有的固有属性，也即是 DOM properties，**尤其是 boolean 的属性**，使用prop方法，例如
 
