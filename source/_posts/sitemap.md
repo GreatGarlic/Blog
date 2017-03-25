@@ -27,11 +27,13 @@ tags: Index
 ## FE
 * [绝对坐标布局](/absolute-layout)
 * [JS 模版 artTempalte](/fe-arttemplate)
+* [jQuery 的 attr 和 prop](/fe-attr-prop)
 * [Bootstrap 模态对话框](/fe-bootstrap-modal-dialog)
 * [Bootstrap Progress Bar](/fe-bootstrap-progressbar)
 * [静态文件 CDN](/fe-cdn)
 * [JS 关闭当前标签页](/fe-close-window)
 * [自定义 HTML5 播放器](/fe-custom-html5-player)
+* [首字母放大缩进](/fe-first-letter)
 * [FlatShadow](/fe-flat-shadow)
 * [Div 在另一个 Div 中同时水平垂直居中](/fe-horizontal-vertical-center)
 * [解析身份证](/fe-id-card)
@@ -45,6 +47,7 @@ tags: Index
 * [Lean Modal](/fe-leanmodal)
 * [使用 LESS 代替 CSS](/fe-less)
 * [jQuery 的 REST 插件](/fe-rest)
+* [Semantic Ui 的 Behavior 和 Settings](/fe-semantic-ui-behavior-settings)
 * [Semantic Ui 菜单栏](/fe-semantic-ui-menu)
 * [Semantic Ui 进度条](/fe-semantic-ui-progress)
 * [Semantic Ui 侧边栏](/fe-semantic-ui-sidebar)
@@ -245,6 +248,14 @@ tags: Index
 * [Redis 客户端 Redis-Commander](/redis-client)
 * [Redis Tips](/redis-tips)
 * [Java 访问 Redis](/redis)
+
+## Semantic-Ui
+* [Semantic Ui 的 Behavior 和 Settings](/fe-semantic-ui-behavior-settings)
+* [Semantic Ui 菜单栏](/fe-semantic-ui-menu)
+* [Semantic Ui 进度条](/fe-semantic-ui-progress)
+* [Semantic Ui 侧边栏](/fe-semantic-ui-sidebar)
+* [Semantic Ui Tab](/fe-semantic-ui-tab)
+* [Semantic Ui Validation](/fe-semantic-ui-validation)
 
 ## Solr
 * [Solr 中文分词插件 SmartCN](/solr-chinese-analyzer)

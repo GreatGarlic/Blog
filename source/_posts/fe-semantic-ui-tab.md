@@ -1,7 +1,7 @@
 ---
 title: Semantic Ui Tab
 date: 2017-03-15 10:44:40
-tags: FE
+tags: [FE, Semantic-Ui]
 ---
 
 Semantic Ui 中创建 Tab，需要 2 步:

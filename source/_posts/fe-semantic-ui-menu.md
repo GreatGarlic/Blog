@@ -1,7 +1,7 @@
 ---
 title: Semantic Ui 菜单栏
 date: 2017-03-14 15:39:56
-tags: FE
+tags: [FE, Semantic-Ui]
 ---
 
 使用 menu 创建菜单栏:

@@ -1,7 +1,7 @@
 ---
 title: Semantic Ui Validation
 date: 2017-03-15 13:24:36
-tags: FE
+tags: [FE, Semantic-Ui]
 ---
 
 Semantic Ui 自带了表单验证功能，使用起来很简单:

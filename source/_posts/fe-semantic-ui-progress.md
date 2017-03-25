@@ -1,7 +1,7 @@
 ---
 title: Semantic Ui 进度条
 date: 2017-03-16 22:57:09
-tags: FE
+tags: [FE, Semantic-Ui]
 ---
 
 Semantic Ui 使用 **progress** 来创建进度条，可以使用 **data-percent** 或者 **data-value + data-total** 两种方式计算及显示进度:

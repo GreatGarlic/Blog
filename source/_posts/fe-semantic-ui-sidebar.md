@@ -1,7 +1,7 @@
 ---
 title: Semantic Ui 侧边栏
 date: 2017-03-14 09:46:15
-tags: FE
+tags: [FE, Semantic-Ui]
 ---
 
 侧边栏在页面打开后就一直存在需要使用 class visible，并且间隔和内容区域的间隔不要太大，可以使用 CSS 调整一下  pusher 的 translate3d 的位置，icon menu 的文本都是居中的，如果不想居中，也需要自己调整，效果如下
