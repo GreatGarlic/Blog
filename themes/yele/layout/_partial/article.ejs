@@ -74,14 +74,21 @@
 
 <% if (!index && post.comments) { %>
     <!-- UY BEGIN -->
-    <section class="youyan" id="comments" style="padding: 15px; margin: 0 15px; background: #fff; border: 1px solid #ddd;">
+    <section id="comments">
         <div id="uyan_frame"></div>
-        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=2128624"></script>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=<%= config.uyan_id %>"></script>
     </section>
     <!-- UY END -->
 <% } %>
 
 <style>
+    #comments {
+        padding: 15px;
+        margin: 0 15px;
+        background: #fff;
+        border: 1px solid #ddd;
+    }
+
     #mask {
         position: fixed;
         width: 100%;
