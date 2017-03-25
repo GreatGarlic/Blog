@@ -1,5 +1,5 @@
 ---
-title: Hexo 使用友言评论
+title: Hexo 友言评论
 date: 2017-03-25 20:23:34
 tags: Hexo
 ---
