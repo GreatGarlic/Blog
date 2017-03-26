@@ -21,7 +21,7 @@ tags: Hexo
 
 ## 使用友言评论
 
-把上面友言的代码复制到主题的 **layout/_partial/article.ejs** 文件中，例如放在 `<section id="comments">` 下，我的如下
+把上面友言的代码复制到主题的 **layout/_partial/article.ejs** 文件中，例如放在 `<section id="comments">` 下即可，我的如下
 
 ```html
 <% if (!index && post.comments) { %>
