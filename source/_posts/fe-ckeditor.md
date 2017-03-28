@@ -140,6 +140,8 @@ CKEDITOR.replace('editor', {
 > success() 是层弹出后的回调方法。
 
 ```js
+createCkeditor('editor'); // 先创建一个固定高度的 editor，弹出层的效果更好
+
 function showEditorDialog() {
     layer.open({
         type: 1,
@@ -183,7 +185,9 @@ function createCkeditor(name) {
 
 ## CKEditor 上传图片
 
-在上面的基础上点击上传图片按钮，可以看到上传图片的层在 Layer 下面，这是因为 Layer 的 z-index 默认是 19891014，而上传图片层的 z-index 是 10000，所以只要修改 Layer 的 z-index 小于 10000 即可，在 open() 函数传参数 `zIndex: 1000` 即可。图片上传的层没问题了，但是发现没有上传图片的选项，只有 图像信息和链接。要显示出上传图片的选项也只是一个配置的问题，只要给 CKEditor 配置 **filebrowserImageUploadUrl** 为上传图片的地址即可。
+在上面的基础上点击上传图片按钮，可以看到上传图片的对话框在 Layer 下面，这是因为 Layer 的 z-index 默认是 19891014，而上传图片层的 z-index 是 10000，所以只要修改 Layer 的 z-index 小于 10000 就能显示正常了，在 open() 函数传参数 `zIndex: 1000` 即可。
+
+图片上传的对话框没问题了，但是发现没有上传图片的选项，只有**图像信息**和**链接** 2 个标签页。要显示出上传图片的标签页也只是一个配置的问题，只要给 CKEditor 配置 **filebrowserImageUploadUrl** 为上传图片的地址即可：
 
 ![](/img/fe/ckeditor-3.png)
 
@@ -191,12 +195,12 @@ function createCkeditor(name) {
 function showEditorDialog() {
     layer.open({
         type: 1,
-        title: '魔法编辑器', // [可选]
+        title: '魔法编辑器',[1] 
         closeBtn: false,
         content: $('#editor-box'), // 对话框中的内容部分
         area: ['700px'], // 对话框的大小, 可以同时指定高宽 ['700px', '440px']
         shadeClose: false, // 为 true 时点击遮罩关闭
-        zIndex: 1000, // *** 重要 ***
+        zIndex: 1000, // *** [1] 重要 ***
         btn: ['保存', '取消'], // 自定义按钮
         btn1: function() {
             var content = CKEDITOR.instances.editor.getData();
@@ -226,36 +230,106 @@ function createCkeditor(name) {
         removePlugins: 'elementspath',
         resize_enabled: false,
         height: '300px',
-        filebrowserImageUploadUrl: '/ckeditor-upload' // *** 不同页面上传的地址有可能不一样哦 ***
+        filebrowserImageUploadUrl: '/ckeditor-upload-image' // *** [2] 不同页面上传的地址有可能不一样哦 ***
     });
 }
 ```
-
-**服务器端接收图片的程序:**
 
 服务器端接收图片使用参数 **upload**，并且还有一个回调的函数名的参数 **CKEditorFuncNum**，服务器端需要返回的是一段 `<script>`，上传完成后 CKEditor 会调用这一段 `<script>` 例如设置刚才上传的图片到设置框中，或则弹出上传错误信息。
 
 ```java
 /**
- * 接收 CKEditor 上传的图片
+ * CKEditor 上传图片
  *
  * @param file 上传的图片
- * @param callback CKEditor 图片上传成功后的回调函数
+ * @param funcNumber 图片上传成功后的回调标志
  * @return 返回一段 <script></script>，CKEditor 会调用这一段 script
  */
-@PostMapping("/ckeditor-upload")
+@PostMapping("/ckeditor-upload-image")
 @ResponseBody
-public String uploadCkeditor(@RequestParam("upload") MultipartFile file, @RequestParam("CKEditorFuncNum") String callback) {
+public String ckeditorUploadImage(@RequestParam("upload") MultipartFile file, @RequestParam("CKEditorFuncNum") String funcNumber) {
     // [1] 存储上传得到的图片网络地址
     System.out.println(file.getOriginalFilename());
 
     // [2] 检查图片的格式，如果有错返回错误的 script，如 : <script>alert('图片格式不支持');</script>
 
     // [3] 上传成功，返回的 script 里带上图片的网络地址
-    String imageUrl = "/img/x.png";
-    return String.format("<script>window.parent.CKEDITOR.tools.callFunction(%s, '%s')</script>", callback, imageUrl);
+    String imageUrl = "/img/x.png"; // 为了简单测试，总返回同一个图片地址
+    return String.format("<script>window.parent.CKEDITOR.tools.callFunction(%s, '%s')</script>", funcNumber, imageUrl);
 }
 ```
 
+这里浏览器端上传图片是不能够限制文件的格式和大小等，需要更好的效果，需要自己实现上传部分 `<input>` 那里的逻辑，例如替换为 webuploader，服务器端当然也得再判断一次。
+
+## CKEditor 上传文件
+
+上面配置 **filebrowserImageUploadUrl** 后实现了上传图片，如果需要上传普通文件，然后在 Editor 中呈现为一个链接，需要配置 **filebrowserUploadUrl**，这样就会在创建超链接的窗口中出现上传文件的标签页：
+
+![](/img/fe/ckeditor-4.png)
+
+```js
+// 创建 CKEditor 编辑器，如果已经存在，则先销毁
+function createCkeditor(name) {
+    var editor = CKEDITOR.instances[name];
+
+    if (editor) {
+        editor.destroy(true);
+    }
+
+    CKEDITOR.replace(name, {
+        language: 'zh-cn',
+        allowedContent: true,
+        removePlugins: 'elementspath',
+        resize_enabled: false,
+        height: '300px',
+        filebrowserUploadUrl: '/ckeditor-upload-file', // 上传文件，the Upload tab will appear in the Link, Image, and Flash dialog windows.
+        filebrowserImageUploadUrl: '/ckeditor-upload-image' // 上传图片，the location of the script that handles file uploads in the Image dialog window. If not set, CKEditor will use filebrowserUploadUrl.
+    });
+}
+```
+
+```java
+/**
+ * CKEditor 上传文件
+ *
+ * @param file 上传的文件
+ * @param funcNumber 文件上传成功后的回调标志
+ * @return 返回一段 <script></script>，CKEditor 会调用这一段 script
+ */
+@PostMapping("/ckeditor-upload-file")
+@ResponseBody
+public String ckeditorUploadFile(@RequestParam("upload") MultipartFile file, @RequestParam("CKEditorFuncNum") String funcNumber) {
+    // [1] 存储上传得到的文件网络地址
+    System.out.println(file.getOriginalFilename());
+    System.out.println("FuncNumber: " + funcNumber);
+
+    // [2] 检查文件的格式，如果有错返回错误的 script，如 : <script>alert('文件格式不支持');</script>
+
+    // [3] 上传成功，返回的 script 里带上图片的网络地址
+    String fileUrl = "/files/x.rar"; // 为了简单测试，总返回同一个文件的地址
+    return String.format("<script>window.parent.CKEDITOR.tools.callFunction(%s, '%s')</script>", funcNumber, fileUrl);
+}
+```
+
+如果仔细观察，会发现服务器端 **ckeditorUploadFile()** 和 **ckeditorUploadImage()** 的实现几乎完全一样，返回 `<script>` 也是一样的，可以把它们合成一个，通过参数区别是上传图片还是上传文件，例如 **/ckeditor-upload?type=file** 和 **/ckeditor-upload?type=image**。
+
+**filebrowserUploadUrl，filebrowserImageUploadUrl 和 filebrowserFlashUploadUrl 有什么区别？**
+
+可以参考一下帮助文档:
+
+* [filebrowserFlashUploadUrl](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-filebrowserFlashUploadUrl) 
+
+  The location of the script that handles file uploads in the Flash dialog window. ...
+
+* [filebrowserImageUploadUrl](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-filebrowserImageUploadUrl)
+
+  The location of the script that handles file uploads in the Image dialog window. ...
+
+* [filebrowserUploadUrl](http://docs.ckeditor.com/#!/api/CKEDITOR.config-cfg-filebrowserUploadUrl)
+
+  The location of the script that handles file uploads. If set, the **Upload** tab will appear in the **Link**, **Image**, and **Flash** dialog windows.
+
 到此为止，CKEditor 的介绍应该能满足百分之八十的需求了，如果想更深度的使用 CKEditor，就需要仔细的阅读帮助文档了 <http://docs.cksource.com/Main_Page>。
+
+也许有人要问我，你为啥这么崇洋媚外，不使用百度的 UEditor 或则 UMEditor？不更简单吗？帮助文档还是中文的呢！确实尝试过，但是它们的图片和文件上传弹出对话框在弹出层中显示不全（打开看看 Dom 结构就明白为啥了）和在弹出对话框中全屏编辑时有问题而放弃。
 
