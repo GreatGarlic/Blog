@@ -71,10 +71,24 @@ tags: Java
 </Host>
 ```
 
-## Default Host
+## 默认 Host
 
 ```xml
 <Engine name="Catalina" defaultHost="localhost">
 ```
 
 **defaultHost** 是指使用 IP 访问时 Tomcat 默认用来处理请求的 Host，也就是访问此域名对应的应用。如果有多个域名时，最好是配置一下。
+
+## Host 别名
+
+可以为同一个应用配置多个域名:
+
+```xml
+<Host name="www.foo.com" appBase="/Users/Biao/Desktop/www.foo.com" unpackWARs="true" autoDeploy="true">
+    <Alias>foo.com</Alias>
+    <Alias>sub.foo.com</Alias>
+    <Valve className="org.apache.catalina.valves.AccessLogValve" directory="/Users/Biao/Desktop/www.foo.com/logs" prefix="foo_access_log" suffix=".txt" pattern="%h %l %u %t &quot;%r&quot; %s %b"/>
+</Host>
+```
+
+www.foo.com，sub.foo.com 和 foo.com 都指向同一个应用。
