@@ -31,6 +31,7 @@ tags: Index
 * [Bootstrap 模态对话框](/fe-bootstrap-modal-dialog)
 * [Bootstrap Progress Bar](/fe-bootstrap-progressbar)
 * [静态文件 CDN](/fe-cdn)
+* [CKEditor 的使用](/fe-ckeditor)
 * [JS 关闭当前标签页](/fe-close-window)
 * [自定义 HTML5 播放器](/fe-custom-html5-player)
 * [首字母放大缩进](/fe-first-letter)
@@ -84,6 +85,7 @@ tags: Index
 ## Hexo
 * [Hexo 多说评论](/hexo-duoshuo)
 * [Hexo 环境搭建](/hexo-usage)
+* [Hexo 友言评论](/hexo-uyan)
 * [Markdown 入门](/mk-intro)
 
 ## Index
@@ -95,6 +97,7 @@ tags: Index
 * [Spring Web 项目开发](/spring-web-index)
 
 ## Java
+* [CKEditor 的使用](/fe-ckeditor)
 * [Git Tips](/git-tips)
 * [Https PKIX](/https-pkix)
 * [安装 CAS-Server](/java-cas-1-install)
@@ -103,6 +106,7 @@ tags: Index
 * [Spring Security 使用 CAS 实现单点登陆](/java-cas-index)
 * [How to change default Java version](/java-change-version)
 * [Java Code Snippets](/java-code-snippets)
+* [Docx 转换为 HTML](/java-docx-html)
 * [计算文件的 MD5](/java-file-md5)
 * [FlatBuffers 入门之 Java + Qt 版](/java-flatbuffer)
 * [Java 使用 FTP](/java-ftp)
@@ -124,6 +128,8 @@ tags: Index
 * [SpringMVC Ajax 拖拽上传文件](/spring-mvc-upload-file-ajax)
 * [Spring 上传文件](/spring-mvc-upload-file)
 * [Tomcat 部署](/tomcat-deploy)
+* [Tomcat 自定义 lib 目录](/tomcat-lib)
+* [Tomcat 多域名](/tomcat-multiple-domains)
 * [Apache Commons](/util-apache-commons)
 * [Commons-Codec 例子](/util-commons-codec)
 * [Commons IO 例子](/util-commons-io)
