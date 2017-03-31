@@ -260,7 +260,14 @@ public class DemoController {
 </web-app>
 ```
 
+## 启动 Web 服务
+
+命令行 cd 进入项目所在目录，也就是 build.gradle 的目录，然后执行 `gradle appStart` 就启动了 Tomcat 服务，项目就可以访问了。
+
+Gradle 的使用请参考 http://qtdebug.com/tags/Gradle/
+
 ## 测试
+
 1. 访问 <http://localhost:8080>
 
     > 输出: Welcome
