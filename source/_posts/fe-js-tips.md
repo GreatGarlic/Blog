@@ -332,10 +332,30 @@ $('#xform input:radio:checked')
 if ($('#xform input:radio').get(0).checked)
 if ($('#xform input:radio[name="name"]').is(':checked'))
 
-// [3] 取消选中
-$('#xform input:radio').removeAttr('checked')
+// [3] 取消选中，不要使用 attr, checked 是 DOM property
+$('#xform input:radio').prop('checked', false)
 
 // [4] 选中
-$('#xform input:radio').attr("checked", 'checked')
+$('#xform input:radio').prop("checked", true)
 ```
 > checkbox 也是一样的
+
+## 多行字符串
+
+```js
+// 利用函数的 toString() 函数把函数的注释提取出多行字符串
+function multiLineString(fn) {
+    return fn.toString().replace(/^[^\/]+\/\*/, '').replace(/\*\/[^\/]+$/, '');
+}
+
+// 创建多行字符串
+var str = multiLineString(function() { /*
+    <div>Your multiple lines here:
+        <div className="course">Course---</div>
+        <div>Content</div>
+    </div>
+*/});
+
+console.log(str);
+```
+

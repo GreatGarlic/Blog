@@ -12,6 +12,21 @@ CKEditor 还有一个很大的优势是它有一个非常强大的插件商店�
 
 * 修改表格的大小 **Table Resize**: <http://ckeditor.com/addon/tableresize>
 * 预览编辑结果 **Preview**: <http://ckeditor.com/addon/preview>
+* 文本的颜色 **Color Button**: <http://ckeditor.com/addon/colorbutton>
+
+修改配置 config.js
+
+```
+// 使用上面的几个插件
+config.extraPlugins = 'tableresize,preview,colorbutton';
+
+// Simplify the dialog windows.
+config.removeDialogTabs = 'image:advanced;image:Link;link:advanced;link:target';
+config.removePlugins = 'elementspath';
+```
+
+
+
 
 下面将介绍:
 
