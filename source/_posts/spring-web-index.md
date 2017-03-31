@@ -1,7 +1,7 @@
 ---
 title: Spring Web 项目开发
 date: 2016-10-15 14:31:43
-tags: Index
+tags: [Index, Spring-Web]
 ---
 1. [Web 开发简介](/spring-web-introduction)
 2. [Web 项目框架](/spring-web-skelton)
