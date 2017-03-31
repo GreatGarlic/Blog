@@ -28,8 +28,7 @@ tags: Spring-Web
     │           │       ├── jquery.js
     │           │       └── template.js
     │           ├── view
-    │           │   └── fm
-    │           │       └── hello.fm
+    │           │   └── hello.fm
     │           └── web.xml
     └── test
         ├── java
@@ -38,14 +37,14 @@ tags: Spring-Web
 
 <!--more-->
 
-目录或文件       | 说明
--------------- | --------------
-spring-mvc.xml | SpringMVC 的配置文件
-static/js      | 存放我们自己的 js
-static/css     | 存放我们自己的 css
-static/img     | 存放我们自己的图片
-static/lib     | 存放第三方的前端文件 js，css 等
-view/fm        | 存放 Freemarker 的模版文件，后缀名为 .fm
+| 目录或文件          | 说明                           |
+| -------------- | ---------------------------- |
+| spring-mvc.xml | SpringMVC 的配置文件              |
+| static/js      | 存放我们自己的 js                   |
+| static/css     | 存放我们自己的 css                  |
+| static/img     | 存放我们自己的图片                    |
+| static/lib     | 存放第三方的前端文件 js，css 等          |
+| view           | 存放 Freemarker 的模版文件，后缀名为 .fm |
 
 ## build.gradle
 ```groovy
@@ -189,9 +188,9 @@ public class DemoController {
         <property name="contentType" value="text/html; charset=UTF-8"/>
     </bean>
 
-    <!-- Freemarker 文件放在目录 WEB-INF/view/ftl 下 -->
+    <!-- Freemarker 文件放在目录 WEB-INF/view 下 -->
     <bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
-        <property name="templateLoaderPath" value="/WEB-INF/view/fm/"/>
+        <property name="templateLoaderPath" value="/WEB-INF/view/"/>
         <property name="freemarkerSettings">
             <props>
                 <prop key="defaultEncoding">UTF-8</prop>

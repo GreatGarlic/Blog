@@ -8,7 +8,7 @@ tags: [FE, Java]
 
 > Constantly leading innovation in the field of rich text editing. Take full control of your content creation process with such unique features as Paste from Word, Advanced Content Filter, widgets, custom HTML formatting and many more.
 
-CKEditor 还有一个很大的优势是它有一个非常强大的插件商店，里面基本都是免费的，推荐 2 个基础，但是很实用的插件：
+CKEditor 还有一个很大的优势是它有一个非常强大的插件商店，里面基本都是免费的，推荐 3 个基础，但是很实用的插件：
 
 * 修改表格的大小 **Table Resize**: <http://ckeditor.com/addon/tableresize>
 * 预览编辑结果 **Preview**: <http://ckeditor.com/addon/preview>
