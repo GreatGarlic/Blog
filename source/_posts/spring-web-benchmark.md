@@ -16,6 +16,8 @@ tags: Spring-Web
 ab -n1000 -c30 http://localhost:8080/demo
 ```
 
+<!--more-->
+
 **输出：**
 
 ```
@@ -75,3 +77,4 @@ Percentage of the requests served within a certain time (ms)
  100%    100 (longest request)
 ​```
 >  更强大的压力测试工具可以使用 JMeter，RunLoader
+```

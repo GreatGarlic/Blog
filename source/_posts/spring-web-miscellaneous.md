@@ -16,7 +16,7 @@ tags: Spring-Web
 <mvc:view-controller path="/xtuer" view-name="result.htm"/>
 ```
 
-访问 **http://localhost/xtuer**，则 View Resolver 访问的是 **/WEB-INF/view/ftl/result.htm**。
+访问 **http://localhost/xtuer**，则 View Resolver 访问的是 **/WEB-INF/view/ftl/result.htm**。<!--more-->
 
 ## Import Resource
 
