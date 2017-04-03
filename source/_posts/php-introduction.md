@@ -33,7 +33,9 @@ echo "Hello World!";
 * 输出内容到网页上用 `echo`
 * `var_dump()`：会返回变量的数据类型和值，调试的时候很有用: var_dump("text"): `string(4) "text"`;
 * `print_r`：Prints human-readable information about a variable
+
 <!--more-->
+
 ## PHP 变量规则：
 * 变量以 `$` 符号开头，其后是变量的名称
 * 变量名称必须以字母或下划线开头

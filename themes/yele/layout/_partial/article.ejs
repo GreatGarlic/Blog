@@ -1,3 +1,7 @@
+<% if (!index) { %>
+    <a href="javascript:void(0)" id="show-toc-button">显示目录</a>
+<%}%>
+
 <article id="<%= post.layout %>-<%= post.slug %>" class="article article-type-<%= post.layout %>" itemscope itemprop="blogPost">
   <%if(post.noDate != "true"){%>
     <div class="article-meta">
@@ -136,6 +140,23 @@
         color: #999;
         font-size: 12px;
     }
+
+    #show-toc-button {
+        background: #666;
+        border-radius: 0px 10px 10px 0px;
+        font-size: 12px;
+        padding: 3px 8px;
+        color: #CCC !important;
+        position: fixed;
+        top: 8px;
+        left: -4px;
+        transition: all 0.2s;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
+    }
+    #show-toc-button:hover {
+        left: 0px;
+    }
 </style>
 
 <!-- Toc -->
@@ -149,7 +170,7 @@ $(document).ready(function() {
         }
     });
 
-    $(document).on('click', '#toc-button', function() {
+    $(document).on('click', '#toc-button, #show-toc-button', function() {
         $('#mask').toggle();
     });
 
