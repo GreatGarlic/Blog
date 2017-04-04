@@ -3,7 +3,7 @@ title: Spring Hello World
 date: 2017-04-01 15:11:08
 tags: Spring-Core
 ---
-## Module 的结构图
+## 项目的结构图
 
 ![](/img/spring-core/HelloWorld.png)
 
@@ -90,8 +90,8 @@ UserDaoMySqlImpl.deleteUser()
 
 ## 更换 UserDao 的实现
 
-\<bean id="userDao" class="com.xtuer.dao.UserDaoMySqlImpl"/> 修改为
-\<bean id="userDao" class="com.xtuer.dao.UserDaoOracleImpl"/>，输出
+`<bean id="userDao" class="com.xtuer.dao.UserDaoMySqlImpl"/>` 修改为
+`<bean id="userDao" class="com.xtuer.dao.UserDaoOracleImpl"/>`，输出
 
 ```
 UserDaoOracleImpl.deleteUser()
@@ -100,3 +100,4 @@ UserDaoOracleImpl.deleteUser()
 把 UserDao 的实现从 UserDaoMySqlImpl 修改为 UserDaoOracleImpl，只需要修改 XML 配置文件，不需要修改代码。
 
 `Spring IoC + 接口` ==> `容易实现非侵入式的开发，扩展已有代码`。
+
