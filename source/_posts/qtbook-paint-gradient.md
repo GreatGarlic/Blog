@@ -235,7 +235,7 @@ void RadialGradientWidget::paintEvent(QPaintEvent *) {
 ```
 
 ## QConicalGradient
-QConicalGradient 名为 `角度渐变`，只需要指定渐变的中心和开始的角度：
+QConicalGradient 名为 `角度渐变`，在同一条半径上的像素的颜色值是相同的，只需要指定渐变的中心和开始的角度：
 
 ```cpp
 QConicalGradient(const QPointF &center, qreal angle)

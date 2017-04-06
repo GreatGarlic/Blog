@@ -11,7 +11,7 @@ tags: Spring-Core
 
 **第三种方式的实现需要以下几步：**
 1. 需要提供一个把 String 转换为对象的类，称之为自定义编辑器（CustomEditor）
-2. 然后把这个自定义编辑器注册到 Spring
+2. 然后把这个自定义编辑器注册到 Spring Container
 3. 使用字符串配置对象属性<!--more-->
 
 下面就以为 Address 实现一个自定义编辑器 AddressEditor 为例，介绍具体的实现细节。
@@ -45,8 +45,7 @@ public class Address {
 ```
 
 ## 3. AddressEditor
-自定义编辑器需要实现 java.beans.PropertyEditor 接口，java.beans.PropertyEditorSupport 提供了 PropertyEditor 的默认实现，我们只需要继承 `PropertyEditorSupport` 并实现
-`setAsText()` 方法就可以了。
+自定义编辑器需要实现 java.beans.PropertyEditor 接口，java.beans.PropertyEditorSupport 提供了 PropertyEditor 的默认实现，我们只需要继承 `PropertyEditorSupport` 并实现 `setAsText()` 方法就可以了。
 
 ```java
 package com.xtuer.beans.editor;

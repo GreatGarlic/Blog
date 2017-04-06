@@ -29,8 +29,9 @@ tags: Spring-Core
 
 ## 别名 alias 的好处
 
-1. 接口 UserDao 定义了多个实现: UserDaoMySqlImpl, UserDaoOracleImpl，而且可以在 XML 里同时定义他们的 Bean: userDaoMySqlImpl、userDaoOracleImpl。
-2. 使用别名 userDao 可以指向 userDaoMySqlImpl 或者 userDaoOracleImpl，在程序里获取 Bean 时使用别名来获取，而不是具体的 userDaoMySqlImpl 或者 userDaoOracleImpl，这样在切换接口的实现时只需要修改 XML 里的别名，而不是代码里 Bean 的 id。
+1. 接口 UserDao 定义了多个实现: UserDaoMySqlImpl, UserDaoOracleImpl，而且可以在 XML 里同时定义他们的 Bean: userDaoMySqlImpl、userDaoOracleImpl
+2. 使用别名 userDao 可以指向 userDaoMySqlImpl 或者 userDaoOracleImpl，在程序里获取 Bean 时使用别名来获取，而不是具体的 userDaoMySqlImpl 或者 userDaoOracleImpl，这样在切换接口的实现时只需要修改 XML 里的别名，而不是代码里 Bean 的 id
+3. 重要的是 alias 可以在 bean 定义后在定义，id 和 name 只能在 bean 定义时定义
 
 下面将用例子演示给 Bean 指定 id, name, alias 以及不指定 id 和 name，Spring 自动生成 id。
 

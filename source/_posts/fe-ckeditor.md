@@ -13,6 +13,7 @@ CKEditor 还有一个很大的优势是它有一个非常强大的插件商店�
 * 修改表格的大小 **Table Resize**: <http://ckeditor.com/addon/tableresize>
 * 预览编辑结果 **Preview**: <http://ckeditor.com/addon/preview>
 * 文本的颜色 **Color Button**: <http://ckeditor.com/addon/colorbutton>
+* 公式编辑器: <http://ckeditor.com/addon/ckeditorwiris>
 
 修改配置 config.js
 

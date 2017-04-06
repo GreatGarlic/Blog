@@ -42,7 +42,7 @@ tags: Spring-Core
 ```
 
 > 1. 需要引入 util schema。
-> 2. 可以不指定 `set-class`，这样就可默认的 `<set>` 注入没有什么区别了。
+> 2. 可以不指定 `set-class`，这样就和默认的 `<set>` 注入没有什么区别了。
 
 ## SetFactoryBeanTest
 ```java

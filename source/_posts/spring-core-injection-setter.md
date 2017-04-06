@@ -61,6 +61,7 @@ public class User {
 ```
 
 ## Address
+
 ```java
 package com.xtuer.beans;
 
@@ -139,7 +140,7 @@ public class InjectionTest {
 
 ## 说明
 1. `<property name="username" value="Alice"/>` 调用 user.setUsername("Alice") 设置属性 username。
-2. `<property name="address" ref="address"/>`，找到标志为 **address**(可以是 id, name, alias) 的 Bean **addressBean**，然后调用 user.setAddress(addressBean) 设置属性 address。
+2. `<property name="address" ref="address"/>`，找到标志为 **address**(可以是 id, name, alias) 的 Bean，然后调用 user.setAddress(address) 设置属性 address。
 
 ## 注入方式: attribute 和 element
 * value 和 ref 都可以使用 attribute 和 element 的方式注入，推荐尽量用 attribute 的方式，这样会简洁一些

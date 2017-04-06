@@ -1,7 +1,7 @@
 ---
-title: Java Code Snippets
-date: 2016-06-02 13:22:45
-tags: [Util, Java]
+title: Java Tips
+date: 2016-04-02 11:13:52
+tags:  [Java, Util]
 ---
 
 一些 Java 里常用的代码片段，例如 Bean to String 等。
@@ -21,16 +21,18 @@ System.out.println(ReflectionToStringBuilder.toString(obj, ToStringStyle.MULTI_L
 System.out.println(ToStringBuilder.reflectionToString(p));
 ```
 
-使用 Jackson，Json 的格式更漂亮
+使用 Fastjson 格式化为 JSON 字符串更漂亮
 
 ```java
-import com.fasterxml.jackson.databind.ObjectMapper;
+import com.alibaba.fastjson.JSON;
 
-ObjectMapper mapper = new ObjectMapper();
-System.out.println(mapper.writeValueAsString(obj));
+System.out.println(JSON.toJSONString(box));
 ```
 
+或则使用 Lombok 的 @ToString 自动生成字符串也不错
+
 ## 取得当前的方法名
+
 ```java
 Thread.currentThread().getStackTrace()[1].getMethodName()
 ```
@@ -41,6 +43,7 @@ HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.cu
 ```
 
 ## SpringSecurity 获取登陆用户名
+
 ```java
 String username = SecurityContextHolder.getContext().getAuthentication().getName();
 ```
@@ -88,40 +91,142 @@ public static String getClientIp(HttpServletRequest request) {
 ```
 
 > Nginx 的配置参考:
+> ```
+>    location / {
 >
+>       proxy_redirect   off;
+>       proxy_set_header Host $host;
+>       proxy_set_header X-Real-IP $remote_addr;
+>       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+>       proxy_pass http://app_server;
+>       add_header Cache-Control 'no-store';
+>   }
 > ```
->   location / {
-> ```
-      proxy_redirect   off;
-      proxy_set_header Host $host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-      proxy_pass http://app_server;
-      add_header Cache-Control 'no-store';
-  }
-  ```
 
 > 参考 [HTTP 请求头中的 X-Forwarded-For](https://imququ.com/post/x-forwarded-for-header-in-http.html)
-> 
+>
 > `X-Forwarded-For` 是用于记录代理信息的，每经过一级代理(匿名代理除外)，代理服务器都会把这次请求的来源 IP 追加在 X-Forwarded-For 中，例如来自 4.4.4.4 的一个请求，header 包含这样一行 `X-Forwarded-For: 1.1.1.1, 2.2.2.2, 3.3.3.3` 代表请求由 1.1.1.1 发出，经过三层代理，第一层是 2.2.2.2，第二层是 3.3.3.3，而本次请求的来源 IP 4.4.4.4 是第三层代理。
 >
 > `X-Real-IP`，一般只记录`真实发出请求的客户端 IP`，上面的例子，如果配置了 X-Read-IP，将会是 X-Real-IP: 1.1.1.1 1所以 ，如果只有一层代理，这两个头的值就是一样的
 
-## 依赖
-* Apache Commons Lang3: `org.apache.commons:commons-lang3:3.4`
-* Jackson: `com.fasterxml.jackson.core:jackson-databind:2.7.3`
-
-  ```
-
-## 生成 MD5
+## 字符串 MD5
 
 ```java
-import org.apache.commons.codec.digest.DigestUtils;
+import org.springframework.util.DigestUtils;
 
 public class Test {
-    public static void main(String[] args) throws Exception {
-        System.out.println(DigestUtils.md5Hex("Who are you?"));
+    public static void main(String[] args) {
+        System.out.println(DigestUtils.md5DigestAsHex("Biao".getBytes()));
     }
 }
+```
+
+## 文件的 MD5
+
+```java
+import org.springframework.util.DigestUtils;
+
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+
+public class Test {
+    /**
+     * 计算文件的 MD5.
+     *
+     * @param path 文件的路径
+     * @return 文件的 MD5
+     */
+    public static String fileMd5(String path) {
+        try (InputStream in = new FileInputStream(path)) {
+            return DigestUtils.md5DigestAsHex(in); // Spring 自带的 MD5 工具
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return "";
+    }
+
+    public static void main(String[] args) {
+        System.out.println(fileMd5("/Users/Biao/Desktop/x.png"));
+    }
+}
+
+```
+
+
+
+## 读文件自动关闭流
+
+```java
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+
+public class Test {
+    public static void main(String[] args) {
+        String path = "/Users/Biao/Documents/workspace/Java/mix/src/main/java/Test.java";
+        try (BufferedReader reader = new BufferedReader(new FileReader(path))) {
+            String line = null;
+            while ((line = reader.readLine()) != null) {
+                System.out.println(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
+```
+
+## 定期执行任务
+
+```java
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
+public class Test {
+    public static void main(String[] args) {
+        ScheduledExecutorService.scheduleAtFixedRate(() -> {
+            System.out.println(System.currentTimeMillis() / 1000);
+        }, 0, 1, TimeUnit.SECONDS);
+    }
+}
+```
+
+## 过滤后映射
+
+```java
+import java.util.stream.Stream;
+
+public class Test {
+    public static void main(String[] args) {
+        Integer[] ns = {1, 2, 3, 4, 5}; // 不能是 int[]
+        Stream.of(ns).filter(n -> n >= 3).mapToInt(n -> n * 2).forEach(System.out::println);
+    }
+}
+```
+
+> * 过滤: 去掉不要的
+> * 映射: 每一个元素映射为对应的值，一个输入对应一个输出
+
+## 创建线程
+
+```java
+public class Test {
+    public static void main(String[] args) {
+        // [1] 方法一
+        new Thread(() -> System.out.println(1)).start();
+        
+        // [2] 方法二
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                System.out.println(2);
+            }
+        }).start();
+    }
+}
+
 ```
 
