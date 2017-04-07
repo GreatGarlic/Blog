@@ -435,7 +435,34 @@ shadowJar {
 }
 ```
 
+## 打包时只要指定的 jar 包，解压
 
+```groovy
+war {
+    // 打包时只包含以下几个 jar 包
+    classpath = classpath.filter { file ->
+        file.name.startsWith('javaee-mvc-framework') ||
+        file.name.startsWith('e-platform-client') ||
+        file.name.equals('main')
+    }
+
+    archiveName 'qa.zip' // 默认为 qa.war
+    def zipFile = file("$buildDir/libs/qa.zip")
+    doLast {
+        copy {
+            from zipFile
+            into "$rootProject.projectDir/output/$school/"
+        }
+        //解压
+        def outputDir = file("$rootProject.projectDir/output/qa")
+        delete outputDir
+        copy{
+            from zipTree(zipFile)
+            into outputDir
+        }
+    }
+}
+```
 
 ## 参考
 * [Gradle 替代 Maven](http://my.oschina.net/enyo/blog/369843)

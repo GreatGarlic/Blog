@@ -336,7 +336,21 @@ WHERE id IN (1,2,3)
 </update>
 ```
 
+## 特殊字符和 CDATA
+
+SQL 使用时特殊字符有 `<` 和 `>`，可以使用 `<![CDATA[ ]]>` 把 SQL 语句括起来:
+
+```xml
+<select id="findAreas" parameterType="int" resultType="Area"><![CDATA[
+    SELECT id, name, level FROM area
+    WHERE id>#{id}
+]]></select>
+```
+
+> 转义也可以，但是不够漂亮。
+
 ## 参考资料
+
 * [Mybatis之批量更新操作](http://my.oschina.net/ckanner/blog/338515)
 * [Mybatis 使用经验分享之批量操作](http://jingyan.baidu.com/article/11c17a2c7f376af446e39d21.html)
 * [Mybatis 的 where foreach set 等标签详解](http://blog.csdn.net/zenson_g/article/details/10137665)
