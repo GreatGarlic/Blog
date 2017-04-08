@@ -1,7 +1,8 @@
 <div class="overlay"></div>
 
 <ul class="menu">
-    <li class="item"><a href="javascript:void(0)" id="show-search-button">谷歌搜索</a></li>
+    <li class="item"><a href="javascript:void(0)" id="baidu-search-button">百度搜索</a></li>
+    <li class="item"><a href="javascript:void(0)" id="google-search-button">谷歌搜索</a></li>
     <li class="item non-index-item"><a href="javascript:void(0)" id="show-toc-button">显示目录</a></li>
 </ul>
 <div class="intrude-less">
@@ -120,8 +121,16 @@
 
 <script>
     $(document).ready(function() {
-        // 搜索
-        $('#show-search-button').click(function(event) {
+        // Baidu 搜索
+        $('#baidu-search-button').click(function(event) {
+            layer.prompt({title: false, formType: 0, closeBtn: 0, maxlength: 140}, function(text, index) {
+                layer.close(index);
+                window.open('https://www.baidu.com/s?wd=site:qtdebug.com+'+text);
+            });
+        });
+
+        // Google 搜索
+        $('#google-search-button').click(function(event) {
             layer.prompt({title: false, formType: 0, closeBtn: 0, maxlength: 140}, function(text, index) {
                 layer.close(index);
                 window.open('https://www.google.com/?#q=site:qtdebug.com+'+text);
