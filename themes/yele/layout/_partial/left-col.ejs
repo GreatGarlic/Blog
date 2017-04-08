@@ -1,4 +1,9 @@
 <div class="overlay"></div>
+
+<ul class="menu">
+    <li class="item"><a href="javascript:void(0)" id="show-search-button">谷歌搜索</a></li>
+    <li class="item non-index-item"><a href="javascript:void(0)" id="show-toc-button">显示目录</a></li>
+</ul>
 <div class="intrude-less">
 	<header id="header" class="inner">
 		<a href="/" class="profilepic">
@@ -112,3 +117,15 @@
         </div>
 	</header>
 </div>
+
+<script>
+    $(document).ready(function() {
+        // 搜索
+        $('#show-search-button').click(function(event) {
+            layer.prompt({title: false, formType: 0, closeBtn: 0, maxlength: 140}, function(text, index) {
+                layer.close(index);
+                window.open('https://www.google.com/?#q=site:qtdebug.com+'+text);
+            });
+        });
+    });
+</script>
