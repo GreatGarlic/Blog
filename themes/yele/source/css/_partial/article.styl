@@ -359,11 +359,10 @@ a.article-title {
 }
 
 .article-meta{
-  width: 150px;
   font-size: 14;
   text-align: right;
   position: absolute;
-  right: 0;
+  right: 30px;
   top: 23px;
   text-align: center;
   z-index: 1;
@@ -376,6 +375,11 @@ a.article-title {
       margin-right: 10px;
     }
   }
+
+    a.article-date {
+        color: #999;
+        font-size: 80%;
+    }
 }
 
 .article-more-link{
@@ -448,4 +452,52 @@ a.article-title {
   ol {
     margin-left 0;
   }
+}
+
+#comments {
+    padding: 15px;
+    margin: 0 15px;
+    background: #fff;
+    border: 1px solid #ddd;
+}
+
+#toc-mask {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: rgba(0,0,0,0.5);
+    z-index:99999;
+    overflow: auto;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    .toc-container {
+        width: 500px;
+        margin: 30px auto;
+        background: rgba(255, 255, 255, 0.9);
+        padding: 10px 20px;
+        border: 6px solid rgba(0, 0, 0, 0.75);
+        border-radius: 2px;
+
+        .toc {
+            padding-left: 0;
+
+            li {
+                margin: 10px;
+                list-style-type: none;
+
+                a.toc-link {
+                    color: rgba(43, 43, 43, 0.8);
+                    &:hover {
+                        color: rgb(43, 43, 43);
+                    }
+                }
+            }
+        }
+    }
 }

@@ -1,15 +1,18 @@
+<!-- 生成目录 -->
+<% if (!index && config.toc) { %>
+    <div id="toc-mask" style="display: none;">
+        <div class="toc-container">
+            <div class="article-toc">
+                <%- toc(post.content, {list_number: false}) %>
+            </div>
+        </div>
+    </div>
+<% } %>
+
 <article id="<%= post.layout %>-<%= post.slug %>" class="article article-type-<%= post.layout %>" itemscope itemprop="blogPost">
   <%if(post.noDate != "true"){%>
     <div class="article-meta">
-        <% if (!index) { %>
-            <span id="access-counter"></span>
-            <a href="javascript: void(0)" id="toc-button">||||</a>
-            <div style="display:none"><%- partial('post/date', {class_name: 'article-date', date_format: null}) %></div>
-        <%}%>
-
-        <% if (index) { %>
-            <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
-        <%}%>
+        <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
     </div>
   <%}%>
   <div class="article-inner">
@@ -29,17 +32,11 @@
       <% } %>
     <% } %>
     <div class="article-entry" itemprop="articleBody">
-      <% if (post.excerpt && index){ %>
-        <%- post.excerpt %>
-      <% } else { %>
-        <% if (!index && config.toc){ %>
-        <div id="toc" class="article-toc" style="display: none;">
-          <%- toc(post.content, {list_number: false}) %>
-          <!-- <hr/> -->
-        </div>
+        <% if (post.excerpt && index) { %>
+            <%- post.excerpt %>
+        <% } else { %>
+            <%- post.content %>
         <% } %>
-        <%- post.content %>
-      <% } %>
     </div>
     <% if (index){ %>
     <div class="article-info article-info-index">
@@ -64,81 +61,17 @@
   <% } %>
 </article>
 
-<% if (!index && theme.share_jia){ %>
-<%- partial('post/share_jia') %>
-<% } %>
-
-<% if (!index && theme.share_addthis){ %>
-<%- partial('post/share_addthis') %>
-<% } %>
-
 <% if (!index && post.comments) { %>
     <!-- UY BEGIN -->
     <section id="comments">
         <div id="uyan_frame"></div>
         <script>
-            var uyan_config = {'du': 'www.qtdebug.com'};
+            var uyan_config = {'du': '<%=theme.uyan_du%>'};
         </script>
-        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=<%= config.uyan_id %>"></script>
+        <script type="text/javascript" src="http://v2.uyan.cc/code/uyan.js?uid=<%= theme.uyan_id %>"></script>
     </section>
     <!-- UY END -->
 <% } %>
-
-<style>
-    #comments {
-        padding: 15px;
-        margin: 0 15px;
-        background: #fff;
-        border: 1px solid #ddd;
-    }
-
-    #mask {
-        position: fixed;
-        width: 100%;
-        height: 100%;
-        background: rgba(0,0,0,0.5);
-        z-index:99999;
-        overflow: auto;
-        -webkit-user-select: none;
-        -moz-user-select: none;
-        -ms-user-select: none;
-        user-select: none;
-    }
-
-    #toc-container {
-        width: 500px;
-        margin: 30px auto;
-        background: rgba(255, 255, 255, 0.9);
-        padding: 10px 20px;
-        border: 6px solid rgba(0, 0, 0, 0.75);
-        border-radius: 2px;
-    }
-
-    #mask .toc li {
-        margin: 10px;
-    }
-
-    #mask .toc li a {
-        color: rgb(43, 43, 43);
-    }
-
-    #toc-button {
-        float: right;
-        margin-right: 28px;
-        color: #AAA;
-        text-decoration: none;
-    }
-    #toc-button:hover {
-        color: #999;
-    }
-
-    #access-counter {
-        color: #999;
-        font-size: 12px;
-    }
-</style>
-
-<!-- Toc -->
 
 <% if(!index) { %>
     <script>
@@ -150,36 +83,21 @@
 
 <script type="text/javascript">
 $(document).ready(function() {
-    createMask();
+    var $tocMask = $('#toc-mask');
 
     $(document).keyup(function(e) {
         if (e.keyCode == 49) {
-            $('#mask').toggle();
+            $tocMask.toggle();
         }
     });
 
-    $(document).on('click', '#toc-button, #show-toc-button', function() {
-        $('#mask').toggle();
+    $(document).on('click', '#show-toc-button', function() {
+        $tocMask.toggle();
     });
 
     // 隐藏 Mask
-    $(document).on('click', '#mask', function() {
-        $('#mask').hide();
-    });
-
-    // 禁止 Toc 上的鼠标点击事件冒泡
-    $(document).on('click', '#toc-container', function(e) {
-        e.stopPropagation();
-        $('#mask').hide();
+    $(document).on('click', '#toc-mask, #toc-mask .toc-link', function() {
+        $tocMask.hide();
     });
 });
-
-function createMask() {
-    var $mask = $('<div id="mask"><div id="toc-container"></div></div>');
-    var $toc = $('#toc');
-    $mask.find('#toc-container').append($toc);
-    $toc.show();
-    $mask.hide();
-    $('body').prepend($mask);
-}
 </script>

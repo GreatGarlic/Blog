@@ -11,9 +11,6 @@ language:
 timezone:
 toc: true
 
-# 友言的 id
-uyan_id: 2128624
-
 # URL
 ## If your site is put in a subdirectory, set url as 'http://yoursite.com/child' and root as '/child/'
 url: http://xtuer.github.io

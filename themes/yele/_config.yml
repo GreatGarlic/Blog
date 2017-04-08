@@ -19,10 +19,14 @@ subnav:
 
 rss: /atom.xml
 
+# 友言
+uyan_id: 2128624
+uyan_du: www.qtdebug.com
+
 # Content
-excerpt_link: 更多···
+excerpt_link: 展开全文
 fancybox: true
-mathjax: true
+mathjax: false
 
 # 是否开启动画效果
 animate: false
@@ -32,13 +36,11 @@ open_in_new: false
 
 # Miscellaneous
 google_analytics: ''
-favicon: /favicon.png
+favicon: /img/dog.png
 
 #你的头像url
 avatar: /img/dog.png
 #是否开启分享
-share_jia: false
-share_addthis: false
 
 #是否开启云标签
 tagcloud: true
@@ -48,12 +50,7 @@ tagcloud: true
 #friends: false
 #开启——
 friends:
-  奥巴马的博客: http://localhost:4000/
-  卡卡的美丽传说: http://localhost:4000/
-  本泽马的博客: http://localhost:4000/
-  吉格斯的博客: http://localhost:4000/
-  习大大大不同: http://localhost:4000/
-  托蒂的博客: http://localhost:4000/
+  华夏大地教育网: http://www.edu-edu.com
 
 #是否开启“关于我”。
 #不开启——
