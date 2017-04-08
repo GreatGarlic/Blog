@@ -47,6 +47,9 @@ tags: Index
 * [弹出层 Layer](/fe-layer)
 * [Lean Modal](/fe-leanmodal)
 * [使用 LESS 代替 CSS](/fe-less)
+* [jQuery 分页插件](/fe-pagination)
+* [RequireJS 加载非 AMD 的 JS](/fe-requirejs-non-amd)
+* [用 RequireJS 统一管理 JS 和 CSS](/fe-requirejs)
 * [jQuery 的 REST 插件](/fe-rest)
 * [Semantic Ui 的 Behavior 和 Settings](/fe-semantic-ui-behavior-settings)
 * [Semantic Ui 菜单栏](/fe-semantic-ui-menu)
@@ -106,7 +109,7 @@ tags: Index
 * [使用 CAS 单点登陆](/java-cas-3-use-cas)
 * [Spring Security 使用 CAS 实现单点登陆](/java-cas-index)
 * [How to change default Java version](/java-change-version)
-* [Java Code Snippets](/java-code-snippets)
+* [Java Tips](/java-code-snippets)
 * [Docx 转换为 HTML](/java-docx-html)
 * [计算文件的 MD5](/java-file-md5)
 * [FlatBuffers 入门之 Java + Qt 版](/java-flatbuffer)
@@ -175,6 +178,7 @@ tags: Index
 ## PHP
 * [PHP Curl](/php-curl)
 * [PHP 使用 PDO 访问数据库](/php-database-pdo)
+* [PHP 快速入门](/php-introduction)
 
 ## Qt
 * [C++ 查看预处理后的源文件](/cpp-macro)
@@ -351,7 +355,7 @@ tags: Index
 
 ## Util
 * [Git Tips](/git-tips)
-* [Java Code Snippets](/java-code-snippets)
+* [Java Tips](/java-code-snippets)
 * [Java 使用 FTP](/java-ftp)
 * [Java 发邮件](/java-mail)
 * [OkHttp](/java-okhttp)
