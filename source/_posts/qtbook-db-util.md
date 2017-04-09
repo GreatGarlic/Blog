@@ -612,7 +612,7 @@ void useSqlFromFile() {
     // 读取 namespace 为 User 下，id 为 findByUserId 的 SQL 语句
     qDebug() << Singleton<Sqls>::getInstance().getSql("User", "findByUserId");
     qDebug() << Singleton<Sqls>::getInstance().getSql("User", "findByUserId-1"); // 找不到这条 SQL 语句会有提示
-    qDebug() << Singleton<Sqls>::getInstance().selectMap(
+    qDebug() << Singleton<DBUtil>::getInstance().selectMap(
         Singleton<Sqls>::getInstance().getSql("User", "findByUserId").arg(2));
 }
 ```
