@@ -61,7 +61,7 @@
             list-style: none;
             position: fixed;
             top: 0px;
-            left: -4px;
+            left: 0px;
 
             .item.non-index-item {
                 display: none;
@@ -69,18 +69,19 @@
 
             .item {
                 margin-top: 6px;
-                background: #666;
-                border-radius: 0px 10px 10px 0px;
+                background: rgba(0, 0, 0, 0.15);
+                border-radius: 0px 2px 2px 0px;
                 font-size: 12px;
-                padding: 3px 12px;
+                padding: 3px 6px;
                 transition: all 0.2s;
-                box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+                box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
 
                 a {
-                    color: #CCC !important;
+                    color: #999 !important;
                     text-shadow: 0 1px 4px rgba(0, 0, 0, 0.7);
 
                     &:hover {
+                        color: #aaa !important;
             			text-shadow: 0 1px 4px rgba(0, 0, 0, 1);
             		}
                 }

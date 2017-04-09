@@ -23,6 +23,11 @@ rss: /atom.xml
 uyan_id: 2128624
 uyan_du: www.qtdebug.com
 
+#是否开启打赏功能
+donate: true
+#打赏文案
+donate_message: 欣赏此文？求鼓励，求支持！
+
 # Content
 excerpt_link: 阅读全文
 fancybox: true

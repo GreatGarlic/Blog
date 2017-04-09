@@ -56,9 +56,13 @@
     </div>
     <% } %>
   </div>
+  <% if (!index && theme.donate){ %>
+      <%- partial('donate') %>
+  <% } %>
   <% if (!index){ %>
     <%- partial('post/nav') %>
   <% } %>
+
 </article>
 
 <% if (!index && post.comments) { %>
