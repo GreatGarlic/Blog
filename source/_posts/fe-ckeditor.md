@@ -11,9 +11,16 @@ tags: [FE, Java]
 CKEditor 还有一个很大的优势是它有一个非常强大的插件商店，里面基本都是免费的，推荐 3 个基础，但是很实用的插件：
 
 * 修改表格的大小 **Table Resize**: <http://ckeditor.com/addon/tableresize>
+
 * 预览编辑结果 **Preview**: <http://ckeditor.com/addon/preview>
+
 * 文本的颜色 **Color Button**: <http://ckeditor.com/addon/colorbutton>
+
 * 公式编辑器: <http://ckeditor.com/addon/ckeditorwiris>
+
+* 很酷的皮肤 Moon Dark: <http://ckeditor.com/addon/moono-dark>
+
+  ![](http://s1.ckeditor.com/sites/default/files/styles/large/public/moono-dark/ckeditor-moono-dark.png?itok=Xbpl_YQj)
 
 修改配置 config.js
 
