@@ -6,7 +6,7 @@ tags: FE
 
 RequireJS 加载的 JS 要求是 AMD 规范的，但是非 AMD 规范的 JS 文件也能够加载，下面就以 Util.js 中定义了类 Rect，Circle 和普通函数 greeting() 为例，演示 RequireJS 对于非 AMD 规范的 JS 的配置，加载以及使用。
 
-可以看到，使用 RequireJS 加载的 JS 中的类和函数，与使用 `<script src="/js/Util.js">` 加载时的使用方式没有区别。<!--more-->
+可以看到，使用 RequireJS 加载的 JS 中的类和函数，与使用 `<script src="/js/Util.js">` 加载时的使用方式没有区别，如果要以 AMD 的方式使用非 AMD 的 JS，可以参考 <http://www.bubuko.com/infodetail-671521.html><!--more-->
 
 ## RequireJS 配置
 

@@ -52,6 +52,7 @@ tags: Index
 * [RequireJS 加载非 AMD 的 JS](/fe-requirejs-non-amd)
 * [用 RequireJS 统一管理 JS 和 CSS](/fe-requirejs)
 * [jQuery 的 REST 插件](/fe-rest)
+* [CSS3 缩放图片](/fe-scale-image)
 * [Semantic Ui 的 Behavior 和 Settings](/fe-semantic-ui-behavior-settings)
 * [Semantic Ui 菜单栏](/fe-semantic-ui-menu)
 * [Semantic Ui 进度条](/fe-semantic-ui-progress)

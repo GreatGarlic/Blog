@@ -28,7 +28,7 @@ tags: FE
         <script type="text/javascript">
             function IdCard(name, idNo) {
                 this.name          = name;
-                this.birthday      = idNo.substring(6, 15);
+                this.birthday      = idNo.substring(6, 14);
                 this.birthdayYear  = this.birthday.substring(0, 4);
                 this.birthdayMonth = this.birthday.substring(4, 6);
                 this.birthdayDay   = this.birthday.substring(6, 8);
@@ -56,9 +56,9 @@ tags: FE
 输出:
 
 ```
-{"name":"黄晓明","birthday":"196507040","birthdayYear":"1965","birthdayMonth":"07","birthdayDay":"04","gender":"男","genderValue":2}
-{"name":"陶君华","birthday":"197710177","birthdayYear":"1977","birthdayMonth":"10","birthdayDay":"17","gender":"男","genderValue":2}
-{"name":"女性的","birthday":"198611267","birthdayYear":"1986","birthdayMonth":"11","birthdayDay":"26","gender":"女","genderValue":1}
+{"name":"黄晓明","birthday":"19650704","birthdayYear":"1965","birthdayMonth":"07","birthdayDay":"04","gender":"男","genderValue":2}
+{"name":"陶君华","birthday":"19771017","birthdayYear":"1977","birthdayMonth":"10","birthdayDay":"17","gender":"男","genderValue":2}
+{"name":"女性的","birthday":"19861126","birthdayYear":"1986","birthdayMonth":"11","birthdayDay":"26","gender":"女","genderValue":1}
 true
 true
 true
