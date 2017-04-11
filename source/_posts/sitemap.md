@@ -24,6 +24,9 @@ tags: Index
 ## Default
 * [Shuttle](/misc-shuttle)
 
+## Dubbo
+* [本机安装 ZooKeeper 集群](/java-zookeeper)
+
 ## FE
 * [绝对坐标布局](/absolute-layout)
 * [JS 模版 artTempalte](/fe-arttemplate)
@@ -125,6 +128,7 @@ tags: Index
 * [微 Web 服务的 REST 框架 Spark Framework](/java-spark-framework)
 * [Tomcat 启用 https](/java-tomcat-https)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
+* [本机安装 ZooKeeper 集群](/java-zookeeper)
 * [Perlin Noise](/perlin-noise)
 * [Redis Tips](/redis-tips)
 * [QQ 登陆的 Scribe-Java 实现](/scribe-qq)
@@ -175,6 +179,7 @@ tags: Index
 * [ActiveMQ 的 MQTT](/misc-mqtt)
 * [Spring Event](/misc-spring-event)
 * [Spring 集成 Groovy](/misc-spring-groovy)
+* [Spring Http 远程方法调用](/misc-spring-http-remote-invoker)
 * [Spring O/X Mapping](/misc-spring-oxm)
 
 ## PHP
