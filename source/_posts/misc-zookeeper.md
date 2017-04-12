@@ -1,7 +1,7 @@
 ---
 title: 本机安装 ZooKeeper 集群
 date: 2017-04-11 20:02:23
-tags: [Java, Dubbo]
+tags: [Java, Misc]
 ---
 
 ZooKeeper 的集群最好是使用 3，5，7，9 奇数台服务器，开发环境可能没有这么多机器给我们使用，不过可以在本机运行多个 ZooKeeper 实例，模拟集群。<!--more-->
@@ -58,9 +58,9 @@ ZooKeeper 是绿色软件，解压即是安装。解压下载得到的 **zookeep
 
 >  zk1 是 ZooKeeper 实例 1 的目录
 >
-> zk2 是 ZooKeeper 实例 2 的目录
+>  zk2 是 ZooKeeper 实例 2 的目录
 >
-> zk3 是 ZooKeeper 实例 3 的目录
+>  zk3 是 ZooKeeper 实例 3 的目录
 
 ## 服务器ID 文件 myid
 

@@ -27,4 +27,6 @@ tags: [Misc, Index]
 * [Ehcache](/misc-ehcache)
 * [Spring 集成 Groovy](/misc-spring-groovy)
 * [ActiveMQ + MQTT](/misc-mqtt)
+* [本机安装 ZooKeeper 集群](/misc-zookeeper)
+* [Dubbo Hello World](/misc-dubbo-hello-world)
 
