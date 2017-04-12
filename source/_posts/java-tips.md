@@ -258,3 +258,11 @@ public class Test {
 }
 ```
 
+## 大小写不敏感的正则表达式写法
+
+在前面加上 **(?i)** 即可
+
+```java
+String name = "names.NSF".replaceAll("(?i)\\.nsf$", ""); // name
+```
+

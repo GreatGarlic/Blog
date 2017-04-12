@@ -122,6 +122,7 @@ tags: Index
 * [Java NIO Buffer](/java-nio-buffer)
 * [OkHttp](/java-okhttp)
 * [HttpServletResponse 返回图片](/java-response-image)
+* [逆转字符串](/java-reverse-words)
 * [Java 绘制平滑曲线](/java-smooth-curve)
 * [微 Web 服务的 REST 框架 Spark Framework](/java-spark-framework)
 * [Java Tips](/java-tips)
