@@ -113,6 +113,7 @@ tags: Index
 * [Spring Security 使用 CAS 实现单点登陆](/java-cas-index)
 * [How to change default Java version](/java-change-version)
 * [Docx 转换为 HTML](/java-docx-html)
+* [字节序 Endian](/java-endian)
 * [计算文件的 MD5](/java-file-md5)
 * [FlatBuffers 入门之 Java + Qt 版](/java-flatbuffer)
 * [Java 使用 FTP](/java-ftp)
@@ -123,6 +124,7 @@ tags: Index
 * [OkHttp](/java-okhttp)
 * [HttpServletResponse 返回图片](/java-response-image)
 * [逆转字符串](/java-reverse-words)
+* [你刚才在淘宝上买了一件东西](/java-route)
 * [Java 绘制平滑曲线](/java-smooth-curve)
 * [微 Web 服务的 REST 框架 Spark Framework](/java-spark-framework)
 * [Java Tips](/java-tips)
@@ -192,6 +194,7 @@ tags: Index
 
 ## Qt
 * [C++ 查看预处理后的源文件](/cpp-macro)
+* [字节序 Endian](/java-endian)
 * [FlatBuffers 入门之 Java + Qt 版](/java-flatbuffer)
 * [Qt 访问网络](/qt-access-network)
 * [Qt 应用程序的图标](/qt-app-icon)

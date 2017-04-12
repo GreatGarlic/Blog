@@ -266,3 +266,17 @@ public class Test {
 String name = "names.NSF".replaceAll("(?i)\\.nsf$", ""); // name
 ```
 
+## 文件路径
+
+```java
+// 说明这个 prop.properties 和类 PropUtil.class 是在同一个目录下 
+PropUtil.class.getClassLoader().getResourceAsStream("prop.properties");
+
+// 注意有个斜杠，说明是在 classpath 根目录下，eclipse 写的话一般如果是 bin 目录，netbeans 的话可能会在 build/classes 目录下   
+PropUtil .class.getClassLoader().getResourceAsStream("/prop.properties");
+
+// 这种是从 System Property 'user.dir'下读 prop.properties, 用 IDE 编写的话默认就是你的工程目录，一般来说 user.dir 是执行 java 命令所在的当前目录。 
+new FileInputStream("prop.properties"); 
+```
+
+> 不存在所谓的 JAVASE 默认根路径的说法，java（无论是 J2SE 还是，J2EE, Web）中只有 classpath，看你的 java 命令怎么配置 classpath。
