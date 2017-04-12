@@ -8,6 +8,10 @@ tags: FE
 * webuploader.css
 * webuploader.js
 
+> WebUploader是由 Baidu WebFE(FEX) 团队开发的一个简单的以 HTML5 为主，FLASH 为辅的现代文件上传组件。在现代的浏览器里面能充分发挥 HTML5 的优势，同时又不摒弃主流 IE 浏览器，沿用原来的 FLASH 运行时，兼容 IE6+，iOS 6+, android 4+。两套运行时，同样的调用方式，可供用户任意选用。
+>
+> 采用大文件分片并发上传，极大的提高了文件上传效率。
+
 有下面一些特性:
 
 * 允许的类型
@@ -23,6 +27,7 @@ tags: FE
 <!--more-->
 
 ## 上传文件的页面
+
 `webuploader.html`
 
 ```html
@@ -65,6 +70,12 @@ tags: FE
 
 
     <script type="text/javascript">
+        // 使用 IE6，7，8 时，如果 Flash 播放器版本低则需要升级一下
+        if (!WebUploader.Uploader.support()) {
+            alert( 'Web Uploader 不支持您的浏览器！如果你使用的是 IE 浏览器，请尝试升级 Flash 播放器');
+            throw new Error( 'WebUploader does not support the browser you are using.' );
+        }
+
         var uploader = WebUploader.create({
             auto: true,               // 自动上传
             dnd: '#drop-area',        // 拖拽到 #drop-area 进行上传，可选

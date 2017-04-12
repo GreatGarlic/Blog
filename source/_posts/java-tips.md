@@ -230,3 +230,31 @@ public class Test {
 
 ```
 
+## 内存映射
+
+```java
+import java.io.FileInputStream;
+import java.io.RandomAccessFile;
+import java.nio.MappedByteBuffer;
+import java.nio.channels.FileChannel;
+
+public class Test {
+    public static void main(String[] args) throws Exception {
+        FileInputStream in = new FileInputStream("/Users/Biao/Desktop/1.cpp");
+        long size = in.available();
+        FileChannel inChannel = in.getChannel();
+        MappedByteBuffer inBuffer = inChannel.map(FileChannel.MapMode.READ_ONLY, 0, size);
+
+        RandomAccessFile out = new RandomAccessFile("/Users/Biao/Desktop/2.cpp", "rw");
+        FileChannel outChannel = out.getChannel();
+        MappedByteBuffer outBuffer = outChannel.map(FileChannel.MapMode.READ_WRITE, 0, size);
+        outBuffer.put(inBuffer);
+
+        inChannel.close();
+        outChannel.close();
+        in.close();
+        out.close();
+    }
+}
+```
+

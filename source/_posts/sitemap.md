@@ -26,6 +26,7 @@ tags: Index
 
 ## FE
 * [绝对坐标布局](/absolute-layout)
+* [滚动插件 Animation Scroll](/fe-animation-scroll)
 * [JS 模版 artTempalte](/fe-arttemplate)
 * [jQuery 的 attr 和 prop](/fe-attr-prop)
 * [Bootstrap 模态对话框](/fe-bootstrap-modal-dialog)
@@ -111,7 +112,6 @@ tags: Index
 * [使用 CAS 单点登陆](/java-cas-3-use-cas)
 * [Spring Security 使用 CAS 实现单点登陆](/java-cas-index)
 * [How to change default Java version](/java-change-version)
-* [Java Tips](/java-code-snippets)
 * [Docx 转换为 HTML](/java-docx-html)
 * [计算文件的 MD5](/java-file-md5)
 * [FlatBuffers 入门之 Java + Qt 版](/java-flatbuffer)
@@ -119,10 +119,12 @@ tags: Index
 * [Future](/java-future)
 * [使用 Lombok 自动生成 Getter and Setter](/java-lombok)
 * [Java 发邮件](/java-mail)
+* [Java NIO Buffer](/java-nio-buffer)
 * [OkHttp](/java-okhttp)
 * [HttpServletResponse 返回图片](/java-response-image)
 * [Java 绘制平滑曲线](/java-smooth-curve)
 * [微 Web 服务的 REST 框架 Spark Framework](/java-spark-framework)
+* [Java Tips](/java-tips)
 * [Tomcat 启用 https](/java-tomcat-https)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
 * [Dubbo Hello World](/misc-dubbo-hello-world)
@@ -362,11 +364,11 @@ tags: Index
 
 ## Util
 * [Git Tips](/git-tips)
-* [Java Tips](/java-code-snippets)
 * [Java 使用 FTP](/java-ftp)
 * [Java 发邮件](/java-mail)
 * [OkHttp](/java-okhttp)
 * [HttpServletResponse 返回图片](/java-response-image)
+* [Java Tips](/java-tips)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
 * [ActiveMQ 的 MQTT](/misc-mqtt)
 * [Spring 集成 Groovy](/misc-spring-groovy)
