@@ -125,6 +125,12 @@ public class Test {
 }
 ```
 
+输出:
+
+```
+worldjava
+```
+
 **compact()** 方法将所有未读的数据拷贝到 Buffer 起始处。然后将 position 设到最后一个未读元素正后面。limit 属性依然像 clear() 方法一样，设置成 capacity。现在 Buffer 准备好写数据了，但是不会覆盖未读的数据。其它还有 **mark()** 与 **reset()** **equals()** 等方法 就不一一介绍了。 
 
 ## 参考资料

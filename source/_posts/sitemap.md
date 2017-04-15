@@ -69,6 +69,8 @@ tags: Index
 * [Vue 的省市多级联动效果](/fe-vue-chain)
 * [Vue 使用 v-for 和设置属性及事件处理](/fe-vue-for-attribute)
 * [Webuploader 上传文件](/fe-webuploader)
+* [zTree 修改 Awesome Style](/fe-ztree-style)
+* [zTree](/fe-ztree)
 * [Atom 常用插件和快捷键](/mac-atom)
 * [在线预览 PDF](/pdf-online)
 * [小程序布局](/wx-flex)
