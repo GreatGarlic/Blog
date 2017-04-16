@@ -108,11 +108,10 @@ tags: [Java, Misc]
 ## 二、Gradle 依赖
 
 ```groovy
-compile(
-    ... // SpringMvc 其他依赖
-    'com.alibaba:dubbo:2.5.3',
-    'com.101tec:zkclient:0.10'
-)
+compile('com.alibaba:dubbo:2.5.3') {
+    exclude group: 'org.springframework', module: 'spring'
+}
+compile('com.101tec:zkclient:0.10')
 
 testCompile("org.springframework:spring-test:$versions.spring")
 testCompile('junit:junit:4.12')

@@ -258,7 +258,7 @@ public class Test {
 }
 ```
 
-## 大小写不敏感的正则表达式写法
+## 大小写不敏感的正则表达式
 
 在前面加上 **(?i)** 即可
 
@@ -280,3 +280,32 @@ new FileInputStream("prop.properties");
 ```
 
 > 不存在所谓的 JAVASE 默认根路径的说法，java（无论是 J2SE 还是，J2EE, Web）中只有 classpath，看你的 java 命令怎么配置 classpath。
+
+## 指定编译和运行时字符集
+
+* 编译时使用参数 encoding
+
+  ```
+  javac -encoding utf-8 Test.java
+  ```
+
+* 运行时使用参数 -Dfile.encoding
+
+  ```
+  java -jar -Dfile.encoding=utf-8 Test.jar
+  ```
+
+## MessageFormat 格式化数字和日期
+
+```java
+import java.text.MessageFormat;
+
+public class Test {
+    public static void main(String[] argv) throws Exception {
+        Object[] params = { new Integer(123), new Double(1222234.567) };
+        String msg = MessageFormat.format("{0,number,percent} and {1,number,,###.##}", params);
+        System.out.println(msg); // 12,300% and 1,222,234.57
+    }
+}
+```
+

@@ -106,6 +106,16 @@ uploadArchives {
 }
 ```
 
+## 排除冲突的 jar 包
+
+例如 dubbo 2.5 依赖 Spring 2，现在基本都用 Spring 4，所以需要把 dubbo 依赖的 Spring 2 的依赖去掉，使用 exclude:
+
+```groovy
+compile('com.alibaba:dubbo:2.5.3') {
+    exclude group: 'org.springframework', module: 'spring'
+}
+```
+
 ## 打包时过滤掉不需要的 jar 包
 
 ```groovy
