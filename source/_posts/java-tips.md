@@ -154,7 +154,15 @@ public class Test {
 
 ```
 
+## 生成 UUID
 
+```java
+import java.util.UUID;
+
+public static String uuid() {
+    return UUID.randomUUID().toString().replace("-", "").toUpperCase();
+}
+```
 
 ## 读文件自动关闭流
 

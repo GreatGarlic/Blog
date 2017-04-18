@@ -80,7 +80,7 @@ public class ImageBase64Utils {
 2. 在 HTML 中使用 img 显示 Base64 编码的字符串表示的图片，如果图片显示正常，则说明转换正确:
 
    ```html
-   <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAACOCA">
+   <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFwAAACOCA...">
    ```
 
 3. 再把上面的字符串解析为图片 B 保存起来
