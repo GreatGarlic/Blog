@@ -138,7 +138,7 @@ int main(int argc, char *argv[]) {
     // 修改 Json，給 foo.bar 创建 fruit，和給 foo 创建 names 数组
     QJsonObject bar = json.getJsonObject("foo.bar");
     bar.insert("fruit", "Apple");
-    json.set("foo.bar", bar);
+    json.set("foo.bar", bar); // 修改好后设置会 json 中
     json.set("foo.names", QStringList() << "One" << "Two" << "Three");
     qDebug() << json.toString(QJsonDocument::Compact);
 

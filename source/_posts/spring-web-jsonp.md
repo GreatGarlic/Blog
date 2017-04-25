@@ -11,7 +11,7 @@ SpringMvc 中处理 JSONP 需要注意响应的 Content-Type，如果为 text/pl
 ## 服务器端:
 
 * 使用 produces 设置响应的 Content-Type
-* 返回 JSONP 格式的字符串，例如 `jQuery21107523536464367151_1492668511201("Goo","Radius",2012)`
+* 返回 JSONP 格式的字符串，例如 `jQuery21107523536464367151_1492668511201("Goo")`
 
 ```java
 import com.alibaba.fastjson.JSONPObject;
