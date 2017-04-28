@@ -10,6 +10,16 @@ Behavior 就是行为，和函数是一回事，写个函数不就好了？但�
 
 Settings(设置) 更是不知道什么时候用啊，既然是设置，那么逻辑上就应该在 behavior 被调用之前先行设置好，这样在 behavior 被调用的时候才会生效，如果在 behavior 被调用后才使用 settings，那么就没有意义了。
 
+从参数上就可以区分是 Settings 还是 Behavior:
+
+* Settings: 参数是一个 JSON 对象
+
+* Behavior: 第一个参数是一个字符串，behavior 的名字，后面是其他参数，例如
+
+  ```js
+  $('.dropdown').dropdown('set selected', 2);
+  ```
+
 下面就以 card 中使用 dimmer 为例，介绍 behavior 和 settings 的使用:
 
 ![](/img/fe/semantic-ui-card.png) <!--more-->
