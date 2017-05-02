@@ -68,6 +68,7 @@ tags: Index
 * [HTML 树的实现](/fe-tree)
 * [Vue-ArtTemplate-jQuery 一起使用](/fe-vue-arttemplate)
 * [Vue 的省市多级联动效果](/fe-vue-chain)
+* [Vue 动态显示编辑按钮和计算 Class](/fe-vue-edit-dynamic)
 * [Vue 使用 v-for 和设置属性及事件处理](/fe-vue-for-attribute)
 * [Vue Todo](/fe-vue-todo)
 * [Webuploader 上传文件](/fe-webuploader)

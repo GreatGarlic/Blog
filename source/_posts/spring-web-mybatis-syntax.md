@@ -14,14 +14,31 @@ tags: Spring-Web
 ## 使用 Oracle 序列生成的主键
 ```xml
 <insert id="insertEnrollment" parameterType="EnrollmentForm">
-    <selectKey resultType="long" order="BEFORE" keyProperty="enrollId">
+    <selectKey keyProperty="enrollId" resultType="long" order="BEFORE">
         SELECT S_ENR_ID.Nextval from DUAL
     </selectKey>
+
     INSERT INTO enrollment (id, address) VALUES (#{enrollId}, #{address})
 </insert>
 ```
 
+## 使用 MySQL 自动生成 UUID
+
+```xml
+<insert id="createKnowledgePoint" parameterType="KnowledgePoint">
+    <selectKey keyProperty="knowledgePointId" resultType="string" order="BEFORE">
+        SELECT uuid() FROM dual
+    </selectKey>
+
+    INSERT INTO knowledge_point(knowledge_point_id, name, knowledge_point_group_id, is_deleted)
+    VALUES(#{knowledgePointId}, #{name}, #{knowledgePointGroupId}, 0)
+</insert>
+```
+
+
+
 ## 使用 LIKE 语句
+
 ```
 MySql:
 SELECT * FROM user WHERE name like CONCAT('%',#{name},'%')
@@ -52,11 +69,13 @@ public List<User> findUsers(@Param("offset") int offset, @Param("count") int cou
 ```
 
 ## #{name} 与 ${name} 的区别
+
 `#{name}` 会根据传进来的参数的类型自动加上相应的信息，例如字符串两边会加上 `''`，日期对象会自动的转化成 SQL 识别的内容，可以`防止 SQL 注入攻击`。
 
 `${name}` 直接替换，例如传进来的是字符串，不会在字符串两边加上 `''`，使用的场景有如 `ORDER BY`，`表名` 等
 
-## `<if>`
+## if
+
 ```xml
 <!-- 查询学生 list，like 姓名 -->   
 <select id="getStudentListLikeName" parameterType="StudentEntity" resultMap="studentResultMap">   
@@ -80,7 +99,8 @@ WHERE ST.STUDENT_NAME LIKE CONCAT(CONCAT('%', #{studentName}),'%')
 
 此时，当 studentName 的值为 null 或 '' 的时候，我们并不进行 where 条件的判断，所以查询结果是全部。
 
-## `<where>`
+## where
+
 由于参数是 Java 的实体类，所以我们可以把所有条件都附加上，使用时比较灵活， new 一个这样的实体类，我们需要限制那个条件，只需要附上相应的值就会 WHERE 这个条件，相反不去赋值就可以不在 WHERE 中判断。
 
 `<where>` 标签会知道如果它包含的标签中有返回值的话，它就插入一个 `WHERE`。此外，如果标签返回的内容是以 `AND` 或 `OR` 开头的，则它会剔除掉。
@@ -106,7 +126,8 @@ WHERE ST.STUDENT_NAME LIKE CONCAT(CONCAT('%', #{studentName}),'%')
 </select>
 ```
 
-## `<set>`
+## set
+
 当在 update 语句中使用 `<if>` 标签时，如果前面的 `<if>` 没有执行，则或导致逗号多余错误。使用 `<set>` 标签可以将动态的配置 SET 关键字，和剔除追加到条件末尾的任何不相关的逗号。
 没有使用 `<if>` 标签时，如果有一个参数为 null，都会导致错误，如下示例：
 
@@ -146,7 +167,8 @@ WHERE ST.STUDENT_NAME LIKE CONCAT(CONCAT('%', #{studentName}),'%')
 </update>
 ```
 
-## `<choose>, <when>, <otherwise>`
+## choose-when-otherwise
+
 有时候我们并不想应用所有的条件，而只是想从多个选项中选择一个。MyBatis 提供了 `<choose>` 元素，按顺序判断 `<when>` 中的条件出否成立，如果有一个成立，则 `<choose>` 结束。当 `<choose>` 中所有`<when>` 的条件都不满则时，则执行 `<otherwise>` 中的 SQL。类似于 Java 的 switch 语句，choose 为 switch，when 为 case，otherwise 则为 default。
 
 | MyBatis   | Java    |
@@ -183,7 +205,8 @@ WHERE ST.STUDENT_NAME LIKE CONCAT(CONCAT('%', #{studentName}),'%')
 </select>
 ```
 
-## `<foreach>`
+## foreach
+
 注意，`<foreach>` 是循环，用来读取传入的 list 参数。批量处理是 parameterType 的类型必须要注意。`<foreach>` 标签中的 `collection` 属性表示传入的是什么集合类型，`item` 表示的是集合中的一个量类似于
 
 ```java
@@ -348,6 +371,78 @@ SQL 使用时特殊字符有 `<` 和 `>`，可以使用 `<![CDATA[ ]]>` 把 SQL 
 ```
 
 > 转义也可以，但是不够漂亮。
+
+## 一对一 association
+
+```xml
+<!-- [[3]] 使用 resultMap 映射，属性是另一个类的对象: association -->
+<select id="selectFullUserById" parameterType="int" resultMap="userResultMap" >
+    SELECT
+        user.id      as id,
+        user.age     as age,
+        user.name    as name,
+        ui.id        as user_info_id,
+        ui.user_id   as user_info_user_id,
+        ui.telephone as user_info_telephone,
+        ui.address   as user_info_address
+    FROM user
+    ...
+</select>
+
+<resultMap id="userResultMap" type="com.xtur.bean.User" >
+    <id property="id" column="id"/>
+    <result property="age" column="age"/>
+    <result property="name" column="name"/>
+    <!--嵌套映射中还可以使用 resultMap: association, collection
+    还可以使用嵌套查询，但是会产生 N＋1 问题，在大数量的数据库里会有很大的性能问题-->
+
+    <!--<association property="userInfo" column="user_info_id" javaType="domain.UserInfo">
+        <id     property="id"        column="user_info_id"/>
+        <result property="userId"    column="user_info_user_id"/>
+        <result property="telephone" column="user_info_telephone"/>
+        <result property="address"   column="user_info_address"/>
+    </association>-->
+
+    <!--使用 columnPrefix 可以使 result map 重用-->
+    <association property="userInfo" column="user_info_id" columnPrefix="user_info_" resultMap="userInfoResultMap"/>
+</resultMap>
+<resultMap id="userInfoResultMap" type="com.xtur.bean.UserInfo" >
+    <id     property="id"        column="id"/>
+    <result property="userId"    column="user_id"/>
+    <result property="telephone" column="telephone"/>
+    <result property="address"   column="address"/>
+</resultMap>
+```
+
+## 一对多 collection
+
+```xml
+<select id="findPapersBySubjectAndNameFilter" resultMap="paperResultMap">
+    SELECT 
+        p.paper_id            as paper_id,
+        p.name                as name,
+        p.uuid_name           as uuid_ame,
+        p.original_name       as original_name,
+        kp.name               as kp_name,
+        kp.knowledge_point_id as kp_knowledge_point_id
+    FROM paper AS p
+    ...
+</select>
+
+<resultMap id="paperResultMap" type="Paper">
+    <id property="paperId"               column="paper_id"/>
+    <result property="name"              column="name"/>
+    <result property="uuidName"          column="uuid_name"/>
+    <result property="originalName"      column="original_name"/>
+
+    <collection property="knowledgePoints" ofType="KnowledgePoint" column="paper_id" columnPrefix="kp_" resultMap="knowledgePointResultMap"/>
+</resultMap>
+
+<resultMap id="knowledgePointResultMap" type="KnowledgePoint">
+    <id property="knowledgePointId" column="knowledge_point_id"/>
+    <result property="name"         column="name"/>
+</resultMap>
+```
 
 ## 参考资料
 

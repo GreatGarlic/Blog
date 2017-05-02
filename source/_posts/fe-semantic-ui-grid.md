@@ -110,7 +110,7 @@ grid 布局可以非常容易地实现任意行列组合的布局。如果 `colu
 </div>
 ```
 
-### 指定 grid 的 column count
+### 指定 column count 的 grid
 
 可以在 `grid` 上指定单个 `column` 的 count，当每行的 column count 达到指定数目后就自动换行，不管有没有指定 `row`:
 
