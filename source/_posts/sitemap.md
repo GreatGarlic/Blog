@@ -55,6 +55,7 @@ tags: Index
 * [jQuery 的 REST 插件](/fe-rest)
 * [CSS3 缩放图片](/fe-scale-image)
 * [Semantic Ui 的 Behavior 和 Settings](/fe-semantic-ui-behavior-settings)
+* [修改 Semantic UI 的默认字体](/fe-semantic-ui-font)
 * [Semantic Ui Grid](/fe-semantic-ui-grid)
 * [Semantic Ui 菜单栏](/fe-semantic-ui-menu)
 * [Semantic Ui 进度条](/fe-semantic-ui-progress)
@@ -282,6 +283,7 @@ tags: Index
 
 ## Semantic-Ui
 * [Semantic Ui 的 Behavior 和 Settings](/fe-semantic-ui-behavior-settings)
+* [修改 Semantic UI 的默认字体](/fe-semantic-ui-font)
 * [Semantic Ui Grid](/fe-semantic-ui-grid)
 * [Semantic Ui 菜单栏](/fe-semantic-ui-menu)
 * [Semantic Ui 进度条](/fe-semantic-ui-progress)
