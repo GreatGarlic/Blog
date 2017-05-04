@@ -6,11 +6,9 @@ tags: [FE, Semantic-Ui]
 
 Semantic Ui 默认使用的是谷歌提供的字体，并且是直接使用了谷歌的官方链接。谷歌网站在国内访问速度很差，甚至根本无法访问，需要对 Semantic UI 的源文件进行一下手动修改:
 
-1. 使用 Nodejs 安装 Semantic Ui: http://www.semantic-ui.cn/introduction/getting-started.html
+1. 使用 Nodejs 下载 Semantic Ui 源码: http://www.semantic-ui.cn/introduction/getting-started.html
 
    * 安装 Nodejs
-
-
    * 安装 gulp: **npm install -g gulp**
    * 下载 Semantic Ui: **npm install semantic-ui --save**
 
