@@ -8,12 +8,11 @@ tags: FE
 
 ![](/img/fe/vue-todo.png)
 
-左边的 Todo 和右边的 Dropdown 分别用一个 Vue 对象来渲染，它们共享使用同一个数组 items，当左边的 Todo 修改了 items 的数据后，右边的 Dropdown 的数据也会同时自动更新。点击编辑按钮，在 item 原来的地方显示一个 input 进行编辑。<!--more-->
+左边的 Todo 和右边的 Dropdown 分别用一个 Vue 对象来渲染，它们共享使用同一个数组 todos，当左边的 Todo 修改了 todos 的数据后，右边的 Dropdown 的数据也会同时自动更新。点击编辑按钮，在 todo 原来的地方显示一个 input 进行编辑。<!--more-->
 
 ```html
 <!DOCTYPE html>
 <html>
-
 <head>
     <meta charset="utf-8">
     <title></title>
@@ -22,57 +21,62 @@ tags: FE
         body {
             padding: 20px;
         }
-
         .icon:hover {
             color: red;
         }
-
         .ui.table {
             margin: 0;
         }
-        #vue-todo input {
+
+        #vue-todos .todo input {
+            display: none;
+        }
+      
+        #vue-todos .todo.editing input {
+            display: block;
+        }
+
+        #vue-todos .todo.editing span {
             display: none;
         }
 
-        #vue-todo, #vue-dropdown {
+        #vue-todos, #vue-dropdown {
             float: left;
             margin-left: 20px;
         }
     </style>
 </head>
-
 <body>
-    <div id="vue-todo" class="ui form" style="width: 300px;">
+    <div id="vue-todos" class="ui form" style="width: 300px;">
         <table class="ui celled striped table">
             <tbody>
-                <!-- 每个 item 一行 -->
-                <tr v-for="(item, index) in items" :key="item.id" :data-id="item.id">
-                    <td>
-                        <span class="name">{{item.name}}</span>
+                <!-- 每个 todo 一行 -->
+                <tr class="todo" :class="{editing: editedTodo==todo}" v-for="todo in todos" :key="todo.id" :data-id="todo.id">
+                    <td @dblclick="editTodo(todo)">
+                        <span class="name">{{todo.name}}</span>
+                        <input type="text" v-model.trim="todo.name" @keyup.enter="updateTodo(todo)" @keyup.esc="cancelEdit()" @blur="cancelEdit()" v-todo-focus="todo==editedTodo">
                     </td>
                     <td class="collapsing">
                         <!-- 编辑和删除按钮 -->
-                        <i class="icon edit"   @click="showInput(index, $event)"></i>
-                        <i class="icon delete" @click="removeItem(index)"></i>
+                        <i class="icon edit"   @click="editTodo(todo)"></i>
+                        <i class="icon delete" @click="removeTodo(todo)"></i>
                     </td>
                 </tr>
             </tbody>
             <tfoot class="full-width">
                 <tr>
                     <!-- 添加的按钮 -->
-                    <th colspan="2"><i class="plus icon" style="float: right;" @click="createItem()"></i></th>
+                    <th colspan="2"><i class="plus icon" style="float: right;" @click="createTodo()"></i></th>
                 </tr>
             </tfoot>
         </table>
-        <!-- 输入框 -->
-        <input class="ui input" type="text" @keyup.enter="updateItem()" @blur="hideInput()" @keyup.esc="hideInput()">
     </div>
 
     <div id="vue-dropdown" class="ui floating labeled icon dropdown button">
         <i class="world icon"></i>
-        <span class="text">Select Item</span>
+        <span class="text">Select Todo</span>
         <div class="menu">
-            <div class="item" v-for="item in items">{{item.name}}</div>
+            <div class="item" v-for="todo in todos">{{todo.name}}</div>
         </div>
     </div>
 
@@ -81,7 +85,7 @@ tags: FE
     <script src="http://cdn.staticfile.org/vue/2.0.3/vue.js"></script>
     <script>
         // 2 个 Vue 对象共享的数组
-        var items = [
+        var todos = [
             {id: 1, name: '后天考试'},
             {id: 2, name: '出差上海'}
         ];
@@ -89,55 +93,45 @@ tags: FE
         var vueDropdown = new Vue({
             el: '#vue-dropdown',
             data: {
-                items: items
+                todos: todos
             }
         });
 
         var vueTodo = new Vue({
-            el: '#vue-todo',
+            el: '#vue-todos',
             data: {
-                items: items,
-                currentIndex: -1 // 正在编辑的 item 的下标
+                todos: todos,
+                editedTodo: null, // 当前编辑的 todo
+                cachedName: ''    // 缓存需要编辑的内容，这里为 todo.name
             },
             methods: {
-                showInput: function(index, event) {
-                    this.currentIndex = index;
-
-                    var $input = this.getInput();
-                    $input.siblings('.name').show(); // 显示当前 input 所在行的 name
-
-                    // 找到要插入的行，隐藏 name，然后插入 input
-                    $td = $(event.target).parent().prev();
-                    $('.name', $td).hide();
-                    $input.val(items[index].name).appendTo($td).show().focus();
+                createTodo: function() {
+                    // TODO: 发送请求到服务器上创建 todo，然后更新到 todos
+                    this.todos.push({id: 1, name: 'New Todo'});
                 },
-                hideInput: function() {
-                    // 隐藏 input，把相应的 name 显示出来，然后把 input 从 item 中移走，防止 item 被删除时 input 也被删除
-                    var $input = this.getInput();
-                    $input.hide();
-                    $input.siblings('.name').show();
-                    $input.appendTo('#vue-todo');
+                updateTodo: function(todo) {
+                    // TODO: 发送请求到服务器上更新 todo，然后更新到 todos
+                    this.editedTodo = null;
                 },
-                createItem: function() {
-                    // TODO: 发送请求到服务器上创建 item，然后更新到 items
-                    window.newId = window.newId || 3;
-                    items.push({id: newId, name: 'New-' + newId++});
+                removeTodo: function(todo) {
+                    // TODO: 发送请求到服务器先删除数据，然后再从 todos 里删除
+                    this.todos.splice(this.todos.indexOf(todo), 1);
                 },
-                updateItem: function() {
-                    // TODO: 发送请求到服务器上更新 item，然后更新到 items
-                    var $input = this.getInput();
-                    items[this.currentIndex].name = $input.val();
-                    items.splice(this.currentIndex, 1, items[this.currentIndex]);
-
-                    $input.siblings('.name').show();
-                    this.hideInput();
+                editTodo: function(todo) {
+                    this.editedTodo = todo;
+                    this.cachedName = todo.name;
                 },
-                removeItem: function(index) {
-                    // TODO: 发送请求到服务器先删除数据，然后再从 items 里删除
-                    items.splice(index, 1);
-                },
-                getInput: function() {
-                    return $('#vue-todo input'); // 返回 input
+                cancelEdit: function() {
+                    this.editedTodo.name = this.cachedName;
+                    this.editedTodo = null;
+                }
+            },
+            // A custom directive to wait for the DOM to be updated.
+            directives: {
+                'todo-focus': function(el, binding) {
+                    if (binding.value) {
+                        el.focus()
+                    }
                 }
             }
         });
@@ -145,11 +139,12 @@ tags: FE
         $('.dropdown').dropdown(); // 在 vueDropdown 后初始化，因为 Vue 会修改 dropdown 的结构
     </script>
 </body>
-
 </html>
 ```
 
 > 数组的操作需要使用 pop, push, splice 等 Vue 才会自动更新 Dom，使用下标操作则不会更新 Dom。
+>
+> ## 数组先赋值为 []，然后重新赋值为新数组也会更新 DOM。
 
 ## 思考
 

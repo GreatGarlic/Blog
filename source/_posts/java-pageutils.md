@@ -23,7 +23,7 @@ public class PageUtils {
     public static int offset(int pageNumber, int pageSize) {
         // 校正参数，pageNumber 从 1 开始，pageSize 最小为 1
         pageNumber = Math.max(1, pageNumber);
-        pageSize = Math.max(1, pageSize);
+        pageSize   = Math.max(1, pageSize);
 
         int offset = (pageNumber -1) * pageSize; // 计算此页开始的位置 offset
         return offset;
@@ -39,25 +39,41 @@ public class PageUtils {
     public static int pageCount(int recordCount, int pageSize) {
         // 校正参数，recordCount 最小为 0，pageSize 最小为 1
         recordCount = Math.max(0, recordCount);
-        pageSize = Math.max(1, pageSize);
+        pageSize    = Math.max(1, pageSize);
 
         int page = (recordCount-1) / pageSize + 1;
         return page;
     }
+}
+```
 
-    public static void main(String[] args) {
-        System.out.println(offset(0, 10));
-        System.out.println(offset(1, 10));
-        System.out.println(offset(9, 10));
-        System.out.println(offset(10, 10));
+<!--more-->
 
-        System.out.println(pageCount(0, 10));
-        System.out.println(pageCount(1, 10));
-        System.out.println(pageCount(9, 10));
-        System.out.println(pageCount(10, 10));
-        System.out.println(pageCount(15, 10));
-        System.out.println(pageCount(20, 10));
-        System.out.println(pageCount(21, 10));
+测试
+
+```java
+import com.xtuer.util.PageUtils;
+import org.junit.Assert;
+import org.junit.Test;
+
+public class TestPageUtils {
+    @Test
+    public void testOffset() {
+        Assert.assertEquals(0,  PageUtils.offset(0,  10));
+        Assert.assertEquals(0,  PageUtils.offset(1,  10));
+        Assert.assertEquals(80, PageUtils.offset(9,  10));
+        Assert.assertEquals(90, PageUtils.offset(10, 10));
+    }
+
+    @Test
+    public void testPageCount() {
+        Assert.assertEquals(1, PageUtils.pageCount(0,  10));
+        Assert.assertEquals(1, PageUtils.pageCount(1,  10));
+        Assert.assertEquals(1, PageUtils.pageCount(9,  10));
+        Assert.assertEquals(1, PageUtils.pageCount(10, 10));
+        Assert.assertEquals(2, PageUtils.pageCount(15, 10));
+        Assert.assertEquals(2, PageUtils.pageCount(20, 10));
+        Assert.assertEquals(3, PageUtils.pageCount(21, 10));
     }
 }
 ```

@@ -61,6 +61,7 @@ tags: Index
 * [Semantic Ui 进度条](/fe-semantic-ui-progress)
 * [Semantic Ui 侧边栏](/fe-semantic-ui-sidebar)
 * [Semantic Ui Tab](/fe-semantic-ui-tab)
+* [Semantic Ui Tips](/fe-semantic-ui-tips)
 * [Semantic Ui Validation](/fe-semantic-ui-validation)
 * [jQuery Slide Box](/fe-slide-box)
 * [JS 解析 SRT 格式的字幕](/fe-srt)
@@ -69,6 +70,7 @@ tags: Index
 * [HTML 树的实现](/fe-tree)
 * [Vue-ArtTemplate-jQuery 一起使用](/fe-vue-arttemplate)
 * [Vue 的省市多级联动效果](/fe-vue-chain)
+* [Vue DOM 更新完成后再执行函数](/fe-vue-dom-updated)
 * [Vue 动态显示编辑按钮和计算 Class](/fe-vue-edit-dynamic)
 * [Vue 使用 v-for 和设置属性及事件处理](/fe-vue-for-attribute)
 * [Vue Todo](/fe-vue-todo)
@@ -290,6 +292,7 @@ tags: Index
 * [Semantic Ui 进度条](/fe-semantic-ui-progress)
 * [Semantic Ui 侧边栏](/fe-semantic-ui-sidebar)
 * [Semantic Ui Tab](/fe-semantic-ui-tab)
+* [Semantic Ui Tips](/fe-semantic-ui-tips)
 * [Semantic Ui Validation](/fe-semantic-ui-validation)
 
 ## Solr
