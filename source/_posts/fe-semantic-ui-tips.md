@@ -43,8 +43,14 @@ $('.dropdown').dropdown({onChange: function(value, text, $choice) {
     layer.msg(value + " : " + text);
 }});
 
-// 选择 data-value="2" 的项
+// 选择 data-value="2" 的项为当前选项
 $('.dropdown').dropdown('set selected', 2);
+
+// 获取当前选项的 value
+$('.dropdown').dropdown('get value');
+
+// 获取当前选项的 text
+$('.dropdown').dropdown('get text');
 ```
 
 ## Card

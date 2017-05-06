@@ -1,7 +1,7 @@
 ---
 title: Vue Todo
 date: 2017-04-24 20:50:24
-tags: FE
+tags: [FE, Vue]
 ---
 
 实现一个简单的 Todo 来介绍不同的 Vue 对象共享同一个 data 数组、Todo 的增加、删除、编辑:
@@ -149,3 +149,9 @@ tags: FE
 ## 思考
 
 数据只有存储到服务器上才有意义，所以上面的代码中注释为 TODO 的地方就是需要和服务器交互的地方，实际项目里需要使用 Ajax 把数据存储到服务器。
+
+## 参考资料
+
+* [TodoMVC Example](https://cn.vuejs.org/v2/examples/todomvc.html)
+* [通过 TodoMVC 来学 vue.js 的使用](http://www.jianshu.com/p/82778a67ea57)
+

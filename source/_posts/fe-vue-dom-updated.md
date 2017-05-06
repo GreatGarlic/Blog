@@ -1,7 +1,7 @@
 ---
 title: Vue DOM 更新完成后再执行函数
 date: 2017-05-04 23:07:57
-tags: FE
+tags: [FE, Vue]
 ---
 
 Vue 的数据变化后会更新 DOM，DOM 只能保证在当前 tick 里面的代码全部执行完毕后更新，不能保证数据一变化后就能用 document.querySelector() 获取到最新的 DOM。要保证在 DOM 更新以后执行某一块代码，就必须把这块代码放到下一次事件循环里面，比如 setTimeout(fn, 0)，这样 DOM 更新后，就会立即执行这块代码。

@@ -1,7 +1,7 @@
 ---
 title: Vue 动态显示编辑按钮和计算 Class
 date: 2017-04-28 10:29:17
-tags: FE
+tags: [FE, Vue]
 ---
 
 下面介绍使用 vue 
@@ -100,5 +100,11 @@ tags: FE
 </body>
 
 </html>
+```
+
+也可以在 **:class** 中进行计算:
+
+```html
+<div class="ui attached segment" :class="{'ui top attached segment': index==0, 'ui bottom attached segment': index==items.length-1}" v-for="(item, index) in items" @mouseenter="item.editable=true" @mouseleave="item.editable=false">
 ```
 

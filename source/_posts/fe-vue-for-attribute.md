@@ -1,7 +1,7 @@
 ---
 title: Vue 使用 v-for 和设置属性及事件处理
 date: 2016-11-08 13:48:19
-tags: FE
+tags: [FE, Vue]
 ---
 
 Vue 中使用 `v-for` 遍历数组，设置属性使用指令 `v-bind`，输入和数据绑定用 `v-model`，事件处理则用 `v-on`。
