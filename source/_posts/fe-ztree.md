@@ -1,7 +1,7 @@
 ---
 title: zTree
 date: 2017-04-14 13:51:34
-tags: FE
+tags: [FE, zTree]
 ---
 
 > zTree is an advanced jQuery 'tree plug-in'. The performance is excellent, it is easy to configurw (with a full set of options), and has many advanced features (that usually only come with paid software).
@@ -83,14 +83,15 @@ tags: FE
         var setting = {
             data: {
                 simpleData: {
-                    enable:  true,       // 启用数组结构的数据创建 zTree
-                    idKey:   'id',       // 定义 node id 的 key，可自定义
-                    pIdKey:  'parentId', // 定义 parent id 的 key，可自定义
+                    enable : true,       // 启用数组结构的数据创建 zTree
+                    idKey  : 'id',       // 定义 node id 的 key，可自定义
+                    pIdKey : 'parentId', // 定义 parent id 的 key，可自定义
                     rootPId: 0           // 根节点的 parentId，这个节点是看不到的，因为不存在
                 }
             }
         };
 
+        // 节点的关系通过 parentId 来建立，顺序不重要
         var nodes = [
             { 'id': 1, 'parentId': 0, 'name': '试卷', open: true }, 
             { 'id': 2, 'parentId': 1, 'name': '数学' },
@@ -142,9 +143,9 @@ tags: FE
         var setting = {
             data: {
                 simpleData: {
-                    enable:  true,       // 启用数组结构的数据创建 zTree
-                    idKey:   'id',       // 定义 node id 的 key，可自定义
-                    pIdKey:  'parentId', // 定义 parent id 的 key，可自定义
+                    enable : true,       // 启用数组结构的数据创建 zTree
+                    idKey  : 'id',       // 定义 node id 的 key，可自定义
+                    pIdKey : 'parentId', // 定义 parent id 的 key，可自定义
                     rootPId: 0           // 根节点的 parentId，这个节点是看不到的，因为不存在
                 }
             },

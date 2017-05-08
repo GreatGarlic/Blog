@@ -74,6 +74,17 @@ public List<User> findUsers(@Param("offset") int offset, @Param("count") int cou
 
 `${name}` 直接替换，例如传进来的是字符串，不会在字符串两边加上 `''`，使用的场景有如 `ORDER BY`，`表名` 等
 
+## 返回 Boolean
+
+返回 Boolean 的 SQL 需要使用 **EXISTS**，因为 MyBatis 中 1 代表 true，非 1 代表 false，如果用 count 的话，大于 1 的情况返回 false，这是不对的。
+
+```xml
+<!--检查目录是否存在-->
+<select id="isDirectoryExisting" parameterType="string" resultType="boolean">
+    SELECT EXISTS(SELECT 1 FROM directory WHERE directory_id=#{directoryId})
+</select>
+```
+
 ## if
 
 ```xml

@@ -1,7 +1,7 @@
 ---
 title: zTree 修改 Awesome Style
 date: 2017-04-15 17:21:40
-tags: FE
+tags: [FE, zTree]
 ---
 
 zTree 默认的皮肤很不好看，还是 XP 的风格，例子中的 Awesome Style 很不错：

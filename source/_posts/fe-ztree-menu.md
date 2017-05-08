@@ -1,7 +1,7 @@
 ---
 title: zTree 右键菜单
 date: 2017-04-20 07:11:15
-tags: FE
+tags: [FE, zTree]
 ---
 
 zTree 使用右边的添加、编辑、删除按钮时容易误操作（踩过坑了），所以下面使用右键菜单来编辑 zTree。

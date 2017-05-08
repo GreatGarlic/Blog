@@ -1,10 +1,14 @@
 ---
 title: 拖拽普通 Element 到 zTree 
 date: 2017-05-06 21:25:02
-tags: FE
+tags: [FE, zTree]
 ---
 
-zTree 不支持 jQuery ui 的拖拽操作，为了拖拽普通的 element 到 zTree 上，需要自己实现拖拽功能，[Drag With Other DOMs](http://www.treejs.cn/v3/demo.php#_511) 演示了具体的实现，但是代码太多，不易于理解，这里把拖拽相关的核心代码提取出来，就能快速的理解拖拽的实现。<!--more-->
+zTree 不支持 jQuery ui 的拖拽操作，因为 drop 事件阻止了 mouse up 事件的冒泡以致 zTree 不能调用 onMouseUp 的回调函数。为了拖拽普通的 element 到 zTree 上，需要自己实现拖拽功能，[Drag With Other DOMs](http://www.treejs.cn/v3/demo.php#_511) 演示了具体的实现，但是代码太多，不易于理解，这里把拖拽相关的核心代码提取出来，就能快速的理解拖拽的实现。
+
+![](/img/fe/ztree-drag.png)
+
+<!--more-->
 
 ```html
 <!DOCTYPE html>
@@ -17,12 +21,12 @@ zTree 不支持 jQuery ui 的拖拽操作，为了拖拽普通的 element 到 zT
 
     <style>
         #items {
+            display: inline-block;
             border: 1px solid #CCC;
-            width: 400px;
             margin-top: 10px;
         }
 
-        #items .item, .dragged-item {
+        .item {
             display: inline-block;
             width: 50px;
             height: 50px;
@@ -46,6 +50,8 @@ zTree 不支持 jQuery ui 的拖拽操作，为了拖拽普通的 element 到 zT
         <div class="item">4</div>
     </div>
 
+    <a href="javascript:;">Fox</a>
+
     <script src="http://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
     <script src="http://cdn.staticfile.org/zTree.v3/3.5.28/js/jquery.ztree.all.min.js"></script>
     <script src="http://cdn.staticfile.org/layer/2.3/layer.js"></script>
@@ -53,7 +59,7 @@ zTree 不支持 jQuery ui 的拖拽操作，为了拖拽普通的 element 到 zT
     <script>
         // DnD(Drag and Drop) 是拖拽实现的核心
         DnD = {
-            $draggedElement: null, // 正在拖拽的 element
+            $draggedElement: null, // 正在被拖拽的 element
             // 按下鼠标
             mouseDown: function(e) {
                 var $doc = $(document);
@@ -62,7 +68,7 @@ zTree 不支持 jQuery ui 的拖拽操作，为了拖拽普通的 element 到 zT
 
                 // 创建并保存拖拽的 element
                 DnD.$draggedElement = $(e.target).clone();
-                DnD.$draggedElement.addClass('dragged-item');
+                // DnD.$draggedElement.addClass('dragged-item');
                 DnD.$draggedElement.css({
                     'position': 'absolute',
                     'left': (e.clientX + x + 2) + 'px',
@@ -74,6 +80,8 @@ zTree 不支持 jQuery ui 的拖拽操作，为了拖拽普通的 element 到 zT
                 $doc.on('mousemove',   DnD.mouseMove);
                 $doc.on('mouseup',     DnD.mouseUp);
                 $doc.on('selectstart', DnD.noSelect);
+
+                return false; // 阻止鼠标事件冒泡
             },
             // 移动鼠标
             mouseMove: function(e) {
@@ -107,7 +115,7 @@ zTree 不支持 jQuery ui 的拖拽操作，为了拖拽普通的 element 到 zT
             }
         };
 
-        $(document).on('mousedown', '.item', DnD.mouseDown);
+        $(document).on('mousedown', '.item, a', DnD.mouseDown);
     </script>
 
     <script>
@@ -146,5 +154,7 @@ zTree 不支持 jQuery ui 的拖拽操作，为了拖拽普通的 element 到 zT
 </html>
 ```
 
-
+> 需要被拖拽到 zTree 的 element 只要注册它的 mousedown 事件处理函数为 DnD.mouseDown 即可，如:
+>
+> `$(document).on('mousedown', '.item, a', DnD.mouseDown);`
 

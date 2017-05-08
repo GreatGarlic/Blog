@@ -144,6 +144,9 @@ $('.dropdown').dropdown('get text');
           // 2 种方式都可以
           $('.with-popup').popup();
           $('.with-popup').popup({ position: 'bottom left' });
+
+          // 如果 popup 的位置不够理想，还可以设置 offset 进行微调，例如下面向左偏移 12 像素
+          $('.with-popup').popup({ position: 'bottom left', offset: -12 });
       </script>
   </body>
   ```
@@ -175,5 +178,13 @@ $('.dropdown').dropdown('get text');
   </body>
   ```
 
+* 微调 Popup 的位置
+
+  ```js
+  // 如果 popup 的位置不够理想，还可以设置 offset 进行微调，例如下面向左偏移 12 像素
+  $('.with-popup').popup({ position: 'bottom left', offset: -12 });
+  ```
+
   ​
+
 
