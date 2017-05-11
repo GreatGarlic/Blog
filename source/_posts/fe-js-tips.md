@@ -359,3 +359,52 @@ var str = multiLineString(function() { /*
 console.log(str);
 ```
 
+## 克隆对象
+
+* 浅拷贝: 
+
+  ```js
+  var obj1 = {
+      id: 1,
+      tags: [1, 2, 3, 4]
+  }
+
+  var obj2 = $.extend({}, obj1); // 浅拷贝
+  obj2.id = 2;
+  obj2.tags[0] = 0; // obj1.tags 和 obj2.tags 是指向同一个地址
+
+  console.log('obj1: ' + JSON.stringify(obj1));
+  console.log('obj2: ' + JSON.stringify(obj2));
+  ```
+
+  输出:
+
+  ```
+  obj1: {"id":1,"tags":[0,2,3,4]}
+  obj2: {"id":2,"tags":[0,2,3,4]}
+  ```
+
+* 深拷贝:
+
+  ```js
+  var obj1 = {
+      id: 1,
+      tags: [1, 2, 3, 4]
+  }
+
+  var obj2 = $.extend(true, {}, obj1); // 深拷贝，true 表示深拷贝
+  obj2.id = 2;
+  obj2.tags[0] = 0; // obj1.tags 和 obj2.tags 指向不同的地址
+
+  console.log('obj1: ' + JSON.stringify(obj1));
+  console.log('obj2: ' + JSON.stringify(obj2));
+  ```
+
+  输出:
+
+  ```
+  obj1: {"id":1,"tags":[1,2,3,4]}
+  obj2: {"id":2,"tags":[0,2,3,4]}
+  ```
+
+  ​
