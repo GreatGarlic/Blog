@@ -23,7 +23,7 @@ import org.docx4j.openpackaging.packages.WordprocessingMLPackage;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 
-public class DocxToHtml {
+public class DocxToHtmlUtils {
     /**
      * 把docx转成html
      *

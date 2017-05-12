@@ -122,6 +122,7 @@ tags: Index
 * [使用 CAS 单点登陆](/java-cas-3-use-cas)
 * [Spring Security 使用 CAS 实现单点登陆](/java-cas-index)
 * [How to change default Java version](/java-change-version)
+* [Doc 转换为 HTML](/java-doc-html)
 * [Docx 转换为 HTML](/java-docx-html)
 * [字节序 Endian](/java-endian)
 * [计算文件的 MD5](/java-file-md5)
