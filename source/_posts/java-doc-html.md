@@ -40,7 +40,7 @@ import java.util.List;
 /**
  * 把 doc 转换为 html 的工具类
  */
-public class Doc2HtmlUtils {
+public class DocToHtmlUtils {
     /**
      * 使用 UTF-8 编码，把 doc 文件为 html。
      * html 存储在目录 htmlDir，名字为 index.html，html 的图片存储在目录 htmlDir/img 中。
