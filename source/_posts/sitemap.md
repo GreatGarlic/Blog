@@ -20,6 +20,7 @@ tags: Index
 * [Mac 安装 Mysql 和 Nginx](/mac-mysql-nginx)
 * [MySQL 导入导出 CSV](/mysql-csv)
 * [MySQL 中 datetime 和 timestamp 的区别](/mysql-datetime-timestamp)
+* [允许外网访问 MySQL](/mysql-wan)
 
 ## Default
 * [Shuttle](/misc-shuttle)
@@ -55,6 +56,7 @@ tags: Index
 * [jQuery 的 REST 插件](/fe-rest)
 * [CSS3 缩放图片](/fe-scale-image)
 * [Semantic Ui 的 Behavior 和 Settings](/fe-semantic-ui-behavior-settings)
+* [Semantic Ui 日期插件](/fe-semantic-ui-calendar)
 * [修改 Semantic UI 的默认字体](/fe-semantic-ui-font)
 * [Semantic Ui Grid](/fe-semantic-ui-grid)
 * [Semantic Ui 菜单栏](/fe-semantic-ui-menu)
@@ -289,6 +291,7 @@ tags: Index
 
 ## Semantic-Ui
 * [Semantic Ui 的 Behavior 和 Settings](/fe-semantic-ui-behavior-settings)
+* [Semantic Ui 日期插件](/fe-semantic-ui-calendar)
 * [修改 Semantic UI 的默认字体](/fe-semantic-ui-font)
 * [Semantic Ui Grid](/fe-semantic-ui-grid)
 * [Semantic Ui 菜单栏](/fe-semantic-ui-menu)
