@@ -52,7 +52,7 @@ Atom 以前很慢，所以一直不想用，在 1.0 版本后启动差不多需�
         'cmd-l': 'go-to-line:toggle'
     ```
 
-## 自定义文件的类型
+## 自定义文件语法高亮规则
 
 比如微信小程序的样式文件扩展名是 wxss，在 Atom 中打开默认是纯文本的样式，没有使用 CSS 的语法高亮，可以渲染它的修改语法规则为 CSS，但是只是一次生效的，下次打开工程又无效了。
 
@@ -73,6 +73,28 @@ core:
 
 在 Packages 里搜索 **language-html**，点击打开，可以看到 `Scope: text.html.basic`，也即是在 Package 里搜索 **language- + 文件类型**，然后找到 **Scope** 即可。
 
+## Tree View 隐藏文件
+
+**config.cson**(Atom -> Config) 中编辑 **ignoredNames**，添加需要隐藏的文件类型，**.*** 表示以点开头的所有文件:
+
+```
+  ignoredNames: [
+    ".git"
+    ".hg"
+    ".svn"
+    ".DS_Store"
+    "._*"
+    "Thumbs.db"
+    ".dll"
+    ".vcxproj"
+    ".suo"
+    ".filters"
+    ".user"
+    ".sdf"
+    ".*"
+  ]
+```
+
 ## 自定义 CSS
 
 例如修改 **highlight-selected** 选中文本的背景色:
@@ -85,4 +107,20 @@ core:
    }
    ```
 
+
+## 去掉 ES6 的警告提示
+
+I am using Atom's `linter`, `react`, and `linter-jshint`/`linter-jsxhint`. In my js files, I keep getting the warning
+
+> Warning: 'import' is only available in ES6 (use 'esvertion: 6'). (W119)
+
+First possibility, **recommended** : you can create a `.jshintrc` in you home directory and jshint will read it in case there is none in the project directory. You might need to restart Atom after.
+
+`.jshintrc` 的内容:
+
+```js
+{
+    "esversion" : 6
+}
+```
 

@@ -75,6 +75,7 @@ tags: Index
 * [Vue DOM 更新完成后再执行函数](/fe-vue-dom-updated)
 * [Vue 动态显示编辑按钮和计算 Class](/fe-vue-edit-dynamic)
 * [Vue 使用 v-for 和设置属性及事件处理](/fe-vue-for-attribute)
+* [vue-cli 简单搭建项目框架](/fe-vue-skeleton)
 * [Vue Todo](/fe-vue-todo)
 * [Webuploader 上传文件](/fe-webuploader)
 * [拖拽普通 Element 到 zTree](/fe-ztree-drag)
@@ -421,6 +422,7 @@ tags: Index
 * [Vue DOM 更新完成后再执行函数](/fe-vue-dom-updated)
 * [Vue 动态显示编辑按钮和计算 Class](/fe-vue-edit-dynamic)
 * [Vue 使用 v-for 和设置属性及事件处理](/fe-vue-for-attribute)
+* [vue-cli 简单搭建项目框架](/fe-vue-skeleton)
 * [Vue Todo](/fe-vue-todo)
 
 ## zTree
