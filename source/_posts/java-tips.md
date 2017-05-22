@@ -317,3 +317,15 @@ public class Test {
 }
 ```
 
+## SpringSecurity iframe
+
+SpringSecurity 默认不让 iframe 嵌入当前站点的网页的，连同域都不允许，可以配置 http 让其允许
+
+```xml
+<http auto-config="true">
+    <headers>
+        <frame-options policy="SAMEORIGIN"/>
+    </headers>
+</http>
+```
+

@@ -4,18 +4,23 @@ date: 2017-03-25 18:43:10
 tags: Java
 ---
 
-上传 doc 文件到服务器上时，如果需要在浏览器中预览，可以把 doc 转为 pdf，然后使用 pdf.js [在线预览 pdf](http://qtdebug.com/pdf-online/)，也可以把 doc 转为 html，直接在浏览器中打开。**POI** 可以很简单的把 doc 转为 html。<!--more-->
+上传 doc 文件到服务器上时，如果需要在浏览器中预览，可以把 doc 转为 pdf，然后使用 pdf.js [在线预览 pdf](http://qtdebug.com/pdf-online/)，也可以把 doc 转为 html，直接在浏览器中打开。**POI** 可以很简单的把 doc 转为 html。
+
+Word 里的公式使用的矢量格式 WMF，需要转换为 SVG 后才能在浏览器中查看，下面的代码使用了 wmf2svg 进行了转换。发现图片文件的名字以 **.wmf** 结尾，则给它加上 **.svg**，并且转换为 **SVG** 格式的图片。<!--more-->
 
 ## Gradle 依赖
 
 ```groovy
 compile 'commons-io:commons-io:2.5'
 compile 'org.apache.poi:poi-scratchpad:3.16'
+compile 'net.arnx:wmf2svg:0.9.8'
 ```
 
 ## 转换程序
 
 ```java
+import net.arnx.wmf2svg.gdi.svg.SvgGdi;
+import net.arnx.wmf2svg.gdi.wmf.WmfParser;
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.output.ByteArrayOutputStream;
 import org.apache.poi.hwpf.HWPFDocument;
@@ -31,10 +36,7 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.*;
 import java.util.List;
 
 /**
@@ -87,6 +89,10 @@ public class DocToHtmlUtils {
             public String savePicture(byte[] content,
                                       PictureType pictureType, String suggestedName,
                                       float widthInches, float heightInches ) {
+                if (suggestedName.toLowerCase().endsWith(".wmf")) {
+                    suggestedName += ".svg"; // 重命名为 xxx.wmf.svg，一会要把 .wmf 图片转换为 svg 的
+                }
+
                 // HTML 中图片的相对路径
                 return imgDirName == null ? suggestedName : imgDirName + File.separator + suggestedName;
             }
@@ -100,7 +106,14 @@ public class DocToHtmlUtils {
         if(pictures != null){
             for (Picture picture : pictures) {
                 try {
-                    picture.writeImageContent(new FileOutputStream(new File(imgDir, picture.suggestFullFileName())));
+                    String suggestedName = picture.suggestFullFileName();
+
+                    // 如果是 wmf 图片，则转换为 svg
+                    if (suggestedName.toLowerCase().endsWith(".wmf")) {
+                        FileUtils.writeByteArrayToFile(new File(imgDir, suggestedName + ".svg"), convertWmfToSvg(picture));
+                    } else {
+                        picture.writeImageContent(new FileOutputStream(new File(imgDir, suggestedName)));
+                    }
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();
                 }
@@ -125,12 +138,60 @@ public class DocToHtmlUtils {
         FileUtils.writeByteArrayToFile(new File(htmlDir, htmlFileName), out.toByteArray());
     }
 
+    /**
+     * Wmf 转化为 Svg
+     *
+     * @param wmfPicture
+     * @return Svg 内容的 bytes 数组
+     * @throws Exception
+     */
+    public static byte[] convertWmfToSvg(Picture wmfPicture) throws Exception {
+        ByteArrayOutputStream wmfContent = new ByteArrayOutputStream();
+        wmfPicture.writeImageContent(wmfContent);
+
+        ByteArrayInputStream in = new ByteArrayInputStream(wmfContent.toByteArray());
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        convertWmfToSvg(in, out);
+
+        return out.toByteArray();
+    }
+
+    /**
+     * 从传入的输入流 in 中读取 wmf 的内容，转换为 svg 格式的内容，保存到 out 中
+     *
+     * @param in wmf 的输入流
+     * @param out svg 的输出流
+     * @throws Exception
+     */
+    public static void convertWmfToSvg(InputStream in, OutputStream out) throws Exception {
+        WmfParser parser = new WmfParser();
+        SvgGdi gdi = new SvgGdi(false);
+
+        parser.parse(in, gdi);
+        Document doc = gdi.getDocument();
+
+        // 保存到 ByteArrayOutputStream
+        TransformerFactory factory = TransformerFactory.newInstance();
+        Transformer transformer = factory.newTransformer();
+
+        transformer.setOutputProperty(OutputKeys.METHOD, "xml");
+        transformer.setOutputProperty(OutputKeys.ENCODING, "UTF-8");
+        transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+        transformer.setOutputProperty(OutputKeys.DOCTYPE_PUBLIC,"-//W3C//DTD SVG 1.0//EN");
+        transformer.setOutputProperty(OutputKeys.DOCTYPE_SYSTEM,"http://www.w3.org/TR/2001/REC-SVG-20010904/DTD/svg10.dtd");
+
+        transformer.transform(new DOMSource(doc), new StreamResult(out));
+        ByteArrayOutputStream buffer = new ByteArrayOutputStream();
+        transformer.transform(new DOMSource(doc), new StreamResult(buffer));
+        out.flush();
+    }
+
     public static void main(String argv[]) throws Exception {
-        convertDocToHtml(new File("/Users/Biao/Desktop/doc/x.doc"),
+        convertDocToHtml(new File("/Users/Biao/Desktop/2011届高考数学强化复习训练题11.doc"),
                 new File("/Users/Biao/Desktop/doc/x"));
-        convertDocToHtml(new File("/Users/Biao/Desktop/doc/x.doc"),
-                new File("/Users/Biao/Desktop/doc/y"),
-                "goo.html", null, "UTF-8");
+//        convertDocToHtml(new File("/Users/Biao/Desktop/doc/x.doc"),
+//                new File("/Users/Biao/Desktop/doc/y"),
+//                "goo.html", null, "UTF-8");
     }
 }
 ```
