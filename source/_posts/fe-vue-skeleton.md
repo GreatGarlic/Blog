@@ -44,11 +44,13 @@ tags: [FE, Vue]
    npm install --save-dev sass-loader
    ```
 
-6. 关闭编译时缩进，console.log() 错误，修改 .eshintrc.js 的 rules
+6. ESHint 设置，修改 .eshintrc.js 的 rules，去掉一些严格的检查
 
    ```
    'indent': 0,
-   'no-console': 0
+   'no-console': 0,
+   'no-undef': 0,
+   'no-trailing-spaces': 0,
    ```
 
    > 我喜欢使用 4 个空格来缩进，Airbnb 默认是 2 个，很多前端的都喜欢使用 2 个进行缩进，为了简单起见，不让空格的个数造成编译时错误，关闭掉它即可。
@@ -198,6 +200,37 @@ tags: [FE, Vue]
    ```
 
    > `<router-view></router-view>`  就是被 component 替换的地方
+
+## 引用静态文件
+
+* 不能在 .vue 文件的模版中引用，需要在 index.html 中引用
+
+
+* 使用 CDN 的 JS
+
+  在 index.html 中使用 script 引用:
+
+  ```html
+  <body>
+      <div id="app"></div>
+      <!-- built files will be auto injected -->
+
+      <script src="http://cdn.staticfile.org/layer/2.3/layer.js"></script>
+  </body>
+  ```
+
+* 引用本地的 JS，不想被打包压缩
+
+  先将其放入 static 目录，然后在 index.html 中使用 script 引用:
+
+  ```html
+  <body>
+      <div id="app"></div>
+      <!-- built files will be auto injected -->
+
+      <script src="/static/lib/jquery.min.js" charset="utf-8"></script>
+  </body>
+  ```
 
 ## 参考资料
 

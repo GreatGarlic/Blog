@@ -27,6 +27,9 @@ testCompile 'junit:junit:4.12'
 ```
 username=Dr. Alice
 age=22
+
+# 存储试卷文件的目录
+papersDirectory=/Users/Biao/Documents/套卷/papers
 ```
 
 `config.yml`
@@ -59,13 +62,17 @@ username: Dr. Alice
         </property>
     </bean>
 
-    <bean id="propertiesConfig" class="org.apache.commons.configuration.PropertiesConfiguration">
-        <constructor-arg value="config.properties"/> <!-- 不要用 classpath: -->
+    <bean id="propertiesConfig" class="org.apache.commons.configuration.PropertiesConfiguration" init-method="load">
+        <property name="encoding" value="UTF-8"/>
+        <property name="URL" value="classpath:/config.properties"/>
     </bean>
 </beans>
 ```
 
+> propertiesConfig 的 encoding 设置为 UTF-8，则 properties 文件里就可以用中文了
+
 ## 测试案例
+
 ```java
 import org.apache.commons.configuration.PropertiesConfiguration;
 import org.junit.runner.RunWith;
