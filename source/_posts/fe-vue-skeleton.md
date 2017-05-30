@@ -25,8 +25,8 @@ tags: [FE, Vue]
    > 注意: 
    >
    > * 项目名称不能有大写字母
-   > * ESLint 使用 Airbnb 风格会更合适一些
-   > * 这里不安装 unit tests 和 e2e tests
+   > * ESLint 使用 Airbnb 风格会更严格一些，不过不管使用哪一种，都需要配置 .eslintrc.js 忽略一些编译检查
+   > * 不安装 unit tests 和 e2e tests
    >
    > ![](/img/fe/vue-cli-1.png)
 
@@ -56,7 +56,9 @@ tags: [FE, Vue]
    'space-before-function-paren': 0,
    'no-unused-vars': 0,
    'comma-dangle': 0,
-   'import/prefer-default-export': 0
+   'import/prefer-default-export': 0,
+   'no-new': 0,
+   'no-multi-spaces': 0,
    ```
 
    > 我喜欢使用 4 个空格来缩进，Airbnb 默认是 2 个，很多前端的都喜欢使用 2 个进行缩进，为了简单起见，不让空格的个数造成编译时错误，关闭掉它即可。
