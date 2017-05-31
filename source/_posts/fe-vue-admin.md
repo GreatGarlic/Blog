@@ -56,56 +56,6 @@ new Vue({
 
 > 在 main.js 中引入 Element，例如 vuex 也在此页面引入。
 
-## App.vue
-
-```html
-<template>
-    <div id="app">
-        <transition name="fade" mode="out-in">
-            <router-view></router-view>
-        </transition>
-    </div>
-</template>
-
-<script>
-    export default {};
-</script>
-
-<style lang="scss">
-    body {
-        font-family: '微软雅黑', Helvetica, Arial, sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-
-        margin: 0px;
-        padding: 0px;
-        font-size: 14px;
-    }
-
-    #app {
-        position: absolute;
-        top: 0px;
-        bottom: 0px;
-        width: 100%;
-    }
-
-    /* transition fade 的样式 */
-    .fade-enter-active,
-    .fade-leave-active {
-    	transition: all .2s ease;
-    }
-
-    .fade-enter,
-    .fade-leave-active {
-    	opacity: 0;
-    }
-</style>
-```
-
-> Home, 404 等都是替换此页中的 router-view，因为它们在 routes 配置中是第一级 path。
->
-> 动画 transition 中的 mode="out-in" 不能省略。
-
 ## router/index.js
 
 ```js
@@ -144,50 +94,102 @@ export default new Router({
 >
 > 此外还配置了 404 的路由。
 
+## App.vue
+
+```html
+<template>
+    <div id="app">
+        <transition name="fade" mode="out-in">
+            <router-view></router-view>
+        </transition>
+    </div>
+</template>
+
+<script>
+    export default {};
+</script>
+
+<style lang="scss">
+    html, body {
+        font-family: '微软雅黑', Helvetica, Arial, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+        margin: 0px;
+        padding: 0px;
+        font-size: 14px;
+    }
+
+    #app {
+        position: absolute;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        right: 0;
+    }
+
+    /* transition fade 的样式 */
+    .fade-enter-active,
+    .fade-leave-active {
+    	transition: all .2s ease;
+    }
+    .fade-enter,
+    .fade-leave-active {
+    	opacity: 0;
+    }
+</style>
+```
+
+> Home, 404 等都是替换此页中的 router-view，因为它们在 routes 配置中是第一级 path。
+>
+> 动画 transition 中的 mode="out-in" 不能省略。
+
 ## Home.vue
 
 ```html
 <template>
-    <el-row class="container">
-        <!-- 最上面的头部信息 -->
-        <el-col :span="24" class="header">
-            <el-col :span="10" class="logo">{{systemName}}</el-col>
-            <el-col :span="4" class="userinfo">
-                <el-dropdown trigger="hover">
-                    <span class="el-dropdown-link userinfo-inner"><img :src="avatar" />{{username}}</span>
-                    <el-dropdown-menu slot="dropdown">
-                        <el-dropdown-item>消息</el-dropdown-item>
-                        <el-dropdown-item>设置</el-dropdown-item>
-                        <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
-                    </el-dropdown-menu>
-                </el-dropdown>
-            </el-col>
-        </el-col>
+    <div class="container">
+        <!-- 侧边导航栏 -->
+        <div class="sidebar">
+            <el-menu :default-active="$route.path" router theme="dark">
+                <el-submenu index="1">
+                    <template slot="title"><i class="el-icon-message"></i>信息管理</template>
+                    <el-menu-item index="/users">用户</el-menu-item>
+                    <el-menu-item index="/hello">Hello</el-menu-item>
+                    <el-menu-item index="1-3">选项3</el-menu-item>
+                    <el-menu-item index="1-4-1">选项1</el-menu-item>
+                </el-submenu>
+                <el-menu-item index="2"><i class="el-icon-menu"></i>导航二</el-menu-item>
+                <el-menu-item index="3"><i class="el-icon-setting"></i>导航三</el-menu-item>
+            </el-menu>
+        </div>
 
-        <el-col :span="24" class="main">
-            <!-- 侧边导航栏: router 表示路由，index 为路由的路径 -->
-            <div class="sidebar">
-                <el-menu default-active="1" router>
-                    <el-submenu index="1">
-                        <template slot="title"><i class="el-icon-message"></i>信息管理</template>
-                        <el-menu-item index="/users">用户</el-menu-item>
-                        <el-menu-item index="/hello">Hello</el-menu-item>
-                        <el-menu-item index="1-3">选项3</el-menu-item>
-                        <el-menu-item index="1-4-1">选项1</el-menu-item>
-                    </el-submenu>
-                    <el-menu-item index="2"><i class="el-icon-menu"></i>导航二</el-menu-item>
-                    <el-menu-item index="3"><i class="el-icon-setting"></i>导航三</el-menu-item>
-                </el-menu>
-            </div>
+        <!-- 主体部分 -->
+        <div class="main">
+            <!-- 头部 -->
+            <el-row class="header" type="flex" justify="space-between">
+                <el-col :span="10" class="logo"></el-col>
+                <el-col :span="4" class="userinfo">
+                    <el-dropdown trigger="hover">
+                        <span class="el-dropdown-link userinfo-inner"><img class="avatar" :src="avatar">{{username}}</span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item>消息</el-dropdown-item>
+                            <el-dropdown-item>设置</el-dropdown-item>
+                            <el-dropdown-item divided @click.native="logout">退出登录</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </el-col>
+            </el-row>
 
-            <!-- 内容区域 -->
-            <div class="content">
-                <transition name="fade" mode="out-in">
-                    <router-view></router-view>
-                </transition>
-            </div>
-        </el-col>
-    </el-row>
+            <!-- 内容区 -->
+            <el-row>
+                <el-col :span="24" class="content">
+                    <transition name="fade" mode="out-in">
+                        <router-view></router-view>
+                    </transition>
+                </el-col>
+            </el-row>
+        </div>
+    </div>
 </template>
 
 <script>
@@ -196,7 +198,7 @@ export default new Router({
             return {
                 systemName: '管理系统',
                 username: '公孙二狗',
-                avatar: '/static/img/avatar.png'
+                avatar: '/static/img/avatar.jpg'
             };
         },
         methods: {
@@ -209,69 +211,58 @@ export default new Router({
 </script>
 
 <style lang="scss">
-    $sidebarWidth: 200px; // 侧边栏的宽度
+    $sidebarWidth: 200px; // 侧边栏的宽
+    $headerHeight: 30px; // 头部的高
 
     .container {
+        display: flex;
         position: absolute;
         top: 0;
         left: 0;
         bottom: 0;
         right: 0;
 
-        .header {
-            height: 60px;
-            line-height: 60px;
-            background: #333;
-            color: #fff;
-
-            .logo {
-                width: $sidebarWidth;
-                height: 60px;
-                line-height: 60px;
-                font-size: 22px;
-                padding: 0 20px;
-            }
-
-            .userinfo {
-                text-align: right;
-                padding-right: 30px;
-                float: right;
-
-                .userinfo-inner {
-                    cursor: pointer;
-                    color: #fff;
-                    img {
-                        width: 40px;
-                        height: 40px;
-                        border-radius: 20px;
-                        margin: 10px 0px 10px 10px;
-                        float: right;
-                    }
-                }
-            }
+        .sidebar {
+            width: $sidebarWidth;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            background: #334156;
+            overflow: auto;
         }
 
         .main {
-            display: flex;
-            position: absolute;
-            top: 60px;
-            bottom: 0px;
             overflow: hidden;
+            flex: 1;
 
-            .sidebar {
-                width: $sidebarWidth;
-                top: 0px;
-                bottom: 0px;
-                background: #EEF1F6;
-                overflow: auto;
+            .header {
+                display: flex;
+                height: $headerHeight;
+                line-height: $headerHeight;
+                padding: 0 10px;
+                background: #334156;
 
-                .el-menu {
-                    border-radius: 0;
+                .userinfo {
+                    text-align: right;
+
+                    .userinfo-inner {
+                        cursor: pointer;
+                        color: #BDC9D6;
+                        font-size: 12px;
+
+                        .avatar {
+                            width: 20px;
+                            height: 20px;
+                            border-radius: 20px;
+                            margin: 5px 0 0px 5px;
+                            float: right;
+                            box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
+                        }
+                    }
                 }
             }
 
             .content {
-                flex: 1;
                 padding: 10px;
             }
         }
@@ -282,6 +273,8 @@ export default new Router({
 > Home 实现了管理界面的结构，点击导航栏中的项时，对应路由的页面显示在页面的主要内容区。
 >
 > Home 主要是用了 Element 的 NavMenu，dropdown 和 layout，同时也用了 flex，具体的用法需要去阅读相关帮助文档。
+>
+> `<el-menu :default-active="$route.path" router>` 中的 `:default-active="$route.path"` 比较有意思，页面刷新或者返回时，自动的展开上一个页面时侧边栏，`$route.path` 值例如为 `/users`。
 
 ## Users.vue
 
@@ -412,7 +405,8 @@ export default new Router({
         width: 100%;
         height: 100%;
         color: #888;
-        margin: 2em auto;
+        margin: 0 auto;
+        padding-top: 20px;
         text-align: center;
 
         h1 {
