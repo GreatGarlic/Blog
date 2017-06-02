@@ -20,7 +20,7 @@ tags: Index
 * [Mac 安装 Mysql 和 Nginx](/mac-mysql-nginx)
 * [MySQL 导入导出 CSV](/mysql-csv)
 * [MySQL 中 datetime 和 timestamp 的区别](/mysql-datetime-timestamp)
-* [允许外网访问 MySQL](/mysql-wan)
+* [允许其他机器访问 MySQL](/mysql-wan)
 
 ## Default
 * [Shuttle](/misc-shuttle)
@@ -70,7 +70,8 @@ tags: Index
 * [JavaScript 里格式化字符串](/fe-string-format)
 * [Sublimetext 安装 jshint](/fe-sublimetext-jshint)
 * [HTML 树的实现](/fe-tree)
-* [Vue 管理端简单框架](/fe-vue-admin)
+* [Vue 后台管理端简单框架（一）](/fe-vue-admin-1)
+* [Vue 后台管理端简单框架（二）](/fe-vue-admin-2)
 * [Vue-ArtTemplate-jQuery 一起使用](/fe-vue-arttemplate)
 * [Vue 的省市多级联动效果](/fe-vue-chain)
 * [Vue DOM 更新完成后再执行函数](/fe-vue-dom-updated)
@@ -424,7 +425,8 @@ tags: Index
 * [Java 解压 zip 文件](/util-unzip)
 
 ## Vue
-* [Vue 管理端简单框架](/fe-vue-admin)
+* [Vue 后台管理端简单框架（一）](/fe-vue-admin-1)
+* [Vue 后台管理端简单框架（二）](/fe-vue-admin-2)
 * [Vue-ArtTemplate-jQuery 一起使用](/fe-vue-arttemplate)
 * [Vue 的省市多级联动效果](/fe-vue-chain)
 * [Vue DOM 更新完成后再执行函数](/fe-vue-dom-updated)

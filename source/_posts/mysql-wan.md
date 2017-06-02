@@ -1,8 +1,10 @@
 ---
-title: 允许外网访问 MySQL
+title: 允许其他机器访问 MySQL
 date: 2017-05-16 17:16:26
 tags: DB
 ---
+A 机器上的 MySQL 默认只能 A 机器上的软件访问，即 localhost，如果 B 机器上的软件想访问 A 机器上的 MySQL，需要 MySQL 对 B 机器的 IP 进行授权。
+
 ## 方式一
 
 * 任意主机以用户 **root** 和密码 **root** 连接到 MySQL 服务器

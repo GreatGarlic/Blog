@@ -1,5 +1,5 @@
 ---
-title: Vue 管理端简单框架
+title: Vue 后台管理端简单框架（一）
 date: 2017-05-30 16:03:34
 tags: [FE, Vue]
 ---
@@ -8,13 +8,13 @@ tags: [FE, Vue]
 
 ![](/img/fe/vue-admin-ui.png)
 
-这里就来介绍怎么实现一个这样的界面，UI 的框架使用 [Element](http://element.eleme.io)，命令行进入前面创建的项目目录，安装 Element:
+下面介绍怎么实现一个这样的界面，UI 的框架使用 [Element](http://element.eleme.io)，命令行进入前面创建的项目目录，安装 Element:
 
 ```
 npm install element-ui --save
 ```
 
-然后在 main.js 中引入 Element:
+然后在 main.js 中引入 Element 就能使用 Element 了，具体参考 main.js:
 
 ```js
 import Element from 'element-ui';
@@ -29,7 +29,15 @@ Vue.use(Element);
 
 ![](/img/fe/vue-admin-files.png)
 
-view 目录存放页面的 vue 文件，最好是根据左边侧边栏的结构把 vue 文件也分目录存放，这样看上去结构更合理一些。Home.vue 是管理功能的界面的主要结构文件，404.vue 在找不到页面时显示。
+为了统一管理页面的 vue 文件，把他们都放到 src/view 目录中，最好还要根据左边侧边栏的结构把 vue 文件也分子目录存放，这样更便于管理。Home.vue 是管理功能的界面的主要结构文件，404.vue 在找不到页面时显示。需要的文件都在下面列出来的，复制到项目即可:
+
+* main.js
+* router/index.js
+* App.vue
+* Home.vue
+* 404.vue
+* Users.vue (页面样例)
+* Hello.vue (页面样例)
 
 ## main.js
 
@@ -54,7 +62,7 @@ new Vue({
 });
 ```
 
-> 在 main.js 中引入 Element，例如 vuex 也在此页面引入。
+> 在 main.js 中引入 Element，例如 vuex 也在此引入。
 
 ## router/index.js
 
@@ -141,9 +149,11 @@ export default new Router({
 
 > Home, 404 等都是替换此页中的 router-view，因为它们在 routes 配置中是第一级 path。
 >
-> 动画 transition 中的 mode="out-in" 不能省略。
+> 动画 transition 中的 mode="out-in" 不能省略，动画的效果也需要自己用 css 定义。
 
 ## Home.vue
+
+Home.vue 主要实现管理端页面的结构，左边是菜单侧边导航栏，中间上部是登陆用户的信息，中间主要部分是管理功能的显示区。
 
 ```html
 <template>
@@ -240,6 +250,7 @@ export default new Router({
                 height: $headerHeight;
                 line-height: $headerHeight;
                 padding: 0 10px;
+                margin-bottom: 0;
                 background: #334156;
 
                 .userinfo {
@@ -276,7 +287,49 @@ export default new Router({
 >
 > `<el-menu :default-active="$route.path" router>` 中的 `:default-active="$route.path"` 比较有意思，页面刷新或者返回时，自动的展开上一个页面时侧边栏，`$route.path` 值例如为 `/users`。
 
+## 404.vue
+
+```html
+<template>
+    <div id="not-found">
+        <h1>Page Not Found</h1>
+        <p>Sorry, but the page you were trying to view does not exist.</p>
+    </div>
+</template>
+
+<style lang="scss">
+    #not-found {
+        display: table;
+        width: 100%;
+        height: 100%;
+        color: #888;
+        margin: 0 auto;
+        padding-top: 20px;
+        text-align: center;
+
+        h1 {
+            color: #555;
+            font-size: 2em;
+            font-weight: 400;
+        }
+
+        @media only screen and (max-width: 280px) {
+            p {
+                width: 95%;
+            }
+
+            h1 {
+                font-size: 1.5em;
+                margin: 0 0 0.3em;
+            }
+        }
+    }
+</style>
+```
+
 ## Users.vue
+
+用户信息的表格，为了展示路由效果的的同时展示一下 Element 的 table 的用法，很简洁，自己实现同样的效果就不只这点代码了，文档请参考 <http://element.eleme.io/#/zh-CN/component/table>
 
 ```html
 <template>
@@ -333,6 +386,8 @@ export default new Router({
 
 ## Hello.vue
 
+普通页面，随便写点就行，只是为了展示路由效果的。
+
 ```html
 <template>
     <div class="hello">
@@ -385,46 +440,6 @@ export default new Router({
 
     a {
         color: #42b983;
-    }
-</style>
-```
-
-## 404.vue
-
-```html
-<template>
-    <div id="not-found">
-        <h1>Page Not Found</h1>
-        <p>Sorry, but the page you were trying to view does not exist.</p>
-    </div>
-</template>
-
-<style lang="scss">
-    #not-found {
-        display: table;
-        width: 100%;
-        height: 100%;
-        color: #888;
-        margin: 0 auto;
-        padding-top: 20px;
-        text-align: center;
-
-        h1 {
-            color: #555;
-            font-size: 2em;
-            font-weight: 400;
-        }
-
-        @media only screen and (max-width: 280px) {
-            p {
-                width: 95%;
-            }
-
-            h1 {
-                font-size: 1.5em;
-                margin: 0 0 0.3em;
-            }
-        }
     }
 </style>
 ```
