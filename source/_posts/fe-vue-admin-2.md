@@ -4,7 +4,7 @@ date: 2017-06-01 18:38:44
 tags: [FE, Vue]
 ---
 
-[Vue 后台管理端简单框架（一）](/fe-vue-admin-1) 中搭建出了后台管理端的页面框架，但是还没有添加其他的功能，例如使用 Vuex 进行管理状态，使用  Axios 和服务器通讯，创建使用 Component 片段，修改打包选项等，这一章主要的内容就是介绍这些功能的实现。<!--more-->
+[Vue 后台管理端简单框架（一）](/fe-vue-admin-1) 中搭建出了后台管理端的页面框架，但是还没有添加其他的功能，例如使用 Vuex 实现模块间数据共享、与服务器通讯、功能独立为模块、修改打包选项等，这一章主要的内容就是介绍这些功能的实现。<!--more-->
 
 ## Vuex
 
@@ -92,6 +92,8 @@ vue-cli 推荐使用 Axios 与服务器通过 Ajax 通讯:
 
 ## Ajax 跨域
 
+> 配置 proxyTable 实现 Ajax 跨域。
+
 使用 vue-cli 开发的时候，与服务器通讯是跨域的 Ajax，要么服务器允许跨域，要么 vue 中配置 proxyTable 让 vue 代理访问实现跨域:
 
 * 服务器允许跨域，但是有一个缺点，Ajax 的 url 必须要带上服务器的 IP、域名和端口
@@ -160,6 +162,8 @@ this.$route.path // 取得当前页面的路径，例如 /users
 
 ## 加载数据
 
+> mounted() 中从服务器加载数据。
+
 一般应该在 mounted() 事件中加载数据，不应该在 created() 中，因为 created() 时 el 还没有被挂载，mounted() 时 el 被替换为 $el，数据就可以显示到界面上，而且在页面中只执行一次。下面以加载用户数据显示到 table 中为例，加载数据时显示 loading 状态，加载完成后用户数据显示到 table 中，loading 状态消失:
 
 ```html
@@ -224,6 +228,103 @@ this.$route.path // 取得当前页面的路径，例如 /users
     };
 </script>
 ```
+
+## Build 配置
+
+执行 npm run build 编译出发布的文件，默认中 dist 文件夹中，context path 为 /，但是默认的配置不一定符合项目的需求。
+
+例如在 Spring MVC 中，context path 很多时候不是 /，而是项目名，vue 中的 index.html 要重命名为 admin.html 并且放到 static/html 目录下，通过配置 mvc:resources 来访问，如 http://host/html/admin.html，这些都可以通过配置 config/index.js 中的 build 来实现，例如:
+
+```js
+build: {
+    env: require('./prod.env'),
+    index: path.resolve(__dirname, '../dist/static/html/admin.html'),
+    assetsRoot: path.resolve(__dirname, '../dist'),
+    assetsSubDirectory: 'static',
+    assetsPublicPath: '/fox',
+    ...
+```
+
+* index: 生成的页面文件的路径
+* assetsRoot: 编译输出的目录
+* assetsSubDirectory: 编译输出的 js、img、css 等文件的文件夹名字
+* assetsPublicPath: context path
+
+## 引入静态文件
+
+> 使用 ESJ 在 index.html 中判断不同的环境下使用不同的路径引入静态文件。
+
+我们自己的静态文件 js、css、image 等都会放到 static 目录下（这里的文件 webpack 不会进行压缩打包），然后在 index.html 中引入
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>vue-admin</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+
+    <script src="/static/lib/jquery.min.js" charset="utf-8"></script>
+    <script src="/static/lib/jquery.rest.js" charset="utf-8"></script>
+</body>
+
+</html>
+
+```
+
+如果项目的 context path 是 **/fox**，修改 build.assetsPublicPath 为 **/fox**，但是编译后 js 引入部分仍然为:
+
+```html
+<script src="/static/lib/jquery.min.js" charset="utf-8"></script>
+<script src="/static/lib/jquery.rest.js" charset="utf-8"></script>
+```
+
+实际需要:
+
+```html
+<script src="/fox/static/lib/jquery.min.js" charset="utf-8"></script>
+<script src="/fox/static/lib/jquery.rest.js" charset="utf-8"></script>
+```
+
+尝试修改 config/index.js 中 dev.assetsPublicPath 为 **/fox**，`npm run dev` 项目启动后却无法访问，可能是不能修改这个选项吧。考虑到可以使用 EJS 模版，于是修改 index.html 通过 if else 判断在开发环境和编译时使用不同的路径引入静态文件:
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>vue-admin</title>
+</head>
+
+<body>
+    <div id="app"></div>
+    <!-- built files will be auto injected -->
+
+    <% if (process.env.NODE_ENV === 'production') {%>
+        <script src="/fox/static/lib/jquery.min.js" charset="utf-8"></script>
+        <script src="/fox/static/lib/jquery.rest.js" charset="utf-8"></script>
+    <%} else {%>
+        <script src="/static/lib/jquery.min.js" charset="utf-8"></script>
+        <script src="/static/lib/jquery.rest.js" charset="utf-8"></script>
+    <%}%>
+</body>
+
+</html>
+```
+
+再次编译后看到引入静态文件时加上了 context path。
+
+## 登陆
+
+登陆就不在此前端页面中做了，因为一个项目里不只是这一个单页面，所以可以由服务器端的 Spring Security 来控制权页面的限访问，还可以方便的实现各种登陆方式、remember me、验证码等，提供接口获取当前登陆用户的信息给前端 vue 使用，然后 vue 根据用户的角色信息显示不同的菜单。
+
+可以在 Home.vue 的 mounted() 中请求当前登陆用户的信息，然后过滤出要显示的菜单。
 
 ## 参考资料
 
