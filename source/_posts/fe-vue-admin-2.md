@@ -103,10 +103,7 @@ vue-cli 推荐使用 Axios 与服务器通过 Ajax 通讯:
   ```js
   proxyTable: {
       '/api': {
-          target: 'http://localhost:8080',
-          pathRewrite: {
-              '^/api': '/api'
-          }
+          target: 'http://localhost:8080'
       }
   }
   ```
@@ -322,9 +319,71 @@ build: {
 
 ## 登陆
 
-登陆就不在此前端页面中做了，因为一个项目里不只是这一个单页面，所以可以由服务器端的 Spring Security 来控制权页面的限访问，还可以方便的实现各种登陆方式、remember me、验证码等，提供接口获取当前登陆用户的信息给前端 vue 使用，然后 vue 根据用户的角色信息显示不同的菜单。
+登陆就不在此前端页面中做了，因为一个项目里不只是这一个单页面，所以可以由服务器端的 Spring Security 来控制权页面的限访问，还可以方便的实现各种登陆方式、remember me、验证码等，提供接口获取当前登陆用户的信息给前端 vue 使用，然后 vue 根据用户的权限信息显示不同的菜单。
 
-可以在 Home.vue 的 mounted() 中请求当前登陆用户的信息，然后过滤出要显示的菜单。
+可以在 main.js 中创建 Vue 时候，在其 created() 中请求当前登陆用户的信息保存到 store 中，然后 Home.vue 中根据用户的权限过滤显示菜单。
+
+```js
+new Vue({
+    el: '#app',
+    router,
+    store,
+    template: '<App/>',
+    components: { App },
+    created() {
+        // 请求登陆用户信息并保存到 store 中
+        const user = {id: 12, name: 'Alice'};
+        this.$store.state.user = user;
+    }
+});
+```
+
+> 能够访问到此页面，说明已经登陆过了，因为 Spring Security 在访问此页面时会拦截，只有登陆后才可以访问。
+>
+> 需要注意的一个问题是，当从其他页面注销后，vue 写的此页面如果不刷新是不知道用户已经注销了的，所以需要想办法获取注销信息。
+
+## 懒加载
+
+打包后页面的 js 全打包到了 app.js 中，如果页面的模块非常多导致 app.js 很大，可以把每个模块的 js 单独打包，在访问具体模块的时候才加载它的 js，只需要在 router 引入 vue 时使用 require 加载即可:
+
+```js
+// 非懒加载
+// import NotFound from '@/view/404';
+// import Home  from '@/view/Home';
+// import Users from '@/view/information/Users';
+// import Hello from '@/view/information/Hello';
+// import Ajax  from '@/view/information/Ajax';
+
+// 懒加载
+const NotFound = resolve => require(['@/view/404'], resolve);
+const Home  = resolve => require(['@/view/Home'], resolve);
+const Users = resolve => require(['@/view/information/Users'], resolve);
+const Hello = resolve => require(['@/view/information/Hello'], resolve);
+const Ajax  = resolve => require(['@/view/information/Ajax'], resolve);
+
+Vue.use(Router);
+
+const router = new Router({
+    routes: [{
+        path: '/',
+        component: Home,
+        children: [
+            // children 下的 component 会在 Home 中的 <router-view> 生成
+            { path: '/users', component: Users, name: 'users' },
+            { path: '/hello', component: Hello, name: 'hello' },
+            { path: '/ajax', component: Ajax, name: 'ajax' }
+        ]
+    }, {
+        path: '/404',
+        component: NotFound,
+        hidden: true
+    }, {
+        path: '*',
+        hidden: true,
+        redirect: { path: '/404' }
+    }]
+});
+```
 
 ## 参考资料
 
@@ -332,3 +391,4 @@ build: {
 * [Axios](https://www.npmjs.com/package/axios)
 * [Axios 在 vue 中的简单配置与使用](http://blog.csdn.net/sinat_17775997/article/details/69367204)
 * [proxyTable 解决开发环境的跨域问题](http://www.jianshu.com/p/95b2caf7e0da)
+* [懒加载](https://router.vuejs.org/zh-cn/advanced/lazy-loading.html)
