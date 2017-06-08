@@ -1,10 +1,10 @@
 ---
-title: Vue 后台管理端简单框架（一）
+title: Vue 后台管理简单框架（一）
 date: 2017-05-30 16:03:34
 tags: [FE, Vue]
 ---
 
-[vue-cli 简单搭建项目框架](/fe-vue-skeleton/) 后我们知道了怎么使用 **vue-cli** 创建一个项目，但是页面比较简单，一般管理功能的界面如下:
+[vue-cli 简单搭建项目框架](/fe-vue-skeleton/) 后我们知道了怎么使用 **vue-cli** 创建一个项目，但是页面比较简单，一般后台管理功能的界面会像下面这样子:
 
 ![](/img/fe/vue-admin-ui.png)
 

@@ -1,10 +1,10 @@
 ---
-title: Vue 后台管理端简单框架（二）
+title: Vue 后台管理简单框架（二）
 date: 2017-06-01 18:38:44
 tags: [FE, Vue]
 ---
 
-[Vue 后台管理端简单框架（一）](/fe-vue-admin-1) 中搭建出了后台管理端的页面框架，但是还没有添加其他的功能，例如使用 Vuex 实现模块间数据共享、与服务器通讯、功能独立为模块、修改打包选项等，这一章主要的内容就是介绍这些功能的实现。<!--more-->
+[Vue 后台管理简单框架（一）](/fe-vue-admin-1) 中搭建出了后台管理的页面框架，但是还没有添加其他的功能，例如使用 Vuex 实现模块间数据共享、与服务器通讯、功能独立为模块、修改打包选项等，这一章主要的内容就是介绍这些功能的实现。<!--more-->
 
 ## Vuex
 
@@ -319,28 +319,39 @@ build: {
 
 ## 登陆
 
-登陆就不在此前端页面中做了，因为一个项目里不只是这一个单页面，所以可以由服务器端的 Spring Security 来控制权页面的限访问，还可以方便的实现各种登陆方式、remember me、验证码等，提供接口获取当前登陆用户的信息给前端 vue 使用，然后 vue 根据用户的权限信息显示不同的菜单。
+登陆就不在此 SPA 前端页面中做了，因为一个项目里不只是这一个单页面，所以可以由服务器端的 Spring Security 来控制权页面的限访问，还可以方便的实现各种登陆方式、remember me、验证码等，提供接口获取当前登陆用户的信息给前端 vue 使用，然后 vue 根据用户的权限信息显示不同的菜单。
 
-可以在 main.js 中创建 Vue 时候，在其 created() 中请求当前登陆用户的信息保存到 store 中，然后 Home.vue 中根据用户的权限过滤显示菜单。
+可以在 main.js 中实现 router 的 **beforeEach()** 勾子函数，每次路由的时候使用 Ajax 在其中请求当前登陆用户的信息并保存到 store 中，然后 Home.vue 中根据用户的权限过滤显示菜单。
 
 ```js
-new Vue({
-    el: '#app',
-    router,
-    store,
-    template: '<App/>',
-    components: { App },
-    created() {
-        // 请求登陆用户信息并保存到 store 中
-        const user = {id: 12, name: 'Alice'};
-        this.$store.state.user = user;
+// 每次路由都请求一下登陆用户信息
+router.beforeEach((to, from, next) => {
+    // 同步使用 Ajax 调用接口获取登陆用户的信息
+    const loginUser = {id: 123, name: 'Alice', logined: true};
+
+    if (loginUser.logined) {
+        next();
+    } else {
+        // 没有登陆则访问登陆页面
+        window.location.href = 'http://localhost:8080/login';
     }
+});
+
+new Vue({
+	...
+    router,
+    ...
 });
 ```
 
-> 能够访问到此页面，说明已经登陆过了，因为 Spring Security 在访问此页面时会拦截，只有登陆后才可以访问。
+> 有可能你要问，每次路由都要请求一次登陆用户信息，效率是不是不高，能不能访问一次使用 sessionStorage 存储起来？
 >
-> 需要注意的一个问题是，当从其他页面注销后，vue 写的此页面如果不刷新是不知道用户已经注销了的，所以需要想办法获取注销信息。
+> 一般一个系统不可能就只有一个地方能够注销，例如:
+>
+> * 点击页面 A、B、C 上的注销按钮进行注销
+> * 直接访问注销的 URL 进行注销
+>
+> 从其他地方注销后需要被监测到，把用户信息从 sessionStorage 里删除，关键就是怎么被监测到。使用 Websocket，定时轮训等？那还不如每次路由时请求一次呢，何况 Ajax 是很快的。
 
 ## 懒加载
 

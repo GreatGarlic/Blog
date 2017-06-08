@@ -18,7 +18,8 @@ Spring 中让一个方法在新线程中运行，只需要给方法加上 `@Asyn
        http://www.springframework.org/schema/task
        http://www.springframework.org/schema/task/spring-task.xsd">
     ...
-    <task:annotation-driven/>
+    <task:executor id="myExecutor" pool-size="5"/>
+    <task:annotation-driven executor="myExecutor"/>
     ...
 </beans>
 ```
