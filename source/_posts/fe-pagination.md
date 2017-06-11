@@ -61,6 +61,10 @@ tags: FE
 </html>
 ```
 
+> * 设置总页数为 100: $('.pagination').jqPagination('option', 'max_page', 100);
+> * 设置当前页为第 5 页: $('.pagination').jqPagination('option', 'current_page', 5);
+> * 这 2 个设置都`会触发` paged() 回调函数
+
 ## simplePagination
 
 主页为 <http://flaviusmatis.github.io/simplePagination.js/>
@@ -107,3 +111,6 @@ tags: FE
 </html>
 ```
 
+>* 设置总页数为 100: $('#paginator').pagination('updateItems', 100);
+>* 设置当前页为第 5 页: $('#paginator').pagination('drawPage', 5);
+>* 这 2 个设置都`不会触发` onPageClick() 回调函数

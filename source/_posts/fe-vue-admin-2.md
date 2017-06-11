@@ -64,7 +64,7 @@ Vuex 是一个专为 Vue.js 应用程序开发的**状态管理模式**。它采
        this.$store.state.count += 1;
    }
 
-   例如在其他 vue 文件中访问 count，因为我们意见引入了 Element，就用消息框吧:
+   例如在其他 vue 文件中访问 count，因为我们已经引入了 Element，就用消息框吧:
    this.$message(`count value is ${this.$store.state.count}`);
    ```
 

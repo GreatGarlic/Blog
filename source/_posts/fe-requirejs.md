@@ -139,7 +139,7 @@ require.config({
 ## 测试
 
 * 访问 <http://localhost/a.html>
-* 看到 Layer 生效了，SemanticUi 也生效了，require 了 2 次 SemanticUi，没有重复加载
+* 看到 Layer 生效了，SemanticUi 也生效了，require 了 2 次 layer，没有重复加载
 
 ## 参考资料
 * [加载不符合AMD规范的 JS 文件](http://blog.csdn.net/ligang2585116/article/details/50725430)

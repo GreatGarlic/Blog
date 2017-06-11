@@ -23,10 +23,10 @@ tags: [Java, Misc]
 
 ![img](/img/misc/dubbo-architecture-roadmap.jpg)
 
-* **单一应用架构**当网站流量很小时，只需一个应用，将所有功能都部署在一起，以减少部署节点和成本。此时，用于简化增删改查工作量的 **数据访问框架(ORM)** 是关键。
-* **垂直应用架构**当访问量逐渐增大，单一应用增加机器带来的加速度越来越小，将应用拆成互不相干的几个应用，以提升效率。此时，用于加速前端页面开发的 **Web框架(MVC)** 是关键。
-* **分布式服务架构**当垂直应用越来越多，应用之间交互不可避免，将核心业务抽取出来，作为独立的服务，逐渐形成稳定的服务中心，使前端应用能更快速的响应多变的市场需求。此时，用于提高业务复用及整合的 **分布式服务框架(RPC)** 是关键。
-* **流动计算架构**当服务越来越多，容量的评估，小服务资源的浪费等问题逐渐显现，此时需增加一个**调度中心**基于访问压力实时管理集群容量，提高集群利用率。此时，用于提高机器利用率的 **资源调度和治理中心(SOA)** 是关键。
+* **单一应用架构**当网站流量很小时，只需一个应用，将所有功能都部署在一起，以减少部署节点和成本。此时，用于简化增删改查工作量的**数据访问框架(ORM)** 是关键。
+* **垂直应用架构**当访问量逐渐增大，单一应用增加机器带来的加速度越来越小，将应用拆成互不相干的几个应用，以提升效率。此时，用于加速前端页面开发的 **Web框架(MVC)**是关键。
+* **分布式服务架构**当垂直应用越来越多，应用之间交互不可避免，将核心业务抽取出来，作为独立的服务，逐渐形成稳定的服务中心，使前端应用能更快速的响应多变的市场需求。此时，用于提高业务复用及整合的**分布式服务框架(RPC)**是关键。
+* **流动计算架构**当服务越来越多，容量的评估，小服务资源的浪费等问题逐渐显现，此时需增加一个**调度中心**基于访问压力实时管理集群容量，提高集群利用率。此时，用于提高机器利用率的**资源调度和治理中心(SOA)**是关键。
 
 ## 架构
 
@@ -34,10 +34,10 @@ tags: [Java, Misc]
 
 **节点角色说明：**
 
-* **Provider:** 暴露服务的服务提供方。
+* **Provider:** 服务提供方。
 * **Consumer:** 调用远程服务的服务消费方。
 * **Registry:** 服务注册与发现的注册中心。
-* **Monitor:** 统计服务的调用次调和调用时间的监控中心。
+* **Monitor:** 统计服务的调用次数和调用时间的监控中心。
 * **Container:** 服务运行容器。
 
 **调用关系说明：**
@@ -117,6 +117,8 @@ testCompile("org.springframework:spring-test:$versions.spring")
 testCompile('junit:junit:4.12')
 ```
 
+> dubbo 默认依赖 Spring 2.5.6，现在都 Spring 4 了，所以为了使用新版的 Spring，去要在依赖中去掉老版本的 Spring 依赖。
+
 ## 三、Dubbo Provider
 
 定义提供服务的接口 TimeService 和其实现 TimeServiceImpl:
@@ -158,19 +160,20 @@ Dubbo Provider 配置文件 **spring-dubbo-provider.xml**:
        http://code.alibabatech.com/schema/dubbo
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-    <!-- 提供方应用信息，用于计算依赖关系 -->
-    <dubbo:application name="provider-of-hello-world-app"  />
+    <!-- 应用提供方信息，用于监控 -->
+    <dubbo:application name="provider-of-hello-world-app"/>
 
-    <dubbo:registry id="dubbo-registry" address="zookeeper://127.0.0.1:2181" file="/temp/dubbo.cachr" />
+    <!-- 注册中心 -->
+    <dubbo:registry id="dubbo-registry" address="zookeeper://127.0.0.1:2181" file="/temp/dubbo.cachr"/>
 
-    <!-- 用 dubbo 协议在 20880 端口暴露服务 -->
-    <dubbo:protocol name="dubbo" port="20880" />
+    <!-- 用 dubbo 协议在 20880 端口暴露服务，dubbo 支持很多种协议: http dubbo thrift 等 -->
+    <dubbo:protocol name="dubbo" port="20880"/>
 
     <!-- 声明需要暴露的服务接口 -->
-    <dubbo:service interface="com.xtuer.dubbo.TimeService" ref="timeService" />
+    <dubbo:service interface="com.xtuer.dubbo.TimeService" ref="timeService"/>
 
-    <!-- 和本地bean一样实现服务 -->
-    <bean id="timeService" class="com.xtuer.dubbo.TimeServiceImpl" />
+    <!-- 服务的实现 -->
+    <bean id="timeService" class="com.xtuer.dubbo.TimeServiceImpl"/>
 </beans>
 ```
 
@@ -194,10 +197,10 @@ Dubbo Provider 配置文件 **spring-dubbo-provider.xml**:
        http://code.alibabatech.com/schema/dubbo
        http://code.alibabatech.com/schema/dubbo/dubbo.xsd">
 
-    <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
     <dubbo:application name="consumer-of-hello-world-app"/>
 
-    <dubbo:registry id="dubbo-registry" address="zookeeper://127.0.0.1:2181" file="/temp/dubbo.cachr" />
+    <!-- 注册中心 -->
+    <dubbo:registry id="dubbo-registry" address="zookeeper://127.0.0.1:2181" file="/temp/dubbo.cachr"/>
 
     <!-- 生成远程服务代理，可以和本地 bean 一样使用 timeService -->
     <dubbo:reference id="timeService" interface="com.xtuer.dubbo.TimeService"/>

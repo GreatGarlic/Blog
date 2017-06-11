@@ -100,7 +100,9 @@ export default new Router({
 
 > 配置页面的路由，注意 Home 下有 children，则说明在 Home 页面中进行路由的页面将替换 Home 中的  router-view，而不是 App 中的 router-view。
 >
-> 此外还配置了 404 的路由。
+> **为什么页面的框架不是写在 App.vue 中而是 Home.vue?**
+>
+> 因为除了要显示 Home.vue 外，还要显示如 404 等页面，这些页面和 Home.vue 是同级的，所以 App.vue 还是有必要存在的。
 
 ## App.vue
 

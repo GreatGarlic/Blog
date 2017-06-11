@@ -79,3 +79,76 @@ tags: FE
 
 </html>
 ```
+
+同样的效果，使用 flex 布局如下，简单很多:
+
+```html
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+        html,
+        body {
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+            margin: 0;
+            height: 100%;
+            font-family: "微软雅黑", Helvetica, Arial, sans-serif;
+        }
+
+        .header {
+            height: 80px;
+            background: #FFCF00;
+            flex-shrink: 0;
+        }
+
+        .footer {
+            height: 80px;
+            background: #FF7A00;
+            flex-shrink: 0;
+        }
+
+        .main {
+            flex: auto;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .sidebar {
+            width: 150px;
+            background: #BAF300;
+        }
+
+        .content {
+            flex: auto;
+            background: white;
+            overflow: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="header"></div>
+    <div class="main">
+        <div class="sidebar"></div>
+        <div class="content"></div>
+    </div>
+    <div class="footer"></div>
+
+    <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js" charset="utf-8"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            for (var i = 0; i < 100; ++i) {
+                $('.content').append('Foo<br/>');
+            }
+        });
+    </script>
+</body>
+
+</html>
+```
+
