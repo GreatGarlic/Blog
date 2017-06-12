@@ -103,7 +103,7 @@ tags: FE
             uploader.removeFile(file, true); // 启用多次上传同一个图片
         };
 
-        // 上传成功，例如抛异常
+        // 上传失败，例如抛异常
         // response 为服务器返回来的数据
         uploader.onUploadError = function(file, response) {
             console.log(response);
