@@ -104,6 +104,8 @@ core:
 2. ```css
    atom-text-editor .highlights .highlight-selected.background .region {
        background-color: #3E4450;
+       border: 0 solid red;
+       border-radius: 0;
    }
    ```
 

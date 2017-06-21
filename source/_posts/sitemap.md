@@ -17,6 +17,7 @@ tags: Index
 * [Tomcat 启用 https](/java-tomcat-https)
 
 ## DB
+* [MySQL 基于条件判断的数据插入](/db-insert-conditional)
 * [Mac 安装 Mysql 和 Nginx](/mac-mysql-nginx)
 * [MySQL 导入导出 CSV](/mysql-csv)
 * [MySQL 中 datetime 和 timestamp 的区别](/mysql-datetime-timestamp)
@@ -129,6 +130,7 @@ tags: Index
 * [How to change default Java version](/java-change-version)
 * [Doc 转换为 HTML](/java-doc-html)
 * [Docx 转换为 HTML](/java-docx-html)
+* [测试 Java 生成 UUID 是否重复](/java-duplicate-uuid)
 * [字节序 Endian](/java-endian)
 * [计算文件的 MD5](/java-file-md5)
 * [FlatBuffers 入门之 Java + Qt 版](/java-flatbuffer)
