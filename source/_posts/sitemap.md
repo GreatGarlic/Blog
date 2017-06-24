@@ -68,6 +68,7 @@ tags: Index
 * [Semantic Ui Tips](/fe-semantic-ui-tips)
 * [Semantic Ui Validation](/fe-semantic-ui-validation)
 * [jQuery Slide Box](/fe-slide-box)
+* [JS 绘制平滑曲线](/fe-smooth-curve)
 * [JS 解析 SRT 格式的字幕](/fe-srt)
 * [JavaScript 里格式化字符串](/fe-string-format)
 * [Sublimetext 安装 jshint](/fe-sublimetext-jshint)
