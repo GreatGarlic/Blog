@@ -38,6 +38,7 @@ tags: Index
 * [CKEditor 的使用](/fe-ckeditor)
 * [JS 关闭当前标签页](/fe-close-window)
 * [自定义 HTML5 播放器](/fe-custom-html5-player)
+* [JS 绘制椭圆](/fe-ellipse)
 * [首字母放大缩进](/fe-first-letter)
 * [FlatShadow](/fe-flat-shadow)
 * [Div 在另一个 Div 中同时水平垂直居中](/fe-horizontal-vertical-center)
