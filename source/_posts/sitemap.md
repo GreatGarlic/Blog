@@ -239,6 +239,7 @@ tags: Index
 * [Qt 自定义日志工具](/qt-logger)
 * [去掉 Windows 中控件的虚线框](/qt-no-focus-rect)
 * [观察者模式的 NotificationCenter](/qt-notification-center)
+* [Qt 绘制平滑曲线](/qt-smooth-curve-1)
 * [Qt 绘制平滑曲线](/qt-smooth-curve)
 * [Qt Tips](/qt-tips)
 * [升级 Xcode8 后 Qt 出错](/qt-xcode8-error)

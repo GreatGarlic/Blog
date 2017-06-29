@@ -32,6 +32,7 @@ compile 'org.springframework.session:spring-session-data-redis:1.2.2.RELEASE'
         <!--<property name="port" value="${redis.port}" />-->
         <!--<property name="password" value="${redis.password}" />-->
         <!--<property name="timeout" value="${redis.timeout}" />-->
+        <property name="database" value="0"/>
         <property name="poolConfig" ref="jedisPoolConfig"/>
         <property name="usePool" value="true"/>
     </bean>
@@ -97,12 +98,12 @@ flushdb
 
 ## 查看 Redis 缓存是否生效
 * 打印日志
-* 查看数据库链接的非活跃时间，查询到数据，并且时间越来越长，说明缓存生效了
+* 查看数据库链接的非活跃时间，查询到了数据，但是非活跃时间越来越长，说明缓存生效了
     * `MySQL` 执行 `show full processlist`  
       ![](/img/spring-web/mysql-connection-status.png)
 
 ## 重构
-观察从 Redis 取数据，没有再从数据库取，然后放入 Redis 的代码，除了 `d = JSON.parseObject(json, Demo.class);` 这一句会根据不同的业务逻辑不同外，其他的代码都是不变的，所以可以使用策略模式进行重构。
+观察从 Redis 取数据，没有再从数据库取，然后放入 Redis 的代码，除了 `d = JSON.parseObject(json, Demo.class) 和 d = demoMapper.findDemoById(id)` 这二句会根据不同的业务逻辑不同外，其他的代码都是不变的，所以可以使用策略模式进行重构。
 
 ```java
 import com.alibaba.fastjson.JSON;
@@ -117,13 +118,13 @@ public class RedisDao {
     /**
      * 缓存优先读取 JavaBean
      *
-     * @param clazz 实体类型
      * @param redisKey key
+     * @param clazz 实体类型
      * @param supplier 缓存失败时的数据提供器， supplier == null 时 return null
      * @param <T>   类型约束
      * @return 实体对象
      */
-    public <T> T get(Class<T> clazz, String redisKey, Supplier<T> supplier) {
+    public <T> T get(String redisKey, Class<T> clazz, Supplier<T> supplier) {
         T d = null;
         String json = redisTemplate.opsForValue().get(redisKey);
 
@@ -151,13 +152,13 @@ public class RedisDao {
     /**
      * 缓存优先读取 Collections Or Map
      *
-     * @param typeReference 使用泛型时 FastJson 需要用 TypeReference 来指定类型，例如类型为 List<Demo>
      * @param redisKey key
-     * @param supplier 缓存失败时的数据提供器， supplier == null 时 return null
+     * @param typeReference 反序列化集合时 FastJson 需要用 TypeReference 来指定类型，例如类型为 List<Demo>
+     * @param supplier 缓存失败时的数据提供器，supplier == null 时 return null
      * @param <T>   类型约束
      * @return 实体对象
      */
-    public <T> T get(TypeReference<T> typeReference, String redisKey, Supplier<T> supplier) {
+    public <T> T get(String redisKey, TypeReference<T> typeReference, Supplier<T> supplier) {
         T d = null;
         String json = redisTemplate.opsForValue().get(redisKey);
 
@@ -198,7 +199,7 @@ public class RedisDao {
 @ResponseBody
 public Demo findDemoById(@PathVariable int id) {
     String redisKey = "demo_" + id;
-    Demo d = RedisDao.get(Demo.class, redisTemplate, redisKey, () -> demoMapper.findDemoById(id));
+    Demo d = redisDao.get(redisKey, Demo.class, () -> demoMapper.findDemoById(id));
 
     return d;
 }

@@ -43,9 +43,9 @@ requirepass 123456
 ```
 
 1. 重启 Redis 服务
-1. 打开 Redis 客户端: `redis-cli`
-2. `keys *` 提示错误 `(error) NOAUTH Authentication required.` 
-3. `auth 123456`，然后 `keys *`，输出所有的 key
+2. 打开 Redis 客户端: `redis-cli`
+3. `keys *` 提示错误 `(error) NOAUTH Authentication required.` 
+4. `auth 123456`，然后 `keys *`，输出所有的 key
 
 ## 绑定 IP
 Redis 采用的安全策略默认会只准许本机访问，修改 bind 配置可以允许外网访问，`但是 bind 的是 Redis 所在服务器网卡的 ip`，也就是说，如果你的 Redis 服务器有两张网卡，一张是 ip-1,另一张是 ip-2，如果 `bind ip-1`，那么只有请求 ip-1 的请求会被受理。
@@ -57,7 +57,19 @@ bind 127.0.0.1 # 注释掉这一行，则监听所有 interface(网卡) 接收�
 > **注意: **
 > bind 的不是请求来源的 IP
 
+## 选择 DB
+
+Redis 可以使用多个 DB，DB 使用序号: 0, 1, 2, ..., 15 来标记，默认 16 个，可以修改配置来增加或减少。
+
+选择要使用的 DB 使用命令 select dbIndex，如 `select 1`
+
+## 清空 DB
+
+* 清空当前 DB: `flushdb`
+* 清空所有 DB: `flushaall`
+
 ## 主从复制
+
 * 配置 Slave 服务器: 只需要在 Slave 服务器的配置文件里加入以下配置
 
     ```
