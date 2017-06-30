@@ -156,6 +156,7 @@ tags: Index
 * [任务队列](/java-task-queue)
 * [Java Tips](/java-tips)
 * [Tomcat 启用 https](/java-tomcat-https)
+* [使用 Velocity 生成静态页面](/java-velocity)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
 * [Dubbo Hello World](/misc-dubbo-hello-world)
 * [本机安装 ZooKeeper 集群](/misc-zookeeper)
@@ -397,6 +398,7 @@ tags: Index
 * [Web 项目框架](/spring-web-skelton)
 * [SpringMVC 进一步学习](/spring-web-springmvc-further)
 * [SpringMVC 事务](/spring-web-transaction)
+* [集成 Velocity](/spring-web-velocity)
 * [View Controller](/spring-web-view-controller)
 * [防止 XSS 攻击](/spring-web-xss)
 
@@ -412,6 +414,7 @@ tags: Index
 * [HttpServletResponse 返回图片](/java-response-image)
 * [任务队列](/java-task-queue)
 * [Java Tips](/java-tips)
+* [使用 Velocity 生成静态页面](/java-velocity)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
 * [ActiveMQ 的 MQTT](/misc-mqtt)
 * [Spring 集成 Groovy](/misc-spring-groovy)
