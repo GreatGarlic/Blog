@@ -25,20 +25,22 @@ tags: Qt
 class SmoothCurveGenerator {
 public:
     /**
-     * @brief generateSmoothCurve() 的重载函数
+     * @brief generateSmoothCurve 的重载函数
      */
-    static QPainterPath generateSmoothCurve(QList<QPointF> points, double tension = 0.5, int numberOfSegments = 16);
+    static QPainterPath generateSmoothCurve(QList<QPointF> points, bool closed = false, double tension = 0.5, int numberOfSegments = 16);
 
     /**
-     * @brief 使用传入的曲线的顶点坐标创建平滑曲线的顶点。
+     * @brief 使用传入的曲线顶点坐标创建平滑曲线。
+     *
      * @param points 曲线顶点坐标数组，
      *               points[i+0] 是第 i 个点的 x 坐标，
      *               points[i+1] 是第 i 个点的 y 坐标
+     * @param closed 曲线是否封闭，默认不封闭
      * @param tension 密集程度，默认为 0.5
      * @param numberOfSegments 平滑曲线 2 个顶点间的线段数，默认为 16
      * @return 平滑曲线的 QPainterPath
      */
-    static QPainterPath generateSmoothCurve(QList<double>points, double tension = 0.5, int numberOfSegments = 16);
+    static QPainterPath generateSmoothCurve(QList<double>points, bool closed = false, double tension = 0.5, int numberOfSegments = 16);
 };
 
 #endif // SMOOTHCURVEGENERATOR_H
@@ -49,17 +51,17 @@ public:
 #include "SmoothCurveGenerator.h"
 #include <QtMath>
 
-QPainterPath SmoothCurveGenerator::generateSmoothCurve(QList<QPointF> points, double tension, int numberOfSegments) {
+QPainterPath SmoothCurveGenerator::generateSmoothCurve(QList<QPointF> points, bool closed, double tension, int numberOfSegments) {
     QList<double> ps;
 
     foreach (QPointF p, points) {
         ps << p.x() << p.y();
     }
 
-    return SmoothCurveGenerator::generateSmoothCurve(ps, tension, numberOfSegments);
+    return SmoothCurveGenerator::generateSmoothCurve(ps, closed, tension, numberOfSegments);
 }
 
-QPainterPath SmoothCurveGenerator::generateSmoothCurve(QList<double> points, double tension, int numberOfSegments) {
+QPainterPath SmoothCurveGenerator::generateSmoothCurve(QList<double> points, bool closed, double tension, int numberOfSegments) {
     QList<double> ps(points); // clone array so we don't change the original points
     QList<double> result; // generated smooth curve coordinates
     double x, y;
@@ -69,11 +71,21 @@ QPainterPath SmoothCurveGenerator::generateSmoothCurve(QList<double> points, dou
 
     // The algorithm require a previous and next point to the actual point array.
     // Check if we will draw closed or open curve.
-    // Duplicate first points to befinning, end points to end
-    ps.prepend(points[1]); // copy 1st point and insert at beginning
-    ps.prepend(points[0]);
-    ps.append(points[points.length() - 2]); // copy last point and append
-    ps.append(points[points.length() - 1]);
+    // If closed, copy end points to beginning and first points to end
+    // If open, duplicate first points to befinning, end points to end
+    if (closed) {
+        ps.prepend(points[points.length() - 1]);
+        ps.prepend(points[points.length() - 2]);
+        ps.prepend(points[points.length() - 1]);
+        ps.prepend(points[points.length() - 2]);
+        ps.append(points[0]);
+        ps.append(points[1]);
+    } else {
+        ps.prepend(points[1]); // copy 1st point and insert at beginning
+        ps.prepend(points[0]);
+        ps.append(points[points.length() - 2]); // copy last point and append
+        ps.append(points[points.length() - 1]);
+    }
 
     // 1. loop goes through point array
     // 2. loop goes through each segment between the 2 points + 1e point before and after
@@ -110,6 +122,10 @@ QPainterPath SmoothCurveGenerator::generateSmoothCurve(QList<double> points, dou
         path.lineTo(result[i+0], result[i+1]);
     }
 
+    if (closed) {
+        path.closeSubpath();
+    }
+
     return path;
 }
 ```
@@ -125,10 +141,6 @@ QPainterPath SmoothCurveGenerator::generateSmoothCurve(QList<double> points, dou
 #include <QList>
 #include <QPainterPath>
 
-namespace Ui {
-class Form;
-}
-
 class Form : public QWidget {
     Q_OBJECT
 
@@ -140,9 +152,10 @@ protected:
     void paintEvent(QPaintEvent *event) Q_DECL_OVERRIDE;
 
 private:
-    Ui::Form *ui;
-    QList<double> points; // 曲线的顶点数组
-    QPainterPath smoothCurvePath; // 平滑曲线
+    QList<QPointF> points1; // 曲线一的顶点数组
+    QList<QPointF> points2; // 曲线二的顶点数组
+    QPainterPath smoothCurvePath1; // 平滑曲线一
+    QPainterPath smoothCurvePath2; // 平滑曲线二
 };
 
 #endif // FORM_H
@@ -151,47 +164,54 @@ private:
 ```cpp
 // 文件名: Form.cpp
 #include "Form.h"
-#include "ui_Form.h"
 #include "SmoothCurveGenerator.h"
 
 #include <QDebug>
 #include <QPainter>
 #include <QDateTime>
 
-Form::Form(QWidget *parent) : QWidget(parent), ui(new Ui::Form) {
-    ui->setupUi(this);
+Form::Form(QWidget *parent) : QWidget(parent) {
     qsrand(QDateTime::currentDateTime().toTime_t());
 
-    // 随机生成曲线的坐标
+    // 随机生成曲线第一条曲线的坐标
     int x = 0, y = 0;
     for (int i = 0; i < 100; ++i) {
         x += qrand() % 30 + 20;
         y = qrand() % 180 + 30;
 
-        points << x << y;
+        points1 << QPointF(x, y);
     }
 
+    // 第二条星行曲线的坐标
+    points2 << QPointF(0, 150) << QPointF(50, 50) << QPointF(150, 0) << QPointF(50, -50)
+            << QPointF(0, -150) << QPointF(-50, -50) << QPointF(-150, 0) << QPointF(-50, 50);
+
     // 使用曲线的坐标生成平滑曲线
-    smoothCurvePath = SmoothCurveGenerator::generateSmoothCurvePoints(points);
+    smoothCurvePath1 = SmoothCurveGenerator::generateSmoothCurve(points1); // 第一条曲线不封闭
+    smoothCurvePath2 = SmoothCurveGenerator::generateSmoothCurve(points2, true); // 第二条曲线是封闭的
 }
 
 Form::~Form() {
-    delete ui;
 }
-
 
 void Form::paintEvent(QPaintEvent *) {
     QPainter painter(this);
     painter.setRenderHint(QPainter::Antialiasing);
     painter.setPen(QPen(Qt::black, 2));
 
-    // 绘制平滑曲线
-    painter.drawPath(smoothCurvePath);
 
-    // 绘制曲线上的顶点
+    // 绘制第一条平滑曲线和曲线上的顶点
+    painter.drawPath(smoothCurvePath1);
     painter.setBrush(Qt::gray);
-    for (int i = 0; i < points.length() - 2; i += 2) {
-        painter.drawEllipse(points[i+0]-3, points[i+1]-3, 6, 6);
+    for (int i = 0; i < points1.length() ; i += 1) {
+        painter.drawEllipse(points1[i].x()-3, points1[i].y()-3, 6, 6);
+    }
+
+    // 绘制第二条平滑曲线和曲线上的顶点
+    painter.translate(200, 400);
+    painter.drawPath(smoothCurvePath2);
+    for (int i = 0; i < points2.length() ; i += 1) {
+        painter.drawEllipse(points2[i].x()-3, points2[i].y()-3, 6, 6);
     }
 }
 ```
