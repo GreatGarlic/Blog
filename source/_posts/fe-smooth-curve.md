@@ -34,6 +34,7 @@ tags: FE
     <script>
         var canvas = $('#canvas').get(0);
         var context = canvas.getContext('2d');
+        context.lineWidth = 2;
 
         // 曲线顶点坐标数组，points[i] 是第 i 个点的 x 坐标，points[i+1] 是第 i 个点的 y 坐标
         var points = [];
