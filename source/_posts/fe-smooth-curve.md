@@ -4,7 +4,7 @@ date: 2017-06-24 17:13:41
 tags: FE
 ---
 
-本文介绍在 JS 中绘制平滑曲线的实现，调用下面的函数 drawSmoothCurve() 即可。默认曲线的 2 个顶点之间被分割为 16 个小线段来拟合曲线，下图展示了 tension 为 0.3，0.4，0.7 时的曲线效果，tension 并不是越大越好，默认的 0.4 大多数时候就不错。
+本文介绍在 JS 中绘制平滑曲线的实现，调用下面的函数 drawSmoothCurve() 即可。默认曲线的 2 个顶点之间被分割为 16 个小线段来拟合曲线，下图展示了 tension 为 0.3，0.5，0.7 时的曲线效果，tension 并不是越大越好，默认的 0.5 大多数时候就不错。
 
 ![](/img/fe/fe-smooth-curve.png)
 
@@ -52,7 +52,7 @@ tags: FE
 
         context.strokeStyle = 'darkred';
         context.translate(0, 200);
-        drawSmoothCurve(context, points, showPoints); // tension 默认为 0.4，效果不错
+        drawSmoothCurve(context, points, showPoints); // tension 默认为 0.5，效果不错
 
         context.strokeStyle = 'darkblue';
         context.translate(0, 200);
@@ -66,7 +66,7 @@ tags: FE
          *                           points[i+0] 是第 i 个点的 x 坐标，
          *                           points[i+1] 是第 i 个点的 y 坐标
          * @param  {Boolean} showPoints 是否绘制曲线的顶点
-         * @param  {Float}   tension    密集程度，默认为 0.4
+         * @param  {Float}   tension    密集程度，默认为 0.5
          * @param  {Boolean} closed     是否创建闭合曲线，默认为 false
          * @param  {Int}     numberOfSegments 平滑曲线 2 个顶点间的线段数，默认为 16
          * @return 无返回值
@@ -82,7 +82,7 @@ tags: FE
          * @param  {Array}   points  曲线顶点坐标数组，
          *                           points[i+0] 是第 i 个点的 x 坐标，
          *                           points[i+1] 是第 i 个点的 y 坐标
-         * @param  {Float}   tension 密集程度，默认为 0.4
+         * @param  {Float}   tension 密集程度，默认为 0.5
          * @param  {Boolean} closed  是否创建闭合曲线，默认为 false
          * @param  {Int}     numberOfSegments 平滑曲线 2 个顶点间的线段数，默认为 16
          * @return {Array}   平滑曲线的顶点坐标数组
@@ -91,7 +91,7 @@ tags: FE
             if (points.length < 4) { return points; }
 
             // use input value if provided, or use a default value
-            tension = tension ? tension : 0.4;
+            tension = tension ? tension : 0.5;
             closed = closed ? true : false;
             numberOfSegments = numberOfSegments ? numberOfSegments : 16;
 
@@ -123,13 +123,13 @@ tags: FE
             // 1. loop goes through point array
             // 2. loop goes through each segment between the 2 points + 1e point before and after
             for (i = 2; i < (ps.length - 4); i += 2) {
-                for (t = 0; t <= numberOfSegments; t++) {
-                    // calculate tension vectors
-                    t1x = (ps[i + 2] - ps[i - 2]) * tension;
-                    t2x = (ps[i + 4] - ps[i - 0]) * tension;
-                    t1y = (ps[i + 3] - ps[i - 1]) * tension;
-                    t2y = (ps[i + 5] - ps[i + 1]) * tension;
+                // calculate tension vectors
+                t1x = (ps[i + 2] - ps[i - 2]) * tension;
+                t2x = (ps[i + 4] - ps[i - 0]) * tension;
+                t1y = (ps[i + 3] - ps[i - 1]) * tension;
+                t2y = (ps[i + 5] - ps[i + 1]) * tension;
 
+                for (t = 0; t <= numberOfSegments; t++) {
                     // calculate step
                     st = t / numberOfSegments;
 

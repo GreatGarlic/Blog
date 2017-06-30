@@ -25,6 +25,11 @@ tags: Qt
 class SmoothCurveGenerator {
 public:
     /**
+     * @brief generateSmoothCurve() 的重载函数
+     */
+    static QPainterPath generateSmoothCurve(QList<QPointF> points, double tension = 0.5, int numberOfSegments = 16);
+
+    /**
      * @brief 使用传入的曲线的顶点坐标创建平滑曲线的顶点。
      * @param points 曲线顶点坐标数组，
      *               points[i+0] 是第 i 个点的 x 坐标，
@@ -43,6 +48,16 @@ public:
 // 文件名: SmoothCurveGenerator.cpp
 #include "SmoothCurveGenerator.h"
 #include <QtMath>
+
+QPainterPath SmoothCurveGenerator::generateSmoothCurve(QList<QPointF> points, double tension, int numberOfSegments) {
+    QList<double> ps;
+
+    foreach (QPointF p, points) {
+        ps << p.x() << p.y();
+    }
+
+    return SmoothCurveGenerator::generateSmoothCurve(ps, tension, numberOfSegments);
+}
 
 QPainterPath SmoothCurveGenerator::generateSmoothCurve(QList<double> points, double tension, int numberOfSegments) {
     QList<double> ps(points); // clone array so we don't change the original points
@@ -63,13 +78,13 @@ QPainterPath SmoothCurveGenerator::generateSmoothCurve(QList<double> points, dou
     // 1. loop goes through point array
     // 2. loop goes through each segment between the 2 points + 1e point before and after
     for (int i = 2; i < (ps.length() - 4); i += 2) {
-        for (int t = 0; t <= numberOfSegments; t++) {
-            // calculate tension vectors
-            t1x = (ps[i + 2] - ps[i - 2]) * tension;
-            t2x = (ps[i + 4] - ps[i - 0]) * tension;
-            t1y = (ps[i + 3] - ps[i - 1]) * tension;
-            t2y = (ps[i + 5] - ps[i + 1]) * tension;
+        // calculate tension vectors
+        t1x = (ps[i + 2] - ps[i - 2]) * tension;
+        t2x = (ps[i + 4] - ps[i - 0]) * tension;
+        t1y = (ps[i + 3] - ps[i - 1]) * tension;
+        t2y = (ps[i + 5] - ps[i + 1]) * tension;
 
+        for (int t = 0; t <= numberOfSegments; t++) {
             // calculate step
             st = (double)t / (double)numberOfSegments;
 
