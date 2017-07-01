@@ -398,6 +398,7 @@ tags: Index
 * [Web 项目框架](/spring-web-skelton)
 * [SpringMVC 进一步学习](/spring-web-springmvc-further)
 * [SpringMVC 事务](/spring-web-transaction)
+* [Velocity 语法](/spring-web-velocity-syntax)
 * [集成 Velocity](/spring-web-velocity)
 * [View Controller](/spring-web-view-controller)
 * [防止 XSS 攻击](/spring-web-xss)

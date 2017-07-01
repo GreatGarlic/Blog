@@ -6,6 +6,8 @@ tags: [Java, Util]
 
 Velocity 可以作为 SpringMVC 的 View 使用，也可以用来生成邮件，静态页面等。
 
+> Velocity 模版中可以直接调用对象的方法，这点比 Freemarker 好用，if else foreach 等语句也更舒服。
+
 ## Gradle 依赖
 
 ```groovy
