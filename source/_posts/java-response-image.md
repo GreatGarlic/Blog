@@ -10,6 +10,7 @@ public void enrollRegPhoto(HttpServletResponse response) {
     OutputStream out = null;
 
     try {
+        response.setContentType("image/png"); // 如果是 jpg 则为 image/jpeg，svg 为 image/svg+xml 等
         in = new FileInputStream("/imageDir/foo.jpg");
         out = response.getOutputStream();
         IOUtils.copy(in, out);

@@ -43,6 +43,8 @@ FreeMarker 是一个用 Java 语言编写的模板引擎，它基于模板来生
 <#elseif condition3> 
     ... 
 <#else>
+    ...
+</#if>
 ```
 
 ```html
@@ -80,10 +82,10 @@ ${answer}
 
 输出结果是: 
 > $42.00 
-$42.00 
-42 
-$42.00 
-4,200%
+> $42.00 
+> 42 
+> $42.00 
+> 4,200%
 
 ---
 
@@ -95,8 +97,8 @@ ${lastUpdated?string("EEEE, MMMM dd, yyyy, hh:mm:ss a '('zzz')'")}
 
 输出结果是: 
 > 2008-04-08 08:08:08 Pacific Daylight Time 
-Tue, Apr 8, '03 
-Tuesday, April 08, 2003, 08:08:08 PM (PDT) 
+> Tue, Apr 8, '03 
+> Tuesday, April 08, 2003, 08:08:08 PM (PDT) 
 
 ---
 

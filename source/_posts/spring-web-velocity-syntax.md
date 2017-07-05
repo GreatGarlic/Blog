@@ -4,6 +4,36 @@ date: 2017-07-01 10:47:01
 tags: Spring-Web
 ---
 
+Velocity 比较接近脚本语言，例如 JS
+
+```
+#if ($foo < 10)
+    ...
+#elseif ($foo == 10)
+    ...
+#elseif ($foo == 12)
+    ...
+#else
+    ...
+#end
+```
+
+比较一下 Freemarker
+
+```
+<#if foo < 10> 
+    ... 
+<#elseif foo == 10> 
+    ... 
+<#elseif foo == 12> 
+    ... 
+<#else>
+    ...
+</#if>
+```
+
+<!--more-->
+
 ## 注释
 
 * 单行注释: `##`
@@ -44,8 +74,6 @@ tags: Spring-Web
 * **!** 用来强制把不存在的变量显示为空白
 
   当页面中包含 $msg，如果 msg 对象有值，将显示 msg 的值，如果不存在 msg 对象同，则在页面中将显示$msg 字符，这是我们不希望的。为了把不存在的变量或变量值为 null 的对象显示为空白，则只需要在变量名前加一个 **!** 号即可，如：`$!msg`
-
-<!--more-->
 
 ## 条件语句
 
@@ -137,6 +165,31 @@ $entry.getKey() - $entry.getValue()<br>
 #parse("products.vm")
 ```
 
+## 不解析
+
+`#[[don't parse me]]#` 的语法，允许模板设计者，在模板中方便地使用大块的无需翻译或解析的内容。
+
+```
+#[[
+#foreach ($woogie in $boogie)
+  对于$woogie，什么也不会发生
+#end
+]]#
+```
+
+输出
+
+```
+#foreach ($woogie in $boogie)  
+  对于$woogie，什么也不会发生
+#end
+```
+
 # stop
 
 stop 停止执行 Velocity 脚本并返回
+
+## 参考资料
+
+更多详细的语法请参考 [Velocity User Guide 用户手册](http://blog.csdn.net/gaojinshan/article/details/23945879)
+

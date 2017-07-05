@@ -269,6 +269,18 @@ encodeURIComponent('http://www.xtuer.com/foo?redirect-url=http://www.xtuer.com/p
         // 删除第一个元素
         ns.splice(0, 1); // count 为 1 且没有第三个参数，说明删除一个元素
         console.log(ns); // [2, 3, 4, 5, 6]
+      
+        // 删除第一个元素
+        ns.shift(); 
+        
+        // 插入元素到数组的最前面
+        ns.unshift(-100);
+      
+        // 删除最后一个元素
+        ns.pop();
+      
+        // 添加元素到数组的最后面
+        ns.push(100);
     </script>
 </body>
 

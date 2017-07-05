@@ -341,6 +341,23 @@ allprojects {
     
     println '++ Building: ' + project.name
 }
+
+// 所有子项目的通用配置
+subprojects {
+    apply plugin: 'java'
+
+    tasks.withType(JavaCompile) {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+    }
+
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+    }
+}
     
 // 某一个指定模块生效
 project('mix1') {
