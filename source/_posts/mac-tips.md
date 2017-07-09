@@ -51,12 +51,19 @@ set number
 `find . -ctime -10s`
 
 ## 查找后使用 grep
+
 `find . -name "*.java" | xargs grep -n --color "topic"`
 
 ## 查找后打开文件
 
 ```
 find . -name mac-tips.md | xargs open
+```
+
+## 统计多个文件的行数
+
+```
+find . -name "*.java" | xargs wc -l
 ```
 
 ## awk 输出列
