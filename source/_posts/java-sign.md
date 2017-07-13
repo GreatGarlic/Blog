@@ -1,5 +1,5 @@
 ---
-title: 签名
+title: 签名验证
 date: 2017-07-13 11:22:33
 tags: [Java, Util]
 ---
@@ -40,7 +40,7 @@ tags: [Java, Util]
 app_id: 015B512C873648578FB2C32BD5677BD4
 username: alice
 productId: 1001
-expiredTime: 1499914521231
+signedTime: 1499914521231
 
 并且 app_key 为 927170905ECA42FC9813DD7EED21A5AF
 ```
@@ -48,19 +48,19 @@ expiredTime: 1499914521231
 第一步：对参数按照 key=value 的格式，并按照参数名 ASCII 字典序排序：
 
 ```js
-signTemp = "app_id=015B512C873648578FB2C32BD5677BD4&app_key=927170905ECA42FC9813DD7EED21A5AF&expiredTime=1499914521231&productId=1001&username=alice";
+signTemp = "app_id=015B512C873648578FB2C32BD5677BD4&app_key=927170905ECA42FC9813DD7EED21A5AF&productId=1001&signedTime=1499914521231&username=alice";
 ```
 
 第二步：计算 signTemp 的签名字符串：
 
 ```js
-sign = md5(signTemp).toUpperCase(); // 33A62BBCEF9D4AF675ADC6BAEA468B99
+sign = md5(signTemp).toUpperCase(); // 281879C9007C3698D1106F9CF6A097A3
 ```
 
 第三步：发送参数（没有 app_key）
 
 ```
-app_id=015B512C873648578FB2C32BD5677BD4&expiredTime=1499914521231&productId=1001&username=alice&sign=33A62BBCEF9D4AF675ADC6BAEA468B99
+app_id=015B512C873648578FB2C32BD5677BD4&productId=1001&signedTime=1499914521231&username=alice&sign=33A62BBCEF9D4AF675ADC6BAEA468B99
 ```
 
 ## Java 实现
@@ -73,7 +73,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.TreeMap;
 
-public class Test {
+public class Sign {
     public static void main(String[] args) throws IOException {
         String appId = "015B512C873648578FB2C32BD5677BD4";
         String appKey = "927170905ECA42FC9813DD7EED21A5AF";
@@ -84,11 +84,10 @@ public class Test {
         params.put("app_key", appKey);
         params.put("username", "alice");
         params.put("productId", "1001");
-        params.put("expiredTime", "1499914521231");
+        params.put("signedTime", "1499914521231");
 
-        // 计算签名字符串
         String signValue = sign(params);
-        System.out.println(signValue); // 33A62BBCEF9D4AF675ADC6BAEA468B99
+        System.out.println(signValue); // 281879C9007C3698D1106F9CF6A097A3
     }
 
     public static String sign(Map<String, String> params) {
@@ -108,3 +107,27 @@ public class Test {
 }
 ```
 
+## 签名有效期
+
+如果不限制签名的使用时间，则生成的签名永远有效，如果别人拿到生成的链接后就能一直使用了，这是比较危险的，所以限制签名时长很有必要，有 2 种方式可以限制签名的有效时间：
+
+1. 客户端加签名生成时间：
+
+   1. 生成签名时的时间加入计算签名
+
+   2. 服务器收到请求后：`签名有效` 并且 `服务器当前时间 <= 参数中的时间 + 过期时长` 则放行访问，否则拒绝访问
+
+      > 缺点：如果客户端的时间或则服务器端的时间不准，就有可能签名会无效，例如客户端的时间是 2016 年的，而服务器端的是 2017 年的，签名的过期时长为 5 分钟，则计算的签名就会是无效的。
+      >
+      > 反过来签名的有效时间就变长了。
+
+2. 服务器记录签名时间：
+
+   1. 客户端计算签名（不使用时间）
+
+   2. 服务器收到请求后：
+
+      * 如果签名有效且是第一次使用，则保存签名和时间 **T1** 到数据库或则 Redis 等，放行访问
+      * 如果签名不是第一次访问（能从数据库或则 Redis 中查找到），并且 `服务器当前时间 <= T1 + 过期时长` 则放行访问，否则拒绝访问
+
+      > 此中方式是最安全的。
