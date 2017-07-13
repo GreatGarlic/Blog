@@ -173,3 +173,10 @@ mkdir -p a/b/c
 ## Chrome 清楚缓存插件
 
 Chrome 应用商店里搜索 **clear Cache**，找到 `clear Cache, clean cache, 清理缓存`并安装
+
+## 查看文件夹大小
+
+```
+du -sh
+```
+

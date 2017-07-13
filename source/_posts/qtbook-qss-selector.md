@@ -35,7 +35,7 @@ QFrame {
 ![](/img/qtbook/qss/QSS-Selector-Type-Selector.png)
 
 ## 类选择器
-`. + 类名` 或者 `. + class 的属性值` 作为选择器，只会作用于它自己，它的子类不受影响，注意和类型选择器的区别。
+`. + 类名` 或者 `. + class 的属性值` 作为选择器（使用 setProperty("class", "QSSClassName") 设置），只会作用于它自己，它的子类不受影响，注意和类型选择器的区别。
 
 ```cpp
 #include <QApplication>
@@ -68,9 +68,9 @@ window, openButton, closeButton 和 saveButton 的背景都变成灰色的了，
 /* 把 QWidget 改成 .QWidget */
 app.setStyleSheet(".QWidget {background: gray;}")
 ```
-    
+
 如果 openButton 和 closeButton 的背景是洋红色的，但是 saveButton 不受影响，则可以使用 `. ＋ class 的属性值` 作为类选择器来设置
-    
+​    
 ```cpp
 app.setStyleSheet(".QWidget { background: gray; }"
                   ".QPushButton[level='dangerous'] { background: magenta; }");
@@ -89,7 +89,7 @@ closeButton->setProperty("class", "RedButton");
 
 ## ID 选择器
 `# + objectName` 作为选择器，只作用于用此 objectName 的对象（多个对象可以使用同一个 objectName，但是不推荐这么做，既然是 ID，那么语义上就表示唯一了）。如上面的程序， openButton 和 closeButton 的背景是洋红色的，但是 saveButton 不受影响，也可以使用 `ID 选择器` 来实现：
-    
+​    
 ```cpp
 app.setStyleSheet(".QWidget { background: gray; }"
                   "#openButton, #closeButton { background: magenta; }");
@@ -118,7 +118,7 @@ QSS 会把所有 QPushButton 中 level 属性值为 dangerous 按钮的背景绘
 英语叫做 `Descendant Selector`，descendant 的表达比较到位。
 
 `选择器之间用空格隔开`，作用于 Widget 的 `子Widget`，`子Widget 的 子Widget`，……，子子孙孙，无穷尽也。
-    
+​    
 ```css
 QFrame {
 	background: gray;
@@ -138,7 +138,7 @@ QFrame QPushButton {
 
 ## 子元素选择器
 `选择器之间用 > 隔开`，作用于 Widget 的直接 `子Widget`，注意和包含选择器的区别。
-    
+​    
 ```
 QFrame {
 	background: gray;
@@ -167,28 +167,28 @@ QCheckBox:!checked { color: red }
 鼠标放到 QPushButton 上时，它的文字为白色，QCheckBox 选中时文字为白色，未选中时为红色。  
 
 伪类选择器还支持链式规则：`选择器:状态1:状态2:状态3`，状态之间使用逻辑与，同时满足条件样式才生效
-    
+​    
 ```css
 QCheckBox:hover:checked { color: white }
 ```
 鼠标 `放到` `选中的` QCheckBox 上时，它的字体为白色。 
- 
+
 ##### 常用伪类选择器有：
-| 伪类                  | 说明                  |
-| -------------------- | -------------------- |
-| :disabled            | Widget 被禁用时 |
-| :enabled             | Widget 可使用时 |
-| :focus               | Widget 得到输入焦点 |
-| :hover               | 鼠标放到 Widget 上 |
-| :pressed             | 鼠标按下时 |
-| :checked             | 被选中时 |
-| :unchecked           | 未选中时 |
-| :has-children        | Item 有子 item，例如 QTreeView 的 item 有子 item 时 |
-| :has-siblings        | Item 有 兄弟，例如 QTreeView 的 item 有兄弟 item 时 |
-| :open                | 打开或展开状态，例如 QTreeView 的 item 展开，QPushButton 的菜单弹出时 |
-| :closed              | 关闭或者非展开状态 |
-| :on                  | Widget 状态是可切换的（toggle）, 在 on 状态 |
-| :off                 | Widget 状态是可切换的（toggle）, 在 off 状态 |
+| 伪类            | 说明                                       |
+| ------------- | ---------------------------------------- |
+| :disabled     | Widget 被禁用时                              |
+| :enabled      | Widget 可使用时                              |
+| :focus        | Widget 得到输入焦点                            |
+| :hover        | 鼠标放到 Widget 上                            |
+| :pressed      | 鼠标按下时                                    |
+| :checked      | 被选中时                                     |
+| :unchecked    | 未选中时                                     |
+| :has-children | Item 有子 item，例如 QTreeView 的 item 有子 item 时 |
+| :has-siblings | Item 有 兄弟，例如 QTreeView 的 item 有兄弟 item 时 |
+| :open         | 打开或展开状态，例如 QTreeView 的 item 展开，QPushButton 的菜单弹出时 |
+| :closed       | 关闭或者非展开状态                                |
+| :on           | Widget 状态是可切换的（toggle）, 在 on 状态          |
+| :off          | Widget 状态是可切换的（toggle）, 在 off 状态         |
 
 伪类的说明写成中文怎么感觉都很别扭，惭愧，表达能力欠佳，在此仅作为抛砖引玉吧，更多更详细的内容请参考 Qt 的帮助文档，搜索 `Qt Style Sheets Reference`，查看最下面的 `List of Pseudo-States`。
 
@@ -213,20 +213,20 @@ QCheckBox {
 
 **常用的 Subcontrol 有:**
 
-| Subcontrol           | 说明                  |
-| -------------------- | -------------------- |
-| ::indicator          | A QCheckBox, QRadioButton, checkable QMenu item, <br>or a checkable QGroupBox's indicator |
-| ::menu-indicator     | A QPushButton's menu indicator |
-| ::item               | A QMenu, QMenuBar, or QStatusBar's item |
-| ::up-button          | A QSpinBox or QScrollBar's up button |
-| ::down-button        | A QSpinBox or QScrollBar's down button |
-| ::up-arrow           | A QSpinBox, QScrollBar, or QHeaderView's up arrow |
-| ::down-arrow         | A QSpinBox, QScrollBar, or QHeaderView's down arrow |
-| ::drop-down          | A QComboBox's drop-down arrow |
-| ::title              | A QGroupBox or QDockWidget's title |
-| ::groove             | A QSlider's groove   |
-| ::chunk              | A QProgressBar's progress chunk |
-| ::branch             | A QTreeView's branch indicator |
+| Subcontrol       | 说明                                       |
+| ---------------- | ---------------------------------------- |
+| ::indicator      | A QCheckBox, QRadioButton, checkable QMenu item, <br>or a checkable QGroupBox's indicator |
+| ::menu-indicator | A QPushButton's menu indicator           |
+| ::item           | A QMenu, QMenuBar, or QStatusBar's item  |
+| ::up-button      | A QSpinBox or QScrollBar's up button     |
+| ::down-button    | A QSpinBox or QScrollBar's down button   |
+| ::up-arrow       | A QSpinBox, QScrollBar, or QHeaderView's up arrow |
+| ::down-arrow     | A QSpinBox, QScrollBar, or QHeaderView's down arrow |
+| ::drop-down      | A QComboBox's drop-down arrow            |
+| ::title          | A QGroupBox or QDockWidget's title       |
+| ::groove         | A QSlider's groove                       |
+| ::chunk          | A QProgressBar's progress chunk          |
+| ::branch         | A QTreeView's branch indicator           |
 
 Subcontrol 选择器的应用比较复杂，所以专门开辟了 [QSS Subcontrol](/qtbook-subcontrol) 一章来介绍。
 

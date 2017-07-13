@@ -17,7 +17,7 @@ tags: Spring-Web
 
 | Name  | Description                              |
 | ----- | ---------------------------------------- |
-| 读脏    | 一事务对数据进行了增删改，但未提交，有可能回滚，<br>另一事务却读取了未提交的数据，允许脏读取，但不允许更新丢失。<br>如果一个事务已经开始写数据，则另外一个事务则不允许同时进行写操作，<br>但允许其他事务读此行数据 |
+| 脏读    | 一事务对数据进行了增删改，但未提交，有可能回滚，<br>另一事务却读取了未提交的数据，允许脏读取，但不允许更新丢失。<br>如果一个事务已经开始写数据，则另外一个事务则不允许同时进行写操作，<br>但允许其他事务读此行数据 |
 | 不可重复读 | 一事务对数据进行了`更新`或`删除`操作，另一事务两次查询的数据不一致      |
 | 幻读    | 一事务对数据进行了`新增`操作，另一事务两次查询的数据不一致           |
 
@@ -67,6 +67,8 @@ tags: Spring-Web
 ------
 
 > 以下解释的场景都是基于 **ServiceA.methodA()** 里调用 **ServiceB.methodB()**
+>
+> 注意: **ServiceA.methodA()** 里调用 **ServiceA.methodB()** 时，methodB() 的 propagation 无效，因为 Spring 的 AOP 是代理的方式，这个时候 methodB() 和 methodA() 都是同一个对象的方法，所以不能对其作切面。
 
 ------
 
@@ -76,7 +78,7 @@ tags: Spring-Web
 
 比如说，**ServiceB.methodB()** 的事务级别定义为 `PROPAGATION_REQUIRED`。
 
-执行 **ServiceA.methodA()** 是它已经起了事务，这时调用 **ServiceB.methodB()**，**ServiceB.methodB()** 看到自己已经运行在 **ServiceA.methodA()** 的事务内部，就不再起新的事务。
+执行 **ServiceA.methodA()** 时它已经起了事务，这时调用 **ServiceB.methodB()**，**ServiceB.methodB()** 看到自己已经运行在 **ServiceA.methodA()** 的事务内部，就不再起新的事务。
 
 假如 **ServiceB.methodB()** 运行的时候发现自己没有在事务中，他就会为自己分配一个事务。
 
