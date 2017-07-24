@@ -10,24 +10,25 @@ Atom 以前很慢，所以一直不想用，在 1.0 版本后启动差不多需�
 
 ## 常用插件
 
-| 插件                       | 说明                                       |
-| ------------------------ | ---------------------------------------- |
-| atom-ternjs              | 这是 Tern 项目的 Atom 插件，提供了了比较精确的代码补全功能，不止是匹配输入过的关键字，还可以提示 ECMAScript、DOM/BOM、NodeJS 的方法和属性，也能自动分析依赖的模块，给出补全提示，这样Atom 用起来就有点 IDE 的感觉了。 |
-| highlight-selected       | 高亮所有和当前选中单词一样的单词，IDE 标配。                 |
-| quick-highlight          | 和 `highlight-selected` 相似，但是能高亮多个选择的词    |
-| pigments                 | CSS 颜色可视化，例如显示 rgba(0,0,0,0.8) 对应的颜色     |
-| jshint                   | JavaScript 代码实时错误提示                      |
-| atom-beautify            | 格式化插件, 支持很多语言，HTML，JS，CSS 等等<br>如果从包管理器里安装不了，就试试从命令行里 `apm install atom-beautify`<br>使用: `cmd + shift + p`, 输入 `beatify`，或者使用快捷键 `ctrl + alt + b` |
-| atom-icons               | 给文件加上图标                                  |
-| jquery-snippets          | jQuery API 代码片段                          |
-| set-syntax               | 方便的使用 `Command Palette` (cmd + shift + p 打开) 修改当前文件的语法 |
-| atom-html-preview        | 在 Atom 里实时的预览 HTML 的内容，`Command Palette` 搜索 `preview`，或者使用快捷键 `ctrl + shift + h` |
-| regex-railroad-diagram   | 正则表达式可视化: 鼠标放到正则表达式上面自动可视化，例如在 JS 文件里 `/\d+/g` |
-| atom-no-tab-close-button | 隐藏关闭按钮，避免误操作关闭 tab，使用 `cmd + w` 来关闭 tab  |
-| docblockr                | 函数名前输入 `/**` 按下回车生成文档的模版                 |
-| tree-view-open-files     | Show open files in a list above the tree view. |
-| less-autocompile         | 保存的时候把 Less 自动编译为 CSS                    |
-| OOOOOOOOOOOOOOOO         | OOO                                      |
+| 插件                             | 说明                                       |
+| ------------------------------ | ---------------------------------------- |
+| atom-ternjs                    | 这是 Tern 项目的 Atom 插件，提供了了比较精确的代码补全功能，不止是匹配输入过的关键字，还可以提示 ECMAScript、DOM/BOM、NodeJS 的方法和属性，也能自动分析依赖的模块，给出补全提示，这样Atom 用起来就有点 IDE 的感觉了。 |
+| highlight-selected             | 高亮所有和当前选中单词一样的单词，IDE 标配。                 |
+| quick-highlight                | 和 `highlight-selected` 相似，但是能高亮多个选择的词    |
+| pigments                       | CSS 颜色可视化，例如显示 rgba(0,0,0,0.8) 对应的颜色     |
+| jshint                         | JavaScript 代码实时错误提示                      |
+| atom-beautify                  | 格式化插件, 支持很多语言，HTML，JS，CSS 等等<br>如果从包管理器里安装不了，就试试从命令行里 `apm install atom-beautify`<br>使用: `cmd + shift + p`, 输入 `beatify`，或者使用快捷键 `ctrl + alt + b` |
+| atom-icons                     | 给文件加上图标                                  |
+| jquery-snippets                | jQuery API 代码片段                          |
+| set-syntax                     | 方便的使用 `Command Palette` (cmd + shift + p 打开) 修改当前文件的语法 |
+| atom-html-preview              | 在 Atom 里实时的预览 HTML 的内容，`Command Palette` 搜索 `preview`，或者使用快捷键 `ctrl + shift + h` |
+| regex-railroad-diagram         | 正则表达式可视化: 鼠标放到正则表达式上面自动可视化，例如在 JS 文件里 `/\d+/g` |
+| atom-no-tab-close-button       | 隐藏关闭按钮，避免误操作关闭 tab，使用 `cmd + w` 来关闭 tab  |
+| docblockr                      | 函数名前输入 `/**` 按下回车生成文档的模版                 |
+| tree-view-open-files           | Show open files in a list above the tree view. |
+| less-autocompile               | 保存的时候把 Less 自动编译为 CSS                    |
+| sublime-style-column-selection | 列编辑                                      |
+| OOOOOOOOOOOOOOOO               | OOO                                      |
 
 ## 快捷键
 

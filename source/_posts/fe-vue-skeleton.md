@@ -59,6 +59,9 @@ tags: [FE, Vue]
    'import/prefer-default-export': 0,
    'no-new': 0,
    'no-multi-spaces': 0,
+   'global-require': 0,
+   'import/no-dynamic-require': 0,
+   'no-underscore-dangle': 0,
    ```
 
    > 我喜欢使用 4 个空格来缩进，Airbnb 默认是 2 个，很多前端的都喜欢使用 2 个进行缩进，为了简单起见，不让空格的个数造成编译时错误，关闭掉它即可。

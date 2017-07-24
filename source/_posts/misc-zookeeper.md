@@ -62,7 +62,7 @@ ZooKeeper 是绿色软件，解压即是安装。解压下载得到的 **zookeep
 >
 >  zk3 是 ZooKeeper 实例 3 的目录
 
-## 服务器ID 文件 myid
+## 服务器 ID 文件 myid
 
 * 创建文件 **/Users/Biao/Documents/zookeeper/temp/zk1/data/myid**，内容为 **1**
 * 创建文件 **/Users/Biao/Documents/zookeeper/temp/zk2/data/myid**，内容为 **2**
@@ -118,7 +118,7 @@ ZooKeeper 是绿色软件，解压即是安装。解压下载得到的 **zookeep
 
 > 因为是在一台机器上模拟集群，所以每个 ZooKeeper 实例的端口号 clientPort 不同。
 >
-> 生产环境中，分布式集群部署的步骤与上面基本相同，只不过因为各 ZooKeeper 分布在不同的机器，上述配置文件中的 localhost 换成各服务器的真实 IP 即可。分布在不同的机器后，不存在端口冲突问题，可以让每个服务器的zk均采用相同的端口，这样管理起来比较方便。
+> 生产环境中，分布式集群部署的步骤与上面基本相同，只不过因为各 ZooKeeper 分布在不同的机器，上述配置文件中的 localhost 换成各服务器的真实 IP 即可。分布在不同的机器后，不存在端口冲突问题，可以让每个服务器的 clientPort 均采用相同的端口，这样管理起来比较方便。
 
 ## 启动 ZooKeeper
 执行下面的命令启动 ZooKeeper 服务器:

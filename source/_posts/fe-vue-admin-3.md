@@ -53,12 +53,13 @@ tags: [FE, Vue]
 
 ```js
 module.exports = {
-  // 多页面的入口
-  entry: {
-      'page/student/index': './src/page/student/index.js',
-      'page/teacher/index': './src/page/teacher/index.js',
-  },
-  output: {
+    // 多页面的入口文件
+    entry: {
+        'page/student/index': './src/page/student/index.js',
+        'page/teacher/index': './src/page/teacher/index.js',
+    },
+    ...
+};
 ```
 
 ## webpack.dev.conf.js
@@ -114,8 +115,8 @@ var entryJS = glob.sync('./src/page/**/*.js').reduce(function (prev, curr) {
 }, {});
 
 module.exports = {
-  entry: entryJS,
-  ...
+    entry: entryJS,
+    ...
 };
 ```
 

@@ -19,19 +19,49 @@ brew install tomcat
 brew uninstall tomcat
 ```
 
-## 更新到最新版本
+## 更新
+
 ```
 brew upgrade tomcat
 ```
 > 更新不会删除原来的，相当于重新安装一个最新版，也就是说配置不能共用
 
-## 切换不同版本
+## 切换版本
+
 ```
 brew switch tomcat 8.5.4
 ```
 > 升级会出现几个不同版本的 Tomcat 同时存在，切换到指定的版本就很有必要了
 
+## 卸载
+
+卸载全部旧版本
+
+```
+brew cleanup tomcat
+```
+
+卸载当前版本
+
+```
+brew remove tomcat
+```
+
+卸载全部版本
+
+```
+brew uninstall --force tomcat
+```
+
+卸载指定版本
+
+```
+brew switch tomcat 8.5.4
+brew remove tomcat
+```
+
 ## 查看已安装的 Tomcat 的版本和最新的版本信息
+
 ```
 brew info tomcat
 ```

@@ -3,7 +3,7 @@ title: SpringMvc 接收日期参数
 date: 2016-11-15 19:49:22
 tags: [Spring-Mvc, Spring-Web]
 ---
-SpringMvc 的请求中的参数默认(字符串)是不能自动地转换为日期的，需要使用 Converter, InitBinder 或者 Formatter 来把请求中的参数转换为日期。
+SpringMvc 的请求中的参数(字符串)默认是不能自动地转换为日期的，需要使用 Converter, InitBinder 或者 Formatter 来把请求中的参数转换为日期。
 
 <!--more-->
 
