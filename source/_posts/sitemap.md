@@ -160,6 +160,7 @@ tags: Index
 * [任务队列](/java-task-queue)
 * [Java Tips](/java-tips)
 * [Tomcat 启用 https](/java-tomcat-https)
+* [Nginx Tomcat 使用 Https](/java-tomcat-nginx-https)
 * [使用 Velocity 生成静态页面](/java-velocity)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
 * [Dubbo Hello World](/misc-dubbo-hello-world)

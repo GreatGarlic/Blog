@@ -30,6 +30,8 @@ tags: Spring-Web
 
 /etc/hosts 里把 www.xtuer.com 映射到 127.0.0.1，这样可以在本地浏览器访问 <http://www.xtuer.com>
 
+> Mac 下 MAMP 的 nginx 的配置文件路径为 /Applications/MAMP/conf/nginx/nginx.conf
+
 ```js
 user                        root admin;
 worker_processes            2;
