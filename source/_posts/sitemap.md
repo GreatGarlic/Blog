@@ -160,7 +160,7 @@ tags: Index
 * [任务队列](/java-task-queue)
 * [Java Tips](/java-tips)
 * [Tomcat 启用 https](/java-tomcat-https)
-* [Nginx Tomcat 使用 Https](/java-tomcat-nginx-https)
+* [Nginx + Tomcat 使用 Https](/java-tomcat-nginx-https)
 * [使用 Velocity 生成静态页面](/java-velocity)
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
 * [Dubbo Hello World](/misc-dubbo-hello-world)
@@ -248,6 +248,7 @@ tags: Index
 * [QtCreator 中重构 Widget 的名字](/qt-refactor)
 * [Qt 绘制平滑曲线](/qt-smooth-curve-1)
 * [Qt 绘制平滑曲线](/qt-smooth-curve)
+* [Qt 实现 Steps 路径样式](/qt-steps)
 * [Qt Tips](/qt-tips)
 * [升级 Xcode8 后 Qt 出错](/qt-xcode8-error)
 

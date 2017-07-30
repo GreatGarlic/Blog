@@ -139,7 +139,7 @@ ZooKeeper 是绿色软件，解压即是安装。解压下载得到的 **zookeep
 
 ## 访问 ZooKeeper
 
-执行命令 `bin/zkCli.sh -server localhost:2181` 使用 ZooKeeper 客户端访问 ZooKeeper，连接成功则说明 ZooKeeper 服务启动了。
+执行命令 `bin/zkCli.sh -server localhost:2181,localhost:2182,127.0.0.1:2183` 使用 ZooKeeper 客户端访问 ZooKeeper，连接成功则说明 ZooKeeper 服务启动了:
 
 ```
 Connecting to localhost:2181
@@ -149,5 +149,9 @@ Connecting to localhost:2181
 2017-04-11 21:33:56,166 - INFO  [main:Environment@97] - Client environment:java.vendor=Oracle Corporation
 ...
 ```
+
+> 使用客户端访问 ZooKeeper 时传入了 ZooKeeper 集群的多个服务器的 IP:Port 信息，当某一个 ZooKeeper 的进程关闭后客户端会自动连接到其他 ZooKeeper 服务器。所以要连接的 ZooKeeper 集群的服务器信息并不是 ZooKeeper 服务器告诉客户端的，而是我们明确的指定给客户端的。
+>
+> 执行 `bin/zkCli.sh` 则连接到本机的 2181 端口的  ZooKeeper，当 2181 的 ZooKeeper 进程关闭后，不会自动连接到其他的 ZooKeeper。
 
 至此，本机 ZooKeeper 的集群搭建完成，以后就可以在此基础上使用 ZooKeeper 开发了，例如使用 Dubbo 开发分布式服务。
