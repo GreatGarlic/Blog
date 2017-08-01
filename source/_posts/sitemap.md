@@ -100,6 +100,7 @@ tags: Index
 * [小程序 Tips](/wx-tips)
 
 ## Gradle
+* [Gradle Deploy](/gradle-deploy)
 * [Gradle 编码](/gradle-encoding)
 * [Gradle 修改 Maven 仓库](/gradle-maven-repo)
 * [IDEA 删除 Gradle Module](/gradle-remove-module-from-idea)

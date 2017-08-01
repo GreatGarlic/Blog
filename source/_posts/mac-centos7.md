@@ -55,3 +55,28 @@ CentOS 7 使用 firewalld 控制端口，不再使用 iptables，默认 8080 端
   > --permanent  #永久生效，没有此参数重启后失效
 
 * 重启防火墙: `firewall-cmd --reload`
+
+* 查看打开的端口: `firewall-cmd --zone=public --list-ports`
+
+* 正在监听的端口: `netstat -an | grep LISTEN` 
+
+参考: [CentOS 7 firewalld 使用简介](http://blog.csdn.net/spxfzc/article/details/39645133)
+
+## SSH 登陆
+
+`ssh root@192.168.82.130`，然后输入密码。
+
+> ssh username@host
+
+## SSH + Key 登陆
+
+* 客户端: 
+  1. 执行 `ssh-keygen -t rsa -C "your_email@example.com"`
+  2. 在用户目录的 **.ssh** 目录下的到 **id_rsa** 和 **id_rsa.pub**
+  3. 复制 **id_rsa.pub** 到 CentOS 的服务器上
+* 服务器:
+  1. 用户的 **id_rsa.pub** 放到 **/root** 目录
+  2. `mkdir /root/.ssh`
+  3. `cd /root/.ssh`
+  4. `cat /root/id_rsa.pub >> /root/.ssh/authorized_keys`
+* 客户端: `ssh username@host`，不需要密码，直接能访问了
