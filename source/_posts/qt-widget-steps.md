@@ -1,7 +1,7 @@
 ---
-title: Qt 实现 Steps 路径样式
+title: 实现 Steps 路径样式
 date: 2017-07-30 19:35:53
-tags: Qt
+tags: QtBook
 ---
 
 如下图使用多个 `步骤` 表示一个过程：
@@ -97,23 +97,27 @@ StepWidget::StepWidget(QWidget *parent) : QWidget(parent) {
     QHBoxLayout *layout = new QHBoxLayout();
     QStringList steps = QStringList() << "提交订单" << "付款成功" << "商品出库" << "------ 快递中-等待收货 ------" << "完成";
 
-    // 创建 steps.size() 个按钮，每个按钮表示一个状态
+    // 创建 steps.size() 个按钮，每个按钮表示一个步骤
     foreach (const QString &step, steps) {
         QPushButton *button = new QPushButton(step);
         button->setFlat(true);
-        button->setProperty("class", "StepButton");
-        button->setProperty("status", "middle");
         stepButtons.append(button);
         layout->addWidget(button);
 
         connect(button, SIGNAL(clicked()), this, SLOT(updateStepButtonsStyle()));
     }
-    stepButtons.last()->setProperty("status", "last");
-    stepButtons.at(2)->click();
 
     layout->addStretch();
     layout->setSpacing(0);
     setLayout(layout);
+
+    // 初始化按钮的状态，有 5 个状态: middle, last, active-middle, active-last, active-prev
+    foreach (QPushButton *b, stepButtons) {
+        b->setProperty("class", "StepButton");
+        b->setProperty("status", "middle");
+    }
+    stepButtons.last()->setProperty("status", "last");
+    stepButtons.at(2)->click(); // 点击第 3 个按钮，让其为当前按钮，这样方便观察效果
 }
 
 StepWidget::~StepWidget() {
@@ -142,12 +146,14 @@ void StepWidget::updateStepButtonsStyle() {
 }
 ```
 
-给按钮设置 class 属性为 StepButton，是为了它们的 QSS 不影响正常 QPushButton 的样式。
+StepButton 要设置 flat 为 true，清除默认的 border、margin 等，添加的 QSS 的效果才更理想。
+
+给按钮设置 class 属性为 StepButton，是为了避免它们的 QSS 影响其他 QPushButton 的样式。
 
 按钮有 5 个状态: middle, last, active-middle, active-last, active-prev
 
-* 初始时第一个到最后一个的状态是 middle，最后一个的状态是 last
-* 当点击一个按钮后，它变为当前按钮，它的状态变为 active-middle，如果它是最后一个按钮，则为 active-last
+* 初始时第一个到倒数第二个的状态是 middle，最后一个的状态是 last
+* 当点击一个按钮后，它变为当前按钮，状态变为 active-middle，如果它是最后一个按钮，则为 active-last
 * 当前按钮的前一个按钮的状态是 active-prev
 * 按钮的属性变化后对应的 QSS 不会自动生效，需要调用 `setStyleSheet("/**/")` 才行
 
@@ -183,14 +189,14 @@ void StepWidget::updateStepButtonsStyle() {
 .StepButton[status="active-prev"] {
     border-image: url(:/img/active-pre.png) 0 22 0 0 repeat stretch;
 }
-
-QWidget {
-    background: gray;
-}
 ```
+
+.StepButton 中定义共有的 QSS，限定了最小宽度和高度等是为了看上去效果更好，并不是必须是上面给定的数值。不同状态下定义对应次状态的 border-image，它会覆盖 .StepButton 中相同的 QSS。
 
 上面 QSS 的关键是 Border-Image 的应用，相关教程请参考 [Border Image](/qtbook-qss-border-image/)
 
 ## 工程源码
 
 [Qt-Steps.7z](/download/Qt-Steps.7z)
+
+> 运行时把 bin 目录下的 **style.qss** 复制到编译出来的可执行文件所在目录：Windows 为 Steps.exe，Linux、Mac 为 Steps。

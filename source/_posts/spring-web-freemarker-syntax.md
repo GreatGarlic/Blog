@@ -45,6 +45,21 @@ FreeMarker 是一个用 Java 语言编写的模板引擎，它基于模板来生
 <#else>
     ...
 </#if>
+
+<#if (age>60)>老年人  
+<#elseif (age>40)>中年人  
+<#elseif (age gt 20)>青年人  
+<#else> 少年人  
+</#if> 
+  
+<#if list.type==0><td>全部频道</td>
+<#elseif list.type==1><td>抚州一套</td>
+<#elseif list.type==2><td>抚州二套</td>
+</#if>
+
+<#if str == "success">
+    xxx
+</#if>
 ```
 
 ```html

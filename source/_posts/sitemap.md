@@ -189,6 +189,7 @@ tags: Index
 * [Https PKIX](/https-pkix)
 * [Linux Crontab](/linux-crontab)
 * [Atom 常用插件和快捷键](/mac-atom)
+* [CentOS 7 简单使用](/mac-centos7)
 * [ForkLift 记住 FTP 密码](/mac-forklift)
 * [Mac Homebrew](/mac-homebrew)
 * [限制 TIME_WAIT 的连接数](/mac-limit-timewait-connection)
@@ -248,11 +249,11 @@ tags: Index
 * [QtCreator 中重构 Widget 的名字](/qt-refactor)
 * [Qt 绘制平滑曲线](/qt-smooth-curve-1)
 * [Qt 绘制平滑曲线](/qt-smooth-curve)
-* [Qt 实现 Steps 路径样式](/qt-steps)
 * [Qt Tips](/qt-tips)
 * [升级 Xcode8 后 Qt 出错](/qt-xcode8-error)
 
 ## QtBook
+* [实现 Steps 路径样式](/qt-widget-steps)
 * [数据库常用操作](/qtbook-db-common)
 * [数据库连接池](/qtbook-db-connection-pool)
 * [数据库驱动](/qtbook-db-driver)

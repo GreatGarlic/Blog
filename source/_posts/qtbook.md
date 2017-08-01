@@ -49,6 +49,8 @@ tags: [QtBook, Index]
   * [数据库常用操作](/qtbook-db-common)
   * [数据库连接池](/qtbook-db-connection-pool)
   * [数据库访问工具 DBUtl](/qtbook-db-util)
+* 自定义 Widget
+  * [实现 Steps 路径样式](/qt-widget-steps)
 * 动画
   * QPropertyAnimation
   * 动画插值函数与高级运用
