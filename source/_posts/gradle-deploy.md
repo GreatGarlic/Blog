@@ -13,11 +13,11 @@ tags: Gradle
 5. 启动 tomcat: `<tomcat>/bin/startup.sh`
 6. 删除上传的 war 包
 
-每次部署都要重复这么多个步骤，效率不高，为了提高效率，借助 [Gradle 的 deploy 插件](https://gradle-ssh-plugin.github.io)，一条命令就完成上面的这些事了。<!--more-->
+每次部署都要重复这么多个步骤，效率不高，为了提高效率，借助 [Gradle 的 deploy 插件](https://gradle-ssh-plugin.github.io)，一条命令 `gradle deploy` 就完成上面的这些事了。<!--more-->
 
 ## build.gradle
 
-下面是 gradle deploy 的关键配置，根据项目具体情况进行修改，然后把它加到项目的 build.gradle:
+下面是 gradle deploy 的关键配置，根据项目具体情况进行修改:
 
 ```groovy
 buildscript {
@@ -65,7 +65,7 @@ task deploy {
 | identity | ssl 的 key 文件 (首先在服务器上把 id_rsa.pub 加入到授权文件中) |
 | from     | 要上传的文件路径                                 |
 | into     | 上传到服务器的目录                                |
-| execute  | 上传完成后在服务器上接着执行的命令，使用分号分割不同的命令            |
+| execute  | 上传完成后在服务器上接着执行的命令，可以执行多条命令，使用分号分割不同的命令   |
 
 > execute 中先执行 `source /root/.bash_profile` 是为了使环境变量生效，否则就不能调用 java 命令启动 tomcat。
 >
@@ -79,4 +79,9 @@ export PATH
 
 ## 部署
 
-命令行下进入项目文件夹，执行命令 `gradle deploy` 即可。
+* 把上面的内容加入到 **build.gradle**，执行命令 `gradle deploy` 即可
+* 把上面的内容保存到 **deploy.gradle**，执行命令 `gradle -b deploy.gradle deploy` 即可(推荐使用这种方式)
+
+## 参考资料
+
+上面只是简单的使用介绍，想了解更详细的内容请参考 [Gradle 的 deploy 插件](https://gradle-ssh-plugin.github.io)，还可以通过代理，使用用户名密码访问等。
