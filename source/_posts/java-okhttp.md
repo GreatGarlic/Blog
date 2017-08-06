@@ -54,13 +54,29 @@ import com.mzlion.easyokhttp.HttpClient;
 
 public class OkHttpEasyTest {
     public static void main(String[] args) {
-        String responseData = HttpClient.get("https://www.baidu.com").execute().asString(); // 自动处理证书信息
+        String responseData = HttpClient.get("https://www.baidu.com").execute().asString(); // 自动处理 CA 签发的证书
         System.out.println(responseData);
     }
 }
 ```
 
+> HttpClient 请求 https 默认需要 CA 颁发的证书，如果是自己签发的证书则请求会失败，可以忽略证书签发，也可以把在请求时传入证书:
+>
+> * 忽略证书:
+>
+>   ```java
+>   String responseData = HttpClient.get("https://www.xtuer.com/").https().execute().asString(); // https() 没有参数
+>   ```
+>
+> * 指定证书:
+>
+>   ```java
+>   InputStream sslInput = new FileInputStream("/Users/Biao/Documents/workspace/Java/https-cert/server.crt");
+>   String responseData = HttpClient.get("https://www.xtuer.com/").https(sslInput).execute().asString(); // https() 的参数为证书的 input stream
+>   ```
+
 ## 参考资料
 
-[对 OkHttp 网络框架的封装 EasyOkHttp](http://www.oschina.net/p/easy-okhttp?fromerr=vg7BzejC)
+* [EasyOkHttp 帮助文档](https://www.w3cschool.cn/easyokhttp)
+* [对 OkHttp 网络框架的封装 EasyOkHttp](http://www.oschina.net/p/easy-okhttp?fromerr=vg7BzejC)
 

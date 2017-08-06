@@ -371,6 +371,7 @@ const Home  = resolve => require(['@/view/Home'], resolve);
 const Users = resolve => require(['@/view/information/Users'], resolve);
 const Hello = resolve => require(['@/view/information/Hello'], resolve);
 const Ajax  = resolve => require(['@/view/information/Ajax'], resolve);
+// 试试 const Ajax  = () => import('@/view/information/Ajax');
 
 Vue.use(Router);
 
