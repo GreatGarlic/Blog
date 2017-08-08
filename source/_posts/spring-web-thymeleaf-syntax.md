@@ -112,7 +112,57 @@ ${#numbers.setFormatDecimal(numSet,3,2,'COMMA')}
 ...
 ```
 
+## 常用 th
 
+* th:attr: 可以同时设置很多属性，也可以设置自定义属性，偷懒的时候就不用记忆很多 `th:` 开头的属性了
+
+  ```html
+  <p th:attr="src=@{/images/gtvglogo.png}, title=${logo}, alt=${logo}"></p>
+  <p th:attr="data-level=${level}, title=${level}" th:text="${level}"></p>
+  ```
+
+* th:text
+
+* th:utext
+
+* th:name
+
+* th:value
+
+* th:class
+
+* th:href
+
+* th:src
+
+* th:alt
+
+* th:title
+
+* th:field
+
+* Appending and prepending
+
+  * th:attrappend
+
+  * th:attrprepend
+
+    ```html
+    <body>
+        <!-- 以下表达式效果都一样 -->
+        <p class="foo" th:attrappend="class=${' '+level}">Hello</p>
+        <p class="foo" th:attrappend="class=' '+${level}">Hello</p>
+        <p class="foo" th:attrappend="class=| ${level}|">Hello</p>
+    </body>
+    ```
+
+* th:checked
+
+* th:selected
+
+* th:object
+
+* 具体请参考 [Setting value to specific attributes](http://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#setting-value-to-specific-attributes)
 
 ## 参考资料
 

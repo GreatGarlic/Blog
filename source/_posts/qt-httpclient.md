@@ -78,6 +78,9 @@ int main(int argc, char *argv[]) {
                 qDebug() << "Download file finished";
             });
         }
+      
+        // [[6]] 上传
+        HttpClient("http://localhost:8080/upload").upload("/Users/Biao/Pictures/ade.jpg");
     }
 
     return a.exec();
@@ -85,6 +88,7 @@ int main(int argc, char *argv[]) {
 ```
 
 ## HttpClient.h
+
 ```cpp
 #ifndef HTTPCLIENT_H
 #define HTTPCLIENT_H
@@ -94,6 +98,7 @@ int main(int argc, char *argv[]) {
 class QString;
 class QByteArray;
 struct HttpClientPrivate;
+class QNetworkReply;
 class QNetworkAccessManager;
 
 class HttpClient {
@@ -115,7 +120,7 @@ public:
      * @param  debug 是否启用调试模式
      * @return 返回 HttpClient 的引用，可以用于链式调用
      */
-    HttpClient& setDebug(bool debug);
+    HttpClient& debug(bool debug);
 
     /**
      * @brief 增加参数
@@ -132,6 +137,12 @@ public:
      * @return 返回 HttpClient 的引用，可以用于链式调用
      */
     HttpClient& addHeader(const QString &header, const QString &value);
+
+    /**
+     * @brief 添加 POST 表单使用的头信息，等价于 addHeader("content-type", "application/x-www-form-urlencoded")
+     * @return 返回 HttpClient 的引用，可以用于链式调用
+     */
+    HttpClient& addFormHeader();
 
     /**
      * @brief 执行 GET 请求
@@ -163,6 +174,17 @@ public:
                   std::function<void ()> finishHandler = NULL,
                   std::function<void (const QString &)> errorHandler = NULL);
 
+    /**
+     * @brief 上传文件
+     * @param path 要上传的文件的路径
+     * @param successHandler 请求成功的回调 lambda 函数
+     * @param errorHandler   请求失败的回调 lambda 函数
+     * @param encoding       请求响应的编码
+     */
+    void upload(const QString &path, std::function<void (const QString &)> successHandler = NULL,
+                std::function<void (const QString &)> errorHandler = NULL,
+                const char *encoding = "UTF-8");
+
 private:
     /**
      * @brief 执行请求的辅助函数
@@ -175,6 +197,15 @@ private:
                  std::function<void (const QString &)> successHandler,
                  std::function<void (const QString &)> errorHandler,
                  const char *encoding);
+
+    /**
+     * @brief 读取服务器响应的数据
+     * @param reply 请求的 QNetworkReply 对象
+     * @param encoding 请求响应的编码，默认使用 UTF-8
+     * @return 服务器端响应的字符串
+     */
+    QString readResponse(QNetworkReply *reply, const char *encoding = "UTF-8");
+
     HttpClientPrivate *d;
 };
 
@@ -186,11 +217,14 @@ private:
 #include "HttpClient.h"
 
 #include <QDebug>
+#include <QFile>
 #include <QHash>
 #include <QUrlQuery>
 #include <QNetworkReply>
 #include <QNetworkRequest>
 #include <QNetworkAccessManager>
+#include <QHttpPart>
+#include <QHttpMultiPart>
 
 struct HttpClientPrivate {
     HttpClientPrivate(const QString &url) : url(url), networkAccessManager(NULL), useInternalNetworkAccessManager(true), debug(false) {}
@@ -219,7 +253,7 @@ HttpClient &HttpClient::useManager(QNetworkAccessManager *manager) {
 }
 
 // 传入 debug 为 true 则使用 debug 模式，请求执行时输出请求的 URL 和参数等
-HttpClient &HttpClient::setDebug(bool debug) {
+HttpClient &HttpClient::debug(bool debug) {
     d->debug = debug;
     return *this;
 }
@@ -234,6 +268,10 @@ HttpClient &HttpClient::addParam(const QString &name, const QString &value) {
 HttpClient &HttpClient::addHeader(const QString &header, const QString &value) {
     d->headers[header] = value;
     return *this;
+}
+
+HttpClient &HttpClient::addFormHeader() {
+    return addHeader("content-type", "application/x-www-form-urlencoded");
 }
 
 // 执行 GET 请求
@@ -260,7 +298,7 @@ void HttpClient::download(std::function<void (const QByteArray &)> readyRead,
     }
 
     if (d->debug) {
-        qDebug() << d->url;
+        qDebug() << QString("URL: %1?%2").arg(d->url).arg(d->params.toString());
     }
 
     QUrl urlx(d->url);
@@ -295,6 +333,62 @@ void HttpClient::download(std::function<void (const QByteArray &)> readyRead,
     });
 }
 
+void HttpClient::upload(const QString &path,
+                        std::function<void (const QString &)> successHandler,
+                        std::function<void (const QString &)> errorHandler,
+                        const char *encoding) {
+    if (d->debug) {
+        qDebug() << QString("URL: %1").arg(d->url);
+    }
+
+    QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
+
+    QFile *file = new QFile(path);
+    file->setParent(multiPart); // we cannot delete the file now, so delete it with the multiPart
+
+    // 如果文件打开失败，则释放资源返回
+    if(!file->open(QIODevice::ReadOnly)) {
+        if (NULL != errorHandler) {
+            errorHandler(QString("文件打开失败: %1").arg(file->errorString()));
+            multiPart->deleteLater();
+            return;
+        }
+    }
+
+    // 表明是文件上传
+    QString disposition = QString("form-data; name=\"file\"; filename=\"%1\"").arg(file->fileName());
+    QHttpPart imagePart;
+    imagePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(disposition));
+    imagePart.setBodyDevice(file);
+    multiPart->append(imagePart);
+
+    bool internal = d->useInternalNetworkAccessManager;
+    QNetworkRequest request(QUrl(d->url));
+    QNetworkAccessManager *manager = internal ? new QNetworkAccessManager() : d->networkAccessManager;
+    QNetworkReply *reply = manager->post(request, multiPart);
+    multiPart->setParent(reply);
+
+    // 请求结束时一次性读取所有响应数据
+    QObject::connect(reply, &QNetworkReply::finished, [=] {
+        if (reply->error() == QNetworkReply::NoError && NULL != successHandler) {
+            successHandler(readResponse(reply, encoding)); // 成功执行
+        }
+
+        // 释放资源
+        reply->deleteLater();
+        if (internal) {
+            manager->deleteLater();
+        }
+    });
+
+    // 请求错误处理
+    QObject::connect(reply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), [=] {
+        if (NULL != errorHandler) {
+            errorHandler(reply->errorString());
+        }
+    });
+}
+
 // 执行请求的辅助函数
 void HttpClient::execute(bool posted,
                          std::function<void (const QString &)> successHandler,
@@ -306,7 +400,7 @@ void HttpClient::execute(bool posted,
     }
 
     if (d->debug) {
-        qDebug() << d->url;
+        qDebug() << QString("URL: %1?%2").arg(d->url).arg(d->params.toString());
     }
 
     QUrl urlx(d->url);
@@ -330,16 +424,7 @@ void HttpClient::execute(bool posted,
     // 请求结束时一次性读取所有响应数据
     QObject::connect(reply, &QNetworkReply::finished, [=] {
         if (reply->error() == QNetworkReply::NoError && NULL != successHandler) {
-            // 读取响应数据
-            QTextStream in(reply);
-            QString result;
-            in.setCodec(encoding);
-
-            while (!in.atEnd()) {
-                result += in.readLine();
-            }
-
-            successHandler(result);
+            successHandler(readResponse(reply, encoding)); // 成功执行
         }
 
         // 释放资源
@@ -355,6 +440,18 @@ void HttpClient::execute(bool posted,
             errorHandler(reply->errorString());
         }
     });
+}
+
+QString HttpClient::readResponse(QNetworkReply *reply, const char *encoding) {
+    QTextStream in(reply);
+    QString result;
+    in.setCodec(encoding);
+
+    while (!in.atEnd()) {
+        result += in.readLine();
+    }
+
+    return result;
 }
 ```
 
@@ -392,4 +489,15 @@ public String singInPost(@RequestParam String id,
                      @RequestHeader(value="token", required=false) String token) throws Exception {
     return String.format("POST: id: %s, name: %s, token: %s", id, name, token);
 }
+
+// 上传
+@PostMapping("/upload")
+@ResponseBody
+public Result uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+    System.out.println(file.getOriginalFilename());
+    file.transferTo(new File("/Users/Biao/Desktop/" + file.getOriginalFilename()));
+
+    return Result.ok("OK", file.getOriginalFilename());
+}
 ```
+

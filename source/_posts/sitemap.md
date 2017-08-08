@@ -236,6 +236,7 @@ tags: Index
 * [Qt 访问网络](/qt-access-network)
 * [Qt 应用程序的图标](/qt-app-icon)
 * [线程一调用线程二中函数的正确姿势](/qt-call-in-different-thread)
+* [Qt 使用摄像头](/qt-camera)
 * [集成自定义类型到 MetaType 系统](/qt-custom-type-metatype)
 * [QSS 实现的扁平滚动条](/qt-flat-scrollbar)
 * [Qt 创建圆角、无边框、有阴影、可拖动的窗口](/qt-frameless-window)
