@@ -23,7 +23,7 @@ compile ('org.thymeleaf:thymeleaf-spring4:3.0.7.RELEASE')
 <!-- 使用 thymeleaf 模版 -->
 <bean id="templateResolver" class="org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver">
     <property name="prefix" value="/WEB-INF/view/" />
-    <property name="templateMode" value="HTML" />
+    <property name="templateMode" value="HTML5" />
     <property name="cacheable" value="false" /> <!-- cacheable 线上环境用 true，开发环境用 false -->
 </bean>
 

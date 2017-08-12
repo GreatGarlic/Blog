@@ -1,5 +1,5 @@
 ---
-title: Qt 使用摄像头
+title: Qt 调用摄像头
 date: 2017-08-08 10:33:40
 tags: Qt
 ---
@@ -80,5 +80,5 @@ int main(int argc, char *argv[]) {
 
 仔细的看一下可以发现 **QImage::scaled()** 缩放的图像和 **QCameraViewfinder** 上缩放的图像的效果不一样，这是因为缩放的算法不同导致的，如果不满足需求，可以使用更专业的图像缩放算法进行处理。
 
-需要注意的是 **QCameraViewfinder** 的 size policy 很奇怪，vertical 和 horizontal 都是都是 Preferred，和 QLabel 默认的 size policy 一样，但是表现出来的却是 expanding 的样子，甚至有 spacer 时，spacer 的 expanding 都没有效果，空间全被 **QCameraViewfinder** 占据了。
+需要注意的是 **QCameraViewfinder** 的 size policy 很奇怪，vertical 和 horizontal 都是 Preferred，和 QLabel 默认的 size policy 一样，但是表现出来的却是 expanding 的样子，甚至有 spacer 时，spacer 的 expanding 都没有效果，空间全被 **QCameraViewfinder** 占据了。
 
