@@ -85,14 +85,23 @@ sort | uniq
 sort | uniq -c
 ```
 
+## zip
+
+```
+// 把文件夹 H5 和文件 x.html 压缩成 result.zip
+zip -r result.zip H5 x.html
+```
+
 ## unzip
+
 ```
 // -d 指定输出目录
 // 如果没有 -d + targetDir，则解压到当前目录
-unzip signup.zip -d targetDir
+unzip signup.zip [-d targetDir]
 ```
 
 ## 查看不同状态的链接数量
+
 ```
 netstat -n | awk '/^tcp/ {++state[$NF]} END {for(key in state) print key,"\t",state[key]}'
 

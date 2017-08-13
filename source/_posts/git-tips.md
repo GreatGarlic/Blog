@@ -9,14 +9,14 @@ Git 的常用命令
 <!--more-->
 
 *   untracked - 新增的文件，Git 根本不知道它的存在
-*   not staged - 被索引过又被修改了的文件
-*   staged - 通过 git add 后被即将被提交的文件
-*   git reflog
-*   版本回退: git reset --hard versionId
-*   创建分支: git branch branchName
-*   切换分支: git checkout branchName
-*   创建并切换分支: git checkout -b branchName
-*   使用 git fetch 和 git pull 都可以更新远程仓库的代码到本地，但是它们之间还是有区别
+* not staged - 被索引过又被修改了的文件
+* staged - 通过 git add 后被即将被提交的文件
+* git reflog
+* 版本回退: git reset --hard versionId
+* 创建分支: git branch branchName
+* 切换分支: git checkout branchName
+* 创建并切换分支: git checkout -b branchName
+* 使用 git fetch 和 git pull 都可以更新远程仓库的代码到本地，但是它们之间还是有区别
     * git fetch: 从远程获取最新的版本到本地的 tmp 分支上，之后再进行比较，决定是否合并
 
         ```
@@ -37,6 +37,19 @@ Git 的常用命令
 ![](/img/git/git-commands.jpg)
 ![](/img/git/git-cheatsheet.png)
 ![](/img/git/git-flow.png)
+
+## 搭建Git服务器
+
+[搭建 Git 服务器](https://www.liaoxuefeng.com/wiki/0013739516305929606dd18361248578c67b8067c8c017b000/00137583770360579bc4b458f044ce7afed3df579123eca000)
+
+> 初始化仓库用命令 `git init --bare sample.git` 而不是 `git init`
+
+[使用 Gitolite 搭建 Git 服务器](http://blog.hwangjr.com/2016/01/14/使用Gitolite搭建Git服务器/)
+
+> 不需要手动在 git 服务器中添加新用户或新仓库，gitolite 的用户，仓库和权限规则是使用一个名为 **gitolite-admin** 的特殊仓库进行维护，需通过修改该仓库并合并 push 到服务器中:
+>
+> * 创建新仓库只需要修改 `gitolite-admin/conf/gitolite.conf`，而不是用 git init --bare 命令
+> * 添加新用户只需要把用户的 ssl 公钥如 **biao.pub** 放到 `gitolite-admin/keydir`，biao 是用户名，在 gitolite.conf 里用到
 
 ## 参考资料
 

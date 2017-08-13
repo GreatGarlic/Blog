@@ -34,6 +34,7 @@ tags: Index
 * [jQuery 的 attr 和 prop](/fe-attr-prop)
 * [Bootstrap 模态对话框](/fe-bootstrap-modal-dialog)
 * [Bootstrap Progress Bar](/fe-bootstrap-progressbar)
+* [截取 Canvas 绘制的图形](/fe-canvas-image-bounding-rect)
 * [Canvas 像素数据处理](/fe-canvas-pixels)
 * [静态文件 CDN](/fe-cdn)
 * [CKEditor 的使用](/fe-ckeditor)

@@ -10,8 +10,18 @@ tags: Mac
 
 ## 必要工具
 
-* yum install zip unzip: `unzip filename.zip [-d dest-directory]`
+* yum install zip unzip: 
+
+  ```
+  # 把文件夹 H5 和文件 x.html 压缩成 result.zip
+  zip -r result.zip H5 x.html
+
+  # 解压 filename.zip, 如无 -d 则解压到当前目录，有则解压到目录 dest-directory
+  unzip filename.zip [-d dest-directory]
+  ```
+
 * yum install net-tools (安装后才能使用 ifconfig 等)
+
 * tar 解压 tar.gz: `tar xf filename.tar.gz` <!--more-->
 
 ## 安装 Java
@@ -80,3 +90,29 @@ CentOS 7 使用 firewalld 控制端口，不再使用 iptables，默认 8080 端
   3. `cd /root/.ssh`
   4. `cat /root/id_rsa.pub >> /root/.ssh/authorized_keys`
 * 客户端: `ssh username@host`，不需要密码，直接能访问了
+
+## 更换 yum 镜像
+
+国内访问 yum 默认镜像太慢，可以更换为比较稳定的阿里云镜像。
+
+1. 备份:
+
+   ```
+   mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+   ```
+
+2. 下载新的 CentOS-Base.repo 到 /etc/yum.repos.d/
+
+   * CentOS 6
+
+     ```
+     wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-6.repo
+     ```
+
+   * CentOS 7
+
+     ```
+     wget -O /etc/yum.repos.d/CentOS-Base.repo http://mirrors.aliyun.com/repo/Centos-7.repo
+     ```
+
+3. 运行 `yum makecache` 生成缓存

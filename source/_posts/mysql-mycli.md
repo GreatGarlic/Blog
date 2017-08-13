@@ -30,9 +30,14 @@ MyCLI 是一个 MySQL 的命令行客户端，可以实现自动补全（auto-co
 * CentOS:
 
   ```
-  sudo yum install pip
+  yum -y install epel-release
+  yum -y install python-pip
+  yum clean all
   sudo pip install mycli
   ```
+  > 安装时可能会提示连接超时，可以换成国内的镜像进行安装:
+  >
+  > `pip  install --index https://pypi.mirrors.ustc.edu.cn/simple/ mycli`
 
 * Ubuntu: 
 
