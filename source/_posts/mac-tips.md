@@ -4,7 +4,7 @@ date: 2016-07-02 16:16:18
 tags: Mac
 ---
 
-Mac 使用中的一些常用操作
+Mac 使用中的一些常用操作和命令。
 
 <!--more-->
 
@@ -189,3 +189,7 @@ Chrome 应用商店里搜索 **clear Cache**，找到 `clear Cache, clean cache,
 du -sh
 ```
 
+## scp 上传和下载文件
+
+* 上传文件: `scp /Users/Biao/Desktop/a.zip root@192.168.82.130:/root`
+* 下载文件: `scp root@192.168.82.130:/root/a.zip /Users/Biao/Desktop`
