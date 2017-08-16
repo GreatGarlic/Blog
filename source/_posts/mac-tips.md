@@ -11,6 +11,7 @@ Mac 使用中的一些常用操作和命令。
 ## Vim 基础
 * 搜索高亮: `:set hlsearch`
 * 显示行号: `:set number`
+* 可使用鼠标点击: `:set mouse=a`
 * 搜索: `/+keyword`
 * 大小写不敏感搜索: 
     * `/+keyword\c`
@@ -193,3 +194,7 @@ du -sh
 
 * 上传文件: `scp /Users/Biao/Desktop/a.zip root@192.168.82.130:/root`
 * 下载文件: `scp root@192.168.82.130:/root/a.zip /Users/Biao/Desktop`
+
+## Quick Look plugins
+
+可以使用 **brew cask** 安装 Quick Look 插件，具体请参考 <https://github.com/sindresorhus/quick-look-plugins>。

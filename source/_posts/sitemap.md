@@ -114,9 +114,7 @@ tags: Index
 * [Gradle 创建 Web 项目 + Greety](/misc-gradle-web)
 
 ## Hexo
-* [Hexo 多说评论](/hexo-duoshuo)
 * [Hexo 环境搭建](/hexo-usage)
-* [Hexo 友言评论](/hexo-uyan)
 * [Markdown 入门](/mk-intro)
 
 ## Index
@@ -162,6 +160,7 @@ tags: Index
 * [Java 绘制平滑曲线](/java-smooth-curve)
 * [微 Web 服务的 REST 框架 Spark Framework](/java-spark-framework)
 * [任务队列](/java-task-queue)
+* [测试 ThreadLocal](/java-thread-local)
 * [Java Tips](/java-tips)
 * [Tomcat 启用 https](/java-tomcat-https)
 * [Nginx + Tomcat 使用 Https](/java-tomcat-nginx-https)

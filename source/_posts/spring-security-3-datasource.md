@@ -57,7 +57,7 @@ tags: Spring-Security
 
 * 用户在登录页面输入 username, password，然后点击登录按钮
 * 方法 loadUserByUsername() 使用 username 查找到用户的信息，如密码，权限等
-* 使用查找到的密码和用户输入的密码比较，如果相等，则身份验证成功
+* Spring Security 自动使用查找到的密码和用户输入的密码比较，如果相等，则身份验证成功
 * 身份验证成功后，使用用户的权限和页面的访问权限比较，页面的权限配置在 `intercept-url`
 
 ```java

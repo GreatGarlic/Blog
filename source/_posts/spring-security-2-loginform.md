@@ -9,18 +9,19 @@ tags: Spring-Security
 <!--more-->
 
 ## spring-security.xml
-| Config | Description |
-| ------ | ----------- |
-| login-page | GET: 登陆页面的 URL |
-| login-processing-url | POST: 登陆表单提交的 URL |
-| default-target-url | 直接访问 login 页面登陆成功后重定向的 URL |
-| authentication-failure-url | 登陆失败重定向的 URL |
-| error-page | 访问权限不够时的 URL |
-| logout-url | 注销的 URL |
-| logout-success-url | 注销成功的 URL |
-| username-parameter | 登陆表单中用户名的 input 的 name |
-| password-parameter | 登陆表单中密码的 input 的 name |
-| `<csrf disabled="true"/>` | 禁用 csrf，默认是启用的，如果想使用 csrf，需要在登陆表单里加上这样的语句:<br> `<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>` |
+| Config                             | Description                              |
+| ---------------------------------- | ---------------------------------------- |
+| login-page                         | GET: 登陆页面的 URL                           |
+| login-processing-url               | POST: 登陆表单提交的 URL                        |
+| default-target-url                 | 直接访问 login 页面登陆成功后重定向的 URL               |
+| authentication-success-handler-ref | Reference to an **AuthenticationSuccessHandler** bean which should be used to handle a successful authentication request. Should not be used in combination with default-target-url (or always-use-default-target-url) as the implementation should always deal with navigation to the subsequent destination. 同一个登陆页面，管理员和普通用户登陆后重定向到不同页面时可用. |
+| authentication-failure-url         | 登陆失败重定向的 URL                             |
+| error-page                         | 访问权限不够时的 URL                             |
+| logout-url                         | 注销的 URL                                  |
+| logout-success-url                 | 注销成功的 URL                                |
+| username-parameter                 | 登陆表单中用户名的 input 的 name                   |
+| password-parameter                 | 登陆表单中密码的 input 的 name                    |
+| `<csrf disabled="true"/>`          | 禁用 csrf，默认是启用的，如果想使用 csrf，需要在登陆表单里加上这样的语句:<br> `<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>` |
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -120,4 +121,61 @@ public class LoginController {
 * 输入错误的用户名或密码，观察登陆失败的页面
 * 输入正确的用户名和密码，继续登陆
 * 访问 <http://biao.com/logout>，观察注销成功的页面
+
+
+## 自定义登陆成功的 handler
+
+自定义登陆成功的 handler，管理员和普通用户登陆成功后重定向到不同的页面:
+
+```xml
+<beans:bean id="authenticationSuccessHandler" class="com.xtuer.security.AuthenticationSuccessHandler"/>
+
+<http auto-config="true">
+    <intercept-url pattern="/page/admin" access="hasRole('ROLE_ADMIN')"/>
+    <intercept-url pattern="/page/login" access="permitAll"/>
+
+    <form-login login-page="/page/login"
+                login-processing-url="/login"
+                default-target-url  ="/"
+                authentication-success-handler-ref="authenticationSuccessHandler"
+                authentication-failure-url="/page/login?error=1"
+                username-parameter="username"
+                password-parameter="password"/>
+    <logout logout-url="/logout" logout-success-url="/page/login?logout=1"/>
+    <access-denied-handler error-page="/page/deny"/>
+    <csrf disabled="true"/>
+</http>
+```
+> `default-target-url="/"` 无效
+
+```java
+package com.xtuer.security;
+
+import com.xtuer.bean.User;
+import com.xtuer.util.SecurityUtils;
+import org.springframework.security.core.Authentication;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+public class AuthenticationSuccessHandler implements org.springframework.security.web.authentication.AuthenticationSuccessHandler {
+    @Override
+    public void onAuthenticationSuccess(HttpServletRequest request,
+                                        HttpServletResponse response,
+                                        Authentication authentication) throws IOException, ServletException {
+        User user = SecurityUtils.getLoginUser(); // 登陆成功的用户
+        String url = request.getContextPath().isEmpty() ? "" : request.getContextPath();
+
+        if (user.getRoles().contains("ROLE_ADMIN")) {
+            url += "/page/admin";
+        } else {
+            url += "/page/hello";
+        }
+
+        response.sendRedirect(url);
+    }
+}
+```
 
