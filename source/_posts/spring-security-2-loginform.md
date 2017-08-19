@@ -61,7 +61,16 @@ tags: Spring-Security
 </beans:beans>
 ```
 
+> Spring Security 允许多个 `<http>` 存在:
+>
+> 上面的配置 `<intercept-url pattern="/login" access="permitAll"/>`，导致访问 /login 页面时也要经过很多 filter，例如 UsernamePasswordAuthenticationFilter, SecurityContextPersistenceFilter, SessionRepositoryFilter 等，其实不需要登陆就能访问的页面，例如登陆页面, js, css, png 等是不需要经过这些 filter 的，则可以配置 http 的 security 为 none，这样就能提高程序的效率:
+```xml
+<http security="none" pattern="/page/login"/>
+<http security="none" pattern="/static/**"/>
+```
+
 ## LoginController
+
 前一节中，注销是在 LoginController 中使用函数 `logoutPage()` 来处理的，这一节注销直接在 spring-security.xml 里配置 `<logout>` 来实现的，把 `logoutPage()` 函数从 LoginController 里删除
 
 ```java
