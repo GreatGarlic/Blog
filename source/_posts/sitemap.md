@@ -56,6 +56,7 @@ tags: Index
 * [Lean Modal](/fe-leanmodal)
 * [使用 LESS 代替 CSS](/fe-less)
 * [jQuery 分页插件](/fe-pagination)
+* [HTML5 播放器](/fe-player)
 * [自定义随机函数](/fe-random)
 * [RequireJS 加载 jQuery 插件](/fe-requirejs-jquery-plugin)
 * [RequireJS 加载非 AMD 的 JS](/fe-requirejs-non-amd)
