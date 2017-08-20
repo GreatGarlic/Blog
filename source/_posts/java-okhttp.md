@@ -60,7 +60,7 @@ public class OkHttpEasyTest {
 }
 ```
 
-> HttpClient 请求 https 默认需要 CA 颁发的证书，如果是自己签发的证书则请求会失败，可以忽略证书签发，也可以把在请求时传入证书:
+> HttpClient 请求 https 默认需要 CA 颁发的证书，如果是自己签发的证书则请求会失败，可以忽略证书签发，也可以在请求时传入证书:
 >
 > * 忽略证书:
 >
