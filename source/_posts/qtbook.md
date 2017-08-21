@@ -90,4 +90,6 @@ tags: [QtBook, Index]
   * [Single Application](/qtbook-misc-single-application)
   * [Qt5 中文乱码](/qtbook-misc-messy-code)
   * [实用正则表达式](/qtbook-misc-regex)
+  * [Qt 程序简单打包](/qtbook-misc-deploy)
+
 
