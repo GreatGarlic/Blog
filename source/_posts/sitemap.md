@@ -116,7 +116,7 @@ tags: Index
 * [IDEA 删除 Gradle Module](/gradle-remove-module-from-idea)
 
 ## Hexo
-* [Gitbook 入门](/gitbook)
+* [GitBook 入门](/gitbook)
 * [Hexo 环境搭建](/hexo-usage)
 * [Markdown 入门](/mk-intro)
 
@@ -271,6 +271,7 @@ tags: Index
 * [QSS 基础](/qtbook-qss-base)
 * [QSS 选择器](/qtbook-qss-selector)
 * [Qt 杂谈](/qtbook)
+* [Qt 程序简单打包](/qtbook-misc-deploy)
 * [Qt5 乱码与 BOM](/qtbook-misc-messy-code)
 * [Single Application](/qtbook-misc-single-application)
 * [UDP 编程](/qtbook-network-udp)

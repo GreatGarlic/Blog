@@ -70,16 +70,20 @@ tags: FE
             margin-right: 0;
         }
 
+        .video-js:focus{
+           outline: none; /* 去掉点击时的蓝色边框 */
+        }
+
         .point {
             position: absolute;
             top: 50%;
-            margin-top: -1px;
-            width: 3px;
-            height: 3px;
+            margin-top: -2px;
+            width: 4px;
+            height: 4px;
             border-radius: 10px;
             background: #DDD;
             transition-duration: 0.2s;
-            z-index: 100000;
+            z-index: 10;
         }
 
         .point:hover {
@@ -115,7 +119,7 @@ tags: FE
             $('#video-id .vjs-progress-control').on('mouseenter', function() {
                 $('.point').css('margin-top', '-6px').width(12).height(12);
             }).on('mouseleave', function() {
-                $('.point').css('margin-top', '-1px').width(3).height(3);
+                $('.point').css('margin-top', '-2px').width(4).height(4);
             });
         });
     </script>
