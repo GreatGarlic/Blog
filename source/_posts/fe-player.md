@@ -4,7 +4,7 @@ date: 2017-08-19 18:52:07
 tags: FE
 ---
 
-[Video.js](http://www2.videojs.com) 是一个简洁、漂亮的 HTML5 播放器，支持字幕，还可支持 Flash(不支持 HTML5 时自动切换到 Flash)，使用很简单，也能自定义插件:
+[Video.js](http://www.videojs.com) 是一个简洁、漂亮的 HTML5 播放器，支持字幕，还可支持 Flash(不支持 HTML5 时自动切换到 Flash)，使用很简单，也能自定义插件:
 
 > Video.js is a JavaScript and CSS library that makes it easier to work with and build on HTML5 video. This is also known as an HTML5 Video Player. Video.js provides a common controls skin built in HTML/CSS, fixes cross-browser inconsistencies, adds additional features like fullscreen and subtitles, manages the fallback to Flash or other playback technologies when HTML5 video isn't supported, and also provides a consistent JavaScript API for interacting with the video.
 
@@ -18,23 +18,18 @@ tags: FE
 
 ```html
 <!DOCTYPE html>
-
 <html>
 
 <head>
+    <meta charset="utf-8">
     <title>Video.js | HTML5 Video Player</title>
-    <link href="video-js.min.css" rel="stylesheet" type="text/css">
-    <script src="video.min.js"></script>
-    <script>
-        videojs.options.flash.swf = "video-js.swf"; // 不使用 Flash 的可以删除
-    </script>
+    <link href="video-js.min.css" rel="stylesheet">
+    <script src="video-js.min.js"></script>
 </head>
 
 <body>
-    <video id="x-video" class="video-js vjs-default-skin vjs-big-play-centered"
-        controls autoplay preload="metadata" poster="poster.png"
-        width="640" height="360" data-setup="">
-        <source src="x.mp4" type="video/mp4"/>
+    <video id="video-id" class="video-js" controls autoplay preload="auto" width="640" height="360" data-setup="">
+        <source src="x.mp4" type="video/mp4"></source>
     </video>
 </body>
 
@@ -49,7 +44,7 @@ tags: FE
 > * 不能删除 **data-setup** 这个属性，删除了 Video.js 就不会生效了
 > * 为了效果更好，video 的宽高设置为视频的宽高，或者是等比缩放的大小，一般 **16:9** 的比较多
 
-更详细的文档请阅读 [GET STARTED](https://github.com/videojs/video.js/blob/stable/docs/guides/setup.md) 和 [DOCS](https://github.com/videojs/video.js/blob/stable/docs/index.md)。
+更详细的文档请阅读 [Video.js Documentation](http://docs.videojs.com/index.html)
 
 ## 自定义关键点
 
@@ -61,31 +56,32 @@ tags: FE
 
 ```html
 <!DOCTYPE html>
-
 <html>
 
 <head>
-    <title>Video.js | HTML5 Video Player</title>
-    <link href="video-js.min.css" rel="stylesheet" type="text/css">
-    <script src="video.min.js"></script>
+    <meta charset="utf-8">
+    <title></title>
     <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
-    <script>
-        videojs.options.flash.swf = "video-js.swf";
-    </script>
-
+    <link href="video-js.min.css" rel="stylesheet">
+    <script src="video-js.min.js"></script>
     <style media="screen">
+        .video-js .vjs-slider {
+            margin-left: 0;
+            margin-right: 0;
+        }
+
         .point {
             position: absolute;
-            top: 0;
-
+            top: 50%;
+            margin-top: -1px;
             width: 3px;
             height: 3px;
-
             border-radius: 10px;
-            background: #CCC;
-            transition-duration: 0.3s;
-            cursor: pointer;
+            background: #DDD;
+            transition-duration: 0.2s;
+            z-index: 100000;
         }
+
         .point:hover {
             background: white;
             box-shadow: 0 0 5px 2px white;
@@ -94,8 +90,8 @@ tags: FE
 </head>
 
 <body>
-    <video id="video-id" class="video-js vjs-default-skin vjs-big-play-centered" controls autoplay preload="metadata" poster="poster.png" width="640" height="360" data-setup="">
-        <source src="x.mp4" type="video/mp4" />
+    <video id="video-id" class="video-js" controls autoplay preload="auto" width="640" height="360" data-setup="">
+        <source src="x.mp4" type="video/mp4"></source>
     </video>
 
     <script>
@@ -103,12 +99,12 @@ tags: FE
         videojs("video-id").ready(function() {
             var $progressBar = $('.vjs-progress-control', "#video-id");
 
-            // 下面向播放器的进度条中插入一些关键点
-            $progressBar.append('<span name="1" class="point" style="left: 50px"></span>');
-            $progressBar.append('<span name="2" class="point" style="left: 80px"></span>');
-            $progressBar.append('<span name="3" class="point" style="left: 200px"></span>');
-            $progressBar.append('<span name="4" class="point" style="left: 300px"></span>');
-            $progressBar.append('<span name="5" class="point" style="left: 500px"></span>');
+            // 向播放器的进度条中插入一些关键点，位置使用百分比计算
+            $progressBar.append('<a href="javascript: void(0);" name="1" class="point" style="left: 10%"></a>');
+            $progressBar.append('<a href="javascript: void(0);" name="2" class="point" style="left: 30%"></a>');
+            $progressBar.append('<a href="javascript: void(0);" name="3" class="point" style="left: 60%"></a>');
+            $progressBar.append('<a href="javascript: void(0);" name="4" class="point" style="left: 80%"></a>');
+            $progressBar.append('<a href="javascript: void(0);" name="5" class="point" style="left: 90%"></a>');
 
             // 定义关键点的点击事件
             $('#video-id').on('click', '.point', function(event) {
@@ -116,10 +112,10 @@ tags: FE
             });
 
             // 鼠标进入和离开播放器时进度条的大小都会变化，所以关键点的大小也要进行响应的变化
-            $('#video-id').on('mouseenter', function() {
-                $('.point').width(9).height(9);
+            $('#video-id .vjs-progress-control').on('mouseenter', function() {
+                $('.point').css('margin-top', '-6px').width(12).height(12);
             }).on('mouseleave', function() {
-                $('.point').width(3).height(3);
+                $('.point').css('margin-top', '-1px').width(3).height(3);
             });
         });
     </script>

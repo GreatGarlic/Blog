@@ -1,10 +1,10 @@
 ---
-title: Gitbook 入门
+title: GitBook 入门
 date: 2017-08-20 17:05:58
 tags: Hexo
 ---
 
-**GitBook** 使用 Markdown 来写文档，GitBook 官网已经有 5万多本 GitBook 写的书了。现在不少公司都开始用 GitBook 来写项目文档、使用手册等。下面就简要的介绍怎么使用 Gitbook:
+**GitBook** 使用 Markdown 来写文档，官网已经有 5 万多本使用 GitBook 写的书了。现在不少公司都开始用 GitBook 来写项目文档、使用手册等。下面就简要的介绍怎么使用 GitBook:
 
 1. 安装 Git
 2. 安装 Nodejs
@@ -52,4 +52,9 @@ GitBook 导出 PDF 依赖 **ebook-convert**, calibre 中包含了 ebook-convert�
    * 进入项目目录
    * 执行 `gitbook pdf`
    * 在项目目录中会生成 **book.pdf**
+
+
+## 参考资料
+
+[GitBook 的使用和常用插件](http://www.tuicool.com/articles/zee2ui)
 
