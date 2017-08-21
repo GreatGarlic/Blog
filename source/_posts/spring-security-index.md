@@ -12,4 +12,6 @@ tags: Index
 7. [Spring Security Login Util](/spring-security-7-login-util/)
 8. [Spring Security 自动登录](/spring-security-8-auto-login/)
 9. [Spring Security 限制同一个账号的登陆用户](/spring-security-9-max-sessions)
+10. [Spring Security Token 认证](/spring-security-8-token)
+
 

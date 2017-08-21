@@ -381,6 +381,7 @@ tags: Index
 ## Spring-Security
 * [Spring Security Login Util](/spring-security-7-login-util)
 * [Spring Security Remember Me](/spring-security-5-rememberme)
+* [Spring Security Token 认证](/spring-security-8-token)
 * [Spring Security 入门](/spring-security-1-hello)
 * [Spring Security 加密密码](/spring-security-4-encrypt)
 * [Spring Security 用户信息数据源](/spring-security-3-datasource)
