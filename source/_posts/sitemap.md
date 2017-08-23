@@ -182,6 +182,7 @@ tags: Index
 * [字节序 Endian](/java-endian)
 * [安装 CAS-Server](/java-cas-1-install)
 * [微 Web 服务的 REST 框架 Spark Framework](/java-spark-framework)
+* [微信企业号开发](/java-weixin-qiyehao)
 * [本机安装 ZooKeeper 集群](/misc-zookeeper)
 * [测试 Java 生成 UUID 是否重复](/java-duplicate-uuid)
 * [测试 ThreadLocal](/java-thread-local)
