@@ -127,7 +127,7 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 }
 ```
 
-> attemptAuthentication 方法中使用 token 查找用户信息，需要根据具体情况进行实现，这里就不再赘述。
+> 没有校验 token，attemptAuthentication 直接返回了一个 authentication 只是为了测试方便，实际项目中要根据具体情况进行实现，这里就不再赘述。
 
 ## spring-security.xml
 
@@ -181,3 +181,15 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 除了 `<custom-filter ref="tokenAuthenticationFilter" before="FORM_LOGIN_FILTER"/>` 在 FORM_LOGIN_FILTER 前插入我们自定义的 filter TokenAuthenticationFilter 外，其他没有什么不同的。
 
 给 authentication-manager 取了一个别名 authenticationManager，是为了方便引用。
+
+## 查看 session 是否创建
+
+怎么知道什么时候创建了 session，什么时候没有创建呢？直接在 Tomcat 中看不够方便。
+
+有个简单的办法是使用 Redis 保存 Tomcat 的 session，请参考 [Spring Security 集群](/spring-security-6-cluster)，只需要配置一下就可以，不需要写代码。
+
+配置好后进入 **redis-cli**，先执行 **flushdb** 清空数据，然后使用 **auth-token** 的方式访问，redis-cli 中执行 **keys *** 看看有没有 session 生成，然后再使用浏览器访问，再执行 **keys *** 看看有没有 session 生成，反复的进行测试观察。
+
+## 使用 auth-token 访问
+
+使用 RESTful 的工具就可以了，例如 Firefox 的 RestClient 插件，Chrome 的 Postman 插件，或者自己使用 HttpClient 编程实现，请求时添加一个 header **auth-token** 就可以了。
