@@ -156,7 +156,7 @@ ext {
     // 部署 gradle deploy
     //     gradle -Denv=production deploy
     environment = System.getProperty("env", "development")
-    war.archiveName 'mini.war'
+    war.archiveName = 'mini.war'
 }
 
 ext.versions = [
@@ -184,7 +184,6 @@ dependencies {
 ////////////////////////////////////////////////////////////////////////////////
 //                                  资源动态替换                                //
 ////////////////////////////////////////////////////////////////////////////////
-// [3]
 def loadConfiguration() {
     println "==> Load configuration for '" + environment + "'"
     def configFile = file('config.groovy') // 配置文件
@@ -201,6 +200,7 @@ processResources {
 ////////////////////////////////////////////////////////////////////////////////
 //                                    Deploy                                  //
 ////////////////////////////////////////////////////////////////////////////////
+// [3]
 remotes {
     webServer {
         host = '120.92.26.194'
@@ -233,7 +233,6 @@ task deploy {
 
 deploy.dependsOn assemble
 assemble.dependsOn clean
-
 ```
 
 > [1]、[2]、[3] 是合并到原来 build.gradle 中的地方。
