@@ -55,6 +55,8 @@ Spring Security 中已经提供了表单登陆认证的功能，如下配置：
 
 关键点是，TokenAuthenticationFilter.doFilter 中为了不让 HttpSessionSecurityContextRepository 在使用 token 认证时创建 session，需要调用 sessionRepository.setAllowSessionCreation(false)，否则每次 token 认证都会生成一个新的 session，最后还需要恢复它的值，否则浏览器访问时就不能创建 session 了。
 
+> AbstractAuthenticationProcessingFilter 也有属性 allowSessionCreation，但是设置了是没有用的。
+
 ```java
 package com.xtuer.security;
 

@@ -198,3 +198,11 @@ du -sh
 ## Quick Look plugins
 
 可以使用 **brew cask** 安装 Quick Look 插件，具体请参考 <https://github.com/sindresorhus/quick-look-plugins>。
+
+## Safari 插件
+
+* [油猴 Tampermonkey](/download/tampermonkey.safariextz.zip)
+
+  脚本下载地址: <https://greasyfork.org/zh-CN/scripts/>
+
+  例如安装优酷的 HTML5 播放器插件，可以搜索 **优酷**
