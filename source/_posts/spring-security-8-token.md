@@ -1,5 +1,5 @@
 ---
-title: Spring Security Token 认证
+title: Spring Security Session + Token 认证
 date: 2017-08-21 22:08:53
 tags: Spring-Security
 ---
@@ -53,7 +53,7 @@ Spring Security 中已经提供了表单登陆认证的功能，如下配置：
 
 当 TokenAuthenticationFilter.doFilter 发现 header 中有 auth-token 时则使用 auth-token 去查找用户信息，如果找不到或者用户信息无效则认证失败，直接返回 SC_UNAUTHORIZED，请求终止。如果查找到有效的用户信息则认证成功，chain.doFilter 会调用下一个 filter UsernamePasswordAuthenticationFilter，它的 doFilter 中 requiresAuthentication(request, response) 返回 false，不会再继续认证操作，而是继续调用下一个 filter。
 
-关键点是，TokenAuthenticationFilter.doFilter 中为了不让 HttpSessionSecurityContextRepository 在使用 token 认证时创建 session，需要调用 sessionRepository.setAllowSessionCreation(false)，否则每次 token 认证都会生成一个新的 session，最后还需要恢复它的值，否则浏览器访问时就不能创建 session 了。
+关键点是，TokenAuthenticationFilter.doFilter 中为了不让 HttpSessionSecurityContextRepository 在使用 token 认证时创建 session，需要调用 sessionRepository.setAllowSessionCreation(false)，否则每次 token 认证都会生成一个新的 session。
 
 > AbstractAuthenticationProcessingFilter 也有属性 allowSessionCreation，但是设置了是没有用的。
 
@@ -69,7 +69,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
 import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
-
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -78,51 +77,61 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * 使用 token 进行身份验证的过滤器。
+ * 如果 request header 中有 auth-token，使用 auth-token 的值查询对应的登陆用户，如果用户有效则放行访问，否则返回 401 错误。
+ */
 public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
     @Autowired
     private HttpSessionSecurityContextRepository sessionRepository;
 
     public TokenAuthenticationFilter() {
-        super(new AntPathRequestMatcher("/login", "POST"));
+        super(new AntPathRequestMatcher("/login", "POST")); // 参考 UsernamePasswordAuthenticationFilter
     }
 
     @Override
     public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
             throws AuthenticationException, IOException, ServletException {
-        // 使用 auth-token 信息查找缓存中的用户信息，下面为了测试方便直接写死一个
-        User user = new User("admin", "", "ROLE_USER");
+        String token = request.getHeader("auth-token");
+
+        // 模拟 token 无效返回 null
+        if (!"123".equals(token)) {
+            return null;
+        }
+
+        // 使用 token 信息查找缓存中的登陆用户信息，下面为了测试方便直接写死一个
+        User user = new User("admin", "不重要", "ROLE_ADMIN");
+
         return new UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
     }
 
     @Override
-    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain)
-            throws IOException, ServletException {
+    public void doFilter(ServletRequest req, ServletResponse res, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest request = (HttpServletRequest) req;
         HttpServletResponse response = (HttpServletResponse) res;
-        Authentication authResult = null;
+        Authentication auth = null;
+
+        sessionRepository.setAllowSessionCreation(true);
 
         // 如果 header 里有 auth-token 时，则使用 token 查询用户数据进行登陆验证
         if (request.getHeader("auth-token") != null) {
-            sessionRepository.setAllowSessionCreation(false); // 禁止 sessionRepository 创建 session
-            authResult = attemptAuthentication(request, response); // 使用 token 查询用户数据进行登陆验证
+            // 1. 尝试进行身份认证
+            // 2. 如果用户无效，则返回 401
+            // 3. 如果用户有效，则保存到 SecurityContext 中，供本次方式后续使用
+            auth = attemptAuthentication(request, response);
 
-            // token 对应的用户不存在或者用户信息无效，例如被锁了，过期了等则返回错误
-            if (authResult == null) {
-                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "登陆后才能访问");
+            if (auth == null) {
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Token 无效，请重新申请 token");
                 return;
             }
 
-            // 保存认证信息到 SecurityContext
-            SecurityContextHolder.getContext().setAuthentication(authResult);
+            // 保存认证信息到 SecurityContext，禁止 sessionRepository 创建 session
+            sessionRepository.setAllowSessionCreation(false);
+            SecurityContextHolder.getContext().setAuthentication(auth);
         }
 
         // 继续调用下一个 filter: UsernamePasswordAuthenticationToken
         chain.doFilter(request, response);
-
-        // 不是使用 token 登陆验证的，则恢复允许 sessionRepository 创建 session
-        if (authResult == null) {
-            sessionRepository.setAllowSessionCreation(true);
-        }
     }
 }
 ```
@@ -193,3 +202,15 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 ## 使用 auth-token 访问
 
 使用 RESTful 的工具就可以了，例如 Firefox 的 RestClient 插件，Chrome 的 Postman 插件，或者自己使用 HttpClient 编程实现，请求时添加一个 header **auth-token** 就可以了。
+
+## Bug
+
+因为 sessionRepository 是所有请求共享的，在访问高并发时，会造成该创建 session 时可能失败，不该创建 session 时创建了 session。解决这个问题需要使用 ThreadLocal 变量标记请求是否要创建 session，创建 session 的代码在 HttpSessionSecurityContextRepository.SaveToSessionResponseWrapper.createNewSessionIfAllowed，如:
+
+```java
+if (!allowSessionCreation || !TokenAuthenticationFilter.isAllowSessionCreation()) {
+    return null;
+}
+```
+
+为了解决这个问题，我们需要实现一个 HttpSessionSecurityContextRepository，由 SecurityContextPersistenceFilter 创建提供给 Spring Security，但是 **Spring Security 不允许覆盖 SecurityContextPersistenceFilter**，所以不能直接提供我们实现的 HttpSessionSecurityContextRepository，只好用 Hack 的办法，把 Spring Security 的源码作为工程源码的部分，然后修改，或者把 jar 包中 HttpSessionSecurityContextRepository 的 class 替换成修改后的 class。

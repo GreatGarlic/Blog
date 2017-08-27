@@ -59,7 +59,7 @@ tags: Java
 
 ## 开发准备
 
-进入应用，设置
+网页中进入应用，设置
 
 * 网页授权及 JS-SDK 的域名
 
@@ -73,7 +73,7 @@ tags: Java
 
   * 用户详情: <http://buch.ngrok.cc/api/user-details>
 
-  * 进入微信企业号应用，界面为:
+  * 微信中进入企业号应用，界面为:
 
     ![](/img/java/weixinqy.png)
 
@@ -183,6 +183,7 @@ public class WeiXinQY {
     public Object loginQYCallback(HttpServletRequest request) {
         System.out.println("code: " + request.getParameter("code"));
         code = request.getParameter("code");
+      
         return request.getParameterMap();
     }
 

@@ -65,8 +65,9 @@ dependencies {
 ```
 
 ## spring-security.xml
-> 权限定义时为 `ROLE_ADMIN`，判断是否有权限时使用 `hasRole('ADMIN')`  
-> 需要多个权限: `hasRole('ADMIN') and hasRole('DBA')`
+> 权限定义为 `ROLE_ADMIN`，判断是否有权限使用 `hasRole('ADMIN') 或者 hasRole('ROLE_ADMIN') `，前缀 ROLE_ 可以省略  
+> 需要多个权限: `hasRole('ADMIN') and hasRole('DBA')`  
+> 有任意一个权限: `hasAnyRole('ROLE_ADMIN', 'ROLE_DBA')`
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -80,7 +81,7 @@ dependencies {
             http://www.springframework.org/schema/security/spring-security.xsd">
 
     <http auto-config="true">
-        <intercept-url pattern="/admin" access="hasRole('ADMIN')" />
+        <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" />
     </http>
 
     <authentication-manager>
@@ -95,6 +96,7 @@ dependencies {
 ```
 
 ## web.xml
+
 > Spring Security 是使用 Servlet Filter 来实现的，filter-name 必须为 `springSecurityFilterChain`
 
 ```xml
