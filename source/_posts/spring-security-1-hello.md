@@ -79,7 +79,7 @@ dependencies {
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/security
             http://www.springframework.org/schema/security/spring-security.xsd">
-
+    <http security="none" pattern="/static/**"/>
     <http auto-config="true">
         <intercept-url pattern="/admin" access="hasRole('ROLE_ADMIN')" />
     </http>

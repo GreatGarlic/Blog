@@ -47,13 +47,13 @@ Spring Security 中已经提供了表单登陆认证的功能，如下配置：
 
 > FORM_LOGIN_FILTER 就是 UsernamePasswordAuthenticationFilter。
 
-下面的类 TokenAuthenticationFilter 用于 token 的身份认证，在 spring-security.xml 中进行配置。
+下面的类 TokenAuthenticationFilter 用于 token 的身份认证，XHttpSessionSecurityContextRepository 确定是否创建 session，在 spring-security.xml 中进行配置。
 
 ## TokenAuthenticationFilter
 
 当 TokenAuthenticationFilter.doFilter 发现 header 中有 auth-token 时则使用 auth-token 去查找用户信息，如果找不到或者用户信息无效则认证失败，直接返回 SC_UNAUTHORIZED，请求终止。如果查找到有效的用户信息则认证成功，chain.doFilter 会调用下一个 filter UsernamePasswordAuthenticationFilter，它的 doFilter 中 requiresAuthentication(request, response) 返回 false，不会再继续认证操作，而是继续调用下一个 filter。
 
-关键点是，TokenAuthenticationFilter.doFilter 中为了不让 HttpSessionSecurityContextRepository 在使用 token 认证时创建 session，需要调用 sessionRepository.setAllowSessionCreation(false)，否则每次 token 认证都会生成一个新的 session。
+关键点是，TokenAuthenticationFilter.doFilter() 中为了不让 HttpSessionSecurityContextRepository 在使用 token 认证时创建 session，需要调用 allowSessionCreation.set(false)，在确定是否创建 session 时检查 TokenAuthenticationFilter.isAllowSessionCreation()。
 
 > AbstractAuthenticationProcessingFilter 也有属性 allowSessionCreation，但是设置了是没有用的。
 
@@ -61,14 +61,13 @@ Spring Security 中已经提供了表单登陆认证的功能，如下配置：
 package com.xtuer.security;
 
 import com.xtuer.bean.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.AbstractAuthenticationProcessingFilter;
-import org.springframework.security.web.context.HttpSessionSecurityContextRepository;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
+
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -82,8 +81,7 @@ import java.io.IOException;
  * 如果 request header 中有 auth-token，使用 auth-token 的值查询对应的登陆用户，如果用户有效则放行访问，否则返回 401 错误。
  */
 public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
-    @Autowired
-    private HttpSessionSecurityContextRepository sessionRepository;
+    private static ThreadLocal<Boolean> allowSessionCreation = new ThreadLocal<>(); // 是否允许当前请求创建 session
 
     public TokenAuthenticationFilter() {
         super(new AntPathRequestMatcher("/login", "POST")); // 参考 UsernamePasswordAuthenticationFilter
@@ -111,7 +109,8 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
         HttpServletResponse response = (HttpServletResponse) res;
         Authentication auth = null;
 
-        sessionRepository.setAllowSessionCreation(true);
+        // 默认创建 session
+        allowSessionCreation.set(true);
 
         // 如果 header 里有 auth-token 时，则使用 token 查询用户数据进行登陆验证
         if (request.getHeader("auth-token") != null) {
@@ -125,71 +124,112 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
                 return;
             }
 
-            // 保存认证信息到 SecurityContext，禁止 sessionRepository 创建 session
-            sessionRepository.setAllowSessionCreation(false);
+            // 保存认证信息到 SecurityContext，禁止 HttpSessionSecurityContextRepository 创建 session
+            allowSessionCreation.set(false);
             SecurityContextHolder.getContext().setAuthentication(auth);
         }
 
         // 继续调用下一个 filter: UsernamePasswordAuthenticationToken
         chain.doFilter(request, response);
     }
+
+    public static boolean isAllowSessionCreation() {
+        return allowSessionCreation.get();
+    }
 }
 ```
 
 > 没有校验 token，attemptAuthentication 直接返回了一个 authentication 只是为了测试方便，实际项目中要根据具体情况进行实现，这里就不再赘述。
+
+## XHttpSessionSecurityContextRepository
+
+XHttpSessionSecurityContextRepository 的代码完全复制 HttpSessionSecurityContextRepository，然后修改了创建 session 的函数 createNewSessionIfAllowed():
+
+```java
+package org.springframework.security.web.context;
+
+public class XHttpSessionSecurityContextRepository implements SecurityContextRepository {
+    ...
+    
+    private HttpSession createNewSessionIfAllowed(SecurityContext context) {
+        ...
+
+        if (!allowSessionCreation || !TokenAuthenticationFilter.isAllowSessionCreation()) {
+            if (logger.isDebugEnabled()) {
+                logger.debug("The HttpSession is currently null, and the "
+                        + HttpSessionSecurityContextRepository.class.getSimpleName()
+                        + " is prohibited from creating an HttpSession "
+                        + "(because the allowSessionCreation property is false) - SecurityContext thus not "
+                        + "stored for next request");
+            }
+
+            return null;
+        }
+        
+        ...
+    }
+
+    ...
+}
+```
 
 ## spring-security.xml
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans:beans
-    xmlns="http://www.springframework.org/schema/security"
-    xmlns:beans="http://www.springframework.org/schema/beans"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans
-        http://www.springframework.org/schema/beans/spring-beans.xsd
-        http://www.springframework.org/schema/context
-        http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/security
-        http://www.springframework.org/schema/security/spring-security.xsd">
+        xmlns="http://www.springframework.org/schema/security"
+        xmlns:beans="http://www.springframework.org/schema/beans"
+        xmlns:context="http://www.springframework.org/schema/context"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.springframework.org/schema/beans
+            http://www.springframework.org/schema/beans/spring-beans.xsd
+            http://www.springframework.org/schema/context
+            http://www.springframework.org/schema/context/spring-context.xsd
+            http://www.springframework.org/schema/security
+            http://www.springframework.org/schema/security/spring-security.xsd">
     <context:annotation-config/>
-
-    <beans:bean id="tokenAuthenticationFilter" class="com.xtuer.security.TokenAuthenticationFilter">
-        <beans:property name="authenticationManager" ref="authenticationManager"/>
-    </beans:bean>
 
     <http security="none" pattern="/page/login"/>
     <http security="none" pattern="/static/**"/>
 
-    <http auto-config="true">
+    <http auto-config="true" security-context-repository-ref="sessionSecurityContextRepository">
         <intercept-url pattern="/page/admin" access="hasRole('ROLE_ADMIN')"/>
-        <intercept-url pattern="/api/json" access="hasAnyRole('ROLE_ADMIN', 'ROLE_USER')"/>
 
         <form-login login-page="/page/login"
                     login-processing-url="/login"
-                    default-target-url  ="/"
+                    default-target-url="/"
                     authentication-failure-url="/page/login?error=1"
                     username-parameter="username"
                     password-parameter="password"/>
         <logout logout-url="/logout" logout-success-url="/page/login?logout=1"/>
         <access-denied-handler error-page="/page/deny"/>
+
         <csrf disabled="true"/>
+        <remember-me key="uniqueAndSecret" token-validity-seconds="2592000"/>
 
         <custom-filter ref="tokenAuthenticationFilter" before="FORM_LOGIN_FILTER"/>
     </http>
 
-    <beans:bean id="userDetailsService" class="com.xtuer.security.UserDetailsService"/>
-
     <authentication-manager alias="authenticationManager">
         <authentication-provider user-service-ref="userDetailsService"/>
     </authentication-manager>
+
+    <beans:bean id="tokenAuthenticationFilter" class="com.xtuer.security.TokenAuthenticationFilter">
+        <beans:property name="authenticationManager" ref="authenticationManager"/>
+    </beans:bean>
+    <beans:bean id="userService" class="com.xtuer.service.UserService"/>
+    <beans:bean id="userDetailsService" class="com.xtuer.security.UserDetailsService"/>
+    <beans:bean id="sessionSecurityContextRepository" class="org.springframework.security.web.context.XHttpSessionSecurityContextRepository"/>
 </beans:beans>
+
 ```
 
-除了 `<custom-filter ref="tokenAuthenticationFilter" before="FORM_LOGIN_FILTER"/>` 在 FORM_LOGIN_FILTER 前插入我们自定义的 filter TokenAuthenticationFilter 外，其他没有什么不同的。
+使用 `security-context-repository-ref` 注入我们自己实现的 HttpSessionSecurityContextRepository，替代默认的实现。
 
-给 authentication-manager 取了一个别名 authenticationManager，是为了方便引用。
+用 `<custom-filter ref="tokenAuthenticationFilter" before="FORM_LOGIN_FILTER"/>` 在 FORM_LOGIN_FILTER 前插入我们自定义的 filter TokenAuthenticationFilter 外。
+
+给 `authentication-manager` 取了一个别名 authenticationManager，是为了方便引用。
 
 ## 查看 session 是否创建
 
@@ -203,14 +243,3 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
 
 使用 RESTful 的工具就可以了，例如 Firefox 的 RestClient 插件，Chrome 的 Postman 插件，或者自己使用 HttpClient 编程实现，请求时添加一个 header **auth-token** 就可以了。
 
-## Bug
-
-因为 sessionRepository 是所有请求共享的，在访问高并发时，会造成该创建 session 时可能失败，不该创建 session 时创建了 session。解决这个问题需要使用 ThreadLocal 变量标记请求是否要创建 session，创建 session 的代码在 HttpSessionSecurityContextRepository.SaveToSessionResponseWrapper.createNewSessionIfAllowed，如:
-
-```java
-if (!allowSessionCreation || !TokenAuthenticationFilter.isAllowSessionCreation()) {
-    return null;
-}
-```
-
-为了解决这个问题，我们需要实现一个 HttpSessionSecurityContextRepository，由 SecurityContextPersistenceFilter 创建提供给 Spring Security，但是 **Spring Security 不允许覆盖 SecurityContextPersistenceFilter**，所以不能直接提供我们实现的 HttpSessionSecurityContextRepository，只好用 Hack 的办法，把 Spring Security 的源码作为工程源码的部分，然后修改，或者把 jar 包中 HttpSessionSecurityContextRepository 的 class 替换成修改后的 class。

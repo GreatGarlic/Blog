@@ -1,7 +1,7 @@
 ---
 title: Gradle Deploy
 date: 2017-08-01 13:35:01
-tags: Gradle
+tags: [Gradle, Spring-Web]
 ---
 
 项目打包后一般可以按照以下几个步骤进行部署：

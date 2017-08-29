@@ -13,7 +13,7 @@ tags: [Index, Spring-Web]
 8. [Thymeleaf 集成](/spring-web-thymeleaf)
 9. [Thymeleaf 语法](/spring-web-thymeleaf-syntax)
 10. [处理 Ajax 请求](/spring-web-ajax)
-   <!--more-->
+  <!--more-->
 11. [使用 REST](/spring-web-rest)
 12. [Fastjson 简单使用](/spring-web-fastjson)
 13. [mvc:view-controller](/spring-web-view-controller)
@@ -31,6 +31,7 @@ tags: [Index, Spring-Web]
 25. [事务处理](/spring-web-transaction)
 26. [防止表单重复提交](/spring-web-form-resubmit)
 27. [SpringMvc 响应 JSONP](/spring-web-jsonp)
+28. [Gradle Deploy 打包部署](/gradle-deploy)
 
 
 ---
@@ -39,3 +40,4 @@ tags: [Index, Spring-Web]
 * [Nginx 负载均衡](/spring-web-nginx)
 * [Ajax 跨域访问](/spring-web-cors)
 * [压力测试](/spring-web-benchmark)
+
