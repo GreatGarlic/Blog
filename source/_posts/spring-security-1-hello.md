@@ -65,9 +65,13 @@ dependencies {
 ```
 
 ## spring-security.xml
+
 > 权限定义为 `ROLE_ADMIN`，判断是否有权限使用 `hasRole('ADMIN') 或者 hasRole('ROLE_ADMIN') `，前缀 ROLE_ 可以省略  
 > 需要多个权限: `hasRole('ADMIN') and hasRole('DBA')`  
 > 有任意一个权限: `hasAnyRole('ROLE_ADMIN', 'ROLE_DBA')`
+>
+> 如果想使用权限列表的方式，而不是上面的这种表达式，需要设置 `<http auto-config="true" use-expressions="false">`，然后才能  
+> `<intercept-url pattern="/demo/filters" access="ROLE_USER"/>`
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
