@@ -32,6 +32,7 @@ tags: [Index, Spring-Web]
 26. [防止表单重复提交](/spring-web-form-resubmit)
 27. [SpringMvc 响应 JSONP](/spring-web-jsonp)
 28. [Gradle Deploy 打包部署](/gradle-deploy)
+29. [Spring Security](/spring-security-index)
 
 
 ---

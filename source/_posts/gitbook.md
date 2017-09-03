@@ -27,6 +27,31 @@ tags: Hexo
 1. 执行命令 `gitbook serve .`
 2. 浏览器里访问 <http://localhost:4000> 
 
+## 插件
+
+Gitbook 本身功能丰富，但同时可以使用插件来进行个性化定制。[Gitbook 插件](https://plugins.gitbook.com/browse) 里已经有100多个插件，可以在 `book.json` 文件的 `plugins` 和 `pluginsConfig` 字段添加插件及相关配置，添加后别忘了进行安装。
+
+```json
+{
+    "plugins": ["expandable-chapters", "prism", "-highlight", "navigator"],
+    "pluginsConfig": {
+        "prism": {
+            "css": [
+                "prismjs/themes/prism-tomorrow.css"
+            ]
+        }
+    }
+}
+```
+
+* [Expandable chapters](https://github.com/DomainDrivenArchitecture/gitbook-plugin-expandable-chapters)
+
+  生成 HTML 的章节不能展开和收缩，太多时不方便查看
+
+* 语法高亮插件 [Prism](https://github.com/gaearon/gitbook-plugin-prism)
+
+可参考 <http://zhaoda.net/2015/11/09/gitbook-plugins/>
+
 ## 导出 PDF
 
 GitBook 导出 PDF 依赖 **ebook-convert**, calibre 中包含了 ebook-convert：

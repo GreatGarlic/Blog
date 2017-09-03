@@ -243,3 +243,12 @@ public class XHttpSessionSecurityContextRepository implements SecurityContextRep
 
 使用 RESTful 的工具就可以了，例如 Firefox 的 RestClient 插件，Chrome 的 Postman 插件，或者自己使用 HttpClient 编程实现，请求时添加一个 header **auth-token** 就可以了。
 
+## 问题与思考
+
+### Token 怎么验证和存储？
+
+上面只介绍了身份认证时使用 token，没有介绍怎么验证 token 是否有效，怎么获取 token 对应的用户信息。一种方案就是使用 Redis，token 为 key，用户信息为 value，并给 key 设置过期时间。
+
+### Web 端访问时不使用 session 可以吗？
+
+当然可以，但是 web 端如果不使用 session，就会失去一些 Spring Security 默认提供的特性，例如登陆成功后跳转到登陆前的页面这个功能就是使用 HttpSessionRequestCache 来存储 SavedRequest 实现的(UsernamePasswordAuthenticationFilter.successHandler)，还有如 RedirectAttributes 也需要 session，不使用 session 的时候，还需要这些功能的话，就得自己实现相关功能，把相关数据保存到 Redis，Cookie 等了。需要权衡有没有必要那么纯粹的不使用 session。
