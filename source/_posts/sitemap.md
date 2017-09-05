@@ -381,8 +381,9 @@ tags: Index
 * [SpringMVC 获取 Request 和 Response](/spring-mvc-get-request)
 
 ## Spring-Security
-* [Spring Security JWT + Token 认证](/spring-security-8-jwt)
+* [Spring Security JWT + Token 认证](/spring-security-10-jwt)
 * [Spring Security Login Util](/spring-security-7-login-util)
+* [Spring Security QQ 登陆](/spring-security-11-qq-login)
 * [Spring Security Remember Me](/spring-security-5-rememberme)
 * [Spring Security Session + Token 认证](/spring-security-8-token)
 * [Spring Security 入门](/spring-security-1-hello)

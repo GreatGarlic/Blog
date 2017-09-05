@@ -97,7 +97,8 @@ public class TokenAuthenticationFilter extends AbstractAuthenticationProcessingF
     }
 
     public static boolean isAllowSessionCreation() {
-        return allowSessionCreation.get();
+        Boolean allow = allowSessionCreation.get();
+        return allow == null ? true : allow; // 如果是 null，则说明没有设置过，使用默认的，也既是 true
     }
 }
 ```

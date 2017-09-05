@@ -14,6 +14,7 @@ tags: Index
 9. [Spring Security 限制同一个账号的登陆用户](/spring-security-9-max-sessions)
 10. [Spring Security Session + Token 认证](/spring-security-8-token)
 11. [Spring Security 权限继承](/spring-security-9-role-inheritance)
-12. [Spring Security JWT + Token 认证](/spring-security-8-jwt)
+12. [Spring Security JWT + Token 认证](/spring-security-10-jwt)
+13. [Spring Security QQ 登陆](/spring-security-11-qq-login)
 
 
