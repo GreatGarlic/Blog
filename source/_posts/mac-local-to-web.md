@@ -1,5 +1,5 @@
 ---
-title: 本地服务映射为外网可访问
+title: 本地服务映射为外网可访问-Ngrok
 date: 2016-06-13 11:34:40
 tags: Mac
 ---
@@ -37,9 +37,9 @@ tags: Mac
 2. 访问 <http://www.ngrok.cc/login> 注册、登陆
 3. 点击 `隧道管理` > `开通隧道` > `立即购买`(可以使用免费的)
 4. 填写 `隧道名称`、`前置域名`、`本地端口`(本地 Web 服务的端口，例如 Tomcat 常用 8080)，其他的可以不填
-![](/img/mac/ngrok-1.png)
+  ![](/img/mac/ngrok-1.png)
 5. 点击 `确定添加`，然后在 `隧道管理` > `隧道管理` 可以看到刚才添加的隧道
-![](/img/mac/ngrok-2.png)
+  ![](/img/mac/ngrok-2.png)
 6. 启动本地 Web 服务，其端口是开通隧道时用的 8080
 7. 启动 ngrok: `./ngrok clientid 497cb09d080c5594`
 

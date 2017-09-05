@@ -163,3 +163,5 @@ public class User {
 
 ## 参考资料
 * Lombok 主页: <https://projectlombok.org>
+* [Lombok @Getter and @Setter](https://projectlombok.org/features/GetterSetter)
+

@@ -99,6 +99,10 @@ dependencies {
 </beans:beans>
 ```
 
+> auto-config: A legacy attribute which automatically registers a login form, BASIC authentication and a logout URL and logout services. If unspecified, defaults to "false". We'd recommend you    avoid using this and instead explicitly configure the services you require.
+>
+> 参考 FormLoginConfigurer, DefaultLoginPageGeneratingFilter and AbstractAuthenticationProcessingFilter.
+
 ## web.xml
 
 > Spring Security 是使用 Servlet Filter 来实现的，filter-name 必须为 `springSecurityFilterChain`

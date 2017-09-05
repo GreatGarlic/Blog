@@ -51,6 +51,10 @@ Git 的常用命令
 > * 创建新仓库只需要修改 `gitolite-admin/conf/gitolite.conf`，而不是用 git init --bare 命令
 > * 添加新用户只需要把用户的 ssl 公钥如 **biao.pub** 放到 `gitolite-admin/keydir`，biao 是用户名，在 gitolite.conf 里用到
 
+## 中文名乱码
+
+例如使用 git status 输出 modified:   "template-web-gradle/doc/\344\275\277\347\224\250\350\257\264\346\230\216.md"，中文名的路径显示不正常，调用 `git config core.quotepath false` 后就可以了.
+
 ## 参考资料
 
 * [一入前端深似海，从此红尘是路人系列第十弹之如何合理利用Git进行团队协作(一)](https://my.oschina.net/qiangdada/blog/800093)

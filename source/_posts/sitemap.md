@@ -124,7 +124,7 @@ tags: Index
 * [All Documents](/sitemap)
 * [Miscellaneous](/misc-index)
 * [Qt 杂谈](/qtbook)
-* [Spring Core Index](/spring-core-index)
+* [Spring Core](/spring-core-index)
 * [Spring Security](/spring-security-index)
 * [Spring Security 使用 CAS 实现单点登陆](/java-cas-index)
 * [Spring Web 项目开发](/spring-web-index)
@@ -205,7 +205,7 @@ tags: Index
 * [Safari 插件](/mac-safari-extension)
 * [Spotlight 快捷键](/mac-spotlight-shortcut)
 * [在线预览 PDF](/pdf-online)
-* [本地服务映射为外网可访问](/mac-local-to-web)
+* [本地服务映射为外网可访问-Ngrok](/mac-local-to-web)
 * [限制 TIME_WAIT 的连接数](/mac-limit-timewait-connection)
 
 ## Misc
@@ -360,7 +360,7 @@ tags: Index
 * [Quartz 实现定时任务](/spring-core-quartz)
 * [SetFactoryBean 注入 Set](/spring-core-injection-setfactorybean)
 * [Setter 注入](/spring-core-injection-setter)
-* [Spring Core Index](/spring-core-index)
+* [Spring Core](/spring-core-index)
 * [Spring Event](/misc-spring-event)
 * [Spring Hello World](/spring-core-hello)
 * [Spring IoC Introduction](/spring-core-ioc-introduction)
@@ -373,6 +373,7 @@ tags: Index
 * [Spring 判断设备信息](/spring-mvc-mobile-detection)
 * [Spring 异步调用](/spring-mvc-async)
 * [Spring 数据绑定之类型转换](/spring-mvc-conversion)
+* [SpringBoot Start](/spring-mvc-spring-boot-start)
 * [SpringMVC Ajax 拖拽上传文件](/spring-mvc-upload-file-ajax)
 * [SpringMVC 处理 Ajax 映射](/spring-mvc-ajax)
 * [SpringMvc 接收日期参数](/spring-mvc-to-date)
@@ -380,6 +381,7 @@ tags: Index
 * [SpringMVC 获取 Request 和 Response](/spring-mvc-get-request)
 
 ## Spring-Security
+* [Spring Security JWT + Token 认证](/spring-security-8-jwt)
 * [Spring Security Login Util](/spring-security-7-login-util)
 * [Spring Security Remember Me](/spring-security-5-rememberme)
 * [Spring Security Session + Token 认证](/spring-security-8-token)
