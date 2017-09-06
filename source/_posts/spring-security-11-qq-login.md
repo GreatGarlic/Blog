@@ -73,6 +73,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class OAuthAuthenticationFilter extends AbstractAuthenticationProcessingFilter {
+    // 替换为自己的 client id 和 client secret
     private String qqClientId = "101292272";
     private String qqClientSecret = "5bdbe9403fcc3abe8eba172337904b5a";
 
@@ -188,7 +189,7 @@ public String bindUser(HttpServletRequest request, HttpServletResponse response)
 
 ## 优化
 
-上面 QQ 的 OAuth 认证部分代码优点是简单、直接，但是太粗暴、丑陋了些，为了更好组织代码，可以使用 OAuth 的框架 ScribeJava  进行重构，可以参考 [QQ 登陆的 Scribe-Java 实现](http://qtdebug.com/scribe-qq/)。
+上面 QQ 的 OAuth 认证部分代码优点是简单、直接，但是太粗暴、丑陋了些，为了更好地组织代码，可以使用 OAuth 的框架 ScribeJava  进行重构，参考 [QQ 登陆的 Scribe-Java 实现](http://qtdebug.com/scribe-qq/)。
 
 ## 思考
 

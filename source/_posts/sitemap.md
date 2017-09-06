@@ -276,6 +276,7 @@ tags: Index
 * [Qt5 乱码与 BOM](/qtbook-misc-messy-code)
 * [Single Application](/qtbook-misc-single-application)
 * [UDP 编程](/qtbook-network-udp)
+* [九宫格绘图](/qtbook-paint-nine-patch-painter)
 * [使用 QChart 创建平滑曲线](/qtbook-paint-smooth-curve-qchart)
 * [使用 QChart 显示实时动态曲线](/qtbook-paint-realtime-curve-qchart)
 * [加载 QSS](/qtbook-qss-load)

@@ -30,6 +30,7 @@ tags: [QtBook, Index]
   * [使用 QChart 创建平滑曲线](/qtbook-paint-smooth-curve-qchart/)
   * [使用 QChart 显示实时动态曲线](/qtbook-paint-realtime-curve-qchart/)
   * [Clip 实现复杂绘图效果](/qtbook-paint-clip/)
+  * [九宫格绘图](/qtbook-paint-nine-patch-painter)
   * [襁褓中的系统界面](/qtbook-paint-osui)
   * 仿射变换原理
   * 巧妙的运用clip实现复杂效果
