@@ -30,7 +30,7 @@ tags: QtBook
 
 ## NinePatchPainter
 
-了解九宫格绘制的原理后，接下来实现工具类 NinePatchPainter，在任意的矩形(widget 也是矩形的)内使用九宫格绘制，只需要简单的调用 `NinePatchPainter::paint(painter, rect)` 即可。
+了解九宫格绘制的原理后，接下来实现工具类 NinePatchPainter，在任意的矩形内(widget 也是矩形的)使用九宫格绘制，只需要简单的调用 `NinePatchPainter::paint(painter, rect)` 即可。
 
 ```cpp
 // 文件名: NinePatchPainter.h
@@ -265,7 +265,7 @@ void NinePatchPainter::paint(QPainter *painter, const QRect &rect) const {
 
 ## 案例展示
 
-下面就用一个简单的案例展示 NinePatchPainter 的威力，重点关注 paintEvent() 函数，效果图请参考文章开头出的效果图.
+下面就用一个简单的案例展示 NinePatchPainter 的威力，重点关注 paintEvent() 函数，结果请参考文章开头处的效果图.
 
 ```cpp
 // 文件名: Widget.h
@@ -343,6 +343,8 @@ int main(int argc, char *argv[]) {
 ## 思考
 
 有了背景图，怎么确定各边的宽高是多少像素才合适呢？一般是各边的大小不小于对应角的大小，这样 4 个角绘制出来才不会变形。可以参考一下 Border Image 一节 <http://qtdebug.com/qtbook-qss-border-image>，这样就能理解的更深刻了。
+
+案例中展示在指定的 rect 中绘制，怎么使用 NinePatchPainter 绘制 widget 的整个背景呢？
 
 ## 作业
 

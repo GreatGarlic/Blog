@@ -118,6 +118,7 @@ tags: Index
 ## Hexo
 * [GitBook 入门](/gitbook)
 * [Hexo 环境搭建](/hexo-usage)
+* [Hexo 跳过指定文件的渲染](/hexo-skip-render)
 * [Markdown 入门](/mk-intro)
 
 ## Index
