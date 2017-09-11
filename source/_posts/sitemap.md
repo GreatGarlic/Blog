@@ -375,7 +375,6 @@ tags: Index
 * [Spring 判断设备信息](/spring-mvc-mobile-detection)
 * [Spring 异步调用](/spring-mvc-async)
 * [Spring 数据绑定之类型转换](/spring-mvc-conversion)
-* [SpringBoot Start](/spring-mvc-spring-boot-start)
 * [SpringMVC Ajax 拖拽上传文件](/spring-mvc-upload-file-ajax)
 * [SpringMVC 处理 Ajax 映射](/spring-mvc-ajax)
 * [SpringMvc 接收日期参数](/spring-mvc-to-date)
@@ -430,6 +429,11 @@ tags: Index
 * [防止 XSS 攻击](/spring-web-xss)
 * [防止表单重复提交](/spring-web-form-resubmit)
 * [集成 Velocity](/spring-web-velocity)
+
+## SpringBoot
+* [SpringBoot MyBatis](/spring-boot-mybatis)
+* [SpringBoot Redis](/spring-boot-redis)
+* [SpringBoot Start](/spring-boot-start)
 
 ## Util
 * [ActiveMQ 的 MQTT](/misc-mqtt)

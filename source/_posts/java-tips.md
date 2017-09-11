@@ -329,3 +329,10 @@ SpringSecurity 默认不让 iframe 嵌入当前站点的网页的，连同域都
 </http>
 ```
 
+## 查看 SpringMVC Application Context 中的对象
+
+```java
+WebApplicationContext webApplicationContext = ContextLoader.getCurrentWebApplicationContext();
+String[] names = webApplicationContext.getBeanDefinitionNames();
+```
+

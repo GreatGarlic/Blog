@@ -101,6 +101,22 @@ zip -r result.zip H5 x.html
 unzip signup.zip [-d targetDir]
 ```
 
+## tar
+
+```
+// 压缩为 archive.tar
+tar -cf archive.tar file1 file2 file3
+
+// 解压 archive.tar
+tar -xf archive.tar
+
+# Create compressed gzip archive.
+tar -czf file.tar.gz file1 file2
+
+# Extract .gz archive.
+tar -xzf file.tar.gz
+```
+
 ## 查看不同状态的链接数量
 
 ```

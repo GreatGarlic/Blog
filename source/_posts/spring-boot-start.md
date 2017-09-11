@@ -1,7 +1,7 @@
 ---
 title: SpringBoot Start
 date: 2017-09-05 13:51:36
-tags: Spring-Mvc
+tags: SpringBoot
 ---
 
 Spring Boot 创建入门级 RESTful Web 项目简单到令人发指，下面就来看看怎么用吧(如果想知道 Spring Boot 是啥，搜索即可):

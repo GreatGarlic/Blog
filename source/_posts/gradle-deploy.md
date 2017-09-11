@@ -130,23 +130,12 @@ export PATH
 熟悉上面的基础后，同时也了解 gradle 的语法，也可以 build 和部署的任务写在一起，或者使用包含文件的方式，下面附上一个实际项目中的 build.gradle 作为参考，**执行 gradle deploy 就能进行重新编译、打包、发布:**
 
 ```groovy
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'org.akhikhl.gretty:gretty:2.0.0'
-        classpath 'org.hidetake:gradle-ssh-plugin:2.9.0' // [1]
-    }
+plugins {
+    id 'war'
+    id 'java'
+    id 'org.hidetake.ssh' version '2.9.0'
+    id 'org.akhikhl.gretty' version '2.0.0'
 }
-
-import org.apache.tools.ant.filters.ReplaceTokens
-
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'war'
-apply plugin: 'org.akhikhl.gretty'
-apply plugin: 'org.hidetake.ssh' // [2]
 
 gretty {
     httpPort = 8080
@@ -159,12 +148,13 @@ gretty {
     recompileOnSourceChange = true
 }
 
-tasks.withType(JavaCompile) {
-    sourceCompatibility = JavaVersion.VERSION_1_8
-    targetCompatibility = JavaVersion.VERSION_1_8
-}
-
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
 [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
+}
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                   Maven 依赖                               //
@@ -176,33 +166,63 @@ repositories {
 
 ext {
     // 运行和打包的环境选择, 默认是开发环境
-    // 获取 gradle 参数中 -Dprofile 的值: gradle -Denv=production clean build
+    // 获取 gradle 参数中 env 的值: gradle -Denv=production clean build
     // 构建 gradle clean build
     //     gradle -Denv=production clean build
-    // 部署 gradle deploy
-    //     gradle -Denv=production deploy
+    // 部署 gradle clean deploy
+    //     gradle -Denv=production clean deploy
     environment = System.getProperty("env", "development")
-    war.archiveName = 'mini.war'
+    war.archiveName = 'ROOT.zip' // 打包的文件名
 }
 
 ext.versions = [
-    spring   : '4.3.10.RELEASE',
-    servlet  : '3.1.0',
-    fastjson : '1.2.24',
-    thymeleaf: '3.0.7.RELEASE',
-    junit    : '4.12'
+    spring        : '4.3.10.RELEASE',
+    springSecurity: '4.2.3.RELEASE',
+    springSession : '1.3.0.RELEASE',
+    servlet       : '3.1.0',
+    lombok        : '1.16.18',
+    fastjson      : '1.2.38',
+    thymeleaf     : '3.0.7.RELEASE',
+    mysql         : '5.1.21',
+    mybatis       : '3.4.5',
+    mybatisSpring : '1.3.1',
+    druid         : '1.1.3',
+    validator     : '6.0.2.Final',
+    commonsLang   : '3.5',
+    commonsFileupload: '1.3.2',
+    snakeyaml     : '1.18',
+    easyOkHttp    : '1.1.3',
+    logback       : '1.2.3',
+    junit         : '4.12',
+    jclOverSlf4j  : '1.7.25'
 ]
 
 dependencies {
     compile(
             "org.springframework:spring-webmvc:$versions.spring", // Spring MVC
             "org.springframework:spring-context-support:$versions.spring",
-            "com.alibaba:fastjson:$versions.fastjson",  // JSON
+            "org.springframework.security:spring-security-web:$versions.springSecurity", // Spring Security
+            "org.springframework.security:spring-security-config:$versions.springSecurity",
+            "org.springframework.session:spring-session-data-redis:$versions.springSession",
+            "com.alibaba:fastjson:$versions.fastjson", // JSON
             "org.thymeleaf:thymeleaf:$versions.thymeleaf",
-            "org.thymeleaf:thymeleaf-spring4:$versions.thymeleaf"
+            "org.thymeleaf:thymeleaf-spring4:$versions.thymeleaf",
+            "mysql:mysql-connector-java:$versions.mysql", // MyBatis
+            "org.springframework:spring-jdbc:$versions.spring",
+            "org.mybatis:mybatis-spring:$versions.mybatisSpring",
+            "org.mybatis:mybatis:$versions.mybatis",
+            "com.alibaba:druid:$versions.druid",
+            "org.hibernate.validator:hibernate-validator:$versions.validator",
+            "org.apache.commons:commons-lang3:$versions.commonsLang",
+            "commons-fileupload:commons-fileupload:$versions.commonsFileupload",
+            "org.yaml:snakeyaml:$versions.snakeyaml",
+            "com.mzlion:easy-okhttp:$versions.easyOkHttp",
+            "ch.qos.logback:logback-classic:$versions.logback", // Logback
+            "org.slf4j:jcl-over-slf4j:$versions.jclOverSlf4j"
     )
 
-    compileOnly("javax.servlet:javax.servlet-api:$versions.servlet")
+    compileOnly("org.projectlombok:lombok:$versions.lombok")
+    compileOnly("javax.servlet:javax.servlet-api:$versions.servlet") // Servlet
     testCompile("org.springframework:spring-test:$versions.spring")
     testCompile("junit:junit:$versions.junit")
 }
@@ -211,7 +231,7 @@ dependencies {
 //                                  资源动态替换                                //
 ////////////////////////////////////////////////////////////////////////////////
 def loadConfiguration() {
-    println "==> Load configuration for '" + environment + "'"
+    println "==> Load configuration for '${environment}'"
     def configFile = file('config.groovy') // 配置文件
     return new ConfigSlurper(environment).parse(configFile.toURI().toURL()).toProperties()
 }
@@ -219,49 +239,44 @@ def loadConfiguration() {
 processResources {
     // src/main/resources 下的文件中 @key@ 的内容使用 config.groovy 里对应的进行替换
     from(sourceSets.main.resources.srcDirs) {
-        filter(ReplaceTokens, tokens: loadConfiguration())
+        filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: loadConfiguration())
     }
 }
 
 ////////////////////////////////////////////////////////////////////////////////
-//                                    Deploy                                  //
+//                                   项目部署                                  //
 ////////////////////////////////////////////////////////////////////////////////
-// [3]
 remotes {
-    webServer {
-        host = '120.92.26.194'
+    server {
+        host = '192.168.82.133'
         user = 'root'
-        password = 'xxxx'
+        // password = 'xxx'
+        identity = file("${System.properties['user.home']}/.ssh/id_rsa")
     }
 }
 
-task deploy {
-    doLast {
-        ssh.settings {
-            knownHosts = allowAnyHosts
-        }
+ssh.settings {
+    knownHosts = allowAnyHosts
+}
 
+task deploy(dependsOn: war) {
+    doLast {
         ssh.run {
-            session(remotes.webServer) {
-                put from: "${buildDir}/libs/${war.archiveName}", into: '/data/shitu.edu-edu.com'
+            session(remotes.server) {
+                put from: "${buildDir}/libs/${war.archiveName}", into: '/data/xtuer.com'
                 execute """
                     source /root/.bash_profile;
-                    /usr/local/edu/tomcat/bin/shutdown.sh;
-                    rm -rf /data/shitu.edu-edu.com/ROOT;
-                    unzip  /data/shitu.edu-edu.com/${war.archiveName} -d /data/shitu.edu-edu.com/ROOT;
-                    /usr/local/edu/tomcat/bin/startup.sh;
-                    rm -rf /data/shitu.edu-edu.com/${war.archiveName}
+                    /usr/local/tomcat/bin/shutdown.sh;
+                    rm -rf /data/xtuer.com/ROOT;
+                    unzip  /data/xtuer.com/${war.archiveName} -d /data/xtuer.com/ROOT > /dev/null;
+                    /usr/local/tomcat/bin/startup.sh;
+                    rm -rf /data/xtuer.com/${war.archiveName};
                 """
             }
         }
     }
 }
-
-deploy.dependsOn assemble
-assemble.dependsOn clean
 ```
 
-> [1]、[2]、[3] 是合并到原来 build.gradle 中的位置。
->
-> 当然还可以把部署的部分放到 deploy.gradle 文件，然后 build.gradle 中 apply from: 'deploy' 的方式。
+> 可以把部署的部分放到 deploy.gradle 文件，然后 build.gradle 中 apply from: 'deploy' 的方式。
 

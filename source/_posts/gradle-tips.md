@@ -32,7 +32,8 @@ compile project(':dependency-project')
 
 ## 依赖本地 jar 包
 ```
-compile fileTree(dir: 'src/main/webapp/WEB-INF/lib', include: ['*.jar'])
+compile files('spring-core.jar', 'spring-aop.jar')
+compile fileTree(dir: 'src/main/webapp/WEB-INF/lib', include: '*.jar')
 ```
 > dir 可以是绝对路径，也可以是相对于工程目录的项目路径
 
