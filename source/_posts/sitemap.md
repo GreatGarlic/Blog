@@ -431,6 +431,7 @@ tags: Index
 * [集成 Velocity](/spring-web-velocity)
 
 ## SpringBoot
+* [Spring Boot Thymeleaf](/spring-boot-thymeleaf)
 * [SpringBoot MyBatis](/spring-boot-mybatis)
 * [SpringBoot Redis](/spring-boot-redis)
 * [SpringBoot Start](/spring-boot-start)
