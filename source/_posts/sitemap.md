@@ -432,6 +432,7 @@ tags: Index
 
 ## SpringBoot
 * [Spring Boot Thymeleaf](/spring-boot-thymeleaf)
+* [Spring Boot 热更新](/spring-boot-hot-swap)
 * [SpringBoot MyBatis](/spring-boot-mybatis)
 * [SpringBoot Redis](/spring-boot-redis)
 * [SpringBoot Start](/spring-boot-start)
