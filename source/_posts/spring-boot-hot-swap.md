@@ -10,12 +10,12 @@ tags: SpringBoot
 
   ```groovy
   buildscript {
-  	repositories {
+      repositories {
           jcenter()
-  	}
-  	dependencies {
+      }
+      dependencies {
           classpath 'org.springframework:springloaded:1.2.8.RELEASE'
-  	}
+      }
   }
   ```
 
