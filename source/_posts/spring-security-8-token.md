@@ -1,7 +1,7 @@
 ---
 title: Spring Security Session + Token 认证
 date: 2017-08-21 22:08:53
-tags: Spring-Security
+tags: SpringSecurity
 ---
 
 前面通过表单进行登陆，会为用户创建一个 session 保存在服务器端，session id 保存在 cookie 中，每次访问服务器的时候服务器端从 cookie 中读取 session id 然后找到用户的 session，就能知道当前用户的信息。但是对于移动端来说，传递 cookie 不是很方便，一般都会使用 token 来进行验证。

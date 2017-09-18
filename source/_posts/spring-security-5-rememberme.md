@@ -1,7 +1,7 @@
 ---
 title: Spring Security Remember Me
 date: 2016-04-10 10:59:20
-tags: Spring-Security
+tags: SpringSecurity
 ---
 
 ## 什么是 Remember Me？

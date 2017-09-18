@@ -1,7 +1,7 @@
 ---
 title: Redis 集成
 date: 2016-10-16 07:27:45
-tags: Spring-Web
+tags: SpringWeb
 ---
 如果数据每次都从数据库查询，当并发大的时候，性能就会急剧的下降，可以采用 Redis 作为缓存，数据首先从 Redis 里查询，如果 Redis 里没有，然后才从数据库查询，并把查询到的结果放入 Redis。
 

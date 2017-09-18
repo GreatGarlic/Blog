@@ -1,7 +1,7 @@
 ---
 title: Semantic Ui 的 Behavior 和 Settings
 date: 2017-03-25 09:14:19
-tags: [FE, Semantic-Ui]
+tags: [FE, SemanticUi]
 ---
 
 学习 Semantic Ui 的时候，不少组件的文档里都有 behavior 和 settings，例如 Dimmer, Form Validation, Transition, Tab, Dropdown等，相信不少同学对 behavior 和 settings 应该怎么用摸不着头脑。

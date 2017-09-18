@@ -1,7 +1,7 @@
 ---
 title: Property Editor
 date: 2017-04-02 11:13:52
-tags: Spring-Core
+tags: SpringCore
 ---
 
 **在设置一个对象类型的属性时：**

@@ -1,7 +1,7 @@
 ---
 title: SetFactoryBean 注入 Set
 date: 2017-04-01 15:42:20
-tags: Spring-Core
+tags: SpringCore
 ---
 ```xml
 <bean id="setExample" class="com.xtuer.beans.CollectionHolder">

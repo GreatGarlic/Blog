@@ -1,7 +1,7 @@
 ---
 title: Spring 中配置 CORS
 date: 2016-06-10 21:21:07
-tags: Spring-Mvc
+tags: SpringMVC
 ---
 
 Ajax 以前要实现跨域访问，可以通过 JSONP、Flash 或者服务器中转的方式来实现，现在可以使用 `CORS`。

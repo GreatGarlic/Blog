@@ -1,7 +1,7 @@
 ---
 title: Spring O/X Mapping
 date: 2016-11-22 18:23:47
-tags: [Misc, Spring-Core]
+tags: [Misc, SpringCore]
 ---
 Spring 3.0 的一个新特性是 `O/X Mapper`，下面简称 `OXM`，O 代表 Object，X 代表 XML，它的目的是实现 Java POJO 对象和 XML 文档之间的互相转换。
 
@@ -35,7 +35,7 @@ Spring O/X Mapper 定义统一的接口，实现由第三方框架提供。要�
 * castor.properties: 默认生成的 xml 是没有缩进的，不利于阅读，为了生成格式化的 xml，需要在配置文件 castor.properties 中定义 `org.exolab.castor.indent = true`，Castor 会读取这个文件
 
 > **术语:**
-> 
+>
 > * Marshalling: 把 POJO 映射为 xml
 > * Unmarshalling: 把 xml 映射为 POJO
 

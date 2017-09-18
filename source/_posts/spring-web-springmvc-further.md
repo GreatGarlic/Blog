@@ -1,7 +1,7 @@
 ---
 title: SpringMVC 进一步学习
 date: 2017-03-31 15:58:26
-tags: Spring-Web
+tags: SpringWeb
 ---
 
 ## @PathVariable

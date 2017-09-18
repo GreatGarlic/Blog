@@ -1,7 +1,7 @@
 ---
 title: Spring Security Login Util
 date: 2016-04-25 13:37:32
-tags: Spring-Security
+tags: SpringSecurity
 ---
 
 查看用户是否登陆，调用 `SecurityUtils.isLogin()` 即可。

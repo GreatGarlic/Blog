@@ -1,7 +1,7 @@
 ---
 title: Fastjson 简单使用
 date: 2016-10-16 08:09:09
-tags: [Spring-Web, Util]
+tags: [SpringWeb, Util]
 ---
 Fastjson API 入口类是 com.alibaba.fastjson.JSON，常用的序列化操作都可以在 JSON 类上的静态方法直接完成。
 
@@ -30,12 +30,12 @@ public static <T> T parseObject(String text, TypeReference<T> type, Feature... f
 什么时候用 `TypeReference` 呢？使用 `parseObject()` 转换的结果使用范型时。
 
 > **public class TypeReference<T> extends Object**  
->   
+>
 > Represents a generic type T. Java doesn't yet provide a way to represent generic types(例如 `List<String>.class` 是不存在的), so this class does. Forces clients to create a subclass of this class which enables retrieval the type information even at runtime.
-For example, to create a type literal for `List<String>`, you can create an empty anonymous inner class:
->  
+> For example, to create a type literal for `List<String>`, you can create an empty anonymous inner class:
+>
 > &nbsp;&nbsp;&nbsp;&nbsp;`TypeReference<List<String>> list = new TypeReference<List<String>>() {};`
->   
+>
 > This syntax cannot be used to create type literals that have wildcard parameters, such as `Class<?>` or `List<? extends CharSequence>`.
 
 ## 测试
@@ -100,7 +100,7 @@ class Box {
 
 ## 常用 API
 ```java
-```java
+​```java
 // 把 JSON 文本 parse 为 JSONObject 或者 JSONArray 
 public static final Object parse(String text); 
 

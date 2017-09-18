@@ -1,7 +1,7 @@
 ---
 title: Velocity 语法
 date: 2017-07-01 10:47:01
-tags: Spring-Web
+tags: SpringWeb
 ---
 
 Velocity 比较接近脚本语言，例如 JS

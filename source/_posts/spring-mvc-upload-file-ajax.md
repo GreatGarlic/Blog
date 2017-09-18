@@ -1,7 +1,7 @@
 ---
 title: SpringMVC Ajax 拖拽上传文件
 date: 2016-05-01 17:02:34
-tags: [Spring-Mvc, Java, Util, Ajax]
+tags: [SpringMVC, Java, Util, Ajax]
 ---
 
 在 [Spring 上传文件](/spring-mvc-upload-file/) 介绍了在 SpringMVC 中怎么上传文件，这里将介绍 SpringMVC ＋ Ajax ＋ 拖拽进行文件的上传，使用的是 jQuery 的文件上传插件 `jQuery File Upload`，其主页为 <http://plugins.jquery.com/blueimp-file-upload/>

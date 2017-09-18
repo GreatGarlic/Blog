@@ -1,7 +1,7 @@
 ---
 title: Spring IoC Introduction
 date: 2017-04-01 15:14:53
-tags: Spring-Core
+tags: SpringCore
 ---
 
 ## IoC 是什么？

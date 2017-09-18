@@ -1,7 +1,7 @@
 ---
 title: Semantic Ui 日期插件
 date: 2017-05-13 10:59:23
-tags: [FE, Semantic-Ui]
+tags: [FE, SemanticUi]
 ---
 
 Semantic Ui 没有提供日期控件，在网上找到了一个基于它的实现，能够选择年、日期、时间、日期+时间，日期范围等，功能很齐全。

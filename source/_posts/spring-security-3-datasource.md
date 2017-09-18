@@ -1,7 +1,7 @@
 ---
 title: Spring Security 用户信息数据源
 date: 2016-04-10 10:22:02
-tags: Spring-Security
+tags: SpringSecurity
 ---
 
 前面章节中用户名、密码、权限都是写在配置文件里的，不能动态的管理用户的权限，大多数时候显然是不行的。这里介绍从其他数据源读取用户的信息，例如从数据库，LDAP 等。只需要给 `authentication-provider` 提供接口 `UserDetailsService` 的实现类即可，使用这个类获取用户的信息:

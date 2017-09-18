@@ -1,7 +1,7 @@
 ---
 title: 处理 Ajax 请求
 date: 2016-10-15 12:04:01
-tags: Spring-Web
+tags: SpringWeb
 ---
 SpringMVC 处理 AJAX 请求很简单，只需要在方法的前面加上 `@ResponseBody` 即可。  
 Controller 的方法一般返回 String(可以是JSON, XML, 普通的 Text), 也可以是对象。
@@ -90,11 +90,11 @@ Controller 的方法一般返回 String(可以是JSON, XML, 普通的 Text), 也
         private boolean success;
         private String message;
         private Object data;
-    
+
         public Result(boolean success, String message) {
             this(success, message, null);
         }
-    
+
         public Result(boolean success, String message, Object data) {
             this.success = success;
             this.message = message;

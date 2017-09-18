@@ -1,7 +1,7 @@
 ---
 title: Spring Security 入门
 date: 2016-04-09 22:34:34
-tags: Spring-Security
+tags: SpringSecurity
 ---
 
 ## 目录结构

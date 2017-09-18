@@ -1,7 +1,7 @@
 ---
 title: 多个配置文件
 date: 2017-04-02 11:20:52
-tags: Spring-Core
+tags: SpringCore
 ---
 把 Spring 的 Bean Configuration File 根据模块分散到不同的文件里，便于管理，然后使用 `<import>` 把它们组织在一起。例如：
 

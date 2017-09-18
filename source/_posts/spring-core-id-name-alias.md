@@ -1,7 +1,7 @@
 ---
 title: ID Name Alias
 date: 2017-04-01 15:18:32
-tags: Spring-Core
+tags: SpringCore
 ---
 ## id, name, alias
 

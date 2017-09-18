@@ -1,7 +1,7 @@
 ---
 title: Ajax 跨域访问
 date: 2017-03-31 19:29:42
-tags: Spring-Web
+tags: SpringWeb
 ---
 ## 什么情况下是跨域访问？
 

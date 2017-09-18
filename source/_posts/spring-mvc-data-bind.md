@@ -1,7 +1,7 @@
 ---
 title: SpringMVC 数据绑定
 date: 2016-04-17 08:57:33
-tags: Spring-Mvc
+tags: SpringMVC
 ---
 
 SpringMVC 中提供了多种数据绑定，可以把请求中的数据绑定为简单类型，简单数组，对象，对象的数组等。
@@ -88,7 +88,7 @@ SpringMVC 中提供了多种数据绑定，可以把请求中的数据绑定为�
 * 映射的参数名 `user` 和 @InitBinder 中的 value `user` 要一样
 
 > 如果 URL 都使用 username 和 age 的话，会同时作用于 user 和 admin，使用 `WebDataBinder` 可对其加前缀，就能在映射的时候区分开是给谁使用的。  
-> 
+>
 > `user.username` `and admin.username` 分别映射到对象 user 和 admin，age 同时映射到他们的 age 属性上。
 
 ```java
@@ -160,8 +160,8 @@ SpringMVC 中提供了多种数据绑定，可以把请求中的数据绑定为�
 ## 对象的 Map
 * <http://localhost:8080/object-map?users['x'].username=Tom&users['y'].username=Lucy>
 * <http://localhost:8080/object-map?users["x"].username=Tom&users["y"].username=Lucy>
-*  不能直接使用 `Map<String, User> users` 来映射
-*  需要创建一个类 UserMap，其属性为 `Map<String, User> users`，然后使用级连映射相似的方式来映射，但是要有 Map 的 key
+* 不能直接使用 `Map<String, User> users` 来映射
+* 需要创建一个类 UserMap，其属性为 `Map<String, User> users`，然后使用级连映射相似的方式来映射，但是要有 Map 的 key
 
 ```java
     @RequestMapping("/object-map")

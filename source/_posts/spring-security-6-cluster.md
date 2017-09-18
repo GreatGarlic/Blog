@@ -1,7 +1,7 @@
 ---
 title: Spring Security 集群
 date: 2016-04-10 11:23:02
-tags: Spring-Security
+tags: SpringSecurity
 ---
 
 集群的关键点是 session 共享，这里使用 `spring-session-data-redis` 把 session 存储到 Redis 实现集群里 session 的共享，全是配置，不需要修改一行 Java 代码就能实现 Session 的集群共享。

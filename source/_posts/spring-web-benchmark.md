@@ -1,7 +1,7 @@
 ---
 title: 压力测试
 date: 2017-03-31 19:39:05
-tags: Spring-Web
+tags: SpringWeb
 ---
 下面介绍使用 Apache 的 `ab` (Apache Benchmark) 简单的进行压力测试
 

@@ -1,7 +1,7 @@
 ---
 title: Spring Security 自动登录
 date: 2017-02-27 14:43:09
-tags: Spring-Security
+tags: SpringSecurity
 ---
 前面的实现可以使用表单进行登陆了，但是某些时候需要自动登录，例如使用 QQ 的第三方登录，服务器收到登陆成功的回调后，需要在我们的系统中继续使用本地账号登陆才行，这时就会需要实现自动登录的功能，还有使用 AJAX 等也不能使用表单登陆，也是需要调用登陆的接口才可以。
 
@@ -150,12 +150,12 @@ if (principal instanceof UserDetails) {
 ```
 > Another item to note from the above code fragment is that you can obtain a principal from the Authentication object. The principal is just an Object. Most of the time this can be cast into a UserDetails object. UserDetails is a central interface in Spring Security. It represents a principal, but in an extensible and application-specific way. Think of UserDetails as the adapter between your own user database and what Spring Security needs inside the SecurityContextHolder. Being a representation of something from your own user database, quite often you will cast the UserDetails to the original object that your application provided, so you can call business-specific methods (like getEmail(), getEmployeeNumber() and so on).
 >
->By now you're probably wondering, so when do I provide a UserDetails object? How do I do that? I thought you said this thing was declarative and I didn't need to write any Java code - what gives? The short answer is that there is a special interface called UserDetailsService. The only method on this interface accepts a String-based username argument and returns a UserDetails:
+> By now you're probably wondering, so when do I provide a UserDetails object? How do I do that? I thought you said this thing was declarative and I didn't need to write any Java code - what gives? The short answer is that there is a special interface called UserDetailsService. The only method on this interface accepts a String-based username argument and returns a UserDetails:
 >
->UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
-This is the most common approach to loading information for a user within Spring Security and you will see it used throughout the framework whenever information on a user is required.
+> UserDetails loadUserByUsername(String username) throws UsernameNotFoundException;
+> This is the most common approach to loading information for a user within Spring Security and you will see it used throughout the framework whenever information on a user is required.
 >
->On successful authentication, UserDetails is used to build the Authentication object that is stored in the SecurityContextHolder (more on this below). The good news is that we provide a number of UserDetailsService implementations, including one that uses an in-memory map (InMemoryDaoImpl) and another that uses JDBC (JdbcDaoImpl). Most users tend to write their own, though, with their implementations often simply sitting on top of an existing Data Access Object (DAO) that represents their employees, customers, or other users of the application. Remember the advantage that whatever your UserDetailsService returns can always be obtained from the SecurityContextHolder using the above code fragment.
+> On successful authentication, UserDetails is used to build the Authentication object that is stored in the SecurityContextHolder (more on this below). The good news is that we provide a number of UserDetailsService implementations, including one that uses an in-memory map (InMemoryDaoImpl) and another that uses JDBC (JdbcDaoImpl). Most users tend to write their own, though, with their implementations often simply sitting on top of an existing Data Access Object (DAO) that represents their employees, customers, or other users of the application. Remember the advantage that whatever your UserDetailsService returns can always be obtained from the SecurityContextHolder using the above code fragment.
 
 ## MyAuthenticationProvider.java
 MyAuthenticationProvider 提供了登陆的逻辑。

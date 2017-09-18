@@ -1,7 +1,7 @@
 ---
 title: ListFactoryBean 注入 List
 date: 2017-04-01 15:38:39
-tags: Spring-Core
+tags: SpringCore
 ---
 ```xml
 <bean id="listExample" class="com.xtuer.beans.CollectionHolder">

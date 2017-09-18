@@ -1,7 +1,7 @@
 ---
 title: View Controller
 date: 2016-10-15 15:35:16
-tags: Spring-Web
+tags: SpringWeb
 ---
 有很多静态页面，里没有动态的内容，如果写 Controller 去做映射的话又感觉很麻烦，都是体力活，没什么意思，这时可以用 `mvc:view-controller` 进行映射达到相同的效果而又不需要写 Controller。
 

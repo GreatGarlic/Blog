@@ -1,7 +1,7 @@
 ---
 title: SpringMvc 响应 JSONP
 date: 2017-04-20 14:12:30
-tags: Spring-Web
+tags: SpringWeb
 ---
 
 SpringMvc 中处理 JSONP 需要注意响应的 Content-Type，如果为 text/plain 时在某些浏览器下就不能正确的执行 JSONP 的回调函数，认为其是不可执行的格式。

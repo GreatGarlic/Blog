@@ -1,7 +1,7 @@
 ---
 title: Property Placeholder
 date: 2017-04-02 11:26:01
-tags: Spring-Core
+tags: SpringCore
 ---
 在 `properties` 文件里定义 key | value，然后在 Bean Configuration File 里用 `${key}` 引用 key 对应的值。
 

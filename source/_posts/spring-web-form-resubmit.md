@@ -1,7 +1,7 @@
 ---
 title: 防止表单重复提交
 date: 2017-03-31 18:26:26
-tags: Spring-Web
+tags: SpringWeb
 ---
 开始介绍使用 redirect 技术防止表单提交，但是 redirect 解决不了后退到表单页面时重复提交表单，为了解决这个问题，加入了 token 的机制，而且同时能够防止 CRSF 攻击。
 

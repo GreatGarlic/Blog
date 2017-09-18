@@ -1,7 +1,7 @@
 ---
 title: FactoryBean
 date: 2017-04-01 15:46:53
-tags: Spring-Core
+tags: SpringCore
 ---
 FactoryBean 是用来创建 Bean 的工厂，实现 `FactoryBean 接口` 的类就可以用来创建其他 Bean 了，在 Bean Configuration File 里的 `<bean>` 里定义要生成的 Bean。
 

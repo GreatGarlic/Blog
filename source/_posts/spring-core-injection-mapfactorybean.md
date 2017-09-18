@@ -1,7 +1,7 @@
 ---
 title: MapFactoryBean 注入 Map
 date: 2017-04-01 15:44:15
-tags: Spring-Core
+tags: SpringCore
 ---
 
 ```xml

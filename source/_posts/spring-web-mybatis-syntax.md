@@ -1,7 +1,7 @@
 ---
 title: Mybatis 语法
 date: 2016-10-15 22:32:37
-tags: Spring-Web
+tags: SpringWeb
 ---
 
 ## 使用 MySQL 自动生成的主键

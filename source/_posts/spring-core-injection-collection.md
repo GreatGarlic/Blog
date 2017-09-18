@@ -1,7 +1,7 @@
 ---
 title: List, Set, Map, Properties 注入
 date: 2017-04-01 15:34:03
-tags: Spring-Core
+tags: SpringCore
 ---
 ## 注入 List
 ```xml

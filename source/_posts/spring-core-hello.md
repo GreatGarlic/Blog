@@ -1,7 +1,7 @@
 ---
 title: Spring Hello World
 date: 2017-04-01 15:11:08
-tags: Spring-Core
+tags: SpringCore
 ---
 ## 项目的结构图
 

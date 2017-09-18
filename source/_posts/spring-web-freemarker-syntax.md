@@ -1,7 +1,7 @@
 ---
 title: Freemarker 语法
 date: 2016-10-15 14:47:10
-tags: Spring-Web
+tags: SpringWeb
 ---
 FreeMarker 是一个用 Java 语言编写的模板引擎，它基于模板来生成文本输出。FreeMarker 与 Web 容器无关，即在 Web 运行时，它并不知道 Servlet 或 HTTP。它不仅可以用作表现层的实现技术，而且还可以用于生成 XML，JSP 或 Java 等。
 

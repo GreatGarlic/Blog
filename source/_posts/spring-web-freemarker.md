@@ -1,7 +1,7 @@
 ---
 title: Freemarker 集成
 date: 2016-10-15 11:43:26
-tags: Spring-Web
+tags: SpringWeb
 ---
 JSP 和 `Freemarker` 都用于显示层，但是都有自己的优缺点。
 
@@ -63,7 +63,7 @@ compile 'org.freemarker:freemarker:2.3.23'
     <property name="requestContextAttribute" value="request"/>
 </bean>
 ```
-    
+
 在模版里使用 Request: `${request.contextPath}`
 
 ## spring-mvc.xml 里定义 Freemarker 的变量

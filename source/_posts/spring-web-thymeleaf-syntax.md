@@ -1,7 +1,7 @@
 ---
 title: Thymeleaf 语法
 date: 2017-08-06 10:07:37
-tags: Spring-Web
+tags: SpringWeb
 ---
 
 Thymeleaf 使用 HTML 元素的属性获取 model 中的数据，属性的前缀是 `th:`，例如 `th:text`, `th:src`。

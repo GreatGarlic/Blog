@@ -1,7 +1,7 @@
 ---
 title: SpringMVC 处理 Ajax 映射
 date: 2016-04-17 21:51:01
-tags: [Spring-Mvc, Ajax]
+tags: [SpringMVC, Ajax]
 ---
 
 SpringMVC 返回 Json 数据给前端是件很简单的事，但是 SpringMVC 的 Controller 接收前端 Ajax传来的 Json 数据却不那么容易，前端和后端都要很小心，有一点不对就会出错，需要分为 2 种情况处理:

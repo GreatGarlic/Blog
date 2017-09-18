@@ -1,7 +1,7 @@
 ---
 title: Qualifier
 date: 2017-04-02 11:43:20
-tags: Spring-Core
+tags: SpringCore
 ---
 当找到多个同类型的 Bean 的定义时，`@Autowired` 注入的时候不知道要用哪一个，会报异常，可以使用 `@Qualifier` 指定要注入的 Bean。
 

@@ -1,7 +1,7 @@
 ---
 title: SpringMVC 事务
 date: 2017-03-31 17:46:48
-tags: Spring-Web
+tags: SpringWeb
 ---
 
 ## 事务具有以下四个基本特征

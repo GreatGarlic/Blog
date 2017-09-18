@@ -1,7 +1,7 @@
 ---
 title: Spring 异步调用
 date: 2016-04-29 16:37:29
-tags: Spring-Mvc
+tags: SpringMVC
 ---
 
 Spring 中让一个方法在新线程中运行，只需要给方法加上 `@Async` 注解就可以（当然也可以自己直接创建一个线程实现异步执行）。

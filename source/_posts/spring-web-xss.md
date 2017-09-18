@@ -1,7 +1,7 @@
 ---
 title: 防止 XSS 攻击
 date: 2016-10-18 11:31:23
-tags: Spring-Web
+tags: SpringWeb
 ---
 可以使用 `XSS Filter` 防止 XSS 攻击，具体细节请访问 <http://www.servletsuite.com/servlets/xssflt.htm>
 
@@ -65,6 +65,6 @@ public String postA(@RequestParam String name) {
 
 ## 测试二
 1. 输入 `<test>`
-4. 控制台输出 `&lt;test&gt;`
-5. 浏览器端收到 `&lt;test&gt;`
-6. 说明防止 XSS 攻击生效
+2. 控制台输出 `&lt;test&gt;`
+3. 浏览器端收到 `&lt;test&gt;`
+4. 说明防止 XSS 攻击生效

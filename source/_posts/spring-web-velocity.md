@@ -1,7 +1,7 @@
 ---
 title: 集成 Velocity
 date: 2017-06-30 15:16:11
-tags: Spring-Web
+tags: SpringWeb
 ---
 
 JSP 和 `Velocity` 都用于显示层，但是都有自己的优缺点。

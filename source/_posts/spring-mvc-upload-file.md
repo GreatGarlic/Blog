@@ -1,7 +1,7 @@
 ---
 title: Spring 上传文件
 date: 2016-04-27 22:13:10
-tags: [Spring-Mvc, Java, Util]
+tags: [SpringMVC, Java, Util]
 ---
 
 SpringMVC 中使用 `commons-fileupload` 上传文件，需要在 SpringMVC 的配置文件里先配置 `multipartResolver`，然后就可以使用 `MultipartFile` 读取 HTTP 请求中的文件流并保存到本地了。

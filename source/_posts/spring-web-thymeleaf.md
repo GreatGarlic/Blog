@@ -1,7 +1,7 @@
 ---
 title: Thymeleaf 集成
 date: 2017-08-06 09:42:22
-tags: Spring-Web
+tags: SpringWeb
 ---
 
 **有了 Freemarker，Velocity 等模版后，为什么要选择 Thymeleaf？**

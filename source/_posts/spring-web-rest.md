@@ -1,7 +1,7 @@
 ---
 title: 使用 REST
 date: 2016-10-15 14:54:47
-tags: Spring-Web
+tags: SpringWeb
 ---
 ## 在 `web.xml` 里加上 HiddenHttpMethodFilter
 ```xml

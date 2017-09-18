@@ -1,7 +1,7 @@
 ---
 title: Spring Security 加密密码
 date: 2016-04-10 10:45:54
-tags: Spring-Security
+tags: SpringSecurity
 ---
 
 明文保存密码是不可取的，可以使用 `SHA`，`BCrypt` 等对密码进行加密。

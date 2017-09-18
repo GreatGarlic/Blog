@@ -1,7 +1,7 @@
 ---
 title: Autowired 注入
 date: 2017-04-02 11:37:52
-tags: Spring-Core
+tags: SpringCore
 ---
 `@Autowired` 是基于类型的注入，Spring 会在 IoC 容器里查找类型匹配的 Bean 注入。
 

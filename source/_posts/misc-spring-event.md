@@ -1,7 +1,7 @@
 ---
 title: Spring Event
 date: 2016-11-21 18:30:05
-tags: [Misc, Spring-Core]
+tags: [Misc, SpringCore]
 ---
 JMS 可用于在不同应用之间通讯，而应用系统内部对象之间的通讯可以使用 Spring Event 来实现（JMS 也能实现同样的效果）。
 

@@ -1,7 +1,7 @@
 ---
 title: Component Scan
 date: 2017-04-02 11:34:49
-tags: Spring-Core
+tags: SpringCore
 ---
 使用 `<context:component-scan>` 特性，可以自动扫描 `base-package` 下类名有注解 `@Component`、`@Service` 或者 `@Controller` 的类，为其在 Spring 容易里创建一个对象。
 

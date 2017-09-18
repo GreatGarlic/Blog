@@ -1,7 +1,7 @@
 ---
 title: Setter 注入
 date: 2017-04-01 15:26:35
-tags: Spring-Core
+tags: SpringCore
 ---
 ## CommonUtils
 

@@ -1,7 +1,7 @@
 ---
 title: Spring Core
 date: 2014-04-01 15:13:49
-tags: [Index, Spring-Core]
+tags: [Index, SpringCore]
 ---
 
 ## Spring IoC

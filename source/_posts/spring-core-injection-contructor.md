@@ -1,7 +1,7 @@
 ---
 title: Contructor 注入
 date: 2017-04-01 15:31:21
-tags: Spring-Core
+tags: SpringCore
 ---
 演示怎么给构造函数注入参数，使用指定的构造函数创建对象。
 

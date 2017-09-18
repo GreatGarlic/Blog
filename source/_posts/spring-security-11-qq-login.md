@@ -1,7 +1,7 @@
 ---
 title: Spring Security QQ 登陆
 date: 2017-09-05 19:23:37
-tags: Spring-Security
+tags: SpringSecurity
 ---
 
 Spring Security 中实现 QQ 登陆，可以在 FORM_LOGIN_FILTER 前插入一个 filter 用于拦截 QQ 登陆成功后的回调，进行身份认证。

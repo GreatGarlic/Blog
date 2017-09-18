@@ -1,7 +1,7 @@
 ---
 title: MyBatis 集成
 date: 2016-10-15 21:35:46
-tags: Spring-Web
+tags: SpringWeb
 ---
 SpringMVC 集成 MyBatis 需要以下几个文件
 
@@ -31,7 +31,7 @@ compile(
 保存在 `resources/config/datasource.xml`
 
 > 连接池使用 Druid，可以监控数据库访问的性能，参考文档
-> 
+>
 > * <https://github.com/alibaba/druid/wiki/常见问题>
 > * <https://github.com/alibaba/druid/wiki/DruidDataSource配置> 
 > * <https://github.com/alibaba/druid/wiki/DruidDataSource配置属性列表>
@@ -101,9 +101,9 @@ compile(
 ```
 
 > `MapperScannerConfigurer` 会为包 `com.xtuer.mapper` 下的每个类在 Spring 容器里创建一个对象，可以使用 `@Autowired` 获取这些对象。
-> 
+>
 > 如果不使用 `MapperScannerConfigurer`，我们就必须手动的创建 Mapper 的对象。
-> 
+>
 > 参考: [MyBatis - MyBatis-Spring | 简介](http://mybatis.github.io/spring/zh/)
 
 ## web.xml 加载 mybatis 配置
@@ -129,16 +129,16 @@ ContextLoaderListener 对应的容器是其他 Spring 容器的父容器，所�
 至此，MyBatis 已经配置好，下面以查询数据库中表 demo 为例，其对应的 bean 为 Demo
 
 > 一般对一个表的查询，需要准备
-> 
+>
 > * bean
 > * mapper interface: 其实例通过 MapperScannerConfigurer 自动创建到 Spring 容器
 > * mapper xml: SQL 语句的文件
 
 ## 数据表 demo
-id  | info
---- | ----
-1   | Biao
-2   | 海龙
+| id   | info |
+| ---- | ---- |
+| 1    | Biao |
+| 2    | 海龙   |
 
 ## Demo.java
 ```java
@@ -208,7 +208,7 @@ public Demo findDemoById(@PathVariable int id) {
     控制台输出:
     [2016-10-15 21:54:29] [DEBUG] [BaseJdbcLogger.java-debug:132] - ==>  Preparing: SELECT id, info FROM demo WHERE id = ?
     [2016-10-15 21:54:29] [DEBUG] [BaseJdbcLogger.java-debug:132] - ==> Parameters: 1(Integer)
-    
+
     网页输出:
     {"id":1,"info":"Biao"}
     ```
@@ -219,7 +219,7 @@ public Demo findDemoById(@PathVariable int id) {
     控制台输出:
     [2016-10-15 21:54:33] [DEBUG] [BaseJdbcLogger.java-debug:132] - ==>  Preparing: SELECT id, info FROM demo WHERE id = ?
     [2016-10-15 21:54:33] [DEBUG] [BaseJdbcLogger.java-debug:132] - ==> Parameters: 2(Integer)
-    
+
     网页输出:
     {"id":2,"info":"海龙"}
     ```

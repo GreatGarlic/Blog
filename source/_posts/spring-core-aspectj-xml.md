@@ -1,7 +1,7 @@
 ---
 title: AspectJ with Xml
 date: 2017-04-02 12:00:41
-tags: Spring-Core
+tags: SpringCore
 ---
 ## 需要添加依赖
 ```xml

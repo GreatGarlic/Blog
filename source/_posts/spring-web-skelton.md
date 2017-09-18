@@ -1,7 +1,7 @@
 ---
 title: Web 项目框架
 date: 2016-10-15 11:10:37
-tags: Spring-Web
+tags: SpringWeb
 ---
 项目结构:
 

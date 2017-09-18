@@ -1,7 +1,7 @@
 ---
 title: Spring Security 权限继承
 date: 2017-08-29 16:34:07
-tags: Spring-Security
+tags: SpringSecurity
 ---
 
 如下面层级结构的权限:

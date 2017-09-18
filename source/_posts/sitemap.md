@@ -322,7 +322,7 @@ tags: Index
 * [Redis Tips](/redis-tips)
 * [Redis 客户端 Redis-Commander](/redis-client)
 
-## Semantic-Ui
+## SemanticUi
 * [Semantic Ui Grid](/fe-semantic-ui-grid)
 * [Semantic Ui Tab](/fe-semantic-ui-tab)
 * [Semantic Ui Tips](/fe-semantic-ui-tips)
@@ -345,7 +345,14 @@ tags: Index
 * [Spring + Fastweixin 微信开发](/spring-weixin)
 * [计算文件的 MD5](/java-file-md5)
 
-## Spring-Core
+## SpringBoot
+* [Spring Boot Thymeleaf](/spring-boot-thymeleaf)
+* [Spring Boot 热更新](/spring-boot-hot-swap)
+* [SpringBoot MyBatis](/spring-boot-mybatis)
+* [SpringBoot Redis](/spring-boot-redis)
+* [SpringBoot Start](/spring-boot-start)
+
+## SpringCore
 * [AspectJ with Annotation](/spring-core-aspectj-annotation)
 * [AspectJ with Xml](/spring-core-aspectj-xml)
 * [Autowired 注入](/spring-core-autowired)
@@ -369,7 +376,7 @@ tags: Index
 * [Spring O/X Mapping](/misc-spring-oxm)
 * [多个配置文件](/spring-core-multi-config)
 
-## Spring-Mvc
+## SpringMVC
 * [Spring 上传文件](/spring-mvc-upload-file)
 * [Spring 中配置 CORS](/spring-mvc-cors)
 * [Spring 判断设备信息](/spring-mvc-mobile-detection)
@@ -377,11 +384,11 @@ tags: Index
 * [Spring 数据绑定之类型转换](/spring-mvc-conversion)
 * [SpringMVC Ajax 拖拽上传文件](/spring-mvc-upload-file-ajax)
 * [SpringMVC 处理 Ajax 映射](/spring-mvc-ajax)
-* [SpringMvc 接收日期参数](/spring-mvc-to-date)
+* [SpringMVC 接收日期参数](/spring-mvc-to-date)
 * [SpringMVC 数据绑定](/spring-mvc-data-bind)
 * [SpringMVC 获取 Request 和 Response](/spring-mvc-get-request)
 
-## Spring-Security
+## SpringSecurity
 * [Spring Security JWT + Token 认证](/spring-security-10-jwt)
 * [Spring Security Login Util](/spring-security-7-login-util)
 * [Spring Security QQ 登陆](/spring-security-11-qq-login)
@@ -396,7 +403,7 @@ tags: Index
 * [Spring Security 集群](/spring-security-6-cluster)
 * [限制同一个账号的登陆用户](/spring-security-9-max-sessions)
 
-## Spring-Web
+## SpringWeb
 * [Ajax 跨域访问](/spring-web-cors)
 * [Fastjson 简单使用](/spring-web-fastjson)
 * [Freemarker 语法](/spring-web-freemarker-syntax)
@@ -411,7 +418,7 @@ tags: Index
 * [SpringMVC 事务](/spring-web-transaction)
 * [SpringMvc 响应 JSONP](/spring-web-jsonp)
 * [SpringMVC 拦截器](/spring-web-interceptor)
-* [SpringMvc 接收日期参数](/spring-mvc-to-date)
+* [SpringMVC 接收日期参数](/spring-mvc-to-date)
 * [SpringMVC 进一步学习](/spring-web-springmvc-further)
 * [Thymeleaf 语法](/spring-web-thymeleaf-syntax)
 * [Thymeleaf 集成](/spring-web-thymeleaf)
@@ -429,13 +436,6 @@ tags: Index
 * [防止 XSS 攻击](/spring-web-xss)
 * [防止表单重复提交](/spring-web-form-resubmit)
 * [集成 Velocity](/spring-web-velocity)
-
-## SpringBoot
-* [Spring Boot Thymeleaf](/spring-boot-thymeleaf)
-* [Spring Boot 热更新](/spring-boot-hot-swap)
-* [SpringBoot MyBatis](/spring-boot-mybatis)
-* [SpringBoot Redis](/spring-boot-redis)
-* [SpringBoot Start](/spring-boot-start)
 
 ## Util
 * [ActiveMQ 的 MQTT](/misc-mqtt)

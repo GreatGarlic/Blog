@@ -1,7 +1,7 @@
 ---
 title: Nginx 负载均衡
 date: 2017-03-31 19:18:23
-tags: Spring-Web
+tags: SpringWeb
 ---
 
 通过简单的配置，Nginx 可以实现反向代理，负载均衡，动静分离，URL 重写等。

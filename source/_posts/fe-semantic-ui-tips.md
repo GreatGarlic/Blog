@@ -1,7 +1,7 @@
 ---
 title: Semantic Ui Tips
 date: 2017-05-04 14:44:43
-tags: [FE, Semantic-Ui]
+tags: [FE, SemanticUi]
 ---
 
 ## JS and CSS

@@ -1,7 +1,7 @@
 ---
 title: Semantic Ui Grid
 date: 2017-04-21 09:12:47
-tags: [FE, Semantic-Ui]
+tags: [FE, SemanticUi]
 ---
 
 [Semantic-Ui](http://semantic-ui.com/) 是一套类似于 bootstrap 的 ui framework，相比 Bootstrap 有如下优点：

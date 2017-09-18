@@ -1,7 +1,7 @@
 ---
 title: 使用 Logback 记录日志
 date: 2016-10-15 15:48:45
-tags: Spring-Web
+tags: SpringWeb
 ---
 Logback 和 Log4j 是同一个人开发的，Logback 比 Log4j 的功能更强大，效率更高，但配置几乎一样。
 

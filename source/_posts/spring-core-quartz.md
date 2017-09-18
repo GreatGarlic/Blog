@@ -1,7 +1,7 @@
 ---
 title: Quartz 实现定时任务
 date: 2017-04-02 12:37:32
-tags: Spring-Core
+tags: SpringCore
 ---
 定义一个定时任务，需要 `Task`, `Job`, `Trigger`, `Scheduler` 4 个类，其中 `Task` 是我们自定义的类，是任务的实现逻辑，另外 3 个类则是由 Spring 和 Quartz 提供的，在 Bean 的配置文件里配置即可。<!--more-->
 

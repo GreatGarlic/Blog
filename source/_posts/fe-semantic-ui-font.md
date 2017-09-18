@@ -1,7 +1,7 @@
 ---
 title: 修改 Semantic UI 的默认字体
 date: 2017-05-03 17:21:01
-tags: [FE, Semantic-Ui]
+tags: [FE, SemanticUi]
 ---
 
 Semantic Ui 默认使用的是谷歌提供的字体，并且是直接使用了谷歌的官方链接。谷歌网站在国内访问速度很差，甚至根本无法访问，需要对 Semantic UI 的源文件进行一下手动修改:

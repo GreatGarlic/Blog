@@ -1,7 +1,7 @@
 ---
 title: SpringMVC 拦截器
 date: 2017-03-31 17:37:59
-tags: Spring-Web
+tags: SpringWeb
 ---
 ## 1. 实现拦截器类
 

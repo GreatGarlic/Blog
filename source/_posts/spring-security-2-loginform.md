@@ -1,7 +1,7 @@
 ---
 title: Spring Security 自定义登陆表单
 date: 2016-04-09 23:40:58
-tags: Spring-Security
+tags: SpringSecurity
 ---
 
 虽然 Spring Security 提供了默认的登录表单，实际项目里肯定是不可以直接使用的，当然 Spring Security 也提供了自定义登录表单的功能。
