@@ -57,3 +57,49 @@ Qt 程序打包一般有 2 种方式，纯手动打包和半自动打包，下�
 Windows  下 Qt 程序的打包完成了，Mac 和 Linux 下打包请参考 Windows 的方式进行研究，更完善的打包方式请在 Qt 的帮助文档中搜索 **deployment**，查看相关帮助文档:
 
 ![](/img/qtbook/misc/deploy-win-2.png)
+
+## 程序文件
+
+附上程序打包后的文件列表作为参考:
+
+```
+├── Gui.exe
+├── Qt5Core.dll
+├── Qt5Gui.dll
+├── Qt5Multimedia.dll
+├── Qt5MultimediaWidgets.dll
+├── Qt5Network.dll
+├── Qt5OpenGL.dll
+├── Qt5Widgets.dll
+├── libEGL.dll
+├── libgcc_s_dw2-1.dll
+├── libstdc++-6.dll
+├── libwinpthread-1.dll
+├── audio
+│   └── qtaudio_windows.dll
+├── bearer
+│   ├── qgenericbearer.dll
+│   └── qnativewifibearer.dll
+├── iconengines
+│   └── qsvgicon.dll
+├── imageformats
+│   ├── qgif.dll
+│   ├── qicns.dll
+│   ├── qico.dll
+│   ├── qjpeg.dll
+│   ├── qsvg.dll
+│   ├── qtga.dll
+│   ├── qtiff.dll
+│   ├── qwbmp.dll
+│   └── qwebp.dll
+├── mediaservice
+│   ├── dsengine.dll
+│   └── qtmedia_audioengine.dll
+├── platforms
+│   └── qwindows.dll
+└── playlistformats
+    └── qtmultimedia_m3u.dll
+```
+
+> 提示: audio, bearer, iconengines, imageformats, mediaservice, platforms, playlistformats 都是 Qt 的插件，他们和 Gui.exe 在同一级目录。如果感觉插件都放在 Gui.exe 的目录太乱，可以把它们放到 plugins 目录中，并在 main 函数中调用 `QApplication::addLibraryPath("plugins")` 即可。
+
