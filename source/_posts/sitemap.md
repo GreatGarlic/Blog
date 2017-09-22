@@ -374,6 +374,7 @@ tags: Index
 * [Spring Hello World](/spring-core-hello)
 * [Spring IoC Introduction](/spring-core-ioc-introduction)
 * [Spring O/X Mapping](/misc-spring-oxm)
+* [spring-core-injection-enum](/spring-core-injection-enum)
 * [多个配置文件](/spring-core-multi-config)
 
 ## SpringMVC

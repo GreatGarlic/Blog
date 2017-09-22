@@ -15,6 +15,7 @@ tags: [Index, SpringCore]
 * [ListFactoryBean 注入 List `<util:list>`](/spring-core-injection-listfactorybean)
 * [SetFactoryBean 注入 Set `<util:set>`](/spring-core-injection-setfactorybean)
 * [MapFactoryBean 注入 Map `<util:map>`](/spring-core-injection-mapfactorybean)
+* [Enum 注入](/spring-core-injection-enum)
 * [​FactoryBean](/spring-core-factorybean)
 * [Property Editor](/spring-core-property-editor)
 * [多个配置文件 `<import>`](/spring-core-multi-config)
