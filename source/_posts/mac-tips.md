@@ -232,3 +232,10 @@ cp -r srcDir/ destDir
   脚本下载地址: <https://greasyfork.org/zh-CN/scripts/>
 
   例如安装优酷的 HTML5 播放器插件，可以搜索 **优酷**
+
+## 列出 Node 安装的软件
+
+```
+ls `npm root -g`
+```
+
