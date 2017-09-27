@@ -67,18 +67,6 @@ public class MqttPublisher {
         // 3. 和服务器的连接断开时调用 onDisconnected() 方法
         connection.listener(new Listener() {
             /**
-             * 收到订阅的消息
-             * @param topic 订阅队列的名字
-             * @param payload 消息的内容
-             * @param onComplete
-             */
-            @Override
-            public void onPublish(UTF8Buffer topic, Buffer payload, Runnable onComplete) {
-                result.onSuccess(payload);
-                onComplete.run();
-            }
-
-            /**
              * 成功连接上服务器
              */
             @Override
@@ -200,7 +188,7 @@ public class MqttSubscriber {
             }
         });
 
-        // 连接服务器
+        // 连接服务器，订阅 Topic，这里和 Publisher 有区别
         connection.connect(new Callback<Void>() {
             /**
              * 第一次连接上服务器后订阅 topic. 没有放到 listener 的 onConnected() 方法,
@@ -448,7 +436,7 @@ public class MqttPublisherAndSubscriber {
 
 ## 使用 Future 的方式实现 Publisher
 
-Callback 方式实现的 Publisher 在特殊情况下不能及时的发现网络问题，使用 Future 实现的 Publisher 可以客服这个问题。
+Callback 方式实现的 Publisher 在特殊情况下不能及时的发现网络问题，使用 Future 实现的 Publisher 可以克服这个问题。
 
 ```java
 package com.xtuer.mqtt.future;

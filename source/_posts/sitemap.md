@@ -37,6 +37,7 @@ tags: Index
 * [Div 在另一个 Div 中同时水平垂直居中](/fe-horizontal-vertical-center)
 * [FlatShadow](/fe-flat-shadow)
 * [HTML 树的实现](/fe-tree)
+* [HTML5 使用 MQTT](/fe-mqtt)
 * [HTML5 播放器 Video.js](/fe-player)
 * [JavaScript Tips](/fe-js-tips)
 * [JavaScript 里格式化字符串](/fe-string-format)
