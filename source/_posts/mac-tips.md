@@ -206,6 +206,16 @@ Chrome 应用商店里搜索 **clear Cache**，找到 `clear Cache, clean cache,
 du -sh
 ```
 
+## cp  复制文件夹
+
+```
+# 把文件夹 srcDir 复制到 destDir, srcDir 为 destDir 的子文件夹
+cp -r srcDir destDir
+
+# 把文件夹 srcDir 下的文件及子文件夹复制到 destDir
+cp -r srcDir/ destDir
+```
+
 ## scp 上传和下载文件
 
 * 上传文件: `scp /Users/Biao/Desktop/a.zip root@192.168.82.130:/root`

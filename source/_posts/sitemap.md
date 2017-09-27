@@ -96,6 +96,7 @@ tags: Index
 * [时间选择器 Laydate](/fe-laydate)
 * [滚动插件 Animation Scroll](/fe-animation-scroll)
 * [用 RequireJS 统一管理 JS 和 CSS](/fe-requirejs)
+* [简单的 Mock 工具 RestServerMock](/fe-mock)
 * [绝对坐标布局](/absolute-layout)
 * [自定义 HTML5 播放器](/fe-custom-html5-player)
 * [自定义随机函数](/fe-random)
@@ -358,6 +359,7 @@ tags: Index
 * [Autowired 注入](/spring-core-autowired)
 * [Component Scan](/spring-core-component-scan)
 * [Contructor 注入](/spring-core-injection-contructor)
+* [Enum 注入](/spring-core-injection-enum)
 * [FactoryBean](/spring-core-factorybean)
 * [ID Name Alias](/spring-core-id-name-alias)
 * [List, Set, Map, Properties 注入](/spring-core-injection-collection)
@@ -374,7 +376,6 @@ tags: Index
 * [Spring Hello World](/spring-core-hello)
 * [Spring IoC Introduction](/spring-core-ioc-introduction)
 * [Spring O/X Mapping](/misc-spring-oxm)
-* [spring-core-injection-enum](/spring-core-injection-enum)
 * [多个配置文件](/spring-core-multi-config)
 
 ## SpringMVC
