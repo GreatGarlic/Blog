@@ -24,9 +24,6 @@ tags: Index
 * [MySQL 导入导出 CSV](/mysql-csv)
 * [允许其他机器访问 MySQL](/mysql-wan)
 
-## Default
-* [Shuttle](/misc-shuttle)
-
 ## FE
 * [Atom 常用插件和快捷键](/mac-atom)
 * [Bootstrap Progress Bar](/fe-bootstrap-progressbar)
@@ -205,7 +202,9 @@ tags: Index
 * [Mac Terminal Powerline-Shell](/mac-terminal-powerline)
 * [Mac Tips](/mac-tips)
 * [Mac 安装 Mysql 和 Nginx](/mac-mysql-nginx)
+* [Mac 开发者常用软件](/mac-software)
 * [Safari 插件](/mac-safari-extension)
+* [Shuttle](/mac-shuttle)
 * [Spotlight 快捷键](/mac-spotlight-shortcut)
 * [在线预览 PDF](/pdf-online)
 * [本地服务映射为外网可访问-Ngrok](/mac-local-to-web)

@@ -1,7 +1,7 @@
 ---
 title: Shuttle
 date: 2016-06-29 16:40:50
-tags:
+tags: Mac
 ---
 
 使用 `Shuttle` 来管理命令的快捷方式，例如 SSH 的登录等。
