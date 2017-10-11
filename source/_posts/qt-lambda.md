@@ -102,14 +102,17 @@ int main(int argc, char *argv[]) {
     comboBox->addItem("武松");
     comboBox->show();
 
+    // [1]
     QObject::connect(comboBox, static_cast<void (QComboBox::*)(int)>(&QComboBox::activated), [](int index) {
         qDebug() << index;
     });
 
+    // [2]
     QObject::connect(comboBox, static_cast<void (QComboBox::*)(const QString &)>(&QComboBox::activated), [](const QString &text) {
         qDebug() << text;
     });
 
+    // [3]
     QObject::connect(comboBox, QOverload<const QString &>::of(&QComboBox::activated), [](const QString &text) {
         qDebug() << text;
     });
