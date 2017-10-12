@@ -20,7 +20,7 @@ Homebrew 主页为 <https://brew.sh/index_zh-cn.html>，安装 Homebrew 只需�
 
 ## IDEA
 
-Java 开发的 IDE，个人觉得比 Eclipse 好用，直接支持 Gradle 和 Maven，到 <https://www.jetbrains.com/idea> 下载。
+Java 开发的 IDE，个人觉得比 Eclipse 好用，默认就支持 Gradle 和 Maven，到 <https://www.jetbrains.com/idea> 下载。
 
 ![](/img/mac/software/idea.png)
 
@@ -44,7 +44,7 @@ Simple Http util, helps you make request to web service, 虽然没有 Google 的
 
 ## MAMP
 
-一个应用集成了 Apache Web Server、MySQL、MySQL Web 端管理工具 phpMyAdmin、Nginx 等，开发的时候就不需要一个一个的去安装了，主页 <https://www.mamp.info/en>。
+一个应用集成了 Apache Server、MySQL、MySQL Web 端管理工具 phpMyAdmin、Nginx 等，开发的时候就不需要一个一个的去安装了，主页 <https://www.mamp.info/en>。
 
 ![](/img/mac/software/mamp.png)
 
@@ -72,7 +72,7 @@ Simple Http util, helps you make request to web service, 虽然没有 Google 的
 
 ## Shuttle
 
-使用 `Shuttle` 来管理命令的快捷方式，例如 SSH 的登录等。主页: <http://fitztrev.github.io/shuttle/>，使用帮助可参考 <http://qtdebug.com/misc-shuttle/>
+使用 `Shuttle` 来管理命令的快捷方式，例如 SSH 的登录等，不再需要记命令和 IP 了。主页: <http://fitztrev.github.io/shuttle/>，使用帮助可参考 <http://qtdebug.com/misc-shuttle/>
 
 ## Sequel Pro
 
@@ -90,7 +90,7 @@ App Store  下载。
 
 ## MyCli
 
-MyCLI 是一个 MySQL 的命令行客户端，可以实现自动补全（auto-completion）和语法高亮，具体特性如下:
+MyCli 是一个 MySQL 的命令行客户端，可以实现自动补全（auto-completion）和语法高亮，具体特性如下:
 
 * 智能补全
 * SQL 语法高亮显示
@@ -121,7 +121,7 @@ GitHub 的客户端，请到 <https://desktop.github.com> 下载。
 
 ## GitBook Editor
 
-GitBook 编辑器，请到 <https://www.gitbook.com/editor> 下载。
+GitBook 写 API 文档非常好用，作笔记也不错，甚至于写开源的书也很好用，GitBook Editor 是 GitBook 的编辑器，请到 <https://www.gitbook.com/editor> 下载。
 
 ![](/img/mac/software/gitbook-editor.png)
 
@@ -139,13 +139,13 @@ Git 客户端: Simplicity and power in a beautiful free Git GUI for Windows and 
 
 ## CHM View
 
-chm 阅读器，App Store 下载。
+CHM 阅读器，App Store 下载。
 
 ![](/img/mac/software/chm-view.jpg)
 
 ## Snap
 
-使用快捷键快速启动、激活程序，App Store 下载。
+使用快捷键快速启动、激活失去焦点的程序，App Store 下载。
 
 ![](/img/mac/software/snap.png)
 
