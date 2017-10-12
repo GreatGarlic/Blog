@@ -92,7 +92,7 @@ int main(int argc, char *argv[]) {
 
 ```cpp
 QObject::connect(camera, &QCamera::statusChanged, [] (QCamera::Status status) {
-    qDebug() << status; // 如果 status 为 QCamera::UnavailableStatus，则说明摄像头不可用
+    qDebug() << status; // 如果 status 为 QCamera::UnavailableStatus，则说明摄像头不可用，为 QCamera::ActiveStatus 则说明摄像头启动成功
 });
 ```
 
