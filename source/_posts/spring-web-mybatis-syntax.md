@@ -441,10 +441,10 @@ SQL 使用时特殊字符有 `<` 和 `>`，可以使用 `<![CDATA[ ]]>` 把 SQL 
 </select>
 
 <resultMap id="paperResultMap" type="Paper">
-    <id property="paperId"               column="paper_id"/>
-    <result property="name"              column="name"/>
-    <result property="uuidName"          column="uuid_name"/>
-    <result property="originalName"      column="original_name"/>
+    <id property="paperId"          column="paper_id"/>
+    <result property="name"         column="name"/>
+    <result property="uuidName"     column="uuid_name"/>
+    <result property="originalName" column="original_name"/>
 
     <collection property="knowledgePoints" ofType="KnowledgePoint" column="paper_id" columnPrefix="kp_" resultMap="knowledgePointResultMap"/>
 </resultMap>
@@ -454,6 +454,12 @@ SQL 使用时特殊字符有 `<` 和 `>`，可以使用 `<![CDATA[ ]]>` 把 SQL 
     <result property="name"         column="name"/>
 </resultMap>
 ```
+
+## resultType 和 resultMap
+
+resultType 是指已有类型，例如 int, string, class User 等，SQL 查询得到的列会自动的映射到对应的类型或者其属性上。
+
+resultMap 是指我们自己用 XML element `<resultMap>...</resultMap>` 定义的映射。
 
 ## 参考资料
 
