@@ -82,3 +82,17 @@ int main(int argc, char *argv[]) {
 
 需要注意的是 **QCameraViewfinder** 的 size policy 很奇怪，vertical 和 horizontal 都是 Preferred，和 QLabel 默认的 size policy 一样，但是表现出来的却是 expanding 的样子，甚至有 spacer 时，spacer 的 expanding 都没有效果，空间全被 **QCameraViewfinder** 占据了。
 
+此外，怎么判断是否启动了摄像头？文档里说:
+
+> Starts the camera.
+>
+> State is changed to QCamera::ActiveState if camera is started successfully, otherwise error() signal is emitted.
+
+但是实际情况却是 camera->start() 后如果摄像头不可用也不会发出 error 信号，不过我们可以根据 camera 的 status 来判断:
+
+```cpp
+QObject::connect(camera, &QCamera::statusChanged, [] (QCamera::Status status) {
+    qDebug() << status; // 如果 status 为 QCamera::UnavailableStatus，则说明摄像头不可用
+});
+```
+
