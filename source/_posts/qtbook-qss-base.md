@@ -46,12 +46,12 @@ QLabel {
 
     ```css
     font: [font-style] [font-variant] [font-weight] [font-size] [font-family]
-    
+
     /* 按顺序设置，可以忽略其中某些值，例如：*/
     font: italic bold 12px arial, sans-serif;
     ```
-    
-    设置字体用 `font-style`, `font-size`, `font-weight`, `font-family`（和 CSS 一样，如果字体名字有空格则用双引号引起来，多个字体名字间用逗号分隔，如果第一个字体找不到则用第二个，第二个找不到则用第三个，依此类推）
+
+设置字体用 `font-style`, `font-size`, `font-weight`, `font-family`（和 CSS 一样，如果字体名字有空格则用双引号引起来，多个字体名字间用逗号分隔，如果第一个字体找不到则用第二个，第二个找不到则用第三个，依此类推）
 * 设置文本颜色用 `color`
 * 设置背景颜色用 `background-color`
 * 设置背景使用 `background`，可以设置如下属性：
@@ -68,7 +68,6 @@ QLabel {
         /* 可以忽略其中某些值，例如：*/
         background: lightgray url(:/resources/horizontal-add-line.png);
         ```
-    
     * url 中的路径可以是：
         * 资源文件的路径（`:/` 开头）
         * 绝对路径
@@ -95,16 +94,16 @@ QLabel {
 * 设置背景还可以用 `border-image`，请参考 `Border-Image` 一节
 * 设置边框用 `border-width`, `border-style`, `border-color`
 * 设置边框用 `border`，语法为：
-    
+
     ```css
     border: border-width border-style border-color
-    
+
     /* 例如：*/
     border: 1px solid gray;
     ```
 * 设置圆角边框用 `border-radius`，但是如果给定的半径大于对应边的一半，圆角就没有效果了，在 CSS 里没有这个问题
 * 支持渐变 gradient: `qlineargradient`、`qradialgradient`、`qconicalgradient`，渐变的坐标不是用像素表示，而是把渐变的坐标的最小值定义为 0，最大值定义为 1，这种技术又叫 `Normalization`，通俗点说就是用比例表示，开始处用 0 表示，结束处用 1 表示，不管渐变的范围是 200px 还是 500px，按比例都能计算出实际的像素坐标，这样做的好处是，不需要关心渐变的像素坐标范围的具体数值。如果不用 `Normalization` 技术，widget 的大小一变化，就需要修改 QSS 里的坐标值。
-    
+
     ```css
     /* 
     x1: 0, y1: 0，渐变的开始位置，为 border rectangle 的左上角（请参考盒子模型）
@@ -121,14 +120,14 @@ QLabel {
     渐变效果比较复杂，可以使用 Qt Desginer 的 QSS 编辑器来帮助我们可视化的实现复杂的渐变效果，如下图:
 
     ![](/img/qtbook/qss/QSS-Base-2.png)
-    
+
 * `Padding` 和 `margin` 参考 `盒子模型` 一节
 * 设置图标，如 QToolButton 的图标：
-    
+
     ```css
     /* 图标大小 */
     icon-size: 20px 20px;
-    
+
     /* 图标文件 */
     qproperty-icon: url(:/resources/tabset-left.png);
     ```
