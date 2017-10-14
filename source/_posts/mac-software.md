@@ -211,6 +211,12 @@ FTP 工具，App Store 下载。
 
 ![](/img/mac/software/svnx.png)
 
+## Codota
+
+搜索代码片段的工具，方便学些，可以单独使用，也可以和 Eclipse, IDEA 一起使用，主页 <https://www.codota.com>。
+
+![](/img/mac/software/codota.png)
+
 ## Chrome
 
 以下几个软件都是 Chrome 的插件，可以在 Chrome 的扩展中心安装，或者百度搜索下载然后安装。
