@@ -223,6 +223,12 @@ FTP 工具，App Store 下载。
 
 ![](/img/mac/software/codota.png)
 
+## GIPHY Capture
+
+GIPHY Capture is the best way to create GIFs on your Mac. This free app is simple, powerful, and easy enough for pretty much anyone. Can be downloaded from App Store.
+
+![](/img/mac/software/GIPHY-Capture.jpg)
+
 ## Chrome
 
 以下几个软件都是 Chrome 的插件，可以在 Chrome 的扩展中心安装，或者百度搜索下载然后安装。
