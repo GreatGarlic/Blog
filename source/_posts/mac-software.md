@@ -173,7 +173,7 @@ Cinch 可以像 Win7 一样拖动程序的窗口到屏幕边上时快速把窗�
 
 ## Spectacle
 
-功能和 Cinch 差不多，功能更多，只不过是使用快捷键快速的把窗口分成左一半、右一半、放大到全屏，移动到下一个屏幕等。
+功能和 Cinch 差不多，功能更多，只不过是使用快捷键快速的把窗口分成左一半、右一半、放大到全屏，移动到下一个屏幕等。主页为 <https://www.spectacleapp.com>。
 
 ![](/img/mac/software/spectacle.png)
 
