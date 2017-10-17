@@ -38,3 +38,5 @@ location ~ /private/.+\.mp4$ {
 Nginx 和应用服务器上同时存储 appId 和 appKey，这样就能根据参数中的 appId 查找到对应的 appKey。至于使用 Lua 的变量存储，或者使用数据库，还是文件，根据具体的情况而定(Nginx 中 Lua 能够访问数据、Redis 等)。
 
 上面的验证规则比较简单，如果其他人得到了 token，就可以无限制的访问了，为了增强安全性，可以使用更多的参数生成 token，例如用户 id，限制 URL 期限的时间戳等。
+
+> Nginx 默认没有安装 Lua 模块，需要自己安装，可参考 <http://qtdebug.com/mac-nginx-lua>
