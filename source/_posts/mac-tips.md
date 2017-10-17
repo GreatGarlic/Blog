@@ -167,6 +167,10 @@ md5 fileName
 ## 计算字符串的 MD5
 ```
 # 下面 3 种方式都可以
+md5 -s Welcome
+md5 -s 'Welcome'
+md5 -s "Welcome"
+
 echo -n Welcome | md5
 echo -n 'Welcome' | md5
 echo -n "Welcome" | md5
