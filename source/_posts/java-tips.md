@@ -340,3 +340,15 @@ String[] names = webApplicationContext.getBeanDefinitionNames();
 
 直接使用 POI 导入导出 Excel 需要写很多代码，使用 Easypoi 只需要很简单的代码就能完成，请访问 http://www.afterturn.cn/doc/easypoi.html
 
+## 连接字符串 join
+
+```java
+public static void main(String[] args) throws Exception {
+    List<String> strs = new LinkedList<>();
+    strs.add("1");
+    strs.add("2");
+    strs.add("3");
+    System.out.println(String.join(", ", strs)); // 输出: 1, 2, 3
+}
+```
+
