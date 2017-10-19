@@ -18,6 +18,7 @@ tags: [QtBook, Index]
   * [绘制文本](/qtbook-paint-text/)
   * [绘制路径](/qtbook-paint-path/)
   * [贝塞尔曲线](/qtbook-paint-bezier/)
+  * [线段拟合曲线](/qtbook-paint-fitting-curve)
   * [画笔](/qtbook-paint-pen/)
   * [蚂蚁线](/qtbook-paint-ant/)
   * [画刷](/qtbook-paint-brush/)

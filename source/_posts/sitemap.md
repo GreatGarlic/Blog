@@ -306,6 +306,7 @@ tags: Index
 * [画刷](/qtbook-paint-brush)
 * [画笔](/qtbook-paint-pen)
 * [盒子模型](/qtbook-qss-boxmodel)
+* [线段拟合曲线](/qtbook-paint-fitting-curve)
 * [组播](/qtbook-network-udp-multicast)
 * [绘制平滑曲线](/qtbook-paint-smooth-curve)
 * [绘制文本](/qtbook-paint-text)
