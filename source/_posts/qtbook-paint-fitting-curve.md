@@ -63,9 +63,8 @@ void FittingCurveWidget::paintEvent(QPaintEvent *) {
     painter.drawLine(0, 0, 700, 0);
     painter.drawLine(0, -200, 0, 200);
 
-    // 计算正弦的坐标点
-    QPainterPath path;
-    path.moveTo(0, 0);
+    // 计算正弦的坐标点，添加到 path 中
+    QPainterPath path(QPointF(0, 0));
 
     // [0, 314] 归一为 [0, PI]
     for (int i = 0; i <= 628; ++i) {
