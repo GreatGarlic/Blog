@@ -229,6 +229,12 @@ GIPHY Capture is the best way to create GIFs on your Mac. This free app is simpl
 
 ![](/img/mac/software/GIPHY-Capture.jpg)
 
+## draw.io
+
+draw.io 是一个发展了很多年的免费绘图软件，可以绘制流程图、UML 等很多种图，可以使用在线版 https://www.draw.io，也提供了桌面版，到 <https://github.com/jgraph/drawio-desktop> 下载。
+
+![](/img/mac/software/draw.io.png)
+
 ## Chrome
 
 以下几个软件都是 Chrome 的插件，可以在 Chrome 的扩展中心安装，或者百度搜索下载然后安装。

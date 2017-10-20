@@ -25,12 +25,14 @@ HttpClient("http://localhost:8080/device").get([](const QString &response) {
 #include <QFile>
 #include <QApplication>
 #include <QNetworkAccessManager>
+#include <QThread>
+#include <QDate>
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
 
+    // 在代码块里执行网络访问，是为了测试 HttpClient 对象在被析构后，网络访问的回调函数仍然能正常执行
     {
-        // 在代码块里执行网络访问，是为了测试 HttpClient 对象在被析构后，网络访问的回调函数仍然能正常执行
         // [[1]] GET 请求无参数
         HttpClient("http://localhost:8080/device").get([](const QString &response) {
             qDebug() << response;
@@ -50,7 +52,8 @@ int main(int argc, char *argv[]) {
                 .addParam("id", "2")
                 .addParam("name", "卧龙")
                 .addHeader("token", "DER#2J7")
-                .addHeader("content-type", "application/x-www-form-urlencoded")
+                // .addHeader("content-type", "application/x-www-form-urlencoded")
+                .addFormHeader()
                 .post([](const QString &response) {
             qDebug() << response;
         });
@@ -65,10 +68,13 @@ int main(int argc, char *argv[]) {
             });
         }
 
-        // [[5]] 下载
+        // [[5]] 下载: 下载直接保存到文件
+        HttpClient("http://xtuer.github.io/img/dog.png").debug(true).download("/Users/Biao/Desktop/dog.png");
+
+        // [[6]] 下载: 自己处理下载得到的字节数据
         QFile *file = new QFile("dog.png");
         if (file->open(QIODevice::WriteOnly)) {
-            HttpClient("http://xtuer.github.io/img/dog.png").setDebug(true).download([=](const QByteArray &data) {
+            HttpClient("http://xtuer.github.io/img/dog.png").debug(true).download([=](const QByteArray &data) {
                 file->write(data);
             }, [=] {
                 file->flush();
@@ -78,9 +84,9 @@ int main(int argc, char *argv[]) {
                 qDebug() << "Download file finished";
             });
         }
-      
-        // [[6]] 上传
-        HttpClient("http://localhost:8080/upload").upload("/Users/Biao/Pictures/ade.jpg");
+
+        // [[7]] 上传
+        HttpClient("http://localhost:8080/webuploader").upload("/Users/Biao/Pictures/ade.jpg");
     }
 
     return a.exec();
@@ -101,6 +107,9 @@ struct HttpClientPrivate;
 class QNetworkReply;
 class QNetworkAccessManager;
 
+/**
+ * @brief 对 QNetworkAccessManager 进行封装的 HTTP 访问客户端，可以进行 GET，POST，上传，下载请求。
+ */
 class HttpClient {
 public:
     HttpClient(const QString &url);
@@ -163,6 +172,16 @@ public:
     void post(std::function<void (const QString &)> successHandler,
              std::function<void (const QString &)> errorHandler = NULL,
              const char *encoding = "UTF-8");
+
+    /**
+     * @brief 使用 GET 进行下载，下载的文件保存到 destinationPath
+     * @param destinationPath 下载的文件保存路径
+     * @param finishHandler   请求处理完成后的回调 lambda 函数
+     * @param errorHandler    请求失败的回调 lambda 函数，打开文件 destinationPath 出错也会调用此函数
+     */
+    void download(const QString &destinationPath,
+                  std::function<void ()> finishHandler = NULL,
+                  std::function<void (const QString &)> errorHandler = NULL);
 
     /**
      * @brief 使用 GET 进行下载，当有数据可读取时回调 readyRead(), 大多数情况下应该在 readyRead() 里把数据保存到文件
@@ -237,6 +256,7 @@ struct HttpClientPrivate {
     bool debug;
 };
 
+// 注意: 不能在回调函数中使用 d，因为回调函数被调用时 HttpClient 对象很可能已经被释放掉了。
 HttpClient::HttpClient(const QString &url) : d(new HttpClientPrivate(url)) {
     //    qDebug() << "HttpClient";
 }
@@ -288,17 +308,59 @@ void HttpClient::post(std::function<void (const QString &)> successHandler,
     execute(true, successHandler, errorHandler, encoding);
 }
 
+void HttpClient::download(const QString &destinationPath,
+                          std::function<void ()> finishHandler,
+                          std::function<void (const QString &)> errorHandler) {
+    QFile *file = new QFile(destinationPath);
+    bool debug = d->debug;
+
+    if (file->open(QIODevice::WriteOnly)) {
+        download([=](const QByteArray &data) {
+            file->write(data);
+        }, [=] {
+            // 请求结束后释放文件对象.
+            file->flush();
+            file->close();
+            file->deleteLater();
+
+            // 不能用 d->debug，因为 d 以及被释放了
+            if (debug) {
+                qDebug() << QString("下载完成，保存到: %1").arg(destinationPath);
+            }
+
+            if (NULL != finishHandler) {
+                finishHandler();
+            }
+        }, errorHandler);
+    } else {
+        // 打开文件出错
+        if (debug) {
+            qDebug() << QString("打开文件出错: %1").arg(destinationPath);
+        }
+
+        if (NULL != errorHandler) {
+            errorHandler(QString("打开文件出错: %1").arg(destinationPath));
+        }
+    }
+}
+
 // 使用 GET 进行下载，当有数据可读取时回调 readyRead(), 大多数情况下应该在 readyRead() 里把数据保存到文件
 void HttpClient::download(std::function<void (const QByteArray &)> readyRead,
                           std::function<void ()> finishHandler,
                           std::function<void (const QString &)> errorHandler) {
+    if (d->debug) {
+        QString params = d->params.toString();
+
+        if (params.isEmpty()) {
+            qDebug() << QString("URL: %1").arg(d->url);
+        } else {
+            qDebug() << QString("URL: %1?%2").arg(d->url).arg(params);
+        }
+    }
+
     // 如果是 GET 请求，并且参数不为空，则编码请求的参数，放到 URL 后面
     if (!d->params.isEmpty()) {
         d->url += "?" + d->params.toString(QUrl::FullyEncoded);
-    }
-
-    if (d->debug) {
-        qDebug() << QString("URL: %1?%2").arg(d->url).arg(d->params.toString());
     }
 
     QUrl urlx(d->url);
