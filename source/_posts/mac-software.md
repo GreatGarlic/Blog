@@ -217,21 +217,21 @@ FTP 工具，App Store 下载。
 
 ![](/img/mac/software/svnx.png)
 
-## Codota
-
-搜索代码片段的工具，方便学些，可以单独使用，也可以和 Eclipse, IDEA 一起使用，主页 <https://www.codota.com>。
-
-![](/img/mac/software/codota.png)
-
 ## GIPHY Capture
 
 GIPHY Capture is the best way to create GIFs on your Mac. This free app is simple, powerful, and easy enough for pretty much anyone. Can be downloaded from App Store.
 
 ![](/img/mac/software/GIPHY-Capture.jpg)
 
+## Codota
+
+搜索代码片段的工具，方便学些，可以单独使用，也可以和 Eclipse, IDEA 一起使用，主页 <https://www.codota.com>。
+
+![](/img/mac/software/codota.png)
+
 ## draw.io
 
-draw.io 是一个发展了很多年的免费绘图软件，可以绘制流程图、UML 等很多种图，可以使用在线版 https://www.draw.io，也提供了桌面版，到 <https://github.com/jgraph/drawio-desktop> 下载。
+draw.io 是一个发展了很多年的免费绘图软件，可以绘制流程图、UML 等很多种图，可以使用在线版 <https://www.draw.io>，也提供了桌面版，到 <https://github.com/jgraph/drawio-desktop> 下载。
 
 ![](/img/mac/software/draw.io.png)
 
