@@ -137,11 +137,11 @@ Git 客户端: Simplicity and power in a beautiful free Git GUI for Windows and 
 
 ![](/img/mac/software/keka.png)
 
-## CHM View
+## iCHM
 
 CHM 阅读器，App Store 下载。
 
-![](/img/mac/software/chm-view.jpg)
+![](/img/mac/software/ichm.jpg)
 
 ## Snap
 
