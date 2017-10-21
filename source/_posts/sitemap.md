@@ -245,6 +245,7 @@ tags: Index
 * [QSS 实现的扁平滚动条](/qt-flat-scrollbar)
 * [Qt Tips](/qt-tips)
 * [Qt 创建圆角、无边框、有阴影、可拖动的窗口](/qt-frameless-window)
+* [Qt 安装](/qt-install)
 * [Qt 应用程序的图标](/qt-app-icon)
 * [Qt 显示 GIF](/qt-gif)
 * [Qt 的 Json 读写工具类 Json](/qt-json)
