@@ -24,7 +24,7 @@ uyan_id: 2128624
 uyan_du: www.qtdebug.com
 
 #是否开启打赏功能
-donate: true
+donate: false
 #打赏文案
 donate_message: 欣赏此文？求鼓励，求支持！
 
