@@ -35,7 +35,7 @@ compile 'ch.qos.logback:logback-classic:1.1.2'
         </encoder>
     </appender>
 
-    <root>
+    <root level="info">
         <appender-ref ref="stdout"/>
         <appender-ref ref="file"/>
     </root>
