@@ -35,7 +35,7 @@ compile 'org.jodconverter:jodconverter-spring:4.1.0'
        xsi:schemaLocation="
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="converterBean" class="org.jodconverter.spring.JodConverterBean" destroy-method="destroy"/>
+    <bean id="converterBean" class="org.jodconverter.spring.JodConverterBean"/>
 </beans>
 ```
 
@@ -80,7 +80,7 @@ public class OfficeConverter {
 
 JodConverterBean 可以配置好多参数，例如 LibreOffice 不是使用默认目录安装的，则需要配置它的 officeHome 属性，否则服务启动不成功，具体查看其属性就知道能配置什么了。
 
-Spring 下的代码更多是为了和 Web 一起使用，如果只是本地进行转换，可以像下面这样简单实用
+Spring 下的代码更多是为了和 Web 一起使用，如果只是本地进行转换，例如有一批 word 要转 pdf，可以像下面这样简单使用
 
 ```java
 import org.jodconverter.JodConverter;

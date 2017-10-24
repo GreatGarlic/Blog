@@ -1,5 +1,5 @@
 ---
-title: Qt 中使用 curl
+title: Qt 使用 curl
 date: 2017-10-23 13:42:12
 tags: Qt
 ---
@@ -33,7 +33,7 @@ curl 没有提供编译好的库，需要自己编译，可按照下面的步骤
 * 编译后的库文件保存到 `C:\curl-7.56.0\builds\libcurl-vc12-x86-release-dll-ipv6-sspi-winssl`，复制此目录到 C 盘根目录，重命名为 libcurl，目录结构如下:
 
   ```
-  C:
+  C:/
   └── libcurl
       ├── bin
       │   ├── curl.exe
@@ -57,12 +57,12 @@ curl 没有提供编译好的库，需要自己编译，可按照下面的步骤
 
 Qt Creator 中创建一个 Qt 项目，pro 文件里加上 curl 的库信息
 
-> 这里不需要动态库的索引 .lib 文件，也不需要把 .lib 转换成 .a，直接使用 .dll，MinGW 的编译器能够识别，和 VS 的编译器有些不一样
-
 ```
 INCLUDEPATH += C:/libcurl/include
 LIBS += C:/libcurl/bin/libcurl.dll
 ```
+
+> 这里不需要动态库的索引 .lib 文件，也不需要把 .lib 转换成 .a，直接使用 .dll 就可以了，MinGW 的编译器能够识别，和 VS 的编译器有些不一样。
 
 接下来就可以使用 curl 发送 Http 请求了
 
@@ -73,7 +73,7 @@ LIBS += C:/libcurl/bin/libcurl.dll
 
 // curl 读取到的数据保存到 std::string
 size_t curlSaveResponseToStdString(void *contents, size_t size, size_t nmemb, std::string *s) {
-    size_t newLength = size*nmemb;
+    size_t newLength = size * nmemb;
     size_t oldLength = s->size();
     s->resize(oldLength + newLength);
     std::copy((char*)contents, (char*)contents+newLength, s->begin()+oldLength);
