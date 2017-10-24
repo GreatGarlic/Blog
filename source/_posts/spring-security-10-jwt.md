@@ -4,7 +4,9 @@ date: 2017-09-03 08:08:21
 tags: SpringSecurity
 ---
 
-在 [Spring Security Session + Token 认证](http://qtdebug.com/spring-security-8-token/) 中介绍了 Token 相关的身份验证，但是怎么验证 token 和使用 token 获取用户信息没有进行介绍，可以把 token 存储到 Redis，下面介绍另一种 token 实现方法 JWT(Json Web Token)。JWT 中存储了 token 的签名，用户信息，还可以存储 token 的签发时间用于服务器验证 token 的有效期，并且这些信息如果被篡改了的话就会导致 token 失效，JWT 的理论请参考 <http://www.jianshu.com/p/576dbf44b2ae>。
+在 [Spring Security Session + Token 认证](http://qtdebug.com/spring-security-8-token/) 中介绍了 Token 相关的身份验证，但是怎么验证 token 和使用 token 获取用户信息没有进行介绍，可以把 token 存储到 Redis、数据库等，下面介绍另一种 token 实现方法 JWT(Json Web Token)，这种 token 不需要存储到服务器，自身就能进行验证。
+
+JWT 中存储了 token 的签名，用户信息，还可以存储 token 的签发时间用于服务器验证 token 的有效期，并且这些信息如果被篡改了的话就会导致 token 失效，JWT 的理论请参考 <http://www.jianshu.com/p/576dbf44b2ae>。
 
 为了在 Spring Security 中使用 JWT，需要修改下面 3 个类:
 
