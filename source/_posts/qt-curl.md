@@ -90,11 +90,12 @@ int main(int argc, char *argv[]) {
         curl_easy_setopt(curl, CURLOPT_URL, "http://www.qtdebug.com/html/data.json"); // 设置要访问的网址
         curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlSaveResponseToStdString); // 告诉 curl 保存响应到 string 中
         curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response); // 请求的响应保存到变量 response 中
-        curl_easy_setopt(curl, CURLOPT_VERBOSE, 0L);
+        curl_easy_setopt(curl, CURLOPT_VERBOSE, 0L); // 0 不输出请求的详细信息，1 输出
         CURLcode code = curl_easy_perform(curl);
 
         if (code == CURLE_OK) {
             // std::cout << response << std::endl; // 中文乱码，因为 std::string 对中文的支持不好
+            // qDebug() << QString::fromUtf8(response.data()); // response.data() 返回的是 UTF-8 的字节数据
             qDebug() << QString::fromStdString(response); // 使用 qDebug() 输出，UTF-8 的中文不会乱码
         }
     } else {
