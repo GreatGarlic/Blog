@@ -131,6 +131,14 @@ Git 客户端: Simplicity and power in a beautiful free Git GUI for Windows and 
 
 ![](/img/mac/software/source-tree.png)
 
+## GitUp
+
+免费的 Git 客户端，简洁、漂亮，主页 <http://gitup.co>
+
+> Work quickly, safely, and without headaches. The Git interface you've been missing all your life has finally arrived.
+
+![](/img/mac/software/gitup.png)
+
 ## Keka
 
 免费的解压软件，支持多种压缩格式的解压和压缩，压缩时可以排除 Mac 的 .DS_Store 文件，压缩时使用 7z 格式能够解决 Mac 和 Windows 解压后文件名乱码问题。主页 <http://www.kekaosx.com/en/>。
