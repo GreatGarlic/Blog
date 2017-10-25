@@ -129,3 +129,9 @@ public static final Object toJSON(Object javaObject);
 > `SerializeWriter`: 相当于 `StringBuffer`  
 > `JSONArray`: 相当于 `List<Object>`  
 >  `JSONObject`: 相当于 `Map<String, Object>`
+
+## 参考资料
+
+* [Wiki](https://github.com/Alibaba/fastjson/wiki/首页)
+* [常见问题](https://github.com/alibaba/fastjson/wiki/常见问题): 例如怎么处理日期
+
