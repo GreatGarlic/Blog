@@ -113,4 +113,25 @@ int main(int argc, char *argv[]) {
 
 > "{\"name\": \"Alice\"}\n"
 
-哈哈，curl 终于集成到我们的项目里了，至于 curl 的更多使用，请执行搜索相关教程即可，在这里就不赘述了。
+哈哈，curl 终于集成到我们的项目里了，至于 curl 的更多使用，请执行搜索相关教程即可，在这里就不赘述了，可以看看 [C++ 用libcurl库进行http通讯网络编程](http://www.cnblogs.com/moodlxs/archive/2012/10/15/2724318.html)，这篇文章不错 。
+
+上面演示了 GET 请求，POST 请求只需要设置 CURLOPT_POST 为 1 即可:
+
+```cpp
+if (curl) {
+    std::string response;
+    curl_easy_setopt(curl, CURLOPT_URL, "http://192.168.10.52:8080/rest");
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, curlSaveResponseToStdString);
+    curl_easy_setopt(curl, CURLOPT_WRITEDATA, &response);
+
+    curl_easy_setopt(curl,CURLOPT_POST, 1); // POST 请求
+    curl_easy_setopt(curl,CURLOPT_POSTFIELDS, "name=赵子龙&department=Dev"); // POST 参数: GET 请求中的中文要进行 URL 编码，否则提示错误
+
+    CURLcode code = curl_easy_perform(curl);
+
+    if (code == CURLE_OK) {
+        qDebug() << QString::fromUtf8(response.data());
+    }
+}
+```
+
