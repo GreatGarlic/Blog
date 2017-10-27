@@ -33,7 +33,7 @@ int main(int argc, char *argv[]) {
     {
         // [[1]] GET 请求无参数
         HttpClient("http://localhost:8080/rest").get([](const QString &response) {
-            qDebug() << response;
+            qDebug().noquote() << response;
         });
 
         // [[2]] GET 请求有参数，有自定义 header
@@ -41,21 +41,21 @@ int main(int argc, char *argv[]) {
                 .addParam("name", "诸葛亮")
                 .addHeader("token", "123AS#D")
                 .get([](const QString &response) {
-            qDebug() << response;
+            qDebug().noquote() << response;
         });
 
         // [[3]] POST 请求，使用 addParam 添加参数时，请求的参数使用 Form 格式
         HttpClient("http://localhost:8080/rest").debug(true)
                 .addParam("name", "卧龙")
                 .post([](const QString &response) {
-            qDebug() << response;
+            qDebug().noquote() << response;
         });
 
         // [[4]] POST 请求，使用 jsonData 添加参数时，请求的参数使用 Json 格式
         HttpClient("http://localhost:8080/restJson").debug(true)
                 .jsonData("{\"name\": \"Alice\"}")
                 .post([](const QString &response) {
-            qDebug() << response;
+            qDebug().noquote() << response;
         });
 
         // [[5]] 下载: 下载直接保存到文件
@@ -71,7 +71,7 @@ int main(int argc, char *argv[]) {
                 file->close();
                 file->deleteLater();
 
-                qDebug() << "下载完成";
+                qDebug().noquote() << "下载完成";
             });
         }
 
@@ -87,7 +87,7 @@ int main(int argc, char *argv[]) {
         QNetworkAccessManager *manager = new QNetworkAccessManager();
         for (int i = 0; i < 5000; ++i) {
             HttpClient("http://localhost:8080/rest").useManager(manager).get([=](const QString &response) {
-                qDebug() << response << ", " << i;
+                qDebug().noquote() << response << ", " << i;
             });
         }
     }
@@ -111,7 +111,7 @@ class QNetworkReply;
 class QNetworkAccessManager;
 
 /**
- * @brief 对 QNetworkAccessManager 进行封装的 HTTP 访问客户端，可以执行 GET，POST，上传，下载请求。
+ * @brief 对 QNetworkAccessManager 进行封装的 HTTP 访问客户端，可以进行 GET，POST，上传，下载请求。
  */
 class HttpClient {
 public:
@@ -265,11 +265,11 @@ struct HttpClientPrivate {
 
 // 注意: 不能在回调函数中使用 d，因为回调函数被调用时 HttpClient 对象很可能已经被释放掉了。
 HttpClient::HttpClient(const QString &url) : d(new HttpClientPrivate(url)) {
-    //    qDebug() << "HttpClient";
+    //    qDebug().noquote() << "HttpClient";
 }
 
 HttpClient::~HttpClient() {
-    //    qDebug() << "~HttpClient";
+    //    qDebug().noquote() << "~HttpClient";
     delete d;
 }
 
@@ -336,7 +336,7 @@ void HttpClient::download(const QString &destinationPath,
 
             // 不能用 d->debug，因为 d 以及被释放了
             if (debug) {
-                qDebug() << QString("下载完成，保存到: %1").arg(destinationPath);
+                qDebug().noquote() << QString("下载完成，保存到: %1").arg(destinationPath);
             }
 
             if (NULL != finishHandler) {
@@ -346,7 +346,7 @@ void HttpClient::download(const QString &destinationPath,
     } else {
         // 打开文件出错
         if (debug) {
-            qDebug() << QString("打开文件出错: %1").arg(destinationPath);
+            qDebug().noquote() << QString("打开文件出错: %1").arg(destinationPath);
         }
 
         if (NULL != errorHandler) {
@@ -363,9 +363,9 @@ void HttpClient::download(std::function<void (const QByteArray &)> readyRead,
         QString params = d->params.toString();
 
         if (params.isEmpty()) {
-            qDebug() << QString("URL: %1").arg(d->url);
+            qDebug().noquote() << QString("网址: %1").arg(d->url);
         } else {
-            qDebug() << QString("URL: %1?%2").arg(d->url).arg(params);
+            qDebug().noquote() << QString("网址: %1?%2").arg(d->url).arg(params);
         }
     }
 
@@ -411,7 +411,7 @@ void HttpClient::upload(const QString &path,
                         std::function<void (const QString &)> errorHandler,
                         const char *encoding) {
     if (d->debug) {
-        qDebug() << QString("URL: %1").arg(d->url);
+        qDebug().noquote() << QString("URL: %1").arg(d->url);
     }
 
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
@@ -474,12 +474,12 @@ void HttpClient::execute(bool posted,
 
     // 输出调试信息
     if (d->debug) {
-        qDebug() << "网址:" << d->url;
+        qDebug().noquote() << "网址:" << d->url;
 
         if (posted && d->useJson) {
-            qDebug() << "参数:" << d->jsonData;
+            qDebug().noquote() << "参数:" << d->jsonData;
         } else if (posted && !d->useJson) {
-            qDebug() << "参数:" << d->params.toString();
+            qDebug().noquote() << "参数:" << d->params.toString();
         }
     }
 
