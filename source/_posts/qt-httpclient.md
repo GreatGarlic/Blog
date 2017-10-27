@@ -106,9 +106,10 @@ int main(int argc, char *argv[]) {
 
 class QString;
 class QByteArray;
-struct HttpClientPrivate;
+class QNetworkRequest;
 class QNetworkReply;
 class QNetworkAccessManager;
+struct HttpClientPrivate;
 
 /**
  * @brief 对 QNetworkAccessManager 进行封装的 HTTP 访问客户端，可以进行 GET，POST，上传，下载请求。
@@ -229,6 +230,13 @@ private:
      */
     QString readResponse(QNetworkReply *reply, const char *encoding = "UTF-8");
 
+    /**
+     * @brief 请求执行前准备好 Request 需要的数据，例如 URL，参数，请求头等。
+     * @param posted 为 true 表示 POST 请求，为 false 表示 GET 请求
+     * @return 返回可用于执行请求的 QNetworkRequest
+     */
+    QNetworkRequest prepareRequest(bool posted = false);
+
     HttpClientPrivate *d;
 };
 
@@ -250,48 +258,52 @@ private:
 #include <QHttpMultiPart>
 
 struct HttpClientPrivate {
-    HttpClientPrivate(const QString &url) : url(url), networkAccessManager(NULL),
-        useJson(false), useInternalNetworkAccessManager(true), debug(false) {}
+    HttpClientPrivate(const QString &url);
+
     QString   url;      // 请求的 URL
     QUrlQuery params;   // 请求的参数使用 Form 格式
     QString   jsonData; // 请求的参数使用 Json 格式
-    QHash<QString, QString> headers; // 请求的头
+    QHash<QString, QString> headers; // 请求头
     QNetworkAccessManager *networkAccessManager;
 
     bool useJson; // 为 true 时 POST 请求使用 Json 格式传递参数，否则使用 Form 格式传递参数
-    bool useInternalNetworkAccessManager; // 是否使用内部的 QNetworkAccessManager
-    bool debug; // 为 true 时输出请求的 URL 和参数
+    bool debug;   // 为 true 时输出请求的 URL 和参数
 };
+
+HttpClientPrivate::HttpClientPrivate(const QString &url)
+    : url(url), networkAccessManager(NULL), useJson(false), debug(false) {
+}
 
 // 注意: 不能在回调函数中使用 d，因为回调函数被调用时 HttpClient 对象很可能已经被释放掉了。
 HttpClient::HttpClient(const QString &url) : d(new HttpClientPrivate(url)) {
-    //    qDebug().noquote() << "HttpClient";
+    // qDebug().noquote() << "HttpClient";
 }
 
 HttpClient::~HttpClient() {
-    //    qDebug().noquote() << "~HttpClient";
+    // qDebug().noquote() << "~HttpClient";
     delete d;
 }
 
 HttpClient &HttpClient::useManager(QNetworkAccessManager *manager) {
     d->networkAccessManager = manager;
-    d->useInternalNetworkAccessManager = false;
     return *this;
 }
 
 // 传入 debug 为 true 则使用 debug 模式，请求执行时输出请求的 URL 和参数等
 HttpClient &HttpClient::debug(bool debug) {
     d->debug = debug;
+
     return *this;
 }
 
-// 增加参数
+// 添加 Form 格式参数
 HttpClient &HttpClient::addParam(const QString &name, const QString &value) {
     d->params.addQueryItem(name, value);
 
     return *this;
 }
 
+// 添加 Json 格式参数
 HttpClient &HttpClient::jsonData(const QString &data) {
     d->useJson = true;
     d->jsonData = data;
@@ -299,7 +311,7 @@ HttpClient &HttpClient::jsonData(const QString &data) {
     return *this;
 }
 
-// 增加访问头
+// 添加访问头
 HttpClient &HttpClient::addHeader(const QString &header, const QString &value) {
     d->headers[header] = value;
     return *this;
@@ -322,8 +334,8 @@ void HttpClient::post(std::function<void (const QString &)> successHandler,
 void HttpClient::download(const QString &destinationPath,
                           std::function<void ()> finishHandler,
                           std::function<void (const QString &)> errorHandler) {
-    QFile *file = new QFile(destinationPath);
     bool debug = d->debug;
+    QFile *file = new QFile(destinationPath);
 
     if (file->open(QIODevice::WriteOnly)) {
         download([=](const QByteArray &data) {
@@ -334,7 +346,6 @@ void HttpClient::download(const QString &destinationPath,
             file->close();
             file->deleteLater();
 
-            // 不能用 d->debug，因为 d 以及被释放了
             if (debug) {
                 qDebug().noquote() << QString("下载完成，保存到: %1").arg(destinationPath);
             }
@@ -359,24 +370,8 @@ void HttpClient::download(const QString &destinationPath,
 void HttpClient::download(std::function<void (const QByteArray &)> readyRead,
                           std::function<void ()> finishHandler,
                           std::function<void (const QString &)> errorHandler) {
-    if (d->debug) {
-        QString params = d->params.toString();
-
-        if (params.isEmpty()) {
-            qDebug().noquote() << QString("网址: %1").arg(d->url);
-        } else {
-            qDebug().noquote() << QString("网址: %1?%2").arg(d->url).arg(params);
-        }
-    }
-
-    // 如果是 GET 请求，并且参数不为空，则编码请求的参数，放到 URL 后面
-    if (!d->params.isEmpty()) {
-        d->url += "?" + d->params.toString(QUrl::FullyEncoded);
-    }
-
-    QUrl urlx(d->url);
-    QNetworkRequest request(urlx);
-    bool internal = d->useInternalNetworkAccessManager;
+    bool internal = d->networkAccessManager == NULL;
+    QNetworkRequest request = prepareRequest();
     QNetworkAccessManager *manager = internal ? new QNetworkAccessManager() : d->networkAccessManager;
     QNetworkReply *reply = manager->get(request);
 
@@ -399,7 +394,7 @@ void HttpClient::download(std::function<void (const QByteArray &)> readyRead,
     });
 
     // 请求错误处理
-    QObject::connect(reply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), [=] {
+    QObject::connect(reply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), [=] {
         if (NULL != errorHandler) {
             errorHandler(reply->errorString());
         }
@@ -410,10 +405,6 @@ void HttpClient::upload(const QString &path,
                         std::function<void (const QString &)> successHandler,
                         std::function<void (const QString &)> errorHandler,
                         const char *encoding) {
-    if (d->debug) {
-        qDebug().noquote() << QString("URL: %1").arg(d->url);
-    }
-
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
     QFile *file = new QFile(path);
@@ -435,8 +426,8 @@ void HttpClient::upload(const QString &path,
     imagePart.setBodyDevice(file);
     multiPart->append(imagePart);
 
-    bool internal = d->useInternalNetworkAccessManager;
-    QNetworkRequest request(QUrl(d->url));
+    bool internal = d->networkAccessManager == NULL;
+    QNetworkRequest request = prepareRequest();
     QNetworkAccessManager *manager = internal ? new QNetworkAccessManager() : d->networkAccessManager;
     QNetworkReply *reply = manager->post(request, multiPart);
     multiPart->setParent(reply);
@@ -448,14 +439,14 @@ void HttpClient::upload(const QString &path,
         }
 
         // 释放资源
-        reply->deleteLater();
+        reply->deleteLater(); // 会同时删除 file, multiPart
         if (internal) {
             manager->deleteLater();
         }
     });
 
     // 请求错误处理
-    QObject::connect(reply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), [=] {
+    QObject::connect(reply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), [=] {
         if (NULL != errorHandler) {
             errorHandler(reply->errorString());
         }
@@ -467,45 +458,9 @@ void HttpClient::execute(bool posted,
                          std::function<void (const QString &)> successHandler,
                          std::function<void (const QString &)> errorHandler,
                          const char *encoding) {
-    // 如果是 GET 请求，并且参数不为空，则编码请求的参数，放到 URL 后面
-    if (!posted && !d->params.isEmpty()) {
-        d->url += "?" + d->params.toString(QUrl::FullyEncoded);
-    }
-
-    // 输出调试信息
-    if (d->debug) {
-        qDebug().noquote() << "网址:" << d->url;
-
-        if (posted && d->useJson) {
-            qDebug().noquote() << "参数:" << d->jsonData;
-        } else if (posted && !d->useJson) {
-            qDebug().noquote() << "参数:" << d->params.toString();
-        }
-    }
-
-    QUrl urlx(d->url);
-    QNetworkRequest request(urlx);
-
-    // 如果是 POST 请求，useJson 为 true 时添加 Json 的请求头，useJson 为 false 时添加 Form 的请求头
-    if (posted && !d->useJson) {
-        addHeader("Content-Type", "application/x-www-form-urlencoded");
-    } else if (posted && d->useJson) {
-        addHeader("Accept", "application/json; charset=utf-8");
-        addHeader("Content-Type", "application/json");
-    }
-
-    // 把请求的头添加到 request 中
-    QHashIterator<QString, QString> iter(d->headers);
-    while (iter.hasNext()) {
-        iter.next();
-        request.setRawHeader(iter.key().toUtf8(), iter.value().toUtf8());
-    }
-
-    // 注意: 不能在 Lambda 表达式里使用 HttpClient 对象的成员数据，因其可能在网络访问未结束时就已经被析构掉了，
-    // 所以如果要使用它的相关数据，定义一个局部变量来保存其数据，然后在 Lambda 表达式里访问这个局部变量
-
     // 如果不使用外部的 manager 则创建一个新的，在访问完成后会自动删除掉
-    bool internal = d->useInternalNetworkAccessManager;
+    bool internal = d->networkAccessManager == NULL;
+    QNetworkRequest request = prepareRequest(posted);
     QNetworkAccessManager *manager = internal ? new QNetworkAccessManager() : d->networkAccessManager;
     QNetworkReply *reply = NULL;
 
@@ -534,7 +489,7 @@ void HttpClient::execute(bool posted,
     });
 
     // 请求错误处理
-    QObject::connect(reply, static_cast<void (QNetworkReply::*)(QNetworkReply::NetworkError)>(&QNetworkReply::error), [=] {
+    QObject::connect(reply, QOverload<QNetworkReply::NetworkError>::of(&QNetworkReply::error), [=] {
         if (NULL != errorHandler) {
             errorHandler(reply->errorString());
         }
@@ -551,6 +506,43 @@ QString HttpClient::readResponse(QNetworkReply *reply, const char *encoding) {
     }
 
     return result;
+}
+
+QNetworkRequest HttpClient::prepareRequest(bool posted) {
+    QNetworkRequest request(QUrl(d->url));
+
+    // 如果是 GET 请求，并且参数不为空，则编码请求的参数，放到 URL 后面
+    if (!posted && !d->params.isEmpty()) {
+        d->url += "?" + d->params.toString(QUrl::FullyEncoded);
+    }
+
+    // 输出调试信息
+    if (d->debug) {
+        qDebug().noquote() << "网址:" << d->url;
+
+        if (posted && d->useJson) {
+            qDebug().noquote() << "参数:" << d->jsonData;
+        } else if (posted && !d->useJson) {
+            qDebug().noquote() << "参数:" << d->params.toString();
+        }
+    }
+
+    // 如果是 POST 请求，useJson 为 true 时添加 Json 的请求头，useJson 为 false 时添加 Form 的请求头
+    if (posted && !d->useJson) {
+        addHeader("Content-Type", "application/x-www-form-urlencoded");
+    } else if (posted && d->useJson) {
+        addHeader("Accept", "application/json; charset=utf-8");
+        addHeader("Content-Type", "application/json");
+    }
+
+    // 把请求的头添加到 request 中
+    QHashIterator<QString, QString> iter(d->headers);
+    while (iter.hasNext()) {
+        iter.next();
+        request.setRawHeader(iter.key().toUtf8(), iter.value().toUtf8());
+    }
+
+    return request;
 }
 ```
 
