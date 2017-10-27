@@ -7,7 +7,7 @@ tags: Qt
 Qt 使用 `QNetworkAccessManager` 访问网络，这里对其进行了简单的封装，访问网络的代码可以简化为:
 
 ```cpp
-HttpClient("http://localhost:8080/device").get([](const QString &response) {
+HttpClient("http://localhost:8080/rest").get([](const QString &response) {
     qDebug() << response;
 });
 ```
@@ -25,8 +25,6 @@ HttpClient("http://localhost:8080/device").get([](const QString &response) {
 #include <QFile>
 #include <QApplication>
 #include <QNetworkAccessManager>
-#include <QThread>
-#include <QDate>
 
 int main(int argc, char *argv[]) {
     QApplication a(argc, argv);
@@ -34,39 +32,31 @@ int main(int argc, char *argv[]) {
     // 在代码块里执行网络访问，是为了测试 HttpClient 对象在被析构后，网络访问的回调函数仍然能正常执行
     {
         // [[1]] GET 请求无参数
-        HttpClient("http://localhost:8080/device").get([](const QString &response) {
+        HttpClient("http://localhost:8080/rest").get([](const QString &response) {
             qDebug() << response;
         });
 
         // [[2]] GET 请求有参数，有自定义 header
-        HttpClient("http://localhost:8080/signIn")
-                .addParam("id", "1")
+        HttpClient("http://localhost:8080/rest").debug(true)
                 .addParam("name", "诸葛亮")
                 .addHeader("token", "123AS#D")
                 .get([](const QString &response) {
             qDebug() << response;
         });
 
-        // [[3]] POST 请求有参数，有自定义 header
-        HttpClient("http://localhost:8080/signIn")
-                .addParam("id", "2")
+        // [[3]] POST 请求，使用 addParam 添加参数时，请求的参数使用 Form 格式
+        HttpClient("http://localhost:8080/rest").debug(true)
                 .addParam("name", "卧龙")
-                .addHeader("token", "DER#2J7")
-                // .addHeader("content-type", "application/x-www-form-urlencoded")
-                .addFormHeader()
                 .post([](const QString &response) {
             qDebug() << response;
         });
 
-        // [[4]] 每创建一个 QNetworkAccessManager 对象都会创建一个线程，当频繁的访问网络时，为了节省线程资源，调用 useManager()
-        // 使用共享的 QNetworkAccessManager，它不会被 HttpClient 删除。
-        // 如果下面的代码不传入 QNetworkAccessManager，从任务管理器里可以看到创建了几千个线程。
-        QNetworkAccessManager *manager = new QNetworkAccessManager();
-        for (int i = 0; i < 5000; ++i) {
-            HttpClient("http://localhost:8080/device").useManager(manager).get([=](const QString &response) {
-                qDebug() << response << ", " << i;
-            });
-        }
+        // [[4]] POST 请求，使用 jsonData 添加参数时，请求的参数使用 Json 格式
+        HttpClient("http://localhost:8080/restJson").debug(true)
+                .jsonData("{\"name\": \"Alice\"}")
+                .post([](const QString &response) {
+            qDebug() << response;
+        });
 
         // [[5]] 下载: 下载直接保存到文件
         HttpClient("http://xtuer.github.io/img/dog.png").debug(true).download("/Users/Biao/Desktop/dog.png");
@@ -81,12 +71,25 @@ int main(int argc, char *argv[]) {
                 file->close();
                 file->deleteLater();
 
-                qDebug() << "Download file finished";
+                qDebug() << "下载完成";
             });
         }
 
         // [[7]] 上传
         HttpClient("http://localhost:8080/webuploader").upload("/Users/Biao/Pictures/ade.jpg");
+    }
+
+    {
+        // [[8]] 共享 QNetworkAccessManager
+        // 每创建一个 QNetworkAccessManager 对象都会创建一个线程，当频繁的访问网络时，为了节省线程资源，调用 useManager()
+        // 使用共享的 QNetworkAccessManager，它不会被 HttpClient 删除，需要我们自己不用的时候删除它。
+        // 如果下面的代码不传入 QNetworkAccessManager，从任务管理器里可以看到创建了几千个线程。
+        QNetworkAccessManager *manager = new QNetworkAccessManager();
+        for (int i = 0; i < 5000; ++i) {
+            HttpClient("http://localhost:8080/rest").useManager(manager).get([=](const QString &response) {
+                qDebug() << response << ", " << i;
+            });
+        }
     }
 
     return a.exec();
@@ -108,7 +111,7 @@ class QNetworkReply;
 class QNetworkAccessManager;
 
 /**
- * @brief 对 QNetworkAccessManager 进行封装的 HTTP 访问客户端，可以进行 GET，POST，上传，下载请求。
+ * @brief 对 QNetworkAccessManager 进行封装的 HTTP 访问客户端，可以执行 GET，POST，上传，下载请求。
  */
 class HttpClient {
 public:
@@ -117,7 +120,7 @@ public:
 
     /**
      * @brief 每创建一个 QNetworkAccessManager 对象都会创建一个线程，当频繁的访问网络时，为了节省线程资源，
-     *     可以使用传人的 QNetworkAccessManager，它不会被 HttpClient 删除。
+     *     可以传入 QNetworkAccessManager 给多个请求共享(它不会被 HttpClient 删除，用户需要自己手动删除)。
      *     如果没有使用 useManager() 传入一个 QNetworkAccessManager，则 HttpClient 会自动的创建一个，并且在网络访问完成后删除它。
      * @param  manager QNetworkAccessManager 对象
      * @return 返回 HttpClient 的引用，可以用于链式调用
@@ -132,7 +135,7 @@ public:
     HttpClient& debug(bool debug);
 
     /**
-     * @brief 增加参数
+     * @brief 添加请求的参数
      * @param name  参数的名字
      * @param value 参数的值
      * @return 返回 HttpClient 的引用，可以用于链式调用
@@ -140,18 +143,19 @@ public:
     HttpClient& addParam(const QString &name, const QString &value);
 
     /**
-     * @brief 增加访问头
-     * @param header 访问头的名字
-     * @param value  访问头的值
+     * @brief 添加请求的参数，使用 Json 格式，例如 "{\"name\": \"Alice\"}"
+     * @param data Json 格式的参数字符串
+     * @return
+     */
+    HttpClient& jsonData(const QString &data);
+
+    /**
+     * @brief 添加请求头
+     * @param header 请求头的名字
+     * @param value  请求头的值
      * @return 返回 HttpClient 的引用，可以用于链式调用
      */
     HttpClient& addHeader(const QString &header, const QString &value);
-
-    /**
-     * @brief 添加 POST 表单使用的头信息，等价于 addHeader("content-type", "application/x-www-form-urlencoded")
-     * @return 返回 HttpClient 的引用，可以用于链式调用
-     */
-    HttpClient& addFormHeader();
 
     /**
      * @brief 执行 GET 请求
@@ -246,14 +250,17 @@ private:
 #include <QHttpMultiPart>
 
 struct HttpClientPrivate {
-    HttpClientPrivate(const QString &url) : url(url), networkAccessManager(NULL), useInternalNetworkAccessManager(true), debug(false) {}
-
-    QString url; // 请求的 URL
-    QUrlQuery params; // 请求的参数
+    HttpClientPrivate(const QString &url) : url(url), networkAccessManager(NULL),
+        useJson(false), useInternalNetworkAccessManager(true), debug(false) {}
+    QString   url;      // 请求的 URL
+    QUrlQuery params;   // 请求的参数使用 Form 格式
+    QString   jsonData; // 请求的参数使用 Json 格式
     QHash<QString, QString> headers; // 请求的头
     QNetworkAccessManager *networkAccessManager;
+
+    bool useJson; // 为 true 时 POST 请求使用 Json 格式传递参数，否则使用 Form 格式传递参数
     bool useInternalNetworkAccessManager; // 是否使用内部的 QNetworkAccessManager
-    bool debug;
+    bool debug; // 为 true 时输出请求的 URL 和参数
 };
 
 // 注意: 不能在回调函数中使用 d，因为回调函数被调用时 HttpClient 对象很可能已经被释放掉了。
@@ -281,6 +288,14 @@ HttpClient &HttpClient::debug(bool debug) {
 // 增加参数
 HttpClient &HttpClient::addParam(const QString &name, const QString &value) {
     d->params.addQueryItem(name, value);
+
+    return *this;
+}
+
+HttpClient &HttpClient::jsonData(const QString &data) {
+    d->useJson = true;
+    d->jsonData = data;
+
     return *this;
 }
 
@@ -288,10 +303,6 @@ HttpClient &HttpClient::addParam(const QString &name, const QString &value) {
 HttpClient &HttpClient::addHeader(const QString &header, const QString &value) {
     d->headers[header] = value;
     return *this;
-}
-
-HttpClient &HttpClient::addFormHeader() {
-    return addHeader("content-type", "application/x-www-form-urlencoded");
 }
 
 // 执行 GET 请求
@@ -461,12 +472,27 @@ void HttpClient::execute(bool posted,
         d->url += "?" + d->params.toString(QUrl::FullyEncoded);
     }
 
+    // 输出调试信息
     if (d->debug) {
-        qDebug() << QString("URL: %1?%2").arg(d->url).arg(d->params.toString());
+        qDebug() << "网址:" << d->url;
+
+        if (posted && d->useJson) {
+            qDebug() << "参数:" << d->jsonData;
+        } else if (posted && !d->useJson) {
+            qDebug() << "参数:" << d->params.toString();
+        }
     }
 
     QUrl urlx(d->url);
     QNetworkRequest request(urlx);
+
+    // 如果是 POST 请求，useJson 为 true 时添加 Json 的请求头，useJson 为 false 时添加 Form 的请求头
+    if (posted && !d->useJson) {
+        addHeader("Content-Type", "application/x-www-form-urlencoded");
+    } else if (posted && d->useJson) {
+        addHeader("Accept", "application/json; charset=utf-8");
+        addHeader("Content-Type", "application/json");
+    }
 
     // 把请求的头添加到 request 中
     QHashIterator<QString, QString> iter(d->headers);
@@ -481,7 +507,18 @@ void HttpClient::execute(bool posted,
     // 如果不使用外部的 manager 则创建一个新的，在访问完成后会自动删除掉
     bool internal = d->useInternalNetworkAccessManager;
     QNetworkAccessManager *manager = internal ? new QNetworkAccessManager() : d->networkAccessManager;
-    QNetworkReply *reply = posted ? manager->post(request, d->params.toString(QUrl::FullyEncoded).toUtf8()) : manager->get(request);
+    QNetworkReply *reply = NULL;
+
+    if (!posted) {
+        // GET 请求
+        reply = manager->get(request);
+    } else if (posted && d->useJson) {
+        // POST 请求，参数使用 Json 格式
+        reply = manager->post(request, d->jsonData.toUtf8());
+    } else if (posted && !d->useJson) {
+        // POST 请求，参数使用 Form 格式
+        reply = manager->post(request, d->params.toString(QUrl::FullyEncoded).toUtf8());
+    }
 
     // 请求结束时一次性读取所有响应数据
     QObject::connect(reply, &QNetworkReply::finished, [=] {
@@ -521,45 +558,40 @@ QString HttpClient::readResponse(QNetworkReply *reply, const char *encoding) {
 这里的服务器端处理请求的代码使用了 `SpringMVC` 实现，作为参考，可以使用其他语言实现，例如 PHP，C#。
 
 ```java
-@GetMapping("/device")
-@ResponseBody
-public String detectDevice(Device device) {
-    if (device.isMobile()) {
-        return "Mobile";
-    } else if (device.isTablet()) {
-        return "Tablet";
-    } else {
-        return "Desktop";
+import com.xtuer.bean.Result;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Map;
+
+@Controller
+public class Controller {
+    @GetMapping("/rest")
+    @ResponseBody
+    public Result get(@RequestParam(required = false) String name) {
+        return Result.ok("GET", name);
     }
-}
-    
-// URL: /signIn?id=1&name=xxx
-@GetMapping("/signIn")
-@ResponseBody
-public String singInGet(@RequestParam String id,
-                     @RequestParam String name,
-                     @RequestHeader(value="token", required=false) String token) throws Exception {
-    name = new String(name.getBytes("iso8859-1"), "UTF-8");
-    return String.format("GET: id: %s, name: %s, token: %s", id, name, token);
-}
 
-// URL: /signIn
-@PostMapping("/signIn")
-@ResponseBody
-public String singInPost(@RequestParam String id,
-                     @RequestParam String name,
-                     @RequestHeader(value="token", required=false) String token) throws Exception {
-    return String.format("POST: id: %s, name: %s, token: %s", id, name, token);
-}
+    @PostMapping("/rest")
+    @ResponseBody
+    public Result post(@RequestParam String name) {
+        return Result.ok("POST", name);
+    }
 
-// 上传
-@PostMapping("/upload")
-@ResponseBody
-public Result uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
-    System.out.println(file.getOriginalFilename());
-    file.transferTo(new File("/Users/Biao/Desktop/" + file.getOriginalFilename()));
+    @PostMapping("/restJson")
+    @ResponseBody
+    public Result restJson(@RequestBody Map map) {
+        return Result.ok(map.toString());
+    }
 
-    return Result.ok("OK", file.getOriginalFilename());
+    @PostMapping("/webuploader")
+    @ResponseBody
+    public Result uploadFile(@RequestParam("file") MultipartFile file) throws IOException {
+        System.out.println(file.getOriginalFilename());
+        file.transferTo(new File("/Users/Biao/Desktop/" + file.getOriginalFilename()));
+
+        return Result.ok("OK", file.getOriginalFilename());
+    }
 }
 ```
 
