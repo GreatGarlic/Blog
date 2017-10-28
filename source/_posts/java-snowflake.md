@@ -163,3 +163,38 @@ public class SnowflakeIdWorker {
 ```
 
 可能你要问，哎呀，只能保证 70 内不重复，70 年后怎么办呢？我的答案是，让 70 后你们公司的同事去头疼吧，问题是，你们公司能活到什么时候都是个问题！
+
+> 提示: 求一个整数，它的二进制表示中最后 n 位为 1: `-1 ^ (-1 << n)`
+> 分析: -1 的二进制表示中所有位都是 1，`-1 << n` 的结果为前 32-n 位为 1，后 n 位为 0，与 -1 执行取反操作得到的结果，前 32-n 位为 0，后 n 为 1(取反: 相同为 0，不同为 1)。
+>
+> ```java
+> import org.apache.commons.lang.StringUtils;
+>
+> public class Test {
+>     public static void main(String[] args) throws Exception {
+>         printBinary(lastNBits1(3));
+>         printBinary(lastNBits1(8));
+>         printBinary(lastNBits1(20));
+>         printBinary(lastNBits1(31));
+>     }
+>
+>     public static int lastNBits1(int n) {
+>         return -1 ^ (-1 << n);
+>     }
+>
+>     public static void printBinary(int n) {
+>         String bs = Integer.toBinaryString(n);
+>         System.out.println(StringUtils.leftPad(bs, 32, '0'));
+>     }
+> }
+> ```
+>
+> 输出:
+>
+> ```
+> 00000000000000000000000000000111
+> 00000000000000000000000011111111
+> 00000000000011111111111111111111
+> 01111111111111111111111111111111
+> ```
+
