@@ -14,12 +14,17 @@
         <div class="content-table">显示目录</div>
     <%}%>
 
-  <%if(post.noDate != "true"){%>
-    <div class="article-meta">
-        <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
-    </div>
-  <%}%>
-  <div class="article-inner">
+    <%if(post.noDate != "true"){%>
+        <div class="article-meta">
+            <%- partial('post/date', {class_name: 'article-date', date_format: null}) %>
+        </div>
+    <%}%>
+
+    <% if (index) { %>
+        <div class="article-inner">
+    <% } else { %>
+        <div class="article-inner article-inner-x">
+    <% } %>
     <% if (theme.fancybox){ %>
       <input type="hidden" class="isFancy" />
     <% } %>

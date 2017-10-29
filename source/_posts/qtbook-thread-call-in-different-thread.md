@@ -8,8 +8,7 @@ Qt 里 `线程一的上下文中` 调用 `线程二的上下文中` 的函数的
 > Because of limitations inherited from the low-level libraries on which Qt's GUI support is built, QWidget and its subclasses are not reentrant. One consequence of this is that we cannot directly call functions on a widget from a secondary thread. If we want to, say, change the text of a QLabel from a secondary thread, we can emit a signal connected to QLabel::setText() or call QMetaObject::invokeMethod() from that thread. For example:
 >
 ```
-void MyThread::run()
-{
+void MyThread::run() {
     ...
     QMetaObject::invokeMethod(label, SLOT(setText(const QString &)), Q_ARG(QString, "Hello"));
     ...

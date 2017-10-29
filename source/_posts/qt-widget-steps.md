@@ -38,7 +38,7 @@ tags: QtBook
 
       > 优点：能够使用 Layout 进行布局，不需要手动计算坐标
       >
-      > 缺点：不够直观，不过，在步骤之间加一点空隙，估计大家都明白怎么做了：每一个步骤的背景都有一份在它的前一个步骤上：
+      > 缺点：不够直观，不过，在步骤之间加一点空隙，估计大家都明白怎么做了：每一个步骤的背景都有一部分在它的前一个步骤上：
       >
       > ![](/img/qt/steps-7.png)
 
@@ -135,7 +135,7 @@ void StepWidget::updateStepButtonsStyle() {
     }
     stepButtons.last()->setProperty("status", "last");
 
-    // 设置被点击的按钮的 status 属性为 active，如果是最后一个按钮则为 active-last
+    // 设置被点击的按钮的 status 属性为 active-middle，如果是最后一个按钮则为 active-last
     clickedButton->setProperty("status", isLast ? "active-last" : "active-middle");
 
     // 设置被点击的按钮的前一个按钮的 status 为 active-prev
