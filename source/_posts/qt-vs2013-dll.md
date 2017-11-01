@@ -8,7 +8,7 @@ tags: Qt
 
 动态库的使用分为隐式链接和显示链接两种方式:
 
-* **显示链接**: 需要 `.dll` 动态库文件，代码中使用 `LoadLibrary + GetProcAddress` 加载函数后需要自己进行函数类型转换
+* **显示链接**: 只需要 `.dll` 动态库文件，代码中使用 `LoadLibrary + GetProcAddress` 加载函数后需要自己进行函数类型转换：
 
   ```cpp
   // 函数类型定义
@@ -22,19 +22,18 @@ tags: Qt
   dllFunc(123);
   ```
 
-* **隐式链接**: 需要 `.h` 头文件，`.lib` 库导入文件，`.dll` 动态库文件，代码中直接使用函数即可
+* **隐式链接**: 需要 `.h` 头文件、`.lib` 库导入文件和 `.dll` 动态库文件，代码中直接使用库的函数即可
 
   > 推荐使用隐式链接，更省事，可参考 [LIB 和 DLL 的区别与使用](http://www.cppblog.com/biao/archive/2013/03/14/198416.html)。
 
 VS2013 中隐式链接使用 dll 一般有两种方法:
 
-* 在代码中使用 `#pragma` 引入 lib
+* 使用 `#pragma` 引入 lib
 
-* 在项目的属性中配置 `头文件目录` 和 `lib 目录` 以及  `lib 名字`
+* 设置项目属性引入 lib<!--more-->
 
-  > 注意: 最后都要把 dll 复制到 exe 所在目录，否则项目能够编译成功，但是运行时提示缺少 dll。<!--more-->
 
-下面就以使用 cul 的 dll 为例进行介绍吧，curl 存放在 `C:/libcurl`。
+下面就以隐式链接使用 curl 的 dll 为例进行介绍，curl 存放在 `C:/libcurl`。
 
 ## 创建 Visual C++ 控制台程序
 
@@ -48,12 +47,14 @@ int _tmain(int argc, _TCHAR* argv[]) {
 }
 ```
 
-## 使用 `#pragma` 引入 lib
+## 一：使用 `#pragma` 引入 lib
+
+包含头文件以及使用 `#pragma` 引入 lib 就可以了：
 
 ```cpp
 #include "stdafx.h"
 
-// 包含 curl 的头文件和 lib
+// 包含 curl 的头文件和 lib(可以把库放到项目中，使用相对路径引入)
 #include "C:/libcurl/include/curl/curl.h"
 #pragma comment(lib, "C:/libcurl/lib/libcurl.lib")
 
@@ -73,9 +74,9 @@ int _tmain(int argc, _TCHAR* argv[]) {
 
 把 libcurl.dll 复制到项目编译出的 exe 目录，运行项目，可以看到 curl 访问网络成功。
 
-## 项目的属性中配置 `头文件目录` 和 `lib 目录` 以及  `lib 名字`
+## 二：设置项目属性引入 lib
 
-项目的名字上右键 > Properties
+在项目的名字上 `右键 > Properties`，在弹出的对话框中配置需要的 `头文件目录`、`lib 目录` 和  `lib 名字`：
 
 * 头文件目录: `C/C++ > General > Additional Include Directories`
 
@@ -89,14 +90,13 @@ int _tmain(int argc, _TCHAR* argv[]) {
 
   ![](/img/qt/vs-dll-4.png)
 
-通过上面三步就配置好了动态库，然后再程序中就可以使用了:
+通过上面三步就配置好了动态库，然后再程序中包含头文件就可以使用了:
 
 ```cpp
 #include "stdafx.h"
 
 // 包含 curl 的头文件和 lib
 #include <curl/curl.h>
-#pragma comment(lib, "libcurl.lib")
 
 int _tmain(int argc, _TCHAR* argv[]) {
     CURL *curl = curl_easy_init();
