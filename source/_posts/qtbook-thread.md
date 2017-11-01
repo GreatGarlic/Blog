@@ -37,12 +37,14 @@ ReadingWidget::ReadingWidget(QWidget *parent) : QWidget(parent), ui(new Ui::Read
 
 > 我系统上的路径是 `/Users/Biao/Qt5.9.2/Docs/Qt-5.9.2/qtgui/qtgui.index`，大家在自己系统上 Qt 的安装路径下找一下。
 
-再次点击 `开始读取`，什么鬼，界面被冻住了，提示正忙，等几分钟内容才一次性显示出来。原因是读取文件、`textEdit->append()`、然后向事件队列发送了一个更新界面的事件，由于执行事件队列中的事件等都是在同一个线程中执行(UI 线程)，所以要等到 while 循环结束后才执行更新 textEdit 界面的事件，导致我们看到界面被冻住，最后一次性显示出所有内容。如果我们想每当读取到内容后，立即在 textEdit 中能够看到，解决这个题一般有 2 个方法:
+再次点击 `开始读取`，什么鬼，界面被冻住了，提示正忙，等几分钟内容才一次性显示出来。原因是读取文件、`textEdit->append()`、然后向 UI 事件队列发送了一个更新 textEdit 界面的事件，由于这些操作和执行 UI 事件队列中的事件等都是在同一个线程中按顺序执行(UI 线程)，所以要等到 while 循环结束后才执行 UI 事件队列中的更新 textEdit 界面事件，导致我们看到界面被冻住，读取完文件后一次性显示出所有内容。如果我们想每当读取到内容后，立即在 textEdit 中能够看到，解决这个题一般有 2 个方法:
 
-* **强制执行事件队列中的事件**：在第 15 行的下面加上一句 `QApplication::processEvents()`，立即执行事件队列中的事件
-* **多线程**：在一个新的线程中读取文件，不要在 UI 线程里读取，这样文件读取就不会阻塞 UI 线程了，将在 [继承 QThread](/qtbook-thread-inheritance) 中介绍使用多线程改写上面的程序
+* **立即执行 UI 事件队列中的事件**：在第 15 行的下面加上一句 `QApplication::processEvents()`，立即执行 UI 事件队列中的事件
+* **使用多线程**：在一个新的线程中读取文件，不要在 UI 线程里读取，这样文件读取就不会阻塞 UI 线程了，将在 [继承 QThread 实现多线程](/qtbook-thread-inheritance) 中介绍使用多线程改写上面的程序
 
-通过这个简单的例子，说明了多线程的重要性，**把耗时的操作放到一个新线程中取执行**，不要让其阻塞用户界面，增加应用程序响应，提高用户体验，下面的介绍多线程的优点和缺点的内容来自于 <https://en.wikipedia.org/wiki/Multithreading_(computer_architecture)>:
+> 为什么增加一句 `QApplication::processEvents()` 就能够解决问题呢，对比一下前后的流程图就能明白了:![](/img/qtbook/thread/process-events.png)
+
+通过这个简单的例子，我们知道了多线程的使用场景，**把耗时的操作放到一个新线程中取执行**，执行的状态通知 UI 线程显示给用户，不要让其阻塞用户界面，能够增加应用程序的响应，提高用户体验，下面介绍多线程的优点和缺点的内容来自于 <https://en.wikipedia.org/wiki/Multithreading_(computer_architecture)>，先从宏观上了解一下多线程:
 
 > **Advantages of Multithreading**
 >

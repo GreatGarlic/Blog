@@ -1,5 +1,5 @@
 ---
-title: 继承 QThread
+title: 继承 QThread 实现多线程
 date: 2017-10-29 12:09:15
 tags: QtBook
 ---

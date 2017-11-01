@@ -30,7 +30,7 @@ VS2013 中隐式链接使用 dll 一般有两种方法:
 
 * 使用 `#pragma` 引入 lib
 
-* 设置项目属性引入 lib<!--more-->
+* 设置 `项目属性` 引入 lib<!--more-->
 
 
 下面就以隐式链接使用 curl 的 dll 为例进行介绍，curl 存放在 `C:/libcurl`。
@@ -74,7 +74,7 @@ int _tmain(int argc, _TCHAR* argv[]) {
 
 把 libcurl.dll 复制到项目编译出的 exe 目录，运行项目，可以看到 curl 访问网络成功。
 
-## 二：设置项目属性引入 lib
+## 二：设置 `项目属性` 引入 lib
 
 在项目的名字上 `右键 > Properties`，在弹出的对话框中配置需要的 `头文件目录`、`lib 目录` 和  `lib 名字`：
 
