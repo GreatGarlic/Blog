@@ -8,7 +8,7 @@ Qt 中使用多线程，最简单直观的方法就是继承 `QThread`，重写 
 
 ##  实现线程
 
-仍以读取文本显示到 QTextEdit 为例，类 ReadingThread 继承 QThread，在 run() 方法中读取文件并添加到 QTextEdit。
+仍以读取文本显示到 QTextEdit 为例，类 ReadingThread 继承 QThread，在 `run()` 方法中读取文件并添加到 QTextEdit。
 
 ```cpp
 // 文件名: ReadingThread.h
@@ -62,7 +62,7 @@ void ReadingThread::run() {
 }
 ```
 
-<!--more-->在点击按钮的槽函数中启动线程:
+<!--more-->在点击开始读取按钮的槽函数中启动线程:
 
 ```cpp
 ReadingWidget::ReadingWidget(QWidget *parent) : QWidget(parent), ui(new Ui::ReadingWidget) {
