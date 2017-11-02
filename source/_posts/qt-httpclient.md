@@ -59,7 +59,7 @@ int main(int argc, char *argv[]) {
             qDebug().noquote() << response;
         });
 
-        // [[6]] 下载: 下载直接保存到文件
+        // [[6]] 下载: 直接保存到文件
         HttpClient("http://xtuer.github.io/img/dog.png").debug(true).download("/Users/Biao/Desktop/dog-1.png");
 
         // [[7]] 下载: 自己处理下载得到的字节数据
@@ -464,6 +464,7 @@ void HttpClient::upload(const QString &path,
                         std::function<void (const QString &)> successHandler,
                         std::function<void (const QString &)> errorHandler,
                         const char *encoding) {
+    bool debug = d->debug;
     QHttpMultiPart *multiPart = new QHttpMultiPart(QHttpMultiPart::FormDataType);
 
     // 创建 Form 表单的参数 Text Part
@@ -483,11 +484,18 @@ void HttpClient::upload(const QString &path,
 
     // 如果文件打开失败，则释放资源返回
     if(!file->open(QIODevice::ReadOnly)) {
-        if (NULL != errorHandler) {
-            errorHandler(QString("文件打开失败: %1").arg(file->errorString()));
-            multiPart->deleteLater();
-            return;
+        QString errorMessage = QString("打开文件失败[%2]: %1").arg(path).arg(file->errorString());
+
+        if (debug) {
+            qDebug().noquote() << errorMessage;
         }
+
+        if (NULL != errorHandler) {
+            errorHandler(errorMessage);
+        }
+
+        multiPart->deleteLater();
+        return;
     }
 
     // 文件上传的参数名为 file，值为文件名
@@ -497,7 +505,6 @@ void HttpClient::upload(const QString &path,
     filePart.setBodyDevice(file);
     multiPart->append(filePart);
 
-    bool debug    = d->debug;
     bool internal = d->manager == NULL;
     QNetworkRequest request        = HttpClientPrivate::createRequest(HttpClientPrivate::GET, d);
     QNetworkAccessManager *manager = internal ? new QNetworkAccessManager() : d->manager;
@@ -605,22 +612,22 @@ void HttpClientPrivate::handleFinish(bool debug,
                                      std::function<void (const QString &)> errorHandler,
                                      QNetworkReply *reply, QNetworkAccessManager *manager) {
     if (reply->error() == QNetworkReply::NoError) {
+        // 请求成功
         if (debug) {
             qDebug().noquote() << QString("[成功]请求结束: %1").arg(successMessage);
         }
 
         if (NULL != successHandler) {
-            successHandler(successMessage); // 请求成功
+            successHandler(successMessage);
         }
-    }
-
-    if (reply->error() != QNetworkReply::NoError) {
+    } else {
+        // 请求失败
         if (debug) {
-            qDebug().noquote() << QString("[成功]请求结束: %1").arg(errorMessage);
+            qDebug().noquote() << QString("[失败]请求结束: %1").arg(errorMessage);
         }
 
         if (NULL != errorHandler) {
-            errorHandler(errorMessage); // 请求失败
+            errorHandler(errorMessage);
         }
     }
 
