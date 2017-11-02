@@ -269,6 +269,20 @@ Http 访问测试工具。
 
 清空 Chrome 缓存、Cookie 等，然后刷新页面，前端开发的时候就能够方便的看到代码更新后的效果了。
 
+### Tiny Tools
+
+Tiny tools(迷你工具)是一个 Chrome 的扩展，其中包含了很多有用的工具，如 QR 码生成器，QR 码解码、翻译，时间戳转换，源格式，JSON 格式，图像 Base64 字符编码等等，访问 <https://gitee.com/karson/tinytools> 下载。
+
+**特色功能**:
+
+* 优先从剪贴板读取内容(支持文字和图片)，其次再读取浏览器当前页面的URL
+* 支持直接解码 QR 和生成图片 Base64
+* 支持识别 Unix 时间戳并生成相应的日期时间
+* 支持 CSS、Javascript、HTML、XML、SQL、JSON 代码格式化
+* 支持 Urlencode、Urldecode、Uniencode、Unidecode
+
+![](/img/mac/software/tiny-tools.png)
+
 ## Nodejs
 以下几个软件都是基于 Nodejs 开发的，使用 npm 进行安装。
 
