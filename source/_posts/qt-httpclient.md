@@ -80,7 +80,7 @@ int main(int argc, char *argv[]) {
         }
 
         // [[8]] 上传
-        HttpClient("http://localhost:8080/upload").upload("/Users/Biao/Pictures/ade.jpg");
+        HttpClient("http://localhost:8080/upload").debug(true).upload("/Users/Biao/Pictures/ade.jpg");
 
         // [[9]] 上传: 也能同时传参数
         HttpClient("http://localhost:8080/upload").debug(true)
@@ -126,6 +126,7 @@ class HttpClientPrivate;
  * 在执行请求前可调用 header() 设置请求头，参数使用 Form 表单的方式传递则调用 param()，如果参数使用 request body
  * 传递则调用 json() 设置参数(当然也可以不是 JSON 格式，使用 request body 的情况多数是 RESTful 时，大家都是用 JSON 格式，故命名为 json)。
  * 默认 HttpClient 会创建一个 QNetworkAccessManager，如果不想使用默认的，调用 manager() 传入即可。
+ * 默认不输出请求的网址参数等调试信息，如果需要输出，调用 debug(true) 即可。
  */
 class HttpClient {
 public:
@@ -278,7 +279,7 @@ public:
 
     // HTTP 请求的类型
     enum HttpMethod {
-        GET, POST, PUT, DELETE
+        GET, POST, PUT, DELETE, UPLOAD /* 不是 HTTP Method，只是为了上传时特殊处理而定义的 */
     };
 
     /**
@@ -506,7 +507,7 @@ void HttpClient::upload(const QString &path,
     multiPart->append(filePart);
 
     bool internal = d->manager == NULL;
-    QNetworkRequest request        = HttpClientPrivate::createRequest(HttpClientPrivate::GET, d);
+    QNetworkRequest request        = HttpClientPrivate::createRequest(HttpClientPrivate::UPLOAD, d);
     QNetworkAccessManager *manager = internal ? new QNetworkAccessManager() : d->manager;
     QNetworkReply *reply           = manager->post(request, multiPart);
 
@@ -568,29 +569,34 @@ QString HttpClientPrivate::readReply(QNetworkReply *reply, const char *encoding)
 }
 
 QNetworkRequest HttpClientPrivate::createRequest(HttpMethod method, HttpClientPrivate *d) {
-    bool get = method == HttpMethod::GET;
+    bool get      = method == HttpMethod::GET;
+    bool upload   = method == HttpClientPrivate::UPLOAD;
+    bool postForm = !get && !upload && !d->useJson;
+    bool postJson = !get && !upload &&  d->useJson;
 
     // 如果是 GET 请求，并且参数不为空，则编码请求的参数，放到 URL 后面
     if (get && !d->params.isEmpty()) {
         d->url += "?" + d->params.toString(QUrl::FullyEncoded);
     }
 
-    // 输出调试信息
+    // 调试时输出网址和参数
     if (d->debug) {
         qDebug().noquote() << "网址:" << d->url;
 
-        if (!get && d->useJson) {
+        if (postJson) {
             qDebug().noquote() << "参数:" << d->json;
-        } else if (!get && !d->useJson) {
+        } else if (postForm) {
+            qDebug().noquote() << "参数:" << d->params.toString();
+        } else if (upload) {
             qDebug().noquote() << "参数:" << d->params.toString();
         }
     }
 
     // 如果是 POST 请求，useJson 为 true 时添加 Json 的请求头，useJson 为 false 时添加 Form 的请求头
-    if (!get && !d->useJson) {
+    if (postForm) {
         d->headers["Content-Type"] = "application/x-www-form-urlencoded";
-    } else if (!get && d->useJson) {
-        d->headers["Accept"] = "application/json; charset=utf-8";
+    } else if (postJson) {
+        d->headers["Accept"]       = "application/json; charset=utf-8";
         d->headers["Content-Type"] = "application/json";
     }
 
