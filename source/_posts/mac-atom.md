@@ -28,6 +28,7 @@ Atom 以前很慢，所以一直不想用，在 1.0 版本后启动差不多需�
 | tree-view-open-files           | Show open files in a list above the tree view. |
 | less-autocompile               | 保存的时候把 Less 自动编译为 CSS                    |
 | sublime-style-column-selection | 列编辑                                      |
+| symbols-view-plus              | Atom 自带的 symbols-view 的增强版               |
 | OOOOOOOOOOOOOOOO               | OOO                                      |
 
 ## 快捷键
