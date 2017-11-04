@@ -263,6 +263,7 @@ tags: Index
 * [升级 Xcode8 后 Qt 出错](/qt-xcode8-error)
 * [去掉 Windows 中控件的虚线框](/qt-no-focus-rect)
 * [字节序 Endian](/java-endian)
+* [测试 Graphics View 的效率](/qt-graphics-view-performance)
 * [线程一调用线程二中函数的正确姿势](/qtbook-thread-call-in-different-thread)
 * [自定义 QListView](/qt-listview)
 * [观察者模式的 NotificationCenter](/qt-notification-center)

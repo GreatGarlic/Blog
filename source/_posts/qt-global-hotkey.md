@@ -64,10 +64,10 @@ Widget::Widget(QWidget *parent) : QWidget(parent), ui(new Ui::Widget) {
 
    > 有很直很直的同学估计会直接复制粘贴 `include(${QHotKey-lib-Path}/qhotkey.pri)` 到 pro 文件里，编译报错。说明一下吧，`${QHotKey-lib-Path}` 指的是 QHotkey 文件存放的路径，因为每个人保存的目录都不一样，所以用变量的样子来表示啦。
 
-QHotkey 不但可以使用源文件的方式引入到项目中，还可以编译成动态链接库再使用：
+QHotkey 不仅可以使用源文件的方式引入到项目中，还可以编译成动态链接库再使用：
 
 1. Qt Creator 中打开 `${QHotKey-lib-Path}/QHotkey/QHotkey.pro` 
-2. 编译，Mac 下编译后得到下面的这些库文件，并把头文件复制到一起(Windows 的参考这个就可以了，只是动态库的名字不一样而已)
+2. 编译，Mac 下编译后得到下面的这些库文件，并把头文件复制到一起(Windows 的参考这个就可以了，只是动态链接库的名字不一样而已)
 
    ```
    QHotkey
@@ -93,5 +93,5 @@ QHotkey 不但可以使用源文件的方式引入到项目中，还可以编译
    ├── libQHotkey.1.dylib -> libQHotkey.1.2.1.dylib
    └── libQHotkey.dylib -> libQHotkey.1.2.1.dylib
    ```
-5. 运行，测试全局快捷键是否生效，如无操作失误，一切都在掌握之中
+5. 运行，测试全局快捷键是否生效，如无操作失误，一切尽在掌握之中
 

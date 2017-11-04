@@ -73,8 +73,11 @@ public void downloadPaper(@PathVariable String paperId, HttpServletResponse resp
     try {
         Paper paper = paperMapper.findPaperByPaperId(paperId);
         String filename = new String(paper.getOriginalName().getBytes("UTF-8"), "ISO8859_1"); // 解决乱码问题
+        // You must tell the browser the file type you are going to send
+        // for example application/pdf, text/plain, text/html, image/jpg
         response.setContentType("application/octet-stream"); // 以流的形式下载文件
-        response.setHeader("Content-Disposition", "attachment;filename=" + filename);
+        response.setHeader("Content-Disposition", "attachment;filename=" + filename); // 下载保存时的文件名
+        // response.setContentLength(length); // [可选] 设置文件的大小，浏览器就能够知道下载进度条了
 
         in = new FileInputStream(paperService.getPaperFile(paper));
         out = response.getOutputStream();
