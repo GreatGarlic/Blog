@@ -64,12 +64,12 @@ Qt Creator 中创建工程的步骤如下:
    2. 点击 `Choose...`
    3. 输入工程名 `SharedLibraryTest` 然后创建
 2. 创建工程 MyLibrary:
-   1. `File > New File or Project... > Library > C++ Library`
+   1. `工程 SharedLibraryTest 上右键 > New Subproject... > Library > C++ Library`
    2. 点击 `Choose...`
    3. 选择 Type 为 `Shared Library`
    4. 输入工程名 `MyLibrary` 然后创建
 3. 创建工程 MyProject:
-   1. `File > New File or Project... > Application > Qt Console Application`
+   1. `工程 SharedLibraryTest 上右键 > New Subproject... > Application > Qt Console Application`
    2. 点击 `Choose...`
    3. 输入工程名 `MyProject` 然后创建
 
