@@ -290,6 +290,7 @@ tags: Index
 * [九宫格绘图](/qtbook-paint-nine-patch-painter)
 * [使用 QChart 创建平滑曲线](/qtbook-paint-smooth-curve-qchart)
 * [使用 QChart 显示实时动态曲线](/qtbook-paint-realtime-curve-qchart)
+* [创建使用动态链接库](/qtbook-misc-shared-library)
 * [加载 QSS](/qtbook-qss-load)
 * [单例](/qtbook-singleton)
 * [单例的其他实现](/qtbook-singleton-6-other)

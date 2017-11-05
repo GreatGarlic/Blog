@@ -47,7 +47,7 @@ OpenResty 的安装很方便，Mac 里使用 brew 安装，对于一些常见的
      }
      ```
 
-  2. `nginx -t` 测试配置没问题，然后 `nginx -s reload` 重新加载配置 (`nginx -s stop` 关闭 Nginx)
+  2. `sudo nginx -t` 测试配置没问题，然后 `sudo nginx -s reload` 重新加载配置 (`sudo nginx -s stop` 关闭 Nginx)
 
   3. `curl http://localhost/lua` 输出 **hello world** 则说明 Nginx 支持 Lua
 
