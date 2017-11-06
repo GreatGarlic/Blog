@@ -4,8 +4,13 @@ date: 2016-04-03 17:49:00
 tags: Hexo
 ---
 
-Welcome to [Hexo](https://hexo.io/)!   
-This is your very first post. Check [documentation](https://hexo.io/docs/) for more info. If you get any problems when using Hexo, you can find the answer in [troubleshooting](https://hexo.io/docs/troubleshooting.html) or you can ask me on [GitHub](https://github.com/hexojs/hexo/issues).
+使用 [Hexo](https://hexo.io) 来搭建自己的个人静态博客:
+
+1. Markdown 写博客
+2. Hexo 生成 HTML
+3. Hexo 发布 HTML 到 Github Pages
+
+> 既然是静态博客，那么就没有后台了，留言功能可以使用第三方的服务，例如畅言。
 
 <!--more-->
 
@@ -17,8 +22,9 @@ Hexo 需要 Node
 
 > Node 就是 Node.js
 
-## 使用 Node 的淘宝镜像
-由于网络的问题，访问 Node 的默认仓库有可能会有问题，很多东西都下载不下来，所以可以使用淘宝的 Node 的镜像，命令行里执行 
+### 使用 Node 的淘宝镜像
+
+由于网络的问题，访问 Node 的默认仓库有可能会很慢，很多东西都下载不下来，可以使用淘宝的 Node 的镜像，命令行里执行 
 
 ```
 npm install -g cnpm --registry=https://registry.npm.taobao.org
@@ -26,12 +32,11 @@ npm install -g cnpm --registry=https://registry.npm.taobao.org
 即可，具体可参考 <http://npm.taobao.org>
 
 ## Install Github Client
+
 Hexo 和 Github 一起使用就可以搭建一个免费的博客网站
 
-* Mac 安装 Github 客户端，进入 <https://desktop.github.com> 下载客户端
-* Windows 安装 Github 客户端，如果在线安装的话，由于网络的问题绝大多数时候都会安装失败，所以可以使用其他人提供的离线安装包，知乎这个帖子有好多个可选择 <https://www.zhihu.com/question/23110947>
-
-> 提示: 安装 Github 客户端后，下面的操作最好是在 `Git Shell` 中进行，因为后面要用到 Git 的命令。Windows 中 安装 GitHub 客户端后会在桌面会创建一个 `Git Shell` 的快捷方式，或者 `开始菜单 > 所有程序 > GitHub, Inc > Git Shell`
+* 如果没有安装 Git，需要安装一下
+* 到 <https://desktop.github.com> 下载 Github 客户端
 
 ## Install Hexo and initialize Pages
 ```
@@ -50,11 +55,7 @@ $ hexo new "My New Post"
 
 ## Run server
 
-本地运行我们的博客系统，方便查看效果，运行 `hexo server` 后浏览器里访问 [http://127.0.0.1:4000](http://127.0.0.1:4000) 就可以了
-
-``` bash
-$ hexo server
-```
+写好文章后，先在本地看一下效果，如果满意再发布。进入博客目录，运行 `hexo server` 后浏览器里访问 [http://127.0.0.1:4000](http://127.0.0.1:4000) 就可以了。
 
 ## Generate static files
 
@@ -64,8 +65,8 @@ $ hexo generate
 
 ## Deploy to git
 
-*   在 Github 创建一个名字为 `xtuer.github.io` 的仓库
-*   我们博客的网站自动为 <http://xtuer.github.io>
+*   如你在 Github 的名字为 xtuer，在 Github 创建一个名字为 `xtuer.github.io` 的仓库(xtuer 修改为你的 Github 名字)
+*   我们博客的网站地址自动为 <http://xtuer.github.io>
 *   安装 hexo 的 git 插件
 
     ```shell
@@ -80,7 +81,7 @@ $ hexo generate
         repo: git@github.com:xtuer/xtuer.github.io.git
     ```
 
-*   发布时需要执行下面三步
+*   发布时需要执行下面三条命令
 
     ```shell
     $ hexo clean
@@ -94,6 +95,8 @@ $ hexo generate
 More info: [Deployment](https://hexo.io/docs/deployment.html)
 
 ## Use tag
+Tag 是用来对文章进行分类的:
+
 * One tag: `tags: Programming`
 * Multi tags: `tags: [Programming, Java, Spring]`
 
