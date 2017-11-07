@@ -37,7 +37,10 @@ class MYLIBRARY_SHARED_SYMBOL Calculator {
 };
 ```
 
-动态链接库工程的 pro 文件中添加 `DEFINES += MYLIBRARY_LIBRARY`，编译的时候 `MYLIBRARY_SHARED_SYMBOL` 被替换为 `Q_DECL_EXPORT`，使用此动态链接库的工程的 pro 文件中千万不要加 `DEFINES += MYLIBRARY_LIBRARY`，编译的时候 `MYLIBRARY_SHARED_SYMBOL` 就被替换为 `Q_DECL_IMPORT`，达到了在导出和导入时使用同一个头文件的目的。<!--more-->
+> 为了达到了在导出和导入时使用同一个头文件的目的:
+>
+> * 生成动态链接库工程的 pro 文件中添加 `DEFINES += MYLIBRARY_LIBRARY`，在编译的时候 `MYLIBRARY_SHARED_SYMBOL` 就会被替换为 `Q_DECL_EXPORT`
+> * 使用动态链接库工程的 pro 文件中千万不要加 `DEFINES += MYLIBRARY_LIBRARY`，编译的时候 `MYLIBRARY_SHARED_SYMBOL` 就会被替换为 `Q_DECL_IMPORT`<!--more-->
 
 说了这么多，还是不知道 Qt 中怎么创建和使用动态链接库，下面就以使用子工程的方式介绍创建和使用动态链接库，工程结构如下:
 

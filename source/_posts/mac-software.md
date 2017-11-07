@@ -320,3 +320,18 @@ Tiny tools(迷你工具)是一个 Chrome 的扩展，其中包含了很多有用
 
   ![](/img/mac/software/gtop.png)
 
+
+## rmtrash
+
+终端使用 rm 删除的文件不会放到回收站，删除后很难找回来，使用 rmtrash 删除的文件会被放到回收站，是手残党的福音啊。可以使用 brew 安装 ：
+
+```
+brew install rmtrash
+```
+
+然后给它设置 alias 为 rm，使用 rm 就是调用 rmtrash 进行删除文件了:
+
+```
+alias rm="rmtrash"
+```
+
