@@ -22,8 +22,8 @@ HTML5 中也能使用 MQTT：
    <body>
        <script src="./browserMqtt.js"></script>
        <script>
-           // 虽然使用的是 MQTT，但底层还是使用 WebSocket 实现的，所以这里的端口需要使用 ActiveMQ 里 WS 的端口，而不是 MQTT 的端口 1883
-           var client = mqtt.connect('ws://127.0.0.1:61616'); // you add a ws:// url here
+           // 虽然使用的是 MQTT，但底层还是使用 WebSocket 实现的，所以这里的端口需要使用 ActiveMQ 里 WS 的端口 61614，而不是 MQTT 的端口 1883
+           var client = mqtt.connect('ws://127.0.0.1:61614'); // you add a ws:// url here
            client.subscribe('foo'); // 订阅 Topic
 
            client.on('message', function(topic, payload) {
