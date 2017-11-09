@@ -300,6 +300,14 @@ public:
     };
 
     /**
+     * @brief 获取 Manager，如果使用传入的 manager 则返回此 manager，否则新创建一个 manager
+     * @param d        HttpClientPrivate 的对象
+     * @param internal 使用传入的 manager 则 interval 被设置为 false，创建新的 manager 则设置 interval 为 true
+     * @return 返回 QNetworkAccessManager 对象
+     */
+    static QNetworkAccessManager* getManager(HttpClientPrivate *d, bool *internal);
+
+    /**
      * @brief 使用用户设定的 URL、请求头等创建 Request
      * @param d      HttpClientPrivate 的对象
      * @param method 请求的类型
@@ -437,7 +445,7 @@ void HttpClient::remove(std::function<void (const QString &)> successHandler,
 void HttpClient::download(const QString &destinationPath,
                           std::function<void (const QString &)> successHandler,
                           std::function<void (const QString &)> errorHandler) {
-    bool debug  = d->debug;
+    bool  debug = d->debug;
     QFile *file = new QFile(destinationPath);
 
     if (file->open(QIODevice::WriteOnly)) {
@@ -473,11 +481,11 @@ void HttpClient::download(const QString &destinationPath,
 void HttpClient::download(std::function<void (const QByteArray &)> readyRead,
                           std::function<void (const QString &)> successHandler,
                           std::function<void (const QString &)> errorHandler) {
-    bool debug    = d->debug;
-    bool internal = d->manager == NULL;
-    QNetworkRequest request        = HttpClientPrivate::createRequest(d, HttpClientPrivate::GET);
-    QNetworkAccessManager *manager = internal ? new QNetworkAccessManager() : d->manager;
-    QNetworkReply *reply           = manager->get(request);
+    bool debug = d->debug;
+    bool internal;
+    QNetworkAccessManager *manager = HttpClientPrivate::getManager(d, &internal);
+    QNetworkRequest        request = HttpClientPrivate::createRequest(d, HttpClientPrivate::GET);
+    QNetworkReply           *reply = manager->get(request);
 
     // 有数据可读取时回调 readyRead()
     QObject::connect(reply, &QNetworkReply::readyRead, [=] {
@@ -565,10 +573,10 @@ void HttpClientPrivate::upload(HttpClientPrivate *d,
         multiPart->append(dataPart);
     }
 
-    bool internal = d->manager == NULL;
-    QNetworkRequest request        = HttpClientPrivate::createRequest(d, HttpClientPrivate::UPLOAD);
-    QNetworkAccessManager *manager = internal ? new QNetworkAccessManager() : d->manager;
-    QNetworkReply *reply           = manager->post(request, multiPart);
+    bool internal;
+    QNetworkAccessManager *manager = HttpClientPrivate::getManager(d, &internal);
+    QNetworkRequest        request = HttpClientPrivate::createRequest(d, HttpClientPrivate::UPLOAD);
+    QNetworkReply           *reply = manager->post(request, multiPart);
 
     QObject::connect(reply, &QNetworkReply::finished, [=] {
         multiPart->deleteLater(); // 释放资源: multiPart + file
@@ -586,11 +594,11 @@ void HttpClientPrivate::executeQuery(HttpClientPrivate *d, HttpMethod method,
                                      std::function<void (const QString &)> errorHandler,
                                      const char *encoding) {
     // 如果不使用外部的 manager 则创建一个新的，在访问完成后会自动删除掉
-    bool debug    = d->debug;
-    bool internal = d->manager == NULL;
-    QNetworkRequest request        = HttpClientPrivate::createRequest(d, method);
-    QNetworkAccessManager *manager = internal ? new QNetworkAccessManager() : d->manager;
-    QNetworkReply *reply           = NULL;
+    bool debug = d->debug;
+    bool internal;
+    QNetworkAccessManager *manager = HttpClientPrivate::getManager(d, &internal);
+    QNetworkRequest        request = HttpClientPrivate::createRequest(d, method);
+    QNetworkReply           *reply = NULL;
 
     switch (method) {
     case HttpClientPrivate::GET:
@@ -615,6 +623,11 @@ void HttpClientPrivate::executeQuery(HttpClientPrivate *d, HttpMethod method,
         HttpClientPrivate::handleFinish(debug, successMessage, errorMessage, successHandler, errorHandler,
                                         reply, internal ? manager : NULL);
     });
+}
+
+QNetworkAccessManager* HttpClientPrivate::getManager(HttpClientPrivate *d, bool *internal) {
+    *internal = d->manager == NULL;
+    return *internal ? new QNetworkAccessManager() : d->manager;
 }
 
 QNetworkRequest HttpClientPrivate::createRequest(HttpClientPrivate *d, HttpMethod method) {
