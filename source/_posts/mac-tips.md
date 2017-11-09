@@ -250,3 +250,9 @@ cp -r srcDir/ destDir
 ls `npm root -g`
 ```
 
+## 删除所有 Vmware 的进程
+
+```
+kill -9 `ps aux | grep -i vmware | grep -v grep | awk '{print $2}'`
+```
+

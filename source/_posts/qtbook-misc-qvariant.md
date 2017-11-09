@@ -1,5 +1,5 @@
 ---
-title: 自定义类与 QVariant
+title: 自定义类型与 QVariant
 date: 2017-03-18 11:18:33
 tags: QtBook
 ---

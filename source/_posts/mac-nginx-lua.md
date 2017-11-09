@@ -8,7 +8,7 @@ Nginx 支持 Lua 需要安装 lua-nginx-module 模块，一般常用有 2 种方
 
 * 编译 Nginx 的时候带上 lua-nginx-module 模块一起编译
 
-* 使用 OpenResty: Nginx + 一些模块，默认启用了 Lua 支持
+* 使用 OpenResty: Nginx + 一些模块，默认启用了 Lua 支持(推荐使用此方式)
 
   > [OpenResty](https://openresty.org/cn/openresty.html) is just an enhanced version of [Nginx](https://openresty.org/cn/nginx.html) by means of addon modules anyway. You can take advantage of all the exisitng goodies in the [Nginx](https://openresty.org/cn/nginx.html) world.
   >
@@ -28,13 +28,13 @@ OpenResty 的安装很方便，Mac 里使用 brew 安装，对于一些常见的
 
 * 终端执行 `brew install homebrew/nginx/openresty` 把 OpenResty 安装到 **/usr/local/Cellar/openresty**
 
-* 终端执行 `openresty -V` 可以从输出信息中发现 Nginx 的配置文件为 **/usr/local/etc/openresty/nginx.conf**
+* 配置文件位于 **/usr/local/etc/openresty/nginx.conf** (可执行 `openresty -V` 从输出中找到)
 
 * 启动 Nginx，2 种启动方式都可以
 
   * `sudo openresty` (openresty 其实就是 nginx 的软连接)
   * `sudo nginx` (把 /usr/local/Cellar/openresty/1.11.2.5/nginx/sbin 添加到 PATH 里，注意不同版本时的路径不同)
-  * 查看是否启动了 nginx: `ps -ef | grep nginx`
+  * 查看是否启动了 nginx: `ps aux | grep nginx`
 
 * 测试是否支持 Lua
 

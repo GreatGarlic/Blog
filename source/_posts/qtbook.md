@@ -88,12 +88,12 @@ tags: [QtBook, Index]
   * [单例的模版＋宏的实现](/qtbook-singleton-5-template-macro)
   * [单例的其他实现](/qtbook-singleton-6-other)
 * 其他
-  * [自定义类与 QVariant](/qtbook-misc-qvariant)
   * [qmake 时复制文件](/qtbook-misc-qmake-copy-file)
   * [Single Application](/qtbook-misc-single-application)
   * [Qt5 中文乱码](/qtbook-misc-messy-code)
   * [实用正则表达式](/qtbook-misc-regex)
   * [Qt 程序简单打包](/qtbook-misc-deploy)
   * [创建使用动态链接库](/qtbook-misc-shared-library)
+  * [自定义类型与 QVariant](/qtbook-misc-qvariant)
 
 
