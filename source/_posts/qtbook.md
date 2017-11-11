@@ -62,7 +62,7 @@ tags: [QtBook, Index]
 * [多线程编程](/qtbook-thread)
   * [继承 QThread 实现多线程](/qtbook-thread-inheritance)
   * [线程一调用线程二中函数的正确姿势](/qtbook-thread-call-in-different-thread)
-  * 线程池 QThreadPool
+  * [线程池 QThreadPool](/qtbook-thread-pool)
   * 同步
     * QMutex
     * QMutexLocker
