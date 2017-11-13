@@ -33,7 +33,7 @@ tags: QtBook
 
 // 使用 MYLIBRARY_SHARED_SYMBOL 声明符号，编译时会根据条件替换为 Q_DECL_EXPORT 或者 Q_DECL_IMPORT
 class MYLIBRARY_SHARED_SYMBOL Calculator {
-   ...
+    ...
 };
 ```
 

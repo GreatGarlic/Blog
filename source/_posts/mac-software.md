@@ -243,6 +243,18 @@ draw.io 是一个发展了很多年的免费绘图软件，可以绘制流程图
 
 ![](/img/mac/software/draw.io.png)
 
+## Grapher
+
+Mac 自带软件，用于绘制各种曲线，曲线公式为 y = condition ? expression，condition 部分限制 x, y 的作用域，可以设置曲线的颜色，线宽等:
+
+![](/img/mac/software/grapher.png)
+
+## Desmos
+
+在线绘制曲线工具
+
+![](/img/mac/software/desmos.png)
+
 ## Chrome
 
 以下几个软件都是 Chrome 的插件，可以在 Chrome 的扩展中心安装，或者百度搜索下载然后安装。
