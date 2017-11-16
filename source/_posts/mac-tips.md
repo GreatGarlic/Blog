@@ -1,6 +1,6 @@
 ---
 title: Mac Tips
-date: 2016-07-02 16:16:18
+date: 2016-04-08 16:16:18
 tags: Mac
 ---
 
@@ -254,5 +254,17 @@ ls `npm root -g`
 
 ```
 kill -9 `ps aux | grep -i vmware | grep -v grep | awk '{print $2}'`
+```
+
+## 去掉截图阴影
+
+```
+defaults write com.apple.screencapture disable-shadow -bool true ; killall SystemUIServer
+```
+
+## 更新文件的图标
+
+```
+sudo rm -rfv /Library/Caches/com.apple.iconservices.store; sudo find /private/var/folders/ \( -name com.apple.dock.iconcache -or -name com.apple.iconservices \) -exec rm -rfv {} \; ; sleep 3;sudo touch /Applications/* ; killall Dock; killall Finder
 ```
 

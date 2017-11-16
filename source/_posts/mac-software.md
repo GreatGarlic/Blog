@@ -251,7 +251,7 @@ Mac 自带软件，用于绘制各种曲线，曲线公式为 y = condition ? ex
 
 ## Desmos
 
-在线绘制曲线工具
+在线绘制曲线工具: <https://www.desmos.com/calculator>
 
 ![](/img/mac/software/desmos.png)
 
