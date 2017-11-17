@@ -239,6 +239,15 @@ SOURCES += main.cpp
 
 `INCLUDEPATH += $$PWD/../MyLibrary` 添加 `MyLibrary` 的路径到包含目录中，使用的时候就可以  `include <Calculator.h>` 这样包含头文件了， `LIBS += -L$$OUT_PWD/../bin - lMyLibrary` 则是引入工程 MyLibrary 生成的动态链接库。
 
+**很多人奇怪，-L 和 -l 到底是啥？**
+
+* `-L` 指定动态链接库所在文件夹
+* `-l` 指定动态链接库的名字，不需要指定库的前缀和后缀，Qt 会为自动识别，因为不同的系统动态链接库的前缀和后缀都不同，例如 Mac 中前缀为 lib，后缀为 .dylib，而 Windows 中前缀为空，后缀为 .dll
+* 如果不使用 -L 和 -l，直接使用 `LIBS += 动态链接库的绝对路径或相对路径` 也是可以的，例如 `LIBS += C:/curl/bin/curl.dll`
+* 还能使用通配符一次导入多个库，如 `LIBS += C:/curl/bin/*.dll`，当有 20 个 dll 要导入时，通配符的方式就很省事了
+
+## 运行程序
+
 编译、运行工程，控制台输出:
 
 > work() -> doWork()
