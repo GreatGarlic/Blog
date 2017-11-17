@@ -22,7 +22,7 @@ tags: QtBook
 
 ## 设置快捷键
 
-默认的快捷键不喜欢不顺手，不好记，没关系，可以自己设置
+默认的快捷键不喜欢不顺手，不好记，没关系，可以自己设置。先选中要设置快捷键的项，然后点击 `Record` 按钮，按下想要的快捷键，再按下 `Stop Recording` 按钮即可，如要恢复默认的快捷键，点击 `Reset` 按钮
 
 ![](/img/qtbook/qtcreator/qtcreator-shortcut.png)
 

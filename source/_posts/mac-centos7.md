@@ -22,7 +22,9 @@ tags: Mac
 
 * yum install net-tools (安装后才能使用 ifconfig 等)
 
-* tar 解压 tar.gz: `tar xf filename.tar.gz` <!--more-->
+* tar 解压 tar.gz: `tar xf filename.tar.gz` 
+
+* 安装 tree: `yum install tree`<!--more-->
 
 ## 安装 Java
 
