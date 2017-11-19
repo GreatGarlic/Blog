@@ -25,6 +25,7 @@ tags: [QtBook, Index]
   * [渐变及原理](/qtbook-paint-gradient/)
   * [Pixmap](/qtbook-paint-pixmap/)
   * [QPainter 的状态保存与恢复](/qtbook-paint-status/)
+  * [拖拽鼠标画矩形](/qtbook-paint-mouse-selection/)
   * [用画家的思维绘制图形](/qtbook-paint-artist/)
   * [绘制平滑曲线](/qtbook-paint-smooth-curve/)
   * [实时动态曲线](/qtbook-paint-realtime-curve/)

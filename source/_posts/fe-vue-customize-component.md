@@ -131,10 +131,7 @@ Parent 使用 **props** 给 children 组件传递数据:
         });
 
         new Vue({
-            el: '#app-one',
-            data: {
-                buttonText: '按钮'
-            }
+            el: '#app-one'
         });
     </script>
 </body>

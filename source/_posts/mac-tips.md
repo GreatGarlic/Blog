@@ -75,6 +75,9 @@ echo 1 2 3 4 5 | awk '{ print $1 }'
 
 // 输出第三列到最后一列
 echo 1 2 3 4 5 | awk '{ for (i=3; i<=NF; i++) print $i }'
+
+// 列求和
+cat m.txt | awk '{a+=$1}END{print a}'
 ```
 
 ## sort & uniq
