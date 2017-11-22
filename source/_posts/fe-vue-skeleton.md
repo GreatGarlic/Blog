@@ -66,7 +66,7 @@ tags: [FE, Vue]
 
    > 我喜欢使用 4 个空格来缩进，Airbnb 默认是 2 个，很多前端的都喜欢使用 2 个进行缩进，为了简单起见，不让空格的个数造成编译时错误，关闭掉它即可。
 
-7. 编辑器使用 4 个空格缩进，修改 **.editorcongif**
+7. 编辑器使用 4 个空格缩进，修改 **.editorcong**
 
    ```
    indent_size = 4
@@ -101,12 +101,19 @@ tags: [FE, Vue]
     > * 进入 dist 目录
     > * browser-sync start --server
 
+## 主要文件介绍
+
+* **main.js:** 注册主界面，路由文件等，引入 iview 等其他库
+* **App.vue:** 程序的主界面，其中 `<router-view/>` 是被 component 替换的地方
+* **router/index.js:** 路由文件，注册每个组件的路径(src/components 下 .vue 文件)
+* **components:** 一般自定义页面、组件的 vue 文件放此文件下
+
 ## 新建 component
 
 1. 在 **src/components** 中创建文件 **Foo.vue**
 
    ```html
-   <template id="">
+   <template>
        <div class="foo">
            <span>{{msg}}</span>
        </div>
@@ -131,6 +138,7 @@ tags: [FE, Vue]
        }
    </style>
    ```
+   > export 导出一个对象，data() {} 是 ES6 定义类的函数的新方式。
 
 2. 在 **src/router/index.js** 中注册 component
 
@@ -170,7 +178,7 @@ tags: [FE, Vue]
            </div>
 
            <div class="main">
-               <router-view></router-view>
+               <router-view/>
            </div>
        </div>
    </template>
@@ -210,7 +218,7 @@ tags: [FE, Vue]
    </style>
    ```
 
-   > `<router-view></router-view>`  就是被 component 替换的地方
+   > `<router-view/>`  就是被 component 替换的地方
 
 ## 引用静态文件
 

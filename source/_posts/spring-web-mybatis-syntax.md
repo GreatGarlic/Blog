@@ -455,6 +455,8 @@ SQL 使用时特殊字符有 `<` 和 `>`，可以使用 `<![CDATA[ ]]>` 把 SQL 
 </resultMap>
 ```
 
+> collection 比 association 多一个 ofType。
+
 ## resultType 和 resultMap
 
 resultType 是指已有类型，例如 int, string, class User 等，SQL 查询得到的列会自动的映射到对应的类型或者其属性上。

@@ -84,3 +84,7 @@ update() 和 repaint() 都会调用 paintEvent() 刷新界面，不过它们有�
 > We suggest only using repaint() if you need an immediate repaint, for example during animation. In almost all circumstances update() is better, as it permits Qt to optimize for speed and minimize flicker.
 >
 > **Warning:** If you call repaint() in a function which may itself be called from paintEvent(), you may get infinite recursion. The update() function never causes recursion.
+
+## 思考
+
+知道了怎么实现拖拽鼠标画矩形，那么想一下，怎么实现拖拽鼠标画出鼠标移动的轨迹呢，甚至多次点击鼠标怎么连成折线呢？
