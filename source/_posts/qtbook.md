@@ -53,6 +53,7 @@ tags: [QtBook, Index]
   * [数据库连接池](/qtbook-db-connection-pool)
   * [数据库访问工具 DBUtl](/qtbook-db-util)
 * 自定义 Widget
+  * [自定义 Widget 使用 QSS](/qt-widget-enable-stylesheet)
   * [实现 Steps 路径样式](/qt-widget-steps)
   * [按下鼠标移动窗口](/qt-widget-drag-to-move-window)
 * 动画

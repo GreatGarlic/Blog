@@ -328,6 +328,7 @@ tags: Index
 * [绘图基础](/qtbook-paint-base)
 * [继承 QThread 实现多线程](/qtbook-thread-inheritance)
 * [网络编程](/qtbook-network)
+* [自定义 Widget 使用 QSS](/qt-widget-enable-stylesheet)
 * [自定义类型与 QVariant](/qtbook-misc-qvariant)
 * [蚂蚁线](/qtbook-paint-ant)
 * [襁褓中的系统界面](/qtbook-paint-osui)
