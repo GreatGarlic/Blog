@@ -22,6 +22,7 @@ tags: Index
 * [MySQL 命令行客户端 MyCLI](/mysql-mycli)
 * [MySQL 基于条件判断的数据插入](/db-insert-conditional)
 * [MySQL 导入导出 CSV](/mysql-csv)
+* [MySQL 导入导出 SQL 文件](/mysql-impex)
 * [允许其他机器访问 MySQL](/mysql-wan)
 
 ## FE
