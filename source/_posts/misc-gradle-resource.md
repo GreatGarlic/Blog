@@ -19,25 +19,26 @@ tags: [Misc, Gradle]
 
     <!-- Data Source using DBCP. -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
-        <property name="driverClassName" value="@jdbc.driverClassName@" />
-        <property name="url" value="@jdbc.url@" />
-        <property name="username" value="@jdbc.username@" />
-        <property name="password" value="@jdbc.password@" />
+        <property name="driverClassName" value="@database.driverClassName@" />
+        <property name="url"      value="@database.url@" />
+        <property name="username" value="@database.username@" />
+        <property name="password" value="@database.password@" />
         ...
     </bean>
 </beans>
 
 ```
 
-`@jdbc.username@`, `@jdbc.password@` 等是占位符，Gradle 会将其替换掉。
+`@database.username@`, `@database.password@` 等是占位符，Gradle 会将其替换掉。
 
 ## 2. 定义不同环境下的配置 `config.groovy`
+
 `config.groovy` 和 `build.gradle` 在同一个目录下，定义了不同环境下的配置信息
 
 ```java
 environments {
     development { // 开发环境
-        jdbc {
+        database {
             driverClassName = 'com.mysql.jdbc.Driver'
             url = 'jdbc:mysql://localhost:3306/survey?useUnicode=true&amp;characterEncoding=UTF-8'
             username = 'root'
@@ -46,7 +47,7 @@ environments {
     }
 
     production { // 线上环境
-        jdbc {
+        database {
             driverClassName = 'com.mysql.jdbc.Driver'
             url = 'jdbc:mysql://localhost:3306/survey?useUnicode=true&amp;characterEncoding=UTF-8'
             username = 'root'
@@ -87,7 +88,7 @@ processResources {
 > Use the `ConfigSlurper` to read in properties for our project. The ConfigSlurper supports environments where we can define values for properties per environment.
 
 ## 4. 打包
-1. `gradle build` 或者 `gradle -Denv=development build` 生成 `开发环境` 下的配置并打包
+1. `gradle clean build` 或者 `gradle clean -Denv=development build` 生成 `开发环境` 下的配置并打包
 
     ```xml
     <?xml version="1.0" encoding="UTF-8"?>
@@ -96,21 +97,21 @@ processResources {
            xsi:schemaLocation="
                 http://www.springframework.org/schema/beans
                 http://www.springframework.org/schema/beans/spring-beans.xsd">
-    
+
         <!-- Data Source using DBCP. -->
         <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
             <property name="driverClassName" value="com.mysql.jdbc.Driver" />
             <property name="url" value="jdbc:mysql://localhost:3306/survey?useUnicode=true&amp;characterEncoding=UTF-8" />
             <property name="username" value="root" />
             <property name="password" value="root" />
-    
+
             <!-- 连接池启动时的初始值 -->
             <property name="initialSize" value="10" />
             ...
         </bean>
     </beans>
     ```
-2. `gradle -Denv=production build` 生成 `线上环境` 的配置并打包
+2. `gradle clean -Denv=production build` 生成 `线上环境` 的配置并打包
 
     ```xml 
     <?xml version="1.0" encoding="UTF-8"?>
@@ -119,14 +120,14 @@ processResources {
            xsi:schemaLocation="
                 http://www.springframework.org/schema/beans
                 http://www.springframework.org/schema/beans/spring-beans.xsd">
-    
+
         <!-- Data Source using DBCP. -->
         <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
             <property name="driverClassName" value="com.mysql.jdbc.Driver" />
             <property name="url" value="jdbc:mysql://localhost:3306/survey?useUnicode=true&amp;characterEncoding=UTF-8" />
             <property name="username" value="root" />
             <property name="password" value="wxyz" />
-    
+
             <!-- 连接池启动时的初始值 -->
             <property name="initialSize" value="10" />
             ...

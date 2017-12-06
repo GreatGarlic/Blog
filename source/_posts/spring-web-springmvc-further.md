@@ -1,12 +1,21 @@
 ---
-title: SpringMVC 进一步学习
+title: Spring MVC 进一步学习
 date: 2017-03-31 15:58:26
 tags: SpringWeb
 ---
 
+本章主要介绍 Spring MVC 中一些常用的知识点，详细说明请参考官方帮助文档。
+
+## @RequestMapping
+
+* `@GetMapping` 等价于 `@RequestMapping(method = RequestMethod.GET)`
+* `@PutMapping` 等价于 `@RequestMapping(method = RequestMethod.PUT)`
+* `@PostMapping` 等价于 `@RequestMapping(method = RequestMethod.POST)`
+* `@DeleteMapping` 等价于 `@RequestMapping(method = RequestMethod.DELETE)`
+
 ## @PathVariable
 
-取得 `URL` 路径中的匹配的内容，适合 RESTful 的风格。
+取得 `URL` 路径中匹配的内容，适合 RESTful 的风格。
 
 > A `@PathVariable` argument can be of any simple type such as int, long, Date, etc. Spring automatically converts to the appropriate type or throws a TypeMismatchException if it fails to do so. You can also register support for parsing additional data types.
 
@@ -47,13 +56,13 @@ public class ParameterController {
 
 **测试：**
 
-* <http://localhost/users/1234>
-* <http://localhost/categories/xbox/products/1234>
-* <http://localhost/regex/part-1234> <!--more-->
+* <http://localhost:8080/users/1234>
+* <http://localhost:8080/categories/xbox/products/1234>
+* <http://localhost:8080/regex/part-1234> <!--more-->
 
 ## @RequestParam
 
-取得 `HTTP 请求`中的参数。
+取得 `HTTP 请求` 中的参数(GET 和 POST 都可以)。
 
 ```java
 package com.xtuer.controller;
@@ -85,12 +94,12 @@ public class ParameterController {
 
 **测试：**
 
-* <http://localhost/user?id=1234>
-* <http://localhost/product?productId=1234&productName=PS4>
+* <http://localhost:8080/user?id=1234>
+* <http://localhost:8080/product?productId=1234&productName=PS4>
 
 ## @ModelAttribute
 
-把 `HTTP 请求`的参数映射到对象，参数名和对象中的属性名匹配的就做映射，不匹配的就不管。
+把 `HTTP 请求`的参数映射到对象，参数名和对象中的属性名匹配的就做映射，不匹配的就不管，此注解可以省略。
 
 ```java
 package com.xtuer.controller;
@@ -134,11 +143,14 @@ public class User {
 
 **测试：**
 
-* <http://localhost/user?id=1234&username=biao>
-* <http://localhost/user?id=1234&username=biao&password=Secret>
-* <http://localhost/user?id=1234&username=biao&password=Secret&age=12>
+* <http://localhost:8080/user?id=1234&username=biao>
+* <http://localhost:8080/user?id=1234&username=biao&password=Secret>
+* <http://localhost:8080/user?id=1234&username=biao&password=Secret&age=12>
 
 ## Forward and Redirect
+
+Forward 在 url 前面加上字符串 `forward:` 即可
+Redirect 在 url 前面加上字符串 `redirect:` 即可
 
 ```java
 package com.xtuer.controller;
@@ -162,8 +174,8 @@ public class ParameterController {
 
 **测试：**
 
-* <http://localhost/forward-test>
-* <http://localhost/redirect-test>
+* <http://localhost:8080/forward-test>
+* <http://localhost:8080/redirect-test>
 
 ## RedirectAttributes
 
@@ -214,7 +226,7 @@ public class ParameterController {
     // 显示表单
     @RequestMapping("/user-form")
     public String showUserForm() {
-        return "user-form.htm";
+        return "user-form.html";
     }
 
     // 更新 User，把结果保存到 RedirectAttributes
@@ -234,14 +246,14 @@ public class ParameterController {
     // 显示表单处理结果
     @RequestMapping("/result")
     public String result() {
-        return "result.htm";
+        return "result.html";
     }
 }
 ```
 
 **测试：**
 
-访问 <http://localhost/user-form>，填写信息，提交表单，处理好后页面被 redirect 到 <http://localhost/result> 显示操作结果。
+访问 <http://localhost:8080/user-form>，填写信息，提交表单，处理好后页面被 redirect 到 <http://localhost:8080/result> 显示操作结果。
 
 ![](/img/spring-web/flash-attribute-2.png)
 
@@ -265,7 +277,7 @@ Redirect 到另一个 Controller 时获取 RedirectAttributes 里的属性使用
 
 ## 获取 Request and Response
 
-想取得 HttpServletRequest 和 HttpServletResponse 很容易，只要在方法的参数里定义后，SpringMVC 会自动的注入 它们。
+想取得 HttpServletRequest 和 HttpServletResponse 很容易，只要在方法的参数里定义后，Spring MVC 会自动的注入它们到参数里。
 
 ```java
 package com.xtuer.controller;
@@ -290,12 +302,14 @@ public class ParameterController {
 
 **测试：**
 
-* <http://localhost/request-response>
+* <http://localhost:8080/request-response>
 
 ## Header
 
-* Read header: The `@RequestHeader` annotation allows a method parameter to be bound to a request header.
-* Write header: Header 直接写入到 `HttpServletResponse`，没有注解用来写 header
+* 读取 header: The `@RequestHeader` annotation allows a method parameter to be bound to a request header
+* 写入 header: Header 直接写入到 `HttpServletResponse`，没有注解用来写 header
+
+下面是浏览器发送请求后的 header 信息:
 
 | Header          | Value                                    |
 | --------------- | ---------------------------------------- |
@@ -345,22 +359,22 @@ public class ParameterController {
 
 **测试：**
 
-* <http://localhost/read-header>
-* <http://localhost/read-header-error>
-* <http://localhost/write-header>
+* <http://localhost:8080/read-header>
+* <http://localhost:8080/read-header-error>
+* <http://localhost:8080/write-header>
 
-访问 <http://localhost/read-header> 成功访问  
+访问 <http://localhost:8080/read-header> 成功访问  
 ![](/img/spring-web/request-header-1.png)
 
-访问 <http://localhost/read-header-error> 提示错误，因为 charset 是 required=true的，在 header 信息里没有 charset，所以报错。但是这个错误如果不了解的话会一头雾水，因为在控制台中没有输出错误的原因  
+访问 <http://localhost:8080/read-header-error> 提示错误，因为 charset 是 required=true 的，在 header 信息里没有 charset，所以报错。但是这个错误如果不了解的话会一头雾水，因为在控制台中没有输出错误的原因  
 ![](/img/spring-web/request-header-1.png)
 
-> 参数错误，类型转换错误等默认在控制台中看不到，也不会返回给浏览器端，要看到错误原因，需要把 SpringMv 的日志调到 Debug 级别。
+> 参数错误，类型转换错误等默认在控制台中看不到，也不会返回给浏览器端，要看到错误原因，需要把 Spring MVC 的日志调到 Debug 级别。
 
 ## Cookie
 
-* Read cookie: The `@CookieValue` annotation allows a method parameter to be bound to the value of an HTTP cookie.
-* Write cookie: Cookie 直接写到 `HttpServletResponse`，没有注解用来写 cookie
+* 读取 cookie: The `@CookieValue` annotation allows a method parameter to be bound to the value of an HTTP cookie
+* 写入 cookie: Cookie 直接写到 `HttpServletResponse`，没有注解用来写 cookie
 
 ```java
 package com.xtuer.controller;
@@ -395,13 +409,13 @@ public class ParameterController {
 
 **测试：**
 
-1. 访问 <http://localhost/read-cookie> 报错，因为还没有 cookie，
+1. 访问 <http://localhost:8080/read-cookie> 报错，因为还没有 cookie，
    可以给 cookie 一个默认值，这样即使没有 cookie 也不会报错了:
    `@CookieValue(value="username", defaultValue="") String cookie`
 
-2. 访问 <http://localhost/write-cookie> 写入 cookie
+2. 访问 <http://localhost:8080/write-cookie> 写入 cookie
 
-3. 访问 <http://localhost/read-cookie> 输出 cookie
+3. 访问 <http://localhost:8080/read-cookie> 输出 cookie
 
 ## Session
 
@@ -458,11 +472,11 @@ public class SessionController {
 
 **测试：**
 
-1. 访问 <http://localhost/write-session>
-2. 访问 <http://localhost/read-session>
+1. 访问 <http://localhost:8080/write-session>
+2. 访问 <http://localhost:8080/read-session>
 
 
-## SpringMVC 的处理流程
+## Spring MVC 的处理流程
 
 1. 用户向服务器发送请求，请求被 Spring 前端控制 Servelt `DispatcherServlet` 捕获
 2. DispatcherServlet 对请求 URL 进行解析，得到请求资源标识符（URI）。然后根据该 URI，调用`HandlerMapping` 获得该 Handler 配置的所有相关的对象（包括 Handler 对象以及 Handler 对象对应的拦截器），最后以 `HandlerExecutionChain` 对象的形式返回

@@ -9,10 +9,11 @@ Fastjson API 入口类是 com.alibaba.fastjson.JSON，常用的序列化操作�
 
 ## Gradle 依赖
 ```groovy
-compile 'com.alibaba:fastjson:1.2.17'
+compile 'com.alibaba:fastjson:1.2.41'
 ```
 
 ## 主要 API
+
 把对象转换为 JSON 字符串
 
 ```java
@@ -128,7 +129,7 @@ public static final Object toJSON(Object javaObject);
 
 > `SerializeWriter`: 相当于 `StringBuffer`  
 > `JSONArray`: 相当于 `List<Object>`  
->  `JSONObject`: 相当于 `Map<String, Object>`
+> `JSONObject`: 相当于 `Map<String, Object>`
 
 ## 参考资料
 

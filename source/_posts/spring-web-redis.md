@@ -3,7 +3,7 @@ title: Redis 集成
 date: 2016-10-16 07:27:45
 tags: SpringWeb
 ---
-如果数据每次都从数据库查询，当并发大的时候，性能就会急剧的下降，可以采用 Redis 作为缓存，数据首先从 Redis 里查询，如果 Redis 里没有，然后才从数据库查询，并把查询到的结果放入 Redis。
+如果数据每次都从数据库查询，当并发大的时候，性能就会急剧的下降，常用、很少变化的数据可以采用 Redis 作为缓存，数据首先从 Redis 里查询，如果 Redis 里没有，然后才从数据库查询，并把查询到的结果放入 Redis。
 
 <!--more-->
 
@@ -45,13 +45,25 @@ compile 'org.springframework.session:spring-session-data-redis:1.2.2.RELEASE'
 > `redisTemplate` 用来访问 Redis 
 
 ## 引入 redis.xml
-在 spring-mvc.xml 中引入 redis.xml
+在 web.xml 的 listener 中加载 redis.xml
 
 ```xml
-<import resource="classpath:config/redis.xml"/>
+<!-- 加载 MyBatis, Spring Security, Redis 配置等 -->
+<context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>
+        classpath:config/redis.xml
+    </param-value>
+</context-param>
+
+<!-- Listener -->
+<listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+</listener>
 ```
 
 ## 使用 RedisTemplate 访问 Redis
+
 ```java
 @Autowired
 private DemoMapper demoMapper;
@@ -82,7 +94,7 @@ public Demo findDemoById(@PathVariable int id) {
     if (d == null) {
         d = demoMapper.findDemoById(id);
 
-        if (d != null) { // 这里需要考虑，null 对象如果不放缓存，如果这个对象被大量访问，会导致缓存穿透，增加数据库的压力
+        if (d != null) { // 这里需要仔细考虑，null 对象如果不放缓存，如果这个对象被大量访问，会导致缓存穿透，增加数据库的压力
             redisTemplate.opsForValue().set(redisKey, JSON.toJSONString(d));
         }
     }

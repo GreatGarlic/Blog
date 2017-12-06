@@ -3,10 +3,8 @@ title: 处理 Ajax 请求
 date: 2016-10-15 12:04:01
 tags: SpringWeb
 ---
-SpringMVC 处理 AJAX 请求很简单，只需要在方法的前面加上 `@ResponseBody` 即可。  
-Controller 的方法一般返回 String(可以是JSON, XML, 普通的 Text), 也可以是对象。
-
-<!--more-->
+Spring MVC 的 Controller 处理 AJAX 请求很简单，只需要在方法的前面加上 `@ResponseBody` 即可。  
+Controller 的方法一般返回 String(可以是JSON, XML, 普通的 Text)，也可以是对象。
 
 ## 返回 Json 字符串
 1. Controller 中添加方法
@@ -23,22 +21,24 @@ Controller 的方法一般返回 String(可以是JSON, XML, 普通的 Text), 也
 
     > 输出: `{username: "Josh", password: "Passw0rd"}`
 
-## 自动把对象转换为 Json
-使用 `Fastjson` 把对象自动映射为 Json
+<!--more-->
+
+## 自动转换对象为 Json
+
+在前面的 springmvc-servlet.xml 中已经配置好了使用 `Fastjson` 把对象自动映射为 Json:
 
 1. Gradle 依赖
 
     ```groovy
-    compile 'com.alibaba:fastjson:1.2.17'
+    compile 'com.alibaba:fastjson:1.2.41'
     ```
 
-2. `spring-mvc.xml` 中把 <mvc:annotation-driven/> 换为下面的配置
+2. 配置 <mvc:annotation-driven/> 为
 
     ```xml
     <mvc:annotation-driven>
-        <!--enableMatrixVariables="true">-->
-        <mvc:message-converters register-defaults="true">
-            <!-- StringHttpMessageConverter 编码为UTF-8，防止乱码 -->
+        <mvc:message-converters>
+            <!-- StringHttpMessageConverter 编码为 UTF-8，防止乱码 -->
             <bean class="org.springframework.http.converter.StringHttpMessageConverter">
                 <constructor-arg value="UTF-8"/>
                 <property name="supportedMediaTypes">
@@ -56,7 +56,7 @@ Controller 的方法一般返回 String(可以是JSON, XML, 普通的 Text), 也
                     </list>
                 </property>
             </bean>
-
+            <!-- FastJson -->
             <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4">
                 <property name="supportedMediaTypes">
                     <list>
@@ -73,7 +73,7 @@ Controller 的方法一般返回 String(可以是JSON, XML, 普通的 Text), 也
                                 <value>DisableCircularReferenceDetect</value>
                             </list>
                         </property>
-                        <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"></property>
+                        <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
                     </bean>
                 </property>
             </bean>
@@ -120,7 +120,7 @@ Controller 的方法一般返回 String(可以是JSON, XML, 普通的 Text), 也
     > 输出: `{"message":"你好","success":true}`
 
 ## 参考资料
-* [SpringMVC fastjson 与 Jackson 的 MessageConverter 配置](http://ibear.me/2016/02/15/170)
+* [Spring MVC fastjson 与 Jackson 的 MessageConverter 配置](http://ibear.me/2016/02/15/170)
 
 
 

@@ -61,15 +61,17 @@ tags: SpringWeb
 </filter-mapping>
 ```
 
-## 6. Freemarker 模版生成文件的字符集设置
-在配置 Freemarker 的时候已经设置过了。
+## 6. Thymeleaf 模版生成文件的字符集设置
 
 ```xml
-<property name="contentType" value="text/html; charset=UTF-8"/>
+<bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+    <property name="templateEngine"    ref="templateEngine"/>
+    <property name="characterEncoding" value="UTF-8"/>
+</bean>
 ```
 
 ## 7. AJAX 返回有乱码?
-由处理 `@ResponseBody` 返回字符串的 MessageConverter 的编码设置造成的，配置 `spring-mvc.xml` 中的 MessageConverter（去掉 ~~<mvc:annotation-driven/>~~）
+由处理 `@ResponseBody` 返回字符串的 MessageConverter 的编码设置造成的，配置 `springmvc-servlet.xml` 中的 MessageConverter（去掉 ~~<mvc:annotation-driven/>~~）
 
 ```xml
 <!-- 默认的注解映射支持 -->
@@ -106,3 +108,4 @@ JAVA_OPTS="$JAVA_OPTS -Dfile.encoding=UTF-8"
 ```
 set "JAVA_OPTS=%JAVA_OPTS% -Dfile.encoding=UTF-8"
 ```
+

@@ -10,13 +10,14 @@ tags: SpringWeb
 <!--more-->
 
 ```xml
-<!-- rest-view.html 是 View 的名字 -->
-<mvc:view-controller path="/rest-view" view-name="rest-view.html"/>
+<!-- hello.html 是 View 的名字 -->
+<mvc:view-controller path="/page/hello" view-name="hello.html"/>
 ```
 
-访问 <http://localhost:8080/rest-view>，则 View Resolver 访问的是 `/WEB-INF/view/fm/rest-view.html`
+访问 <http://localhost:8080/page/hello>，则 View Resolver 访问的是 `/WEB-INF/page/hello.html`
 
 ## mvc:view-controller 配置
+
 例如存放在文件 `spring-view-controller.xml`
 
 ```xml
@@ -29,12 +30,12 @@ tags: SpringWeb
        http://www.springframework.org/schema/beans/spring-beans.xsd
        http://www.springframework.org/schema/mvc
        http://www.springframework.org/schema/mvc/spring-mvc.xsd">
-    <mvc:view-controller path="/rest-view" view-name="rest-view.html"/>
+    <mvc:view-controller path="/page/hello" view-name="hello.html"/>
 </beans>
 ```
 
 ## 引入 mvc:view-controller 配置
-在 spring-mvc.xml 中引入 spring-view-controller.xml
+在 springmvc-servlet.xml 中引入 spring-view-controller.xml
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>

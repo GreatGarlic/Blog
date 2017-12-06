@@ -19,11 +19,11 @@ SpringMVC 集成 MyBatis 需要以下几个文件
 ## Gradle 依赖
 ```groovy
 compile(
-    "org.springframework:spring-jdbc:4.3.0.RELEASE",
+    "org.springframework:spring-jdbc:5.0.2.RELEASE",
     "mysql:mysql-connector-java:5.1.21",         
-    "org.mybatis:mybatis:3.2.1",            
-    "org.mybatis:mybatis-spring:1.2.2", 
-    "com.alibaba:druid:1.0.26" 
+    "org.mybatis:mybatis:3.4.5",            
+    "org.mybatis:mybatis-spring:1.3.1", 
+    "com.alibaba:druid:1.1.5" 
 )
 ```
 
@@ -43,7 +43,6 @@ compile(
        xsi:schemaLocation="
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd">
-
     <!-- Data Source using Druid. -->
     <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource" init-method="init" destroy-method="close">
         <property name="url" value="jdbc:mysql://localhost:3306/test?useUnicode=true&amp;characterEncoding=UTF-8"/>
@@ -58,7 +57,7 @@ compile(
         <property name="timeBetweenEvictionRunsMillis" value="60000"/>
         <property name="minEvictableIdleTimeMillis" value="300000"/>
 
-        <property name="validationQuery" value="select NOW()"/>
+        <property name="validationQuery" value="SELECT 1 FROM dual"/>
         <property name="testWhileIdle" value="true"/>
         <property name="testOnBorrow" value="false"/>
         <property name="testOnReturn" value="false"/>
@@ -107,7 +106,7 @@ compile(
 > 参考: [MyBatis - MyBatis-Spring | 简介](http://mybatis.github.io/spring/zh/)
 
 ## web.xml 加载 mybatis 配置
-在 web.xml 中用 ContextLoaderListener 加载 mybatis.xml。  
+在 web.xml 中用 ContextLoaderListener 加载 mybatis.xml，因为 MyBatis 是整个应用级别的，供多个 servlet 使用，而 Spring MVC Servlet 只是 Servlet 级别的。  
 ContextLoaderListener 对应的容器是其他 Spring 容器的父容器，所以在里面创建的 MyBatis 的 mapper 在 springmvc 这个容易以及其他的容器中都能使用。
 
 ```xml
@@ -171,8 +170,9 @@ public interface DemoMapper {
 }
 ```
 
-## mapper/Demo.xml
-保存在 `resources/mapper/Demo.xml`，在这里编写 SQL 语句。
+## mapper/DemoMapper.xml
+
+保存在 `resources/mapper/DemoMapper.xml`，在这里编写 SQL 语句。
 
 ```xml
 <?xml version="1.0" encoding="UTF-8" ?>
