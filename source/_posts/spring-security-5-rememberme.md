@@ -5,17 +5,18 @@ tags: SpringSecurity
 ---
 
 ## 什么是 Remember Me？
-* 访问 <http://biao.com/admin> 
+
+* 访问 <http://localhost:8080/admin> 
 * 登录成功
 * 重启浏览器
-* 再次访问 <http://biao.com/admin>
+* 再次访问 <http://localhost:8080/admin>
 * 需要重新登录
 
-如果启用了 `Remember Me`，登录后重启浏览器访问 <http://biao.com/admin> 就不需要重新登录了。
+如果启用了 `Remember Me`，登录后重启浏览器访问 <http://localhost:8080/admin> 就不需要重新登录了。
 
 <!--more-->
 
-给 Spring Security 添加 Remember Me 功能，只需要 2 步:
+Spring Security 5 已经默认启动了 Remember Me 功能，Spring Security 4 需要按照下面进行配置。给 Spring Security 添加 Remember Me 功能，只需要 2 步:
 
 * 在登录的 form 表单里添加
 
@@ -28,19 +29,22 @@ tags: SpringSecurity
     <remember-me key="uniqueAndSecret" token-validity-seconds="2592000"/>
     ```
 
-## Login.htm
+## Login.html
+
 ```html
 <html>
 <head>
     <title>Login Page</title>
 </head>
 <body>
-    ${error!}${logout!}
+    <span th:text="${error}" th:if="${error} != null"></span>
+    <span th:text="${logout}" th:if="${logout} != null"></span>
+
     <form name="loginForm" action="/login" method="POST">
-        Username: <input type="text" name="username" /><br>
-        Password: <input type="password" name="password" /><br>
+        Username: <input type="text" name="username"/><br>
+        Password: <input type="password" name="password"/><br>
         <input type="checkbox" name="remember-me"/> Remember Me<br>
-        <input name="submit" type="submit" value="登陆" />
+        <input name="submit" type="submit" value="登陆"/>
     </form>
 </body>
 </html>
@@ -85,8 +89,8 @@ tags: SpringSecurity
 ```
 
 ## 测试
-* 访问 <http://biao.com/admin> 
+* 访问 <http://localhost:8080/admin> 
 * 登录成功
 * 重启浏览器
-* 再次访问 <http://biao.com/admin>
+* 再次访问 <http://localhost:8080/admin>
 * 不需要重新登录

@@ -6,9 +6,7 @@ tags: SpringSecurity
 
 明文保存密码是不可取的，可以使用 `SHA`，`BCrypt` 等对密码进行加密。
 
-<!--more-->
-
-BCrypt 算法与 MD5/SHA 算法有一个很大的区别，每次生成的 hash 值都是不同的，就可以免除存储 salt，暴力破解起来也更困难。BCrypt 加密后的字符长度比较长，有60位，所以用户表中密码字段的长度，如果打算采用 BCrypt 加密存储，字段长度不得低于 60。
+BCrypt 算法与 MD5/SHA 算法有一个很大的区别，每次生成的 hash 值都是不同的，就可以免除存储 salt，暴力破解起来也更困难。BCrypt 加密后的字符长度比较长，有60位，所以用户表中密码字段的长度，如果打算采用 BCrypt 加密存储，字段长度不得低于 68(需要前缀 `{bcrypt}`)。
 
 下面的代码展示怎么使用 BCrypt 进行加密:
 
@@ -53,44 +51,49 @@ true
 false
 ```
 
-随意取其中任意一个都可以，因为每次生成都是不一样的，所以取第一个就可以了。
+随意取其中任意一个都可以，因为每次生成都是不一样的，所以取第一个就可以了。<!--more-->
 
 ## Spring Security 使用 BCrypt 加密
-* 在 spring-security.xml 里的 authentication-provider 中启用 BCrypt 加密
+Spring Security 4 的时候需要配置 `<password-encoder hash="bcrypt"/>` 指定加密方式，Spring Security 5 不需要配置了，而是用户密码加前缀的方式表明加密方式，例如
 
-    ```xml
-    <authentication-manager>
-        <authentication-provider user-service-ref="userDetailsService">
-            <password-encoder hash="bcrypt"/>
-        </authentication-provider>
-    </authentication-manager>
-    ```
-*  把 BCrypt 加密后的密码保存到数据库(怎么加密？参考上面的示例代码)
+* `{bcrypt}$2a$10$gQKUOoFuevnCkoej3.AvAO9YzHKCKYmKuiSfEGHL22piY2FfNDQYu` 说明是使用 BCrypt 进行加密的
 
-## UserDao
+* `{noop}Passw0rd` 则是使用明文保存的密码 (noop: No Operation)
+
+
+这样的好处是同一个系统可以使用多种加密方式，迁移用户到新系统时比较就省事了。Spring Security 5 默认支持的密码加密方式在 PasswordEncoderFactories 中定义:
+
+```java
+public static PasswordEncoder createDelegatingPasswordEncoder() {
+    String encodingId = "bcrypt";
+    Map<String, PasswordEncoder> encoders = new HashMap<>();
+    encoders.put(encodingId, new BCryptPasswordEncoder());
+    encoders.put("ldap", new LdapShaPasswordEncoder());
+    encoders.put("MD4", new Md4PasswordEncoder());
+    encoders.put("MD5", new MessageDigestPasswordEncoder("MD5"));
+    encoders.put("noop", NoOpPasswordEncoder.getInstance());
+    encoders.put("pbkdf2", new Pbkdf2PasswordEncoder());
+    encoders.put("scrypt", new SCryptPasswordEncoder());
+    encoders.put("SHA-1", new MessageDigestPasswordEncoder("SHA-1"));
+    encoders.put("SHA-256", new MessageDigestPasswordEncoder("SHA-256"));
+    encoders.put("sha256", new StandardPasswordEncoder());
+
+    return new DelegatingPasswordEncoder(encodingId, encoders);
+}
+```
+
+## UserService
+
 > 从数据源取得的密码是加密后的密码
 
 ```java
-package com.xtuer.dao;
-
-import com.xtuer.domain.User;
-import com.xtuer.domain.UserRole;
-
-import java.util.*;
-
-public class UserDao {
+public class UserService {
     private static Map<String, User> users = new HashMap<String, User>();
 
     static {
         // 模拟数据源，可以是多种，如数据库，LDAP，从配置文件读取等
-        UserRole userRole = new UserRole("ROLE_USER");   // 普通用户权限
-        UserRole adminRole = new UserRole("ROLE_ADMIN"); // 管理员权限
-
-        // Passw0rd 的 BCrypt 加密结果
-        String password = "$2a$10$gtaxGaHMfxMRj6rqK/kp0.5TPF13CBvnXhvD7teUmeftH1cX0Mb6S";
-
-        users.put("admin", new User("admin", password, true, new HashSet<UserRole>(Arrays.asList(adminRole))));
-        users.put("alice", new User("alice", password, true, new HashSet<UserRole>(Arrays.asList(userRole))));
+        users.put("admin", new User("admin", "{noop}Passw0rd", "ROLE_ADMIN")); // 密码是 Passw0rd
+        users.put("alice", new User("alice", "{bcrypt}$2a$10$dtA5fPvVJEBHLPp7FZci9uKJL90zF8T1EQZzP9qownQlf130bdBZW", "ROLE_USER")); // 密码是 Passw0rd
     }
 
     public User findUserByUsername(String username) {
@@ -100,6 +103,7 @@ public class UserDao {
 ```
 
 ## 测试
-* 访问 http://biao.com/admin
+
+* 访问 http://localhost:8080/admin
 * 输入错误的用户名或密码，观察登陆失败的页面
 * 输入正确的用户名和密码，继续登陆

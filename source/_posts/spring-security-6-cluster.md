@@ -10,10 +10,11 @@ tags: SpringSecurity
 
 ## Gradle 依赖
 ```
-"org.springframework.session:spring-session-data-redis:1.1.1.RELEASE"
+"org.springframework.session:spring-session-data-redis:1.3.1.RELEASE"
 ```
 
 ## spring-session.xml
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
@@ -47,9 +48,9 @@ tags: SpringSecurity
     <bean id="jedisPoolConfig" class="redis.clients.jedis.JedisPoolConfig"/>
     <bean id="jedisConnectionFactory" class="org.springframework.data.redis.connection.jedis.JedisConnectionFactory">
         <!--<property name="hostName" value="${redis.host}" />-->
-        <!--<property name="port" value="${redis.port}" />-->
+        <!--<property name="port"     value="${redis.port}" />-->
         <!--<property name="password" value="${redis.password}" />-->
-        <!--<property name="timeout" value="${redis.timeout}" />-->
+        <!--<property name="timeout"  value="${redis.timeout}" />-->
         <property name="poolConfig" ref="jedisPoolConfig" />
         <property name="usePool" value="true" />
     </bean>
@@ -100,9 +101,9 @@ Spring Session Data Redis 使用 Servlet Filter 来实现的，filter-name 必�
     * 应用启动前已经启动 Redis，应用启动成功，中途 Redis 关闭了，处理请求会报异常，再次启动 Redis，应用会自动连接 Redis，正常处理请求
 * 既然是集群，就需要一个负债均衡如 `Nginx` 来分发请求
 * 启动多个应用的实例
-* 访问 <http://biao.com/admin>
+* 访问 <http://localhost:8080/admin>
 * 登陆
-* 不停的刷新访问 <http://biao.com/admin>
+* 不停的刷新访问 <http://localhost:8080/admin>
 * 看到只需要一次登陆，集群中的所有应用都不需要再次登陆了
 
 ## 参考

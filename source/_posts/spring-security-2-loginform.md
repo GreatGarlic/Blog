@@ -22,6 +22,7 @@ tags: SpringSecurity
 | username-parameter                 | 登陆表单中用户名的 input 的 name                   |
 | password-parameter                 | 登陆表单中密码的 input 的 name                    |
 | `<csrf disabled="true"/>`          | 禁用 csrf，默认是启用的，如果想使用 csrf，需要在登陆表单里加上这样的语句:<br> `<input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>` |
+| ooooooooooooooooooooooooooooo      |                                          |
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
@@ -33,28 +34,26 @@ tags: SpringSecurity
             http://www.springframework.org/schema/beans/spring-beans.xsd
             http://www.springframework.org/schema/security
             http://www.springframework.org/schema/security/spring-security.xsd">
-
+    <http security="none" pattern="/static/**"/>
     <http auto-config="true">
         <intercept-url pattern="/admin" access="hasRole('ADMIN')"/>
         <intercept-url pattern="/login" access="permitAll"/>
-
         <form-login login-page="/login"
                     login-processing-url="/login"
                     default-target-url  ="/hello"
-                    authentication-failure-url="/login?error=1"
+                    authentication-failure-url="/login?error"
                     username-parameter="username"
                     password-parameter="password"/>
         <access-denied-handler error-page="/deny" />
-        <logout logout-url="/logout" logout-success-url="/login?logout=1" />
-
+        <logout logout-url="/logout" logout-success-url="/login?logout" />
         <csrf disabled="true"/>
     </http>
 
     <authentication-manager>
         <authentication-provider>
             <user-service>
-                <user name="admin" password="Passw0rd" authorities="ROLE_ADMIN"/>
-                <user name="alice" password="Passw0rd" authorities="ROLE_USER"/>
+                <user name="admin" password="{noop}Passw0rd" authorities="ROLE_ADMIN"/>
+                <user name="alice" password="{noop}Passw0rd" authorities="ROLE_USER"/>
             </user-service>
         </authentication-provider>
     </authentication-manager>
@@ -78,14 +77,11 @@ package com.xtuer.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 @Controller
 public class LoginController {
-    @RequestMapping(value="/login", method = RequestMethod.GET)
+    @GetMapping("/login")
     public String loginPage(@RequestParam(value="error", required=false) String error,
                             @RequestParam(value="logout", required=false) String logout,
                             ModelMap model) {
@@ -95,7 +91,7 @@ public class LoginController {
             model.put("logout", "Logout successful");
         }
 
-        return "login.htm";
+        return "login.html";
     }
 
     @RequestMapping("/deny")
@@ -106,7 +102,7 @@ public class LoginController {
 }
 ```
 
-## 登陆表单 login.htm
+## 登陆表单 login.html
 
 ```html
 <html>
@@ -114,7 +110,9 @@ public class LoginController {
     <title>Login Page</title>
 </head>
 <body>
-    ${error!}${logout!}
+    <span th:text="${error}" th:if="${error} != null"></span>
+    <span th:text="${logout}" th:if="${logout} != null"></span>
+
     <form name="loginForm" action="/login" method="POST">
         Username: <input type="text" name="username" /><br>
         Password: <input type="password" name="password" /><br>
@@ -125,65 +123,90 @@ public class LoginController {
 ```
 
 ## 测试
-* 访问 <http://biao.com/hello>
-* 访问 <http://biao.com/admin>
+* 访问 <http://localhost:8080/hello>
+* 访问 <http://localhost:8080/admin>
 * 输入错误的用户名或密码，观察登陆失败的页面
-* 输入正确的用户名和密码，继续登陆
-* 访问 <http://biao.com/logout>，观察注销成功的页面
+* 输入正确的用户名和密码 admin/Passw0rd，继续登陆
+* 访问 <http://localhost:8080/logout>，观察注销成功的页面
+* 访问 <http://localhost:8080/admin>
+* 输入正确的用户名和密码 alice/Passw0rd，继续登陆
+* 提示权限不够
 
 
 ## 自定义登陆成功的 handler
 
-自定义登陆成功的 handler，管理员和普通用户登陆成功后重定向到不同的页面:
+设置 authentication-success-handler-ref 为自定义登陆成功的 handler，就可以使用同一个登录表单，登录成功后根据用户的角色或者权限重定向到不同的页面:
 
 ```xml
-<beans:bean id="authenticationSuccessHandler" class="com.xtuer.security.AuthenticationSuccessHandler"/>
+<beans:bean id="loginSuccessHandler" class="com.xtuer.security.LoginSuccessHandler"/>
 
+<http security="none" pattern="/static/**"/>
 <http auto-config="true">
-    <intercept-url pattern="/page/admin" access="hasRole('ROLE_ADMIN')"/>
-    <intercept-url pattern="/page/login" access="permitAll"/>
+    <intercept-url pattern="/admin" access="hasRole('ADMIN')"/>
+    <intercept-url pattern="/login" access="permitAll"/>
 
-    <form-login login-page="/page/login"
+    <form-login login-page="/login"
                 login-processing-url="/login"
                 default-target-url  ="/"
-                authentication-success-handler-ref="authenticationSuccessHandler"
-                authentication-failure-url="/page/login?error=1"
+                authentication-success-handler-ref="loginSuccessHandler"
+                authentication-failure-url="/login?error"
                 username-parameter="username"
                 password-parameter="password"/>
-    <logout logout-url="/logout" logout-success-url="/page/login?logout=1"/>
-    <access-denied-handler error-page="/page/deny"/>
-    <csrf disabled="true"/>
+    <access-denied-handler error-page="/deny" />
+
+    <logout logout-url="/logout" logout-success-url="/login?logout" />
+    <csrf disabled="true"/> <!-- 去掉这一行不行 -->
 </http>
 ```
-> `default-target-url="/"` 无效
+> 注意：自定义登录成功的 handler 后 `default-target-url` 不再起作用。
 
 ```java
 package com.xtuer.security;
 
-import com.xtuer.bean.User;
-import com.xtuer.util.SecurityUtils;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
+import org.springframework.security.web.savedrequest.HttpSessionRequestCache;
+import org.springframework.security.web.savedrequest.SavedRequest;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-public class AuthenticationSuccessHandler implements org.springframework.security.web.authentication.AuthenticationSuccessHandler {
+public class LoginSuccessHandler implements AuthenticationSuccessHandler {
     @Override
     public void onAuthenticationSuccess(HttpServletRequest request,
                                         HttpServletResponse response,
                                         Authentication authentication) throws IOException, ServletException {
-        User user = SecurityUtils.getLoginUser(); // 登陆成功的用户
-        String url = request.getContextPath().isEmpty() ? "" : request.getContextPath();
+        // 用户登录成功后访问不同的页面:
+        // 1. 获取用户登录前访问的 URL
+        // 2. 如果 url 不为空，访问登录前的页面
+        // 3. 如果 url 为空，登录后根据用户的角色访问对应的页面
+        SavedRequest savedRequest = new HttpSessionRequestCache().getRequest(request, response);
+        String redirectUrl = (savedRequest == null) ? "" : savedRequest.getRedirectUrl();
 
-        if (user.getRoles().contains("ROLE_ADMIN")) {
-            url += "/page/admin";
-        } else {
-            url += "/page/hello";
+        if (!redirectUrl.isEmpty()) {
+            response.sendRedirect(redirectUrl);
+            return;
         }
 
-        response.sendRedirect(url);
+        // 获取登录用户信息
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+        for (GrantedAuthority authority : auth.getAuthorities()) {
+            String role = authority.getAuthority(); // 用户的权限
+
+            // 不同的用户访问不同的页面
+            if ("ROLE_ADMIN".equals(role)) {
+                redirectUrl = "/admin";
+            } else {
+                redirectUrl = "/hello";
+            }
+        }
+
+        response.sendRedirect(redirectUrl);
     }
 }
 ```

@@ -6,27 +6,33 @@ tags: SpringSecurity
 
 ## 目录结构
 ```
-├── main
-│   ├── java
-│   │   └── com
-│   │       └── xtuer
-│   │           └── controller
-│   │               ├── HelloController.java
-│   │               └── LoginController.java
-│   ├── resources
-│   │   └── config
-│   │       ├── spring-mvc.xml
-│   │       └── spring-security.xml
-│   └── webapp
-│       └── WEB-INF
-│           ├── view
-│           │   └── fm
-│           │       ├── admin.htm
-│           │       └── hello.htm
-│           └── web.xml
-└── test
-    ├── java
-    └── resources
+├── build.gradle
+└── src
+    ├── main
+    │   ├── java
+    │   │   └── com
+    │   │       └── xtuer
+    │   │           └── controller
+    │   │               └── HelloController.java
+    │   ├── resources
+    │   │   ├── config
+    │   │   │   ├── application-servlet.xml
+    │   │   │   └── spring-security.xml
+    │   │   └── logback.xml
+    │   └── webapp
+    │       └── WEB-INF
+    │           ├── page
+    │           │   ├── admin.html
+    │           │   └── hello.html
+    │           ├── static
+    │           │   ├── css
+    │           │   ├── img
+    │           │   ├── js
+    │           │   └── lib
+    │           └── web.xml
+    └── test
+        ├── java
+        └── resources
 ```
 
 <!--more-->
@@ -40,27 +46,33 @@ Spring Security 的依赖有:
 > 注意: Spring Security 的版本和 Spring 的版本不是一样的
 
 ```
-ext {
-    springVersion   = '4.2.5.RELEASE'
-    springSecurityVersion = '4.0.4.RELEASE'
-    jstlVersion     = '1.2'
-    servletVersion  = '3.1.0'
-    jacksonVersion  = '2.5.3'
-    freemarkerVersion = '2.3.20'
-}
+ext.versions = [
+    spring   : '5.0.2.RELEASE',
+    springSecurity: '5.0.0.RELEASE',
+    servlet  : '4.0.0',
+    fastjson : '1.2.41',
+    thymeleaf: '3.0.9.RELEASE',
+    lombok   : '1.16.18',
+    logback  : '1.2.3',
+    jclOverSlf4j: '1.7.25'
+]
 
 dependencies {
     compile(
-            "org.springframework:spring-webmvc:$springVersion",             // Spring MVC
-            "org.springframework.security:spring-security-web:$springSecurityVersion", // Spring Security
-            "org.springframework.security:spring-security-config:$springSecurityVersion",
-            "org.springframework:spring-context-support:$springVersion",
-            "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion",  // JSON
-            "org.freemarker:freemarker:$freemarkerVersion"                  // Freemarker
+            "org.springframework:spring-webmvc:${versions.spring}",
+            "org.springframework:spring-context-support:${versions.spring}",
+            "org.springframework.security:spring-security-web:${versions.springSecurity}",
+            "org.springframework.security:spring-security-config:${versions.springSecurity}",
+            "com.alibaba:fastjson:${versions.fastjson}",
+            "org.thymeleaf:thymeleaf:${versions.thymeleaf}",
+            "org.thymeleaf:thymeleaf-spring5:${versions.thymeleaf}",
+            "ch.qos.logback:logback-classic:${versions.logback}", // Logback
+            "org.slf4j:jcl-over-slf4j:${versions.jclOverSlf4j}"
     )
 
-    compile("javax.servlet:jstl:$jstlVersion") // JSTL
-    compileOnly("javax.servlet:javax.servlet-api:$servletVersion")
+    compileOnly("javax.servlet:javax.servlet-api:${versions.servlet}")
+    compileOnly("org.projectlombok:lombok:${versions.lombok}")
+    testCompile("org.springframework:spring-test:${versions.spring}")
 }
 ```
 
@@ -91,8 +103,9 @@ dependencies {
     <authentication-manager>
         <authentication-provider>
             <user-service>
-                <user name="admin" password="Passw0rd" authorities="ROLE_ADMIN"/>
-                <user name="alice" password="Passw0rd" authorities="ROLE_USER"/>
+                <!-- 密码都是 Passw0rd，不是 {noop}Passw0rd，前缀 {noop} 是 Spring Security 5 用来确定 PasswordEncoder 的 -->
+                <user name="admin" password="{noop}Passw0rd" authorities="ROLE_ADMIN"/>
+                <user name="alice" password="{noop}Passw0rd" authorities="ROLE_USER"/>
             </user-service>
         </authentication-provider>
     </authentication-manager>
@@ -103,19 +116,109 @@ dependencies {
 >
 > 参考 FormLoginConfigurer, DefaultLoginPageGeneratingFilter and AbstractAuthenticationProcessingFilter.
 
+## application-servlet.xml
+
+```xml
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd
+           http://www.springframework.org/schema/context
+           http://www.springframework.org/schema/context/spring-context.xsd
+           http://www.springframework.org/schema/mvc
+           http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!-- 控制器 -->
+    <context:component-scan base-package="com.xtuer.controller"/>
+
+    <!-- 注解映射支持 -->
+    <mvc:annotation-driven>
+        <!--enableMatrixVariables="true">-->
+        <mvc:message-converters register-defaults="true">
+            <!-- StringHttpMessageConverter 编码为 UTF-8，防止乱码 -->
+            <bean class="org.springframework.http.converter.StringHttpMessageConverter">
+                <constructor-arg value="UTF-8"/>
+                <property name="supportedMediaTypes">
+                    <list>
+                        <bean class="org.springframework.http.MediaType">
+                            <constructor-arg index="0" value="text"/>
+                            <constructor-arg index="1" value="plain"/>
+                            <constructor-arg index="2" value="UTF-8"/>
+                        </bean>
+                        <bean class="org.springframework.http.MediaType">
+                            <constructor-arg index="0" value="*"/>
+                            <constructor-arg index="1" value="*"/>
+                            <constructor-arg index="2" value="UTF-8"/>
+                        </bean>
+                    </list>
+                </property>
+            </bean>
+            <!-- FastJson -->
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4">
+                <property name="supportedMediaTypes">
+                    <list>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>application/json;charset=UTF-8</value>
+                    </list>
+                </property>
+                <property name="fastJsonConfig">
+                    <bean class="com.alibaba.fastjson.support.config.FastJsonConfig">
+                        <property name="features">
+                            <list>
+                                <value>AllowArbitraryCommas</value>
+                                <value>AllowUnQuotedFieldNames</value>
+                                <value>DisableCircularReferenceDetect</value>
+                            </list>
+                        </property>
+                        <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
+                    </bean>
+                </property>
+            </bean>
+        </mvc:message-converters>
+    </mvc:annotation-driven>
+
+    <!-- 使用 thymeleaf 模版 -->
+    <bean id="templateResolver" class="org.thymeleaf.spring5.templateresolver.SpringResourceTemplateResolver">
+        <property name="prefix"       value="/WEB-INF/page/"/>
+        <property name="templateMode" value="HTML"/>
+        <property name="cacheable"    value="false"/>
+    </bean>
+
+    <bean id="templateEngine" class="org.thymeleaf.spring5.SpringTemplateEngine">
+        <property name="templateResolver" ref="templateResolver"/>
+    </bean>
+
+    <bean class="org.thymeleaf.spring5.view.ThymeleafViewResolver">
+        <property name="templateEngine"    ref="templateEngine"/>
+        <property name="characterEncoding" value="UTF-8"/>  <!--解决中文乱码-->
+    </bean>
+
+    <!-- 静态资源的访问，如 js, css, jpg, png -->
+    <!-- 如 HTML 里访问 /static/js/jquery.js, 则实际访问的是 /WEB-INF/static/js/jquery.js -->
+    <mvc:resources mapping="/static/js/**"   location="/WEB-INF/static/js/"   cache-period="31556926"/>
+    <mvc:resources mapping="/static/css/**"  location="/WEB-INF/static/css/"  cache-period="31556926"/>
+    <mvc:resources mapping="/static/img/**"  location="/WEB-INF/static/img/"  cache-period="31556926"/>
+    <mvc:resources mapping="/static/lib/**"  location="/WEB-INF/static/lib/"  cache-period="31556926"/>
+    <mvc:resources mapping="/static/html/**" location="/WEB-INF/static/html/" cache-period="31556926"/>
+    <mvc:resources mapping="/favicon.ico"    location="/WEB-INF/static/img/favicon.ico" cache-period="31556926"/>
+</beans>
+```
+
 ## web.xml
 
 > Spring Security 是使用 Servlet Filter 来实现的，filter-name 必须为 `springSecurityFilterChain`
 
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app
-        xmlns="http://java.sun.com/xml/ns/javaee"
-        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
-            http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
-        version="3.0"
-        metadata-complete="false">
+<web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee
+         http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+         version="3.1"
+         metadata-complete="true">
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
@@ -144,7 +247,7 @@ dependencies {
 
         <init-param>
             <param-name>contextConfigLocation</param-name>
-            <param-value>classpath:config/spring-mvc.xml</param-value>
+            <param-value>classpath:config/application-servlet.xml</param-value>
         </init-param>
         <load-on-startup>1</load-on-startup>
     </servlet>
@@ -212,7 +315,7 @@ public class HelloController {
         model.addAttribute("title", "Spring Security Hello World");
         model.addAttribute("message", "This is welcome page!");
 
-        return "hello.htm";
+        return "hello.html";
     }
 
     @RequestMapping(value = "/admin", method = RequestMethod.GET)
@@ -223,39 +326,40 @@ public class HelloController {
         UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         model.addAttribute("username", userDetails.getUsername());
 
-        return "admin.htm";
+        return "admin.html";
     }
 }
 ```
 
-## hello.htm
+## hello.html
+
 ```html
 <html>
 <body>
-    <h1>Title : ${title}</h1>
-    <h1>Message : ${message}</h1>
+    <h1 th:text="|Title : ${title}|"></h1>
+    <h1 th:text="|Message : ${message}|"></h1>
 </body>
 </html>
 ```
 
-## admin.htm
+## admin.html
+
 ```htm
 <html>
 <body>
-    <h1>Title : ${title}</h1>
-    <h1>Message : ${message}</h1>
+    <h1 th:text="|Title : ${title}|"></h1>
+    <h1 th:text="|Message : ${message}|"></h1>
 
-    <#if username??>
-        <h2>Welcome : ${username} <a href="/logout">Logout</a></h2>
-    </#if>
+    <h2 th:if="${username} != ''"><span th:text="|Welcome : ${username}|"></span> <a href="/logout">Logout</a></h2>
 </body>
 </html>
 ```
 
 ## 测试
-* 访问 <http://biao.com/hello>，因为没有权限要求，正常访问页面
-* 访问 <http://biao.com/admin>，因为需要 admin 的权限，所以会自动 redirect 到 <http://biao.com/login> 进行登录
-    * 用户名输入 `admin`，密码输入 `Passw0rd`，点击 Login，登录成功，自动 redirect 到登陆前先前的页面 <http://biao.com/admin>
+
+* 访问 <http://localhost:8080/hello>，因为没有权限要求，正常访问页面
+* 访问 <http://localhost:8080/admin>，因为需要 admin 的权限，所以会自动 redirect 到 <http://localhost:8080/login> 进行登录
+    * 用户名输入 `admin`，密码输入 `Passw0rd`，点击 Login，登录成功，自动 redirect 到登陆前先前的页面 <http://localhost:8080/admin>
     * 用户名输入 `alice`，密码输入 `Passw0rd`，点击 Login，登录成功，提示无权限访问
 
 ## 参考

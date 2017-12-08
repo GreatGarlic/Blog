@@ -3,6 +3,20 @@ title: Spring Security 自动登录
 date: 2017-02-27 14:43:09
 tags: SpringSecurity
 ---
+**Spring Security 怎么判断一个用户是否登录了呢？**
+
+非常的简单，只要 Spring Context 中存储了一个 Authentication 的对象，那么 Spring Security 就认为用户已经登录。所以所有的操作都是为了往 Spring Context 中存储了一个 Authentication 的对象，这样就实现了自动登录的功能:
+
+```java
+User user = new User(...);
+Authentication auth = UsernamePasswordAuthenticationToken(user, user.getPassword(), user.getAuthorities());
+SecurityContextHolder.getContext().setAuthentication(auth);
+```
+
+下面的代码都是为了结合某些业务一起介绍的，写的很冗杂，不管怎么做，核心功能只要围绕上面这几行代码即可。
+
+---
+
 前面的实现可以使用表单进行登陆了，但是某些时候需要自动登录，例如使用 QQ 的第三方登录，服务器收到登陆成功的回调后，需要在我们的系统中继续使用本地账号登陆才行，这时就会需要实现自动登录的功能，还有使用 AJAX 等也不能使用表单登陆，也是需要调用登陆的接口才可以。
 
 为了提供登陆的接口，需要实现 **AuthenticationProvider** 进行登陆，不再使用 Spring Security 的默认实现。当然实现了自动登录后，并不会影响 Spring Security 的表单登陆。
