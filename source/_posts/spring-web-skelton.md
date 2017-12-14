@@ -103,7 +103,6 @@ dependencies {
             "org.springframework:spring-webmvc:${versions.spring}",
             "org.springframework:spring-context-support:${versions.spring}",
             "com.alibaba:fastjson:${versions.fastjson}",
-            "org.thymeleaf:thymeleaf:${versions.thymeleaf}",
             "org.thymeleaf:thymeleaf-spring5:${versions.thymeleaf}"
     )
 
