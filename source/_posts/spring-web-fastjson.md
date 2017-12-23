@@ -17,7 +17,8 @@ compile 'com.alibaba:fastjson:1.2.41'
 把对象转换为 JSON 字符串
 
 ```java
-public static String toJSONString(Object object);
+public static String toJSONString(Object object) // 转为压缩格式的，去掉多余的空格，占用空间少
+public static String toJSONString(Object object, boolean prettyFormat) // prettyFormat 为 true 转为格式化后的，可读性好
 ```
 
 把 JSON 字符串转换为对象
@@ -27,7 +28,22 @@ public static <T> T parseObject(String text, Class<T> clazz);
 public static <T> T parseObject(String text, TypeReference<T> type, Feature... features);
 ```
 
+转为字符串时忽略某一个属性，使用 ignores
+
+```java
+@JSONType(ignores = {"children"})
+public static class Node {
+    Long id;
+    Long parentId;
+
+    List<Node> children = new LinkedList<>();
+}
+```
+
+
+
 ## TypeReference
+
 什么时候用 `TypeReference` 呢？使用 `parseObject()` 转换的结果使用范型时。
 
 > **public class TypeReference<T> extends Object**  

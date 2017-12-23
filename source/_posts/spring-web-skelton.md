@@ -81,6 +81,8 @@ gretty {
     debugSuspend = false
     managedClassReload      = true
     recompileOnSourceChange = true
+  
+    // 升级 gretty 自带的 springloaded
     jvmArgs = ['-javaagent:/Users/Biao/Documents/springloaded-1.2.8.RELEASE.jar', '-noverify']
 }
 
@@ -209,21 +211,13 @@ public class HelloController {
                 <constructor-arg value="UTF-8"/>
                 <property name="supportedMediaTypes">
                     <list>
-                        <bean class="org.springframework.http.MediaType">
-                            <constructor-arg index="0" value="text"/>
-                            <constructor-arg index="1" value="plain"/>
-                            <constructor-arg index="2" value="UTF-8"/>
-                        </bean>
-                        <bean class="org.springframework.http.MediaType">
-                            <constructor-arg index="0" value="*"/>
-                            <constructor-arg index="1" value="*"/>
-                            <constructor-arg index="2" value="UTF-8"/>
-                        </bean>
+                        <value>text/html;charset=UTF-8</value>
+                        <value>text/plain;charset=UTF-8</value>
                     </list>
                 </property>
             </bean>
             <!-- FastJson -->
-            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter4">
+            <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
                         <value>text/html;charset=UTF-8</value>
@@ -270,7 +264,10 @@ public class HelloController {
 </beans>
 ```
 
+> [在 Spring 中集成 Fastjson](https://github.com/alibaba/fastjson/wiki/在-Spring-中集成-Fastjson)
+
 ## web.xml
+
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns="http://xmlns.jcp.org/xml/ns/javaee"
