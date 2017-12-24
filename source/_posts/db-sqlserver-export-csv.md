@@ -10,9 +10,10 @@ tags: DB
 bcp "select * from tableName FOR XML AUTO, ROOT('Root')" queryout C:/x.xml -S(local) -T -r -c
 ```
 
-* `-c`: 使用 GBK 编码
 * `-w`: 使用 UTF-16 编码，小端
+* `-c`: 使用 GBK 编码
 * `-c -C6501`: 使用 UTF-8 编码，但是有的计算机上不支持
+* `-T`: 本机使用 `-T` 表示可信连接，如果是访问其他机器使用 `-U user -P pwd` 输入用户名和密码
 
 > 注意：
 >

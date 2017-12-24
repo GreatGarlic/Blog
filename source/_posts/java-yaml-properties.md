@@ -7,7 +7,20 @@ tags: [Java, Util]
 Java 可以使用 `PropertiesConfiguration` 来读取 properties 属性文件，Spring 4.3 后还支持了 `Yaml 格式的属性文件`
 
 * PropertiesConfiguration: 读取时可以自动进行类型转换，可以给定默认值
-* Yaml 格式的属性文件: 可以使用树形结构，方便分组，比 `.properties` 属性文件更灵活，但是以普通的 `java.util.Properties` 来读取
+
+* Yaml 格式的属性文件: 可以使用树形结构，方便分组，支持中文，比 `.properties` 属性文件更灵活，但是以普通的 `java.util.Properties` 来读取:
+
+  ```
+  # 1. 配置分组
+  jdbc:
+      driverClassName:        com.mysql.jdbc.Driver    a     # 2. 前后空格会被自动去掉，注释不会被读取
+      url: jdbc:mysql://localhost:3306/test?useUnicode=true&characterEncoding=UTF-8
+      username: root
+      password: 密码 # 3. 支持中文
+  urls:
+      - http://127.0.0.1 # 4. 定义数组
+      - http://localhost
+  ```
 
 <!--more-->
 
