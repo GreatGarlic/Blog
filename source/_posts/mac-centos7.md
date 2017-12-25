@@ -24,7 +24,19 @@ tags: Mac
 
 * tar 解压 tar.gz: `tar xf filename.tar.gz` 
 
-* 安装 tree: `yum install tree`<!--more-->
+* 安装 tree: `yum install tree`
+
+* 安装 7z: `yum install -y p7zip`，如果不能用 yum 安装，可以自己编译
+
+  ```
+  wget http://nchc.dl.sourceforge.net/project/p7zip/p7zip/9.20.1/p7zip_9.20.1_src_all.tar.bz2
+  tar -jxvf p7zip_9.20.1_src_all.tar.bz2
+  cd p7zip_9.20.1
+  make
+  make install
+  ```
+
+  <!--more-->
 
 ## 安装 Java
 
@@ -118,3 +130,20 @@ CentOS 7 使用 firewalld 控制端口，不再使用 iptables，默认 8080 端
      ```
 
 3. 运行 `yum makecache` 生成缓存
+
+## 7z 使用
+
+```
+# 解压 filename.7z 到 here 目录
+7za x filename.7z here
+
+命令: 7za {a|d|l|e|u|x} 压缩包文件名 {文件列表或目录，可选}
+x: 以完整路径解压
+a: 向压缩包里添加文件或创建压缩包，如向 001.7z 添加 001.jpg，执行：7za a 001.7z 001.jpg；
+   将001目录打包执行：7za a 001.7z 001；
+d: 从压缩里删除文件，如将 001.7z 里的 001.jpg 删除，执行：7za d 001.7z 001.jpg
+l: 列出压缩包里的文件，如列出 001.7z 里的文件，执行：7za l 001.7z
+e: 解压到当前目录，目录结构会被破坏，如 001.rar 内有如下目录及文件 123/456/789.html，
+   执行：7za e 001.rar，目录 123 和 456 及文件 789.html 都会存放在当前目录下。
+```
+
