@@ -62,7 +62,7 @@ tags: [FE, zTree]
 ```
 
 ## 数组结构数据创建 zTree
-数据库表中树形结构的存储一般都是通过 parentId 来建立数据之间的父子关系，zTree 也可以使用数组结构的数据，通过 parentId 来建立树节点之间的父子关系，需要设置 **setting.data.simple** 的属性来启用这种创建方式。
+数据库表中树形结构的存储一般都是通过 parentId 来建立数据之间的父子关系，zTree 也可以使用数组结构的数据，通过 parentId 来建立树节点之间的父子关系，需要设置 **setting.data.simpleData** 的属性来启用这种创建方式。
 
 ```html
 <!DOCTYPE html>

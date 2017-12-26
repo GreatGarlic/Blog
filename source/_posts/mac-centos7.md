@@ -134,8 +134,11 @@ CentOS 7 使用 firewalld 控制端口，不再使用 iptables，默认 8080 端
 ## 7z 使用
 
 ```
+# 解压 filename.7z 到当前目录
+7za x filename.7z
+
 # 解压 filename.7z 到 here 目录
-7za x filename.7z here
+7za x filename.7z -ohere
 
 命令: 7za {a|d|l|e|u|x} 压缩包文件名 {文件列表或目录，可选}
 x: 以完整路径解压

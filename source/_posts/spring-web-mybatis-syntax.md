@@ -76,7 +76,7 @@ public List<User> findUsers(@Param("offset") int offset, @Param("count") int cou
 
 ## 返回 Boolean
 
-返回 Boolean 的 SQL 需要使用 **EXISTS**，因为 MyBatis 中 1 代表 true，非 1 代表 false，如果用 count 的话，大于 1 的情况返回 false，这是不对的。
+JDBC 规范中，1 代表 true，0 代表 false，其他值是未定义的，如果用 count 的话，大于 1 是返回 true 还是 false 和 JDBC 的驱动有关(MyBatis + MySQL: `>=1` 为 true，`<=0` 为 false)，所以返回 boolean 时最保险的是使用 `EXISTS`:
 
 ```xml
 <!--检查目录是否存在-->
@@ -85,7 +85,11 @@ public List<User> findUsers(@Param("offset") int offset, @Param("count") int cou
 </select>
 ```
 
-## if
+> MyBatis 的 BooleanTypeHandler 中返回 boolean 的代码为 `return rs.getBoolean(columnName)`，JDK 的说明:
+>
+> If the designated column has a datatype of CHAR or VARCHAR and contains a "0" or has a datatype of BIT, TINYINT, SMALLINT, INTEGER or BIGINT and contains a 0, a value of `false` is returned. If the designated column has a datatype of CHAR or VARCHAR and contains a "1" or has a datatype of BIT, TINYINT, SMALLINT, INTEGER or BIGINT and contains a 1, a value of `true` is returned.
+
+##  if
 
 ```xml
 <!-- 查询学生 list，like 姓名 -->   
