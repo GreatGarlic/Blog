@@ -211,7 +211,7 @@ public class FooController {
 
 ```xml
 <mvc:cors>
-    <mvc:mapping path="/**" />
+    <mvc:mapping path="/**" allowed-methods="*"/> <!-- 默认只允许 GET 和 POST -->
 </mvc:cors>
 ```
 
@@ -223,9 +223,9 @@ public class FooController {
         allowed-headers="header1, header2, header3"
         exposed-headers="header1, header2" 
         allow-credentials="false"
-        max-age="3600" />
+        max-age="3600"/>
 
-    <mvc:mapping path="/resources/**" allowed-origins="http://domain1.com" />
+    <mvc:mapping path="/resources/**" allowed-origins="http://domain1.com"/>
 </mvc:cors>
 ```
 

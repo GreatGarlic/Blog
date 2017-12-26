@@ -30,7 +30,10 @@ compile 'groupId:artifactId:version'
 compile project(':dependency-project')
 ```
 
+> 被依赖的项目会被打成 jar 包放到 lib 目录(包含它的资源文件)。
+
 ## 依赖本地 jar 包
+
 ```
 compile files('spring-core.jar', 'spring-aop.jar')
 compile fileTree(dir: 'src/main/webapp/WEB-INF/lib', include: '*.jar')

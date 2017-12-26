@@ -220,7 +220,6 @@ public class HelloController {
             <bean class="com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter">
                 <property name="supportedMediaTypes">
                     <list>
-                        <value>text/html;charset=UTF-8</value>
                         <value>application/json;charset=UTF-8</value>
                     </list>
                 </property>
