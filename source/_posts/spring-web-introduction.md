@@ -26,11 +26,23 @@ tags: SpringWeb
 1. 安装 IntelliJ IDEA 社区版: 
     * [IDEA 介绍](http://www.jetbrains.com/idea/)
     * [IDEA 下载](http://www.jetbrains.com/idea/download/download_thanks.jsp)
+
 2. 安装 Gradle: [Gradle 主页](https://gradle.org)
+
+    * 设置 Gradle 的编码为 UTF-8: <http://qtdebug.com/gradle-encoding/>
+
 3. 安装 MySQL: 
     * Mac 下可以安装 [`MAMP`](https://www.mamp.info)
     * Windows 里可以安装 `MAMP`
     * MAMP: 里面集成了数据库 MySQL, MySQL 的网页版管理工具 PhpMySQLAdmin 等
+
 4. 安装 [Tomcat](http://tomcat.apache.org)，开发阶段不需要安装, 而是使用 Gradle  的 Gretty 插件，Gretty 集成了嵌入式的 Jetty 和 Tomcat
+
+5. Windows 设置终端显示 UTF-8 字符:
+
+    * 执行 `chcp 65001`
+
+    * 设置命令行的属性，选择字体 `Lucida Console`(不要选择点阵字体)
+
 
 
