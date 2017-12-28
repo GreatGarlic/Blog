@@ -9,9 +9,13 @@ Thymeleaf 使用 HTML 元素的属性获取 model 中的数据，属性的前缀
 ## 变量访问
 
 ```html
+<!-- 使用属性的方式访问变量 -->
 <span th:text="${name}">Thymeleaf 解析后会被覆盖</span>
 <span th:text="|Welcome ${name}|">Thymeleaf 解析后会被覆盖</span>
 <span th:text="'Welcome ' + ${name}">Thymeleaf 解析后会被覆盖</span>
+
+<!-- 非属性的方式访问变量 -->
+<span>[[${name}]]</span>
 ```
 
 字符串拼接时 `|...|` 的方式更简洁，但是里面不能包含表达式，第三种方式功能强大，可以包含表达式。
@@ -167,3 +171,5 @@ ${#numbers.setFormatDecimal(numSet,3,2,'COMMA')}
 ## 参考资料
 
 * [Thymeleaf 官方文档](http://www.thymeleaf.org/doc/tutorials/2.1/usingthymeleaf.html#introducing-thymeleaf)
+* [Thymeleaf 3 ten-minute migration guide](http://www.thymeleaf.org/doc/articles/thymeleaf3migration.html)
+
