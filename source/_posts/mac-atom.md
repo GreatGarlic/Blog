@@ -30,6 +30,7 @@ Atom 以前很慢，所以一直不想用，在 1.0 版本后启动差不多需�
 | sublime-style-column-selection | 列编辑                                      |
 | symbols-view-plus              | Atom 自带的 symbols-view 的增强版               |
 | atom-history                   | 打开文件的记录                                  |
+| atom-ide-ui                    | 这将在你的 Atom 中呈现 IDE 界面，但是要成为一个完全可工作的 IDE ，你还需要安装你的语言服务器支持。可以选择：ide-html、ide-typescript(TypeScript & JavaScript)、 ide-php、 ide-java、 ide-csharp |
 | OOOOOOOOOOOOOOOO               | OOO                                      |
 
 ## 快捷键
@@ -42,18 +43,22 @@ Atom 以前很慢，所以一直不想用，在 1.0 版本后启动差不多需�
 
 ## 自定义快捷键
 
-* 如果已经被使用了，先解绑，例如 `cmd + l`
+如果已经被使用了，先解绑，例如 `cmd + l`，然后再绑定新的快捷键
 
-    ```js
-    'atom-text-editor':
-        'cmd-l': 'unset!'
-    ```
-* 绑定新的快捷键
+```js
+'atom-text-editor':
+    'cmd-l': 'unset!'
+'.platform-darwin, .platform-win32, .platform-linux':
+    'cmd-l': 'go-to-line:toggle'
+    'cmd-o': 'outline-view:toggle'
 
-    ```js
-    '.platform-darwin, .platform-win32, .platform-linux':
-        'cmd-l': 'go-to-line:toggle'
-    ```
+'.platform-darwin atom-text-editor':
+    'cmd-d': 'unset!'
+'atom-text-editor:not([mini])':
+    'cmd-d': 'editor:delete-line'
+'atom-text-editor[data-grammar~=html]':
+    'alt-p': 'atom-html-preview:toggle'
+```
 
 ## 自定义文件语法高亮规则
 
