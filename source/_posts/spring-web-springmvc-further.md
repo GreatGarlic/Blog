@@ -51,6 +51,12 @@ public class ParameterController {
     public String three(@PathVariable String text, @PathVariable Integer number) {
         return "Text: " + text + ", Number: " + number;
     }
+  
+    // 路径中有 . 时需要用正则，如 http://localhost:8080//question-img/GYYK034C/Aimage002.jpg
+    @GetMapping("/question-img/{subjectCode}/{imageName:.+}")
+    public void readQuestionImage(@PathVariable String subjectCode, @PathVariable String imageName) {
+        ...
+    }
 }
 ```
 

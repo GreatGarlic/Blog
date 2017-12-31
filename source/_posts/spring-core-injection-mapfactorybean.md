@@ -81,3 +81,19 @@ public class MapFactoryBeanTest {
 }
 "java.util.HashMap"
 ```
+
+## 注入静态变量
+
+使用 `util:constant`
+
+```xml
+<property name="classSerializers">
+    <map>
+        <!-- key 时 Class, value 时静态变量 -->
+        <entry key="java.lang.Long">
+            <util:constant static-field="com.alibaba.fastjson.serializer.ToStringSerializer.instance"/>
+        </entry>
+    </map>
+</property>
+```
+

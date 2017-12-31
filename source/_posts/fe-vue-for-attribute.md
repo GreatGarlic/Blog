@@ -61,7 +61,7 @@ v-bind 和 v-on 有简写形式 `:` 和 `@`
         <input type="text" v-model="username" @keyup.enter="alert(username)" placeholder="输入用户名">
         
         <ul>
-            <li v-for="province in provinces" :data-id="province.id">{{province.name}}</li>
+            <li v-for="province in provinces" :data-id="province.id" :key="province.id">{{province.name}}</li>
             <li v-show="provinces.length === 0">没有数据</li>
         </ul>
         <hr/>

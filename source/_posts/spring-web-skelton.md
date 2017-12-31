@@ -232,6 +232,11 @@ public class HelloController {
                                 <value>DisableCircularReferenceDetect</value>
                             </list>
                         </property>
+                        <property name="serializerFeatures">
+                            <list>
+                                <value>BrowserCompatible</value> <!-- 解决 JS 不支持 Long 类型: Long 输出为字符串 -->
+                            </list>
+                        </property>
                         <property name="dateFormat" value="yyyy-MM-dd HH:mm:ss"/>
                     </bean>
                 </property>
