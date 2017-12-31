@@ -1,7 +1,7 @@
 ---
 title: Solr Tips
 date: 2016-04-19 20:42:10
-tags: [Java, Solr]
+tags: Java
 ---
 
 ## 安装 Solr
@@ -114,4 +114,4 @@ bin/post -c ebag example/exampledocs/books.json
     * <http://localhost:8983/solr/ebag/select?q=price:[0%20TO%20400]&facet=on&facet.field=cat&wt=json&indent=on>
 
 ## 参考
-* [Running Solr](https://cwiki.apache.org/confluence/display/solr/Running+Solr)
+* ## [Running Solr](https://cwiki.apache.org/confluence/display/solr/Running+Solr)

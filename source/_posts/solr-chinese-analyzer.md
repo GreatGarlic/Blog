@@ -1,7 +1,7 @@
 ---
 title: Solr 中文分词插件 SmartCN
 date: 2016-04-22 13:02:00
-tags: Solr
+tags: Java
 ---
 
 ## 为什么要使用中文分词呢？
@@ -33,14 +33,14 @@ Solr 中默认的中文分词是用 Lucene 的一元分词包，下面介绍配�
     ```
 
     给需要使用中文分词的字段的 type 定义为 `text_smartcn`，增加下面的语句，比如 content 字段
-    
+
     ```xml
     <field name="content" type="text_smartcn" indexed="true" stored="true"/>
     ```
 
 3. 重启 Solr 服务: `bin/solr restart`
 4. 验证 SmartCN 的分词效果
-![](/img/solr/solr-smartcn.png)
+  ![](/img/solr/solr-smartcn.png)
 
 ## 参考
 * [Solr5.0配置中文分词包](http://tec.5lulu.com/detail/110d2n2ehig5g8592.html)

@@ -1,7 +1,7 @@
 ---
 title: Java 访问 Solr
 date: 2016-04-21 14:13:07
-tags: [Java, Solr]
+tags: Java
 ---
 
 可以使用 SolrJ 来访问 Solr，其提供的 SolrClient 能够在连接断开后自动重连。
