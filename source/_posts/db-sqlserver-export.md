@@ -23,7 +23,7 @@ bcp "select * from tableName FOR XML AUTO, ROOT('Root')" queryout C:/x.xml -S(lo
 ## 导出 CSV
 
 ```
-sqlcmd -S localhost -d dbName -E -o "csvFile.csv" -Q "select * from tableName" -W -w 999 -s ","
+sqlcmd -S localhost -d dbName -E -o "csvFile.csv" -Q "set nocount on; select * from tableName" -W -w 999 -s ","
 ```
 
 * `-W`: remove trailing spaces from each individual field
@@ -32,6 +32,7 @@ sqlcmd -S localhost -d dbName -E -o "csvFile.csv" -Q "select * from tableName" -
 * `-U`: username
 * `-P`: password
 * `-h-1`: removes column name headers from the result
+* set nocount on: 输出时不显示 XXX 行受到影响的统计信息
 
 > 注意：sqlcmd 导出为 CSV 文件时，如果列中有逗号，那么导出的 CSV 文件会被破坏，还没找到好办法。
 

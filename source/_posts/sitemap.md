@@ -24,7 +24,7 @@ tags: Index
 * [MySQL 导入导出 CSV](/mysql-csv)
 * [MySQL 导入导出 SQL 文件](/mysql-impex)
 * [MySQL 数据类型](/mysql-types)
-* [SQL Server 导出 CSV 和 XML](/db-sqlserver-export-csv)
+* [SQL Server 导出 CSV 和 XML](/db-sqlserver-export)
 * [允许其他机器访问 MySQL](/mysql-wan)
 * [数据库常用基础](/db-tips)
 
