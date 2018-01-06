@@ -133,7 +133,7 @@ export PATH
 plugins {
     id 'war'
     id 'java'
-    id 'org.hidetake.ssh' version '2.9.0'
+    id 'org.hidetake.ssh'   version '2.9.0'
     id 'org.akhikhl.gretty' version '2.0.0'
 }
 
@@ -146,51 +146,44 @@ gretty {
     debugSuspend = false
     managedClassReload      = true
     recompileOnSourceChange = true
-}
 
-sourceCompatibility = JavaVersion.VERSION_1_8
-targetCompatibility = JavaVersion.VERSION_1_8
-[compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
-
-tasks.withType(JavaCompile) {
-    options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
+    // 升级 gretty 自带的 springloaded
+    jvmArgs = ["-javaagent:${project.projectDir}/springloaded-1.2.8.RELEASE.jar", '-noverify']
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                   Maven 依赖                               //
 ////////////////////////////////////////////////////////////////////////////////
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
 ext {
     // 运行和打包的环境选择, 默认是开发环境
-    // 获取 gradle 参数中 env 的值: gradle -Denv=production clean build
-    // 构建 gradle clean build
-    //     gradle -Denv=production clean build
-    // 部署 gradle clean deploy
-    //     gradle -Denv=production clean deploy
-    environment = System.getProperty("env", "development")
-    war.archiveName = 'ROOT.zip' // 打包的文件名
+    // 构建: gradle clean build
+    //       gradle clean build -Denv=production
+    // 部署: gradle clean deploy
+    //       gradle clean deploy -Denv=production
+    environment = System.getProperty("env", "development") // 获取 gradle 参数中 env 的值，选择环境
+    war.archiveName = 'Fox.zip' // 打包的文件名，不用 war 包自动解压的话，用 .zip 会更好一些
 }
 
 ext.versions = [
-    spring        : '4.3.10.RELEASE',
-    springSecurity: '4.2.3.RELEASE',
-    springSession : '1.3.0.RELEASE',
-    servlet       : '3.1.0',
+    spring        : '5.0.2.RELEASE',
+    springSecurity: '5.0.0.RELEASE',
+    springSession : '1.3.1.RELEASE',
+    servlet       : '4.0.0',
     lombok        : '1.16.18',
-    fastjson      : '1.2.38',
-    thymeleaf     : '3.0.7.RELEASE',
+    fastjson      : '1.2.41',
+    thymeleaf     : '3.0.9.RELEASE',
     mysql         : '5.1.21',
     mybatis       : '3.4.5',
     mybatisSpring : '1.3.1',
-    druid         : '1.1.3',
-    validator     : '6.0.2.Final',
-    commonsLang   : '3.5',
-    commonsFileupload: '1.3.2',
-    snakeyaml     : '1.18',
+    druid         : '1.1.5',
+    validator     : '6.0.5.Final',
+    commonsLang   : '3.7',
+    commonsFileupload: '1.3.3',
+    snakeyaml     : '1.19',
     easyOkHttp    : '1.1.3',
     logback       : '1.2.3',
     junit         : '4.12',
@@ -199,47 +192,44 @@ ext.versions = [
 
 dependencies {
     compile(
-            "org.springframework:spring-webmvc:$versions.spring", // Spring MVC
-            "org.springframework:spring-context-support:$versions.spring",
-            "org.springframework.security:spring-security-web:$versions.springSecurity", // Spring Security
-            "org.springframework.security:spring-security-config:$versions.springSecurity",
-            "org.springframework.session:spring-session-data-redis:$versions.springSession",
-            "com.alibaba:fastjson:$versions.fastjson", // JSON
-            "org.thymeleaf:thymeleaf:$versions.thymeleaf",
-            "org.thymeleaf:thymeleaf-spring4:$versions.thymeleaf",
-            "mysql:mysql-connector-java:$versions.mysql", // MyBatis
-            "org.springframework:spring-jdbc:$versions.spring",
-            "org.mybatis:mybatis-spring:$versions.mybatisSpring",
-            "org.mybatis:mybatis:$versions.mybatis",
-            "com.alibaba:druid:$versions.druid",
-            "org.hibernate.validator:hibernate-validator:$versions.validator",
-            "org.apache.commons:commons-lang3:$versions.commonsLang",
-            "commons-fileupload:commons-fileupload:$versions.commonsFileupload",
-            "org.yaml:snakeyaml:$versions.snakeyaml",
-            "com.mzlion:easy-okhttp:$versions.easyOkHttp",
-            "ch.qos.logback:logback-classic:$versions.logback", // Logback
-            "org.slf4j:jcl-over-slf4j:$versions.jclOverSlf4j"
+            "org.springframework:spring-webmvc:${versions.spring}",
+            "org.springframework:spring-context-support:${versions.spring}",
+            "org.springframework.security:spring-security-web:${versions.springSecurity}",
+            "org.springframework.security:spring-security-config:${versions.springSecurity}",
+            "org.springframework.session:spring-session-data-redis:${versions.springSession}",
+            "com.alibaba:fastjson:${versions.fastjson}",
+            "org.thymeleaf:thymeleaf-spring5:${versions.thymeleaf}",
+            "mysql:mysql-connector-java:${versions.mysql}",
+            "org.springframework:spring-jdbc:${versions.spring}",
+            "org.mybatis:mybatis-spring:${versions.mybatisSpring}",
+            "org.mybatis:mybatis:${versions.mybatis}",
+            "com.alibaba:druid:${versions.druid}",
+            "org.hibernate.validator:hibernate-validator:${versions.validator}",
+            "org.apache.commons:commons-lang3:${versions.commonsLang}",
+            "commons-fileupload:commons-fileupload:${versions.commonsFileupload}",
+            "org.yaml:snakeyaml:${versions.snakeyaml}",
+            "com.mzlion:easy-okhttp:${versions.easyOkHttp}",
+            "ch.qos.logback:logback-classic:${versions.logback}",
+            "org.slf4j:jcl-over-slf4j:${versions.jclOverSlf4j}"
     )
 
-    compileOnly("org.projectlombok:lombok:$versions.lombok")
-    compileOnly("javax.servlet:javax.servlet-api:$versions.servlet") // Servlet
-    testCompile("org.springframework:spring-test:$versions.spring")
-    testCompile("junit:junit:$versions.junit")
+    compileOnly("org.projectlombok:lombok:${versions.lombok}")
+    compileOnly("javax.servlet:javax.servlet-api:${versions.servlet}")
+    testCompile("org.springframework:spring-test:${versions.spring}")
+    testCompile("junit:junit:${versions.junit}")
 }
 
 ////////////////////////////////////////////////////////////////////////////////
 //                                  资源动态替换                                //
 ////////////////////////////////////////////////////////////////////////////////
-def loadConfiguration() {
-    println "==> Load configuration for '${environment}'"
-    def configFile = file('config.groovy') // 配置文件
-    return new ConfigSlurper(environment).parse(configFile.toURI().toURL()).toProperties()
-}
-
 processResources {
     // src/main/resources 下的文件中 @key@ 的内容使用 config.groovy 里对应的进行替换
+    println "==> Load configuration for '${environment}'"
+    def configFile = file('config.groovy') // 配置文件
+    def props = new ConfigSlurper(environment).parse(configFile.toURI().toURL()).toProperties()
+
     from(sourceSets.main.resources.srcDirs) {
-        filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: loadConfiguration())
+        filter(org.apache.tools.ant.filters.ReplaceTokens, tokens: props)
     }
 }
 
@@ -250,6 +240,7 @@ remotes {
     server {
         host = '192.168.82.133'
         user = 'root'
+        // password 和 identity 只用其中一个
         // password = 'xxx'
         identity = file("${System.properties['user.home']}/.ssh/id_rsa")
     }
@@ -260,21 +251,34 @@ ssh.settings {
 }
 
 task deploy(dependsOn: war) {
+    def targetDir = '/data/xtuer.com'
     doLast {
         ssh.run {
             session(remotes.server) {
-                put from: "${buildDir}/libs/${war.archiveName}", into: '/data/xtuer.com'
+                put from: "${buildDir}/libs/${war.archiveName}", into: "${targetDir}"
                 execute """
                     source /root/.bash_profile;
                     /usr/local/tomcat/bin/shutdown.sh;
-                    rm -rf /data/xtuer.com/ROOT;
-                    unzip  /data/xtuer.com/${war.archiveName} -d /data/xtuer.com/ROOT > /dev/null;
+                    rm -rf ${targetDir}/ROOT;
+                    unzip -u ${targetDir}/${war.archiveName} -d ${targetDir}/ROOT > /dev/null;
+                    kill `ps aux | grep -i tomcat | grep -v grep | awk '{print \$2}'`;
                     /usr/local/tomcat/bin/startup.sh;
-                    rm -rf /data/xtuer.com/${war.archiveName};
+                    rm -rf ${targetDir}/${war.archiveName};
                 """
             }
         }
     }
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//                                    JVM                                     //
+////////////////////////////////////////////////////////////////////////////////
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+[compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
 }
 ```
 
