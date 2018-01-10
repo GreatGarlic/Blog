@@ -44,13 +44,22 @@ tags: [FE, Vue]
    npm install --save-dev sass-loader
    ```
 
-6. ESHint 设置，修改 .eshintrc.js 的 rules，去掉一些严格的检查
+6. 编辑器使用 4 个空格缩进，修改 **.editorcong**
 
    ```
+   indent_size = 4
+   ```
+
+7. ESHint 设置，修改 .eshintrc.js 的 rules，去掉一些严格的检查
+
+   ```js
+   'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off',
    'indent': 0,
    'no-console': 0,
    'no-undef': 0,
+   'no-alert': 0,
    'no-trailing-spaces': 0,
+   'object-shorthand': 0,
    'func-names': 0,
    'prefer-arrow-callback': 0,
    'space-before-function-paren': 0,
@@ -62,17 +71,12 @@ tags: [FE, Vue]
    'global-require': 0,
    'import/no-dynamic-require': 0,
    'no-underscore-dangle': 0,
+   'array-bracket-spacing': 0
    ```
 
    > 我喜欢使用 4 个空格来缩进，Airbnb 默认是 2 个，很多前端的都喜欢使用 2 个进行缩进，为了简单起见，不让空格的个数造成编译时错误，关闭掉它即可。
 
-7. 编辑器使用 4 个空格缩进，修改 **.editorcong**
-
-   ```
-   indent_size = 4
-   ```
-
-8. 图片不使用 Base64 的字符串嵌入到网页里，修改 **build/webpack.base.conf.js**
+8. 图片不使用 Base64 的字符串嵌入到网页里，修改 **build/webpack.base.conf.js** 的 `limit` 为 1
 
    ```
    {
@@ -85,7 +89,7 @@ tags: [FE, Vue]
    }
    ```
 
-   > limit 表示图片大小小于它的图片将使用 Base64 的方式嵌入网页。
+   > limit 表示图片大小，小于它的图片将使用 Base64 的方式嵌入网页。
 
 9. 修改端口号
 
@@ -139,6 +143,8 @@ tags: [FE, Vue]
    </style>
    ```
    > export 导出一个对象，data() {} 是 ES6 定义类的函数的新方式。
+   >
+   > component 一般由 3 个部分组成: template, script, style。
 
 2. 在 **src/router/index.js** 中注册 component
 
