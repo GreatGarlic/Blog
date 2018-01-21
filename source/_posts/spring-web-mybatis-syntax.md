@@ -411,7 +411,7 @@ SQL 使用时特殊字符有 `<` 和 `>`，可以使用 `<![CDATA[ ]]>` 把 SQL 
     <!--嵌套映射中还可以使用 resultMap: association, collection
     还可以使用嵌套查询，但是会产生 N＋1 问题，在大数量的数据库里会有很大的性能问题-->
 
-    <!--<association property="userInfo" column="user_info_id" javaType="domain.UserInfo">
+    <!--<association property="userInfo" javaType="domain.UserInfo">
         <id     property="id"        column="user_info_id"/>
         <result property="userId"    column="user_info_user_id"/>
         <result property="telephone" column="user_info_telephone"/>
@@ -419,7 +419,7 @@ SQL 使用时特殊字符有 `<` 和 `>`，可以使用 `<![CDATA[ ]]>` 把 SQL 
     </association>-->
 
     <!--使用 columnPrefix 可以使 result map 重用-->
-    <association property="userInfo" column="user_info_id" columnPrefix="user_info_" resultMap="userInfoResultMap"/>
+    <association property="userInfo" columnPrefix="user_info_" resultMap="userInfoResultMap"/>
 </resultMap>
 <resultMap id="userInfoResultMap" type="com.xtur.bean.UserInfo" >
     <id     property="id"        column="id"/>
@@ -450,7 +450,7 @@ SQL 使用时特殊字符有 `<` 和 `>`，可以使用 `<![CDATA[ ]]>` 把 SQL 
     <result property="uuidName"     column="uuid_name"/>
     <result property="originalName" column="original_name"/>
 
-    <collection property="knowledgePoints" ofType="KnowledgePoint" column="paper_id" columnPrefix="kp_" resultMap="knowledgePointResultMap"/>
+    <collection property="knowledgePoints" ofType="KnowledgePoint" columnPrefix="kp_" resultMap="knowledgePointResultMap"/>
 </resultMap>
 
 <resultMap id="knowledgePointResultMap" type="KnowledgePoint">

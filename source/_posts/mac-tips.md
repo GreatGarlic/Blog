@@ -31,12 +31,16 @@ Mac 使用中的一些常用操作和命令。
 * 光标移到屏幕顶部: `H`
 * 光标移到屏幕中部: `M`
 * 光标移到屏幕底部: `L`
+* 单词出现的次数: `:%s/pattern//gn`
 
 如果要长期有效，可以在 `~/.vimrc` 里加上对应的设置，例如
 
 ```
 set hlsearch
 set number
+colorscheme torte
+set mouse=a
+syntax on
 ```
 
 ## 查看使用端口的 PID
@@ -269,5 +273,12 @@ defaults write com.apple.screencapture disable-shadow -bool true ; killall Syste
 
 ```
 sudo rm -rfv /Library/Caches/com.apple.iconservices.store; sudo find /private/var/folders/ \( -name com.apple.dock.iconcache -or -name com.apple.iconservices \) -exec rm -rfv {} \; ; sleep 3;sudo touch /Applications/* ; killall Dock; killall Finder
+```
+
+## 隐藏显示文件
+
+```
+alias hide="chflags hidden *"
+alias show="chflags nohidden *"
 ```
 

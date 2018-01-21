@@ -17,6 +17,10 @@ Snowflake 生成的 ID 的 bit 结构如下:
 下面用 Java 实现 Snowflake，是现成安全的，调用 `nextId()` 生成 ID:
 
 ```java
+package com.xtuer.service;
+
+import org.apache.commons.lang3.StringUtils;
+
 /**
  * Snowflake 生成的 64 位 long 类型的 ID，结构如下:<br>
  * 0 - 0000000000 0000000000 0000000000 0000000000 0 - 00000 - 00000 - 000000000000 <br>
@@ -39,10 +43,10 @@ public class SnowflakeIdWorker {
     /** 数据标识 ID 所占的位数 */
     private final long datacenterIdBits = 5L;
 
-    /** 支持的最大机器 ID，结果是 31 */
+    /** 支持的最大机器 ID，结果是 31: 0B11111 */
     private final long maxWorkerId = -1L ^ (-1L << workerIdBits);
 
-    /** 支持的最大数据中心 ID，结果是 31 */
+    /** 支持的最大数据中心 ID，结果是 31: 0B11111 */
     private final long maxDatacenterId = -1L ^ (-1L << datacenterIdBits);
 
     /** 序列在 ID 中占的位数 */
@@ -73,18 +77,35 @@ public class SnowflakeIdWorker {
     private long lastTimestamp = -1L;
 
     /**
-     * 使用工作机器 ID 和数据中心 ID 创建一个 ID 生成器
+     * 创建 ID 生成器的方式一: 使用工作机器的序号，范围是 [0, 1023]，优点是方便给机器编号
      *
-     * @param workerId     工作机器 ID (0~31)
-     * @param datacenterId 数据中心 ID (0~31)
+     * @param workerId 工作机器 ID
      */
-    public SnowflakeIdWorker(long workerId, long datacenterId) {
+    public SnowflakeIdWorker(long workerId) {
+        long maxMachineId = (maxDatacenterId+1) * (maxWorkerId+1) - 1; // 1023
+
+        if (workerId < 0 || workerId > maxMachineId) {
+            throw new IllegalArgumentException(String.format("Worker ID can't be greater than %d or less than 0", maxMachineId));
+        }
+
+        this.datacenterId = (workerId >> workerIdBits) & maxDatacenterId;
+        this.workerId = workerId & maxWorkerId;
+    }
+
+    /**
+     * 创建 ID 生成器的方式二: 使用工作机器 ID 和数据中心 ID，优点是方便分数据中心管理
+     *
+     * @param datacenterId 数据中心 ID (0~31)
+     * @param workerId     工作机器 ID (0~31)
+     */
+    public SnowflakeIdWorker(long datacenterId, long workerId) {
         if (workerId > maxWorkerId || workerId < 0) {
             throw new IllegalArgumentException(String.format("Worker ID can't be greater than %d or less than 0", maxWorkerId));
         }
         if (datacenterId > maxDatacenterId || datacenterId < 0) {
             throw new IllegalArgumentException(String.format("Datacenter ID can't be greater than %d or less than 0", maxDatacenterId));
         }
+
         this.workerId = workerId;
         this.datacenterId = datacenterId;
     }
@@ -156,13 +177,13 @@ public class SnowflakeIdWorker {
         for (int i = 0; i < 1000; i++) {
             long id = idWorker.nextId();
             System.out.println(id);
-            System.out.println(Long.toBinaryString(id));
+            System.out.println(StringUtils.leftPad(Long.toBinaryString(id), 64, "0"));
         }
     }
 }
 ```
 
-可能你要问，哎呀，只能保证 70 内不重复，70 年后怎么办呢？我的答案是，让 70 后你们公司的同事去头疼吧，问题是，你们公司能活到什么时候都是个问题！
+可能你要问，哎呀，只能保证 70 内不重复，70 年后怎么办呢？我的答案是，让 70 年后公司的同事去头疼吧，问题是，你们公司能活到什么时候都是个问题！
 
 > 提示: 求一个整数，它的二进制表示中最后 n 位为 1: `-1 ^ (-1 << n)`
 > 分析: -1 的二进制表示中所有位都是 1，`-1 << n` 的结果为前 32-n 位为 1，后 n 位为 0，与 -1 执行取反操作得到的结果，前 32-n 位为 0，后 n 为 1(取反: 相同为 0，不同为 1)。

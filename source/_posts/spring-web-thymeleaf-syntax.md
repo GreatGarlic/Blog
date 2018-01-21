@@ -22,6 +22,15 @@ Thymeleaf 使用 HTML 元素的属性获取 model 中的数据，属性的前缀
 
 变量访问也可以使用级联的方式: `${user.name}`。
 
+## null 处理
+
+表达式 `${foo}?` 当 foo 为 null 时返回 false；级联调用时变量访问前先用 `?` 进行判断可以减少一个一个的条件判断
+
+```html
+<div th:text="${foo}?'Alt'"></div>
+<div th:text="${foo?.bar?.fix}"></div>
+```
+
 ## 使用 URL
 
 ```html
