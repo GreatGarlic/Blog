@@ -15,7 +15,7 @@ tags: SpringWeb
 ```xml
 <insert id="insertEnrollment" parameterType="EnrollmentForm">
     <selectKey keyProperty="enrollId" resultType="long" order="BEFORE">
-        SELECT S_ENR_ID.Nextval from DUAL
+        SELECT S_ENR_ID.Nextval FROM DUAL
     </selectKey>
 
     INSERT INTO enrollment (id, address) VALUES (#{enrollId}, #{address})
@@ -123,19 +123,19 @@ WHERE ST.STUDENT_NAME LIKE CONCAT(CONCAT('%', #{studentName}),'%')
 ```xml
 <!-- 查询学生list，like姓名，=性别、=生日、=班级，使用where,参数entity类型 -->
 <select id="getStudentListWhereEntity" parameterType="StudentEntity" resultMap="studentResultMap">
-    SELECT * FROM STUDENT_TBL ST
+    SELECT * FROM student
     <where>
         <if test="studentName!=null and studentName!='' ">
-            ST.STUDENT_NAME LIKE CONCAT(CONCAT('%', #{studentName}),'%')
+            name LIKE CONCAT('%', #{studentName},'%')
         </if>
         <if test="studentSex!= null and studentSex!= '' ">
-            AND ST.STUDENT_SEX = #{studentSex}
+            AND gender = #{gender}
         </if>
         <if test="studentBirthday!=null">
-            AND ST.STUDENT_BIRTHDAY = #{studentBirthday}
+            AND birthday = #{birthday}
         </if>
         <if test="classEntity!=null and classEntity.classID !=null and classEntity.classID!='' ">
-            AND ST.CLASS_ID = #{classEntity.classID}
+            AND class_id = #{classEntity.classID}
         </if>
     </where>
 </select>
@@ -241,8 +241,8 @@ for (String str : list) {
 <select id="getStudentListByClassIDs" resultMap="studentResultMap">
     SELECT * FROM STUDENT_TBL ST
      WHERE ST.CLASS_ID IN
-     <foreach collection="list" item="classList" open="(" close=")" separator=",">
-        #{classList}
+     <foreach collection="list" item="classId" open="(" close=")" separator=",">
+        #{classId}
      </foreach>
 </select>
 ```
@@ -451,6 +451,11 @@ SQL 使用时特殊字符有 `<` 和 `>`，可以使用 `<![CDATA[ ]]>` 把 SQL 
     <result property="originalName" column="original_name"/>
 
     <collection property="knowledgePoints" ofType="KnowledgePoint" columnPrefix="kp_" resultMap="knowledgePointResultMap"/>
+
+    <!--<collection property="knowledgePoints" ofType="KnowledgePoint" columnPrefix="kp_">
+        <id property="knowledgePointId" column="knowledge_point_id"/>
+        <result property="name"         column="name"/>
+    </collection>-->
 </resultMap>
 
 <resultMap id="knowledgePointResultMap" type="KnowledgePoint">
@@ -459,7 +464,7 @@ SQL 使用时特殊字符有 `<` 和 `>`，可以使用 `<![CDATA[ ]]>` 把 SQL 
 </resultMap>
 ```
 
-> collection 比 association 多一个 ofType。
+> 内联的 association 类型用 javaType，collection 用 ofType
 
 ## resultType 和 resultMap
 

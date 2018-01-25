@@ -239,6 +239,13 @@ cp -r srcDir/ destDir
 * 上传文件: `scp /Users/Biao/Desktop/a.zip root@192.168.82.130:/root`
 * 下载文件: `scp root@192.168.82.130:/root/a.zip /Users/Biao/Desktop`
 
+## mv 移动目录
+
+```
+# 移动目录和重命名一样
+mv srcDir destDir/
+```
+
 ## Quick Look plugins
 
 可以使用 **brew cask** 安装 Quick Look 插件，具体请参考 <https://github.com/sindresorhus/quick-look-plugins>。
