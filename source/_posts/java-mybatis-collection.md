@@ -44,7 +44,7 @@ SELECT name, email, country, province, street FROM user
 </mapper>
 ```
 
-测试用例
+<!--more-->测试用例
 
 ```java
 public class UserTest {
@@ -62,33 +62,30 @@ public class UserTest {
 
 ```json
 [
-	{
-		"addresses":[
-			{
-				"country":"china",
-				"province":"北京",
-				"street":"天河街"
-			},
-			{
-				"country":"Deutschland",
-				"province":"Braunschweig",
-				"street":"Wiesenstrasse"
-			}
-		],
-		"email":"biao@gmail.com",
-		"name":"Biao"
-	},
-	{
-		"addresses":[
-			{
-				"country":"china",
-				"province":"河北",
-				"street":"鼓楼大街"
-			}
-		],
-		"email":"alice@gmail.com",
-		"name":"Alice"
-	}
+    {
+        "addresses": [{
+                "country": "china",
+                "province": "北京",
+                "street": "天河街"
+            },
+            {
+                "country": "Deutschland",
+                "province": "Braunschweig",
+                "street": "Wiesenstrasse"
+            }
+        ],
+        "email": "biao@gmail.com",
+        "name": "Biao"
+    },
+    {
+        "addresses": [{
+            "country": "china",
+            "province": "河北",
+            "street": "鼓楼大街"
+        }],
+        "email": "alice@gmail.com",
+        "name": "Alice"
+    }
 ]
 ```
 
@@ -102,45 +99,37 @@ public class UserTest {
 
 ```json
 [
-	{
-		"addresses":[
-			{
-				"country":"china",
-				"province":"北京",
-				"street":"天河街"
-			}
-		],
-		"email":"biao@gmail.com",
-		"name":"Biao"
-	},
-	{
-		"addresses":[
-			{
-				"country":"Deutschland",
-				"province":"Braunschweig",
-				"street":"Wiesenstrasse"
-			}
-		],
-		"email":"biao@icloud.com",
-		"name":"Biao"
-	},
-	{
-		"addresses":[
-			{
-				"country":"china",
-				"province":"河北",
-				"street":"鼓楼大街"
-			}
-		],
-		"email":"alice@gmail.com",
-		"name":"Alice"
-	}
+    {
+        "addresses": [{
+            "country": "china",
+            "province": "北京",
+            "street": "天河街"
+        }],
+        "email": "biao@gmail.com",
+        "name": "Biao"
+    },
+    {
+        "addresses": [{
+            "country": "Deutschland",
+            "province": "Braunschweig",
+            "street": "Wiesenstrasse"
+        }],
+        "email": "biao@icloud.com",
+        "name": "Biao"
+    },
+    {
+        "addresses": [{
+            "country": "china",
+            "province": "河北",
+            "street": "鼓楼大街"
+        }],
+        "email": "alice@gmail.com",
+        "name": "Alice"
+    }
 ]
 ```
 
 > association 中嵌套 collection，collection 中再嵌套 association 也是同理，使用 `<id>` 归类数据为某一个对象。
-
-<!--more-->
 
 ## Java Mapper
 

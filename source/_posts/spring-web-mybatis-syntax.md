@@ -450,7 +450,7 @@ SQL 使用时特殊字符有 `<` 和 `>`，可以使用 `<![CDATA[ ]]>` 把 SQL 
     <result property="uuidName"     column="uuid_name"/>
     <result property="originalName" column="original_name"/>
 
-    <collection property="knowledgePoints" ofType="KnowledgePoint" columnPrefix="kp_" resultMap="knowledgePointResultMap"/>
+    <collection property="knowledgePoints" columnPrefix="kp_" resultMap="knowledgePointResultMap"/>
 
     <!--<collection property="knowledgePoints" ofType="KnowledgePoint" columnPrefix="kp_">
         <id property="knowledgePointId" column="knowledge_point_id"/>
