@@ -36,7 +36,7 @@ province = BeiJing
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <context:property-placeholder location="classpath:*.properties" ignore-unresolvable="true"/>
+    <context:property-placeholder location="classpath:*.properties" ignore-unresolvable="true" file-encoding="UTF-8"/>
 
     <bean id="address" class="com.xtuer.beans.Address">
         <property name="country" value="${country}"/>
@@ -51,7 +51,10 @@ province = BeiJing
 </beans>
 ```
 
+> 设置 file-encoding 让 properties 文件支持中文，默认支持 ASCII。
+
 ## 4. PropertyPlaceholderTest
+
 ```java
 import com.xtuer.beans.User;
 import com.xtuer.util.CommonUtils;

@@ -1,8 +1,8 @@
 .DS_Store
 Thumbs.db
+dump.rdb
 db.json
 *.log
 node_modules/
 public/
 .deploy*/
-
