@@ -40,7 +40,25 @@ public static class Node {
 }
 ```
 
+前端 JS 不支持 Long，可以把 Long 转换为 String 后返回给前端
 
+```java
+1. 在后台将这个Long类型的字段转换成String类型的，风险比较大
+2. 使用 Fastjson 的提供的注解: 
+   @JSONField(serializeUsing = ToStringSerializer.class)
+   private Long id
+3. 使用浏览器兼容模式，全局配置 BrowserCompatible 的 serializerFeatures，例如 SpringMVC 里
+   <property name="fastJsonConfig">
+       <bean class="com.alibaba.fastjson.support.config.FastJsonConfig">
+           <property name="serializerFeatures">
+               <list>
+                   <value>BrowserCompatible</value> <!-- 解决 JS 不支持 Long 类型: Long 输出为字符串 -->
+               </list>
+           </property>
+       </bean>
+   </property>
+   注意: 这种方式中文会转为 UTF-8 的编码，如 {"id":2,"info":"\u6D77\u9F99"}，不过浏览器里能自动识别
+```
 
 ## TypeReference
 
