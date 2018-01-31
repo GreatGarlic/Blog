@@ -17,7 +17,7 @@ Subcontrol 的绘制位置由 subcontrol-origin、subcontrol-position, top, left
 `subcontrol-origin` 定义在 parent widget 中绘制 subcontrol 的参考矩形，默认在 padding 的矩形中绘制。
 
 > The origin rectangle of the subcontrol within the parent element.
-If this property is not specified, the default is padding.
+> If this property is not specified, the default is padding.
 
 
 
@@ -472,11 +472,24 @@ QTabBar::tab:hover {
 }
 ```
 
-| tab-active.png       | tab-inactive.png     |
-| -------------------- | -------------------- |
+| tab-active.png                      | tab-inactive.png                      |
+| ----------------------------------- | ------------------------------------- |
 | ![](/img/qtbook/qss/tab-active.png) | ![](/img/qtbook/qss/tab-inactive.png) |
 
+QTabWidget 的关闭按钮可如下定义样式:
+
+```css
+QTabBar::close-button {
+    image: url(close.png);
+    subcontrol-position: left;
+}
+QTabBar::close-button:hover {
+    image: url(close-hover.png)
+}
+```
+
 ## QScrollBar
+
 QScrollBar 相关的 subcontrol 挺多的，仔细观察的话，有点像 QSpinBox 和 QSlider 的合体：
 
 * ::sub-line, ::add-line

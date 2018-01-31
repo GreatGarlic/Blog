@@ -73,7 +73,9 @@ int main(int argc, char *argv[]) {
   #include <QApplication>
   #include <QPushButton>
 
+  #ifdef _MSC_BUILD
   #pragma execution_character_set("utf-8") // 瞅这里
+  #endif
 
   int main(int argc, char *argv[]) {
       QApplication a(argc, argv);
@@ -84,5 +86,3 @@ int main(int argc, char *argv[]) {
       return a.exec();
   }
   ```
-
-  这个方法不错，不需要把中文字符串都使用 QStringLiteral 创建就解决了 VS 中的乱码问题，但是在非 VS 的编译器环境下不识别 execution_character_set 这个 pragma，编译时会给出一个警告，虽然不影响编译运行，但是看上去总是有点不舒服，删除即可，一行代码而已。

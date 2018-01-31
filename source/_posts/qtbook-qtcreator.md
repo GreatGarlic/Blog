@@ -62,3 +62,16 @@ Locator 中可以搜索很多内容，不过大多数时候用来搜索当前文
 当一个函数或者变量被使用了很多次，重命名是非常痛苦的一件事，因为很全部难找到哪些地方使用了它们，只要有一个地方少修改，编译的时候都会报错。好在 Qt Creator 提供了重命名的功能，在函数或者变量名上点击鼠标右键，如图操作，一次就能把所有用到的地方自动的帮我们重命名
 
 ![](/img/qtbook/qtcreator/qtcreator-refactor.png)
+
+## 编译输出目录
+
+常会把很多 Qt 项目源码都放同一个父目录下，默认的编译输出目录和源码的目录在同一个父目录下，会导致源码目录和编译输出的目录混在一起，看上去很乱，所以喜欢把编译输出指定到其他地方，需要设置 `Build & Run > Default build directory`:
+
+````
+例如使用
+/Users/Biao/Temp/Qt/%{CurrentProject:Name}
+
+默认的是
+../%{JS: Util.asciify("build-%{CurrentProject:Name}-%{CurrentKit:FileSystemName}-%{CurrentBuild:Name}")}
+````
+
