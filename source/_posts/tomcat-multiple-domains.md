@@ -42,7 +42,7 @@ tags: Java
 二、在 /Users/Biao/Desktop/www.foo.com 目录下创建一个 ROOT 目录，把项目的文件放在 ROOT 目录下:
 
 ```
-├── foo
+├── www.foo.com
 │   ├── ROOT
 │   │   ├── style.css
 │   │   └── test.html
