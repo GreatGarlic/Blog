@@ -50,8 +50,9 @@ Vcpkg 用来帮助我们在 Windows 方便地上获取第三方的 C/C++ 库，�
   * 安装 opencv: `vcpkg install opencv`
 * 列出: `vcpkg list`
 * 搜索:
-  * `vckpg search`  列出所有可用的库
+  * `vckpg search`  列出所有可用的库，也可以在 ports 目录中看到
   * `vcpkg search curl` 列出搜索到的库
+* 删除: `vcpkg remove curl`
 
 ### 补充说明
 
