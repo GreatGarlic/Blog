@@ -20,6 +20,8 @@ tags: Mac
   unzip filename.zip [-d dest-directory]
   ```
 
+* yun install bzip2 (解压 .bz2 文件)
+
 * yum install net-tools (安装后才能使用 ifconfig 等)
 
 * tar 解压 tar.gz: `tar xf filename.tar.gz` 
@@ -150,3 +152,39 @@ e: 解压到当前目录，目录结构会被破坏，如 001.rar 内有如下�
    执行：7za e 001.rar，目录 123 和 456 及文件 789.html 都会存放在当前目录下。
 ```
 
+## 安装 Nodejs 8
+
+直接 `yum install nodejs` 安装的是 Nodejs 6，如果想要安装 Nodejs 8、Nodejs 9 则需要看[官方文档](https://www.hugeserver.com/kb/install-nodejs8-centos7-debian8-ubuntu16/)，安装步骤如下
+
+```
+curl -sL https://rpm.nodesource.com/setup_8.x | bash -
+yum install nodejs
+
+# 安装后查看版本
+node -v
+```
+
+## 安装 MongoDB
+
+MongoDB 默认使用端口 27017，安装步骤如下:
+
+1. 指定 MongoDB 的原: 创建 `/etc/yum.repos.d/mongodb-org-3.6.repo`
+
+   ```
+   [mongodb-org-3.6]
+   name=MongoDB Repository
+   baseurl=https://repo.mongodb.org/yum/redhat/$releasever/mongodb-org/3.6/x86_64/
+   gpgcheck=1
+   enabled=1
+   gpgkey=https://www.mongodb.org/static/pgp/server-3.6.asc
+   ```
+
+2. 安装 MongoDB: `sudo yum install -y mongodb-org`
+
+3. 启动 MongoDB: `sudo service mongod start`
+
+4. 关闭 MongoDB: `sudo service mongod stop`
+
+5. 访问 MongoDB: `mongo --host 127.0.0.1:27017`
+
+详细内容请参考[官方文档](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-red-hat/#configure-the-package-management-system-yum)。
