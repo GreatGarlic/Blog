@@ -38,7 +38,8 @@ tags: Qt
    }
    ```
 
-6. 把 OpenCV 相关的 DLL 复制到编译出的 exe 所在目录
+6. 把 OpenCV 相关的 DLL 从 `C:/vcpkg/installed/x86-windows/bin` 目录复制到编译出的 exe 所在目录
 
 7. 运行程序，然后就看到打开一个窗口，图片显示在窗口中
+
 

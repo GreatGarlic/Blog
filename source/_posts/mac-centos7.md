@@ -82,7 +82,7 @@ CentOS 7 使用 firewalld 控制端口，不再使用 iptables，默认 8080 端
 
 * 重启防火墙: `firewall-cmd --reload`
 
-* 查看打开的端口: `firewall-cmd --zone=public --list-ports`
+* 查看开放的端口: `firewall-cmd --zone=public --list-ports`
 
 * 正在监听的端口: `netstat -an | grep LISTEN` 
 

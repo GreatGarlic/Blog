@@ -183,6 +183,7 @@ tags: Index
 * [使用 CAS 单点登陆](/java-cas-3-use-cas)
 * [使用 Lombok 自动生成 Getter and Setter](/java-lombok)
 * [使用 Velocity 生成静态页面](/java-velocity)
+* [使用百度 OCR 服务识别图片中的文本](/java-ocr-baidu)
 * [分布式 ID 生成算法 Snowflake](/java-snowflake)
 * [分页计算工具](/java-pageutils)
 * [前 16 名 Java 实用工具类](/java-most-16-utils)
