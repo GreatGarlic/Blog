@@ -181,9 +181,9 @@ node -v
 
 2. 安装 MongoDB: `sudo yum install -y mongodb-org`
 
-3. 启动 MongoDB: `sudo service mongod start`
+3. 启动 MongoDB: `sudo service mongod start` 或者 `systemctl start mongod`
 
-4. 关闭 MongoDB: `sudo service mongod stop`
+4. 关闭 MongoDB: `sudo service mongod stop` 或者 `systemctl stop mongod`
 
 5. 访问 MongoDB: `mongo --host 127.0.0.1:27017`
 
