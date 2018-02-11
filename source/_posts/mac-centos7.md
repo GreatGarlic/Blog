@@ -188,3 +188,20 @@ node -v
 5. 访问 MongoDB: `mongo --host 127.0.0.1:27017`
 
 MongoDB 默认使用端口 27017，配置在 `/etc/mongod.conf`。
+
+## nohup &
+
+例如使用 SSH 远程用 node 运行的程序不是 deamon 进程(systemctl, service 运行的是)，当前 SSH 窗口关闭后程序就会退出，可以使用 `nohup node app.js &` 解决这个问题，能使命令永久的在后台执行:
+
+* `nohup` 不挂断地运行命令
+* `&` 指在后台运行，关掉 SSH 窗口后程序就会退出
+
+nohup 执行后，会产生日志文件:
+
+* `nohup node app.js &`: 在运行命令的目录产生日志文件 nohup.out
+* `nohup command >> /temp/logs/my-app.log 2>&1 &`: 日志被重定向到 `my-app.log` 文件中(推荐使用这种方式)
+
+> **注意:** 为什么 nohup 在终端退出之后进程会退出？
+>
+> 因为在 nohup 执行之后，该终端必须以命令 `exit` 正常退出，若直接关闭 SSH 窗口退出，则有些主机会认为你异常退出而关闭你的进程。
+

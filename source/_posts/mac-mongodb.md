@@ -16,8 +16,10 @@ tags: Mac
 
 * 启动 MongoDB:
   * `mongod`
-  * Windows 使用配置文件启动 `mongod --config C:/etc/mongod.conf`
-* 访问 MongoDB: `mongo` <!--more-->
+  * `mongod --config C:/etc/mongod.conf`: 一般 Windows 才这么使用，Linux 和 Mac 都会使用默认的配置文件
+* 访问 MongoDB: 
+  * `mongo`
+  * `mongo --host IP` <!--more-->
 
 ## 配置文件
 

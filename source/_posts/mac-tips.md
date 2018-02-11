@@ -9,6 +9,9 @@ Mac 使用中的一些常用操作和命令。
 <!--more-->
 
 ## Vim 基础
+
+下面列出一些 Vi 常用的命令和设置:
+
 * 搜索高亮: `:set hlsearch`
 * 显示行号: `:set number`
 * 可使用鼠标点击: `:set mouse=a`
@@ -33,6 +36,17 @@ Mac 使用中的一些常用操作和命令。
 * 光标移到屏幕底部: `L`
 * 单词出现的次数: `:%s/pattern//gn`
 
+Vi 内全局替换
+
+```
+# 使用 str2 替换 str1
+:%s/str1/str2/g
+
+# 多个匹配，例如把所有的 '\t' 替换为 ','
+# 一个或多个用 '\+' 而不是 '+'
+:%s/\t\+/,/g
+```
+
 如果要长期有效，可以在 `~/.vimrc` 里加上对应的设置，例如
 
 ```
@@ -44,6 +58,7 @@ syntax on
 ```
 
 ## 查看使用端口的 PID
+
 `lsof -n -P | grep :80`
 
 ## 使用文件名查找
@@ -171,7 +186,8 @@ find *.txt -exec sh -c "iconv -f GB18030 -t UTF8 {} > {}.txt" \;
 md5 fileName
 ```
 
-## 计算字符串的 MD5
+## 计算字符串 MD5
+
 ```
 # 下面 3 种方式都可以
 md5 -s Welcome
@@ -189,18 +205,8 @@ echo -n "Welcome" | md5
 hexdump -C Main.java | head -n 20
 ```
 
-## VI 内全局替换
-
-```
-# 使用 str2 替换 str1
-:%s/str1/str2/g
-
-# 多个匹配，例如把所有的 '\t' 替换为 ','
-# 一个或多个用 '\+' 而不是 '+'
-:%s/\t\+/,/g
-```
-
 ## 重新加载声卡驱动
+
 合上盖子后再打开有时候可能会没声，注销再登陆后就有声音了，或者用命令重新加载声卡驱动也可以解决
 
 ```
@@ -211,6 +217,7 @@ sudo kextload /System/Library/Extensions/AppleHDA.kext
 ## 递归创建目录
 
 ```
+# p 是 plus 之意
 mkdir -p a/b/c
 ```
 
@@ -276,7 +283,7 @@ kill -9 `ps aux | grep -i vmware | grep -v grep | awk '{print $2}'`
 defaults write com.apple.screencapture disable-shadow -bool true ; killall SystemUIServer
 ```
 
-## 更新文件的图标
+## 更新文件图标
 
 ```
 sudo rm -rfv /Library/Caches/com.apple.iconservices.store; sudo find /private/var/folders/ \( -name com.apple.dock.iconcache -or -name com.apple.iconservices \) -exec rm -rfv {} \; ; sleep 3;sudo touch /Applications/* ; killall Dock; killall Finder
@@ -287,5 +294,59 @@ sudo rm -rfv /Library/Caches/com.apple.iconservices.store; sudo find /private/va
 ```
 alias hide="chflags hidden *"
 alias show="chflags nohidden *"
+```
+
+## 查看端口占用
+
+使用 `lsof -i:port` 查看端口是否被某个进程占用了，例如 `lsof -i:8080`。
+
+## 显示后台进程
+
+使用 `jobs -l` 查看当前终端(标签页)启动的后台进程。关闭终端后，在另一个终端 jobs 无法看到后台跑得程序了，此时可利用 `ps` 命令。
+
+## .bash_profile
+
+```bash
+export GRADLE_HOME="/usr/local/gradle"
+export MYSQL_HOME="/usr/local/Cellar/mysql/5.7.13"
+export NGINX_HOME="/usr/local/Cellar/openresty/1.11.2.5/nginx/sbin"
+export PATH="$PATH:$GRADLE_HOME/bin:$MYSQL_HOME/bin:$NGINX_HOME"
+export JAVA_HOME=`/usr/libexec/java_home -v 1.8.0_77`
+# export JAVA_HOME=`/usr/libexec/java_home -v 9`
+
+alias ll="ls -lh"
+alias lla="ls -lha"
+alias tcpCount="netstat -n | awk '/^tcp/ {++state[\$NF]} END {for(key in state) print key,\"\t\",state[key]}'"
+alias rm="rmtrash"
+
+# Hexo
+alias hc="hexo clean"
+alias hg="hexo generate"
+alias hs="hexo server -g"
+alias hd="hexo clean; hexo generate; hexo deploy"
+alias gs="cd /Users/Biao/GitBook/Library/xtuer/notes; gitbook serve ."
+alias notes="cd /Users/Biao/GitBook/Library/xtuer/notes; gitbook serve ."
+
+alias cddesk="cd ~/Desktop"
+alias cdblog="cd /Users/Biao/Documents/workspace/Blog"
+alias cdjava="cd /Users/Biao/Documents/workspace/Java"
+alias cdnotes="cd /Users/Biao/GitBook/Library/xtuer/notes"
+alias cdtemp="cd /Users/Biao/Temp"
+alias ngrokStart="/Applications/ngrok clientid 497cb09d080c5594"
+alias cdbrew="cd /usr/local/Cellar"
+alias hide="chflags hidden *"
+alias show="chflags nohidden *"
+alias cal="cal 2018"
+
+# Theme
+export CLICOLOR=1
+export LSCOLORS=gxfxaxdxcxegedabagacad
+export LC_CTYPE=en_US.UTF-8
+export LC_ALL=en_US.UTF-8
+
+function powerline_shell() {
+    export PS1="$(/Applications/powerline-shell/powerline-shell.py $? 2> /dev/null)"
+}
+export PROMPT_COMMAND="powerline_shell; $PROMPT_COMMAND"
 ```
 
