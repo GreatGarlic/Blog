@@ -69,7 +69,7 @@ Vcpkg 用来帮助我们在 Windows 方便地上获取第三方的 C/C++ 库，�
 
 * 可看看视频微软工程师对 Vcpkg 的介绍视频 <http://www.365yg.com/item/6499765776189227534>
 
-## 命令行工具 ConEnu
+## 命令行工具 ConEmu
 
 CMD 的替代工具，**显示 UTF-8 字符时不会像 CMD 那样屏幕刷新不干净**，官网为 <https://github.com/Maximus5/ConEmu>。
 

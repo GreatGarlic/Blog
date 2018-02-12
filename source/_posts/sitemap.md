@@ -213,7 +213,7 @@ tags: Index
 * [Mac Tips](/mac-tips)
 * [Mac 安装 Mysql 和 Nginx](/mac-mysql-nginx)
 * [Mac 开发者软件推荐](/mac-software)
-* [MongoDB 初步使用](/mac-mongodb)
+* [MongoDB 初步接触](/mac-mongodb)
 * [Nginx 安装 Lua 支持](/mac-nginx-lua)
 * [Nginx 验证 Token](/mac-nginx-token)
 * [Safari 插件](/mac-safari-extension)

@@ -1,5 +1,5 @@
 ---
-title: MongoDB 初步使用
+title: MongoDB 初步接触
 date: 2018-02-11 22:26:51
 tags: Mac
 ---
