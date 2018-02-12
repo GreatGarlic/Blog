@@ -55,8 +55,30 @@ Git 的常用命令
 
 例如使用 git status 输出 modified:   "template-web-gradle/doc/\344\275\277\347\224\250\350\257\264\346\230\216.md"，中文名的路径显示不正常，调用 `git config core.quotepath false` 后就可以了.
 
+## 名字大小写不敏感
+
+Git 是大小写不敏感的，导致跨操作系统共享的 Git 仓库就会遇到上面的情况。如果重命名的文件或文件夹只有大小写不同，那么对 Git 来说甚至都没有变化。下面介绍解决 Git 大小写不敏感导致的重命名无效的办法: **先将文件夹重命名为临时文件夹，然后再从临时文件夹恢复成正常文件夹。**
+
+> 注意: 中间需要先 commit 一次，否则会存在两份文件夹！
+
+下面以重命名 Default-CMD.png 为 default-cmd.png 为例:
+
+```
+$ git mv Default-CMD.pngs Default-CMD.bak.png
+$ git add .
+$ git commit -m "改名（第 1/2 步）"
+
+$ git mv Default-CMD.bak.png default-cmd.png
+$ git add .
+$ git commit -m "改名（第 2/2 步）"
+
+$ git push
+```
+
 ## 参考资料
 
-* [一入前端深似海，从此红尘是路人系列第十弹之如何合理利用Git进行团队协作(一)](https://my.oschina.net/qiangdada/blog/800093)
-* [一入前端深似海，从此红尘是路人系列第十一弹之如何合理利用Git进行团队协作(二)](https://my.oschina.net/qiangdada/blog/808527)
+* [一入前端深似海，从此红尘是路人系列第十弹之如何合理利用Git进行团队协作 (一)](https://my.oschina.net/qiangdada/blog/800093)
+* [一入前端深似海，从此红尘是路人系列第十一弹之如何合理利用Git进行团队协作 (二)](https://my.oschina.net/qiangdada/blog/808527)
+* [解决 Git 重命名时遇到的大小写不敏感的问题](https://walterlv.oschina.io/post/case-insensitive-in-git-rename.html)
+
 
