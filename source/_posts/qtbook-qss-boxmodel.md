@@ -37,8 +37,7 @@ Margin，Border，Padding 都分为 4 个部分：上、右、下、左，它们
 
 margin 的语法和 padding 的一样，border 除了分成 4 个部分外，还有颜色，圆角等。
 
-也许你也有和我一样的疑问，为什么上面表示的顺序不是从左开始，而是从上开始？对我来说，从左开始更习
-惯一些，但是 CSS 和 QSS 里就是这么规定的，没办法，既然不能反抗，那么就享受吧！
+也许你也有和我一样的疑问，为什么上面表示的顺序不是从左开始，而是从上开始？对我来说，从左开始更习惯一些，但是 CSS 和 QSS 里就是这么规定的，没办法，既然不能反抗，那么就享受吧！
 
 ## padding 是什么
 可能你还是不明白 margin, padding 具体是什么，下面用例子具体的的介绍它们。在 Qt Designer 里用 QGridLayout 布局，拖放一个 QLabel 到窗口上，让其占据整个窗口，用下面的 QSS 把 QLabel 的 margin, border, padding 都设置为 50px：
@@ -48,7 +47,7 @@ QLabel {
     margin: 50px;
     border: 50px solid rgb(74, 74, 74);
     padding: 50px;
-	background: white;
+    background: white;
 }
 ```
 
@@ -60,7 +59,7 @@ QLabel {
 * 标记为 margin 的部分是 margin，为 50px
 * 标记为 padding 的部分是 padding，为 50px
 * 用工具测量一下，得到 border 的宽也是 50px
-* 小虚线方框内是 content rectangle，QLabel 就是在它里面绘制文本，图片等，不会绘制到 padding, border, margin 等上面（如果你自己想继承 QLabel 然后这么绘制，当然没问题）
+* 小虚线方框内是 content rectangle，QLabel 就是在它里面绘制文本，图片等，不会绘制到 padding, border, margin 等上面（如果你自己想继承 QLabel 然后绘制到它们上面当然没问题）
 * 当拖动修改窗口的大小后，QLabel 的大小随着改变了，但是 margin, border（宽）, padding 的大小都不会变，变化的只有 content rectangle
 * Margin 是不可见的，不绘制任何东西
 * Padding 是不可见的，但是 QLabel 的背景会绘制到它里面
@@ -106,8 +105,9 @@ Qt 绘制自带的 Widget 时，先绘制 border，然后才绘制 content 的�
 **需要注意的是:**
 
 * QWidget::contentsRect() 和上面的 contentRect 一样
-* QWidget::contentsMargins() 不是 margin，而是 margin + border + padding 的和
+* QWidget::contentsMargins() 不是 margin，而是 margin + border + padding 的和: content 离边框的距离
 * QWidget::size() 返回的是 margin + border + padding + content 的和
+* 需要注意一点: QSS 中设置的 width, height, min-width, max-height 等设置的都是 content width 和 content height，而 QWidget::size() 返回的却是整个 QWidget 的大小
 
 ## 可视化盒子模型
 下面的程序，可以直观地验证盒子模型的理论，有助于加深理解，界面虽然俗气了点，但效果却是不凡，正所谓：大俗即大雅。顶级窗口的 content margin 和 spacing 设置为 0，有 4 个 QLabel，它们只有 border 的颜色不一样，还有一个 QPushButton，按下 QPushButton 时输出左上角 flagLabel 的 size(), contentsRect() 和 contentsMargins()
@@ -128,37 +128,37 @@ MainWidget::MainWidget(QWidget *parent) :
 
 ```css
 QLabel {
-	margin: 0px;
-	padding: 0px;
-	border-width: 30px;
-	border-style: solid;
-	background: white;
-	min-width: 140px;  /* 设置 content rect 的最小 width，不是 widget 的 width() */
-	min-height: 140px; /* 设置 content rect 的最小 heightd，不是 widget 的 height()*/
+    margin: 0px;
+    padding: 0px;
+    border-width: 30px;
+    border-style: solid;
+    background: white;
+    min-width: 140px;  /* 设置 content rect 的最小 width，不是 widget 的 width() */
+    min-height: 140px; /* 设置 content rect 的最小 heightd，不是 widget 的 height()*/
 }
 
 #flagLabel {
-	border-color: qlineargradient(
-	   spread:pad, x1:0, 
-	   y1:0, x2:0, y2:1, 
-	   stop:0 rgba(0, 0, 0, 255), 
-	   stop:0.33 rgba(0, 0, 0, 255), 
-	   stop:0.34 rgba(255, 30, 30, 255), 
-	   stop:0.66 rgba(255, 0, 0, 255), 
-	   stop:0.67 rgba(255, 255, 0, 255), 
-	   stop:1 rgba(255, 255, 0, 255));
+    border-color: qlineargradient(
+    spread:pad, x1:0, 
+    y1:0, x2:0, y2:1, 
+    stop:0 rgba(0, 0, 0, 255), 
+    stop:0.33 rgba(0, 0, 0, 255), 
+    stop:0.34 rgba(255, 30, 30, 255), 
+    stop:0.66 rgba(255, 0, 0, 255), 
+    stop:0.67 rgba(255, 255, 0, 255), 
+    stop:1 rgba(255, 255, 0, 255));
 }
 
 #greenLabel {
-	border-color: green;
+    border-color: green;
 }
 
 #blueLabel {
-	border-color: blue;
+    border-color: blue;
 }
 
 #yellowLabel {
-	border-color: yellow;
+    border-color: yellow;
 }
 ```
 
@@ -171,7 +171,7 @@ QLabel {
 > Contents rect:  QRect(30,30 140x140)  
 > Contents margins:  QMargins(30, 30, 30, 30)  
 
-**由于 margin 为 0px，padding 为 0px，所以:**
+**由于 margin 为 0px，padding 为 0px，border-width 为 30px, 所以:**
 
 * **label width**：0 + 30 + 0 + 140 + 0 + 30 + 0，为 200
 * **label height**：0 + 30 + 0 + 140 + 0 + 30 + 0，为 200

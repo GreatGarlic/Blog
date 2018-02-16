@@ -330,7 +330,7 @@ int main(int argc, char *argv[]) {
 ![](/img/qtbook/qss/QSS-BorderImage-Border-Width.png)
 
 ## Padding 的设置
-以开头圆角按钮为例，`border-width: 12px; min-height: 24px;`，如果不设置 padding（即为 0px），那么按钮的最小高度为 0 + 12 + 24 + 12 + 0 为 48px（参考盒子模型一节）：  
+以开头圆角按钮为例，`border-width: 12px; min-height: 24px;`，如果不设置 padding（即为 0px），那么按钮的最小高度为 12 + 0 + 24 + 0 + 12 为 48px（参考盒子模型一节）：  
 ![](/img/qtbook/qss/QSS-BorderImage-Round-Button-Min-Height.png)  
 高 48px 的按钮，很多时候都太大了，为了减小按钮的高度，可以设置 marging 和 padding 为负值，具体理论请参考 [盒子模型](http://qtdebug.com/QSS-BoxModel.html) 一节。为了不影响 border 的绘制效果，则不能设置 margin 为负值，否则有可能要把 border 绘制到不可见区域了，剩下就是修改 padding 为负值了，这里我们用了 `padding: -10px 0 -10px 0;`，也可以根据情况调整为其他值。
 
@@ -343,4 +343,4 @@ int main(int argc, char *argv[]) {
 | ---------------------------------------- | ---------------------------------------- |
 | ![](/img/qtbook/qss/QSS-BorderImage-Bubble-Left.png)<br><br>![](/img/qtbook/qss/QSS-BorderImage-Bubble-Right.png) | ![](/img/qtbook/qss/QSS-BorderImage-Chat.png) |
 
-然后再思考一下，怎么把一张图片拉伸铺满一个 Widget(提示: background-image 做不到，除非图片和 Widget 一样大)。
+然后再思考一下，怎么把一张图片缩放铺满一个 Widget (提示: background-image 做不到，除非图片和 Widget 一样大)。
