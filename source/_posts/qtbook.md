@@ -55,7 +55,7 @@ tags: [QtBook, Index]
 * 自定义 Widget
   * [自定义 Widget 使用 QSS](/qtbook-custom-widget-enable-stylesheet)
   * [实现 Steps 路径样式](/qtbook-custom-widget-steps)
-  * [按下鼠标移动窗口](/qtbook-custom-widget-drag-to-move-window)
+  * [按下鼠标拖动窗口](/qtbook-custom-widget-drag-to-move-window)
   * [带阴影的圆形 Label](/qtbook-custom-widget-shadow-round-label)
 * 动画
   * QPropertyAnimation

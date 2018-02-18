@@ -80,4 +80,6 @@ ui->blurQLabel->setGraphicsEffect(blurEffect);
 
 ## 思考
 
-这里演示的是 QLabel，有的时候设计的是圆形按钮 (还要处理 hover, pressed 等状态)，怎么实现呢？
+这里演示使用的是 QLabel，有的时候设计的是圆形按钮 (还要处理 hover, pressed 等状态)，怎么实现呢？
+
+第 5 个图标模糊了边框，没有模糊背景，这里没有提供实现，想一下应该怎么做呢？
