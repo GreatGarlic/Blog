@@ -12,9 +12,7 @@ Qt 的默认窗口使用系统风格，不能修改标题栏和边框，满足�
 * 窗口透明隐藏默认背景: `QWidget::setAttribute(Qt::WA_TranslucentBackground)`
 * `QWidget::paintEvent(QPaintEvent *event)` 里绘制任意形状的自定义背景
 * 拖拽移动窗口
-* 缩放窗口
-
-下面就一步一步的进行介绍。<!--more-->
+* 缩放窗口<!--more-->
 
 ## 自定义窗口
 
@@ -70,10 +68,9 @@ TopWindow::TopWindow() : ui(new Ui::TopWindow) {
     });
 }
 
-void TopWindow::paintEvent(QPaintEvent *event) {
-    Q_UNUSED(event);
+void TopWindow::paintEvent(QPaintEvent *) {
     QPainter painter(this);
-    ninePatchPainter->paint(&painter, rect());
+    ninePatchPainter->paint(&painter, rect()); // 可以使用 Qt 自带的 qDrawBorderPixmap() 代替
 }
 ```
 
@@ -99,6 +96,8 @@ l->addWidget(sizeGrip, 1, 0, Qt::AlignRight | Qt::AlignBottom);
 > **提示:** 
 >
 > 利用了 QGridLayout 的同一个位置可以放置多个 QWidget 的特点把 QSizeGrip 和 centralWidget 放在同一个位置(row 和 column 分别相等)，只是 QSizeGrip 在右下角，centralWidget 填充满中间。
+>
+> 为了方便演示，QSizeGrip 做成了个红色的小方块，怎么使用 QSS 设置它的背景图使它变得更好看，大家各自尽情发挥好了。
 
 ## 思考
 
@@ -144,3 +143,5 @@ int main(int argc, char *argv[]) {
 这样是不是需要使用自定义窗口的时候只需要关心组件的布局，自定义窗口部分直接使用 TopWindow 就可以了？也即是说，自定义窗口的代码不会污染我们业务逻辑窗口相关的代码，启用和关闭自定义窗口功能只需要很少的几行代码就可以做到。
 
 上面的实现没有提供最小化按钮、最大化按钮、最大化时不能移动和缩放窗口、替换整个标题栏等，理解了上面的代码，这些都不是大问题了，就留给大家思考一下怎么实现，最后提供一个实现了这些功能的代码以供参考 [TopWindow.7z](/download/qtbook/widget/TopWindow.7z)。
+
+另外，再思考个小问题，要实现任意形状的窗口，应该怎么做呢？至此如果这个都还不会做的话，转行应该是个不错的选择！
