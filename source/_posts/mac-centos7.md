@@ -52,11 +52,10 @@ tags: Mac
 
 * 修改 **.bash_profile** 文件(在用户目录下)，添加 Java 到环境变量
 
-  > export JAVA_HOME="/usr/local/jdk1.8.0_144"
-  >
-  > PATH=$PATH:$HOME/bin:$JAVA_HOME/bin
-  >
-  > export PATH
+  ```shell
+  export JAVA_HOME="/usr/local/jdk1.8.0_144"
+  export PATH="$PATH:$JAVA_HOME/bin"
+  ```
 
 * 使修改的 **.bash_profile** 生效: `source .bash_profile`
 
@@ -87,6 +86,11 @@ CentOS 7 使用 firewalld 控制端口，不再使用 iptables，默认 8080 端
 * 正在监听的端口: `netstat -an | grep LISTEN` 
 
 参考: [CentOS 7 firewalld 使用简介](http://blog.csdn.net/spxfzc/article/details/39645133)
+
+## 禁用端口
+
+* 禁用端口: `firewall-cmd --zone=public --remove-port=8080/tcp --permanent`
+* 重启防火墙: `firewall-cmd --reload`
 
 ## SSH 登陆
 
@@ -139,7 +143,7 @@ CentOS 7 使用 firewalld 控制端口，不再使用 iptables，默认 8080 端
 # 解压 filename.7z 到当前目录
 7za x filename.7z
 
-# 解压 filename.7z 到 here 目录
+# 解压 filename.7z 到 here 目录，注意 -o 和 here 之间没有空格
 7za x filename.7z -ohere
 
 命令: 7za {a|d|l|e|u|x} 压缩包文件名 {文件列表或目录，可选}
@@ -168,7 +172,7 @@ node -v
 
 详细内容请参考[官方文档](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-red-hat/#configure-the-package-management-system-yum)，安装步骤如下:
 
-1. 指定 MongoDB 的原: 创建 `/etc/yum.repos.d/mongodb-org-3.6.repo`
+1. 指定 MongoDB 的原: 创建文件 `/etc/yum.repos.d/mongodb-org-3.6.repo`，内容如下:
 
    ```
    [mongodb-org-3.6]
@@ -201,7 +205,7 @@ nohup 执行后，会产生日志文件:
 * `nohup node app.js &`: 在运行命令的目录产生日志文件 nohup.out
 * `nohup command >> /temp/logs/my-app.log 2>&1 &`: 日志被重定向到 `my-app.log` 文件中(推荐使用这种方式)
 
-> **注意:** 为什么 nohup 在终端退出之后进程会退出？
+> **注意:** 为什么 `nohup &` 启动的进程在终端退出之后会退出？
 >
 > 因为在 nohup 执行之后，该终端必须以命令 `exit` 正常退出，若直接关闭 SSH 窗口退出，则有些主机会认为你异常退出而关闭你的进程。
 

@@ -16,7 +16,10 @@ tags: Mac
 
 * 启动 MongoDB:
   * `mongod`
-  * `mongod --config C:/etc/mongod.conf`: 一般 Windows 才这么使用，Linux 和 Mac 都会使用默认的配置文件
+
+  * `mongod --config C:/etc/mongod.conf`
+
+    一般 Windows 才会手动指定配置文件，Linux 和 Mac 都会使用默认的配置文件，下面有介绍
 * 访问 MongoDB: 
   * `mongo`
   * `mongo --host IP` <!--more-->
@@ -39,7 +42,10 @@ net:
 > * `bindIp = 127.0.0.1, 192.168.1.10`: 使用这 2 个 IP 访问
 > * `bindIp = 0.0.0.0`: 任意机器
 >
-> Winows 中 MongoDB 的数据库目录需要我们手动创建，如果目录不存在则会启动失败，默认的目录为 `C:/data/db`，上面配置文件的为 `D:/MongoDB/data` 和 `D:/MongoDB/logs`。
+> 注意：Winows 中 MongoDB 的数据库目录需要我们手动创建，如果目录不存在则会启动失败
+>
+> * 默认的目录为 `C:/data/db`
+> * 上面配置文件的为 `D:/MongoDB/data` 和 `D:/MongoDB/logs`。
 
 配置文件路径:
 

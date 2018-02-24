@@ -70,31 +70,23 @@ app.setStyleSheet(".QWidget {background: gray;}")
 ```
 
 如果 openButton 和 closeButton 的背景是洋红色的，但是 saveButton 不受影响，则可以使用 `. ＋ class 的属性值` 作为类选择器来设置
-​    
 ```cpp
 app.setStyleSheet(".QWidget { background: gray; }"
-                  ".QPushButton[level='dangerous'] { background: magenta; }");
+                  ".RedButton { background: magenta; }");
 
 // .RedButton 将作为类选择器
-openButton->setProperty("class", "RedButton");
+openButton->setProperty("class",  "RedButton");
 closeButton->setProperty("class", "RedButton");
 ```
 ![](/img/qtbook/qss/QSS-Selector-Class-Selector.png)
 
-**属性的值可以用单引号，双引号括起来，如果值没有空格，甚至可以不用引号，但不推荐这么做**
-
-1. `.QPushButton[level="dangerous"]`
-2. `.QPushButton[level='dangerous']`
-3. `.QPushButton[level=dangerous]`
-
 ## ID 选择器
 `# + objectName` 作为选择器，只作用于用此 objectName 的对象（多个对象可以使用同一个 objectName，但是不推荐这么做，既然是 ID，那么语义上就表示唯一了）。如上面的程序， openButton 和 closeButton 的背景是洋红色的，但是 saveButton 不受影响，也可以使用 `ID 选择器` 来实现：
-​    
 ```cpp
+// #openButton 和 #closeButton 作为 ID 选择器
 app.setStyleSheet(".QWidget { background: gray; }"
                   "#openButton, #closeButton { background: magenta; }");
     
-// #openButton 和 #closeButton 作为 ID 选择器
 openButton->setObjectName("openButton");
 closeButton->setObjectName("closeButton");
 ```
@@ -102,23 +94,30 @@ closeButton->setObjectName("closeButton");
 ## 属性选择器
 `选择器[属性="值"]` 作为选择器，这个属性可用通过 `object->property(propertyName)` 访问的，Qt 里称为 `Dynamic Properties`。
 
-如上面的程序， openButton 和 closeButton 的背景是洋红色的，但是 saveButton 不受影响，也可以使用属性选择器 来实现：
+如上面的程序， openButton 和 closeButton 的背景是洋红色的，但是 saveButton 不受影响，也可以使用属性选择器来实现：
 
 ```cpp
 app.setStyleSheet(".QWidget { background: gray; }"
-                  "QPushButton[level=\"dangerous\"] { background: magenta; }");
+                  "QPushButton[level='dangerous'] { background: magenta; }");
 
-openButton->setProperty("level", "dangerous");
+openButton->setProperty("level",  "dangerous");
 closeButton->setProperty("level", "dangerous");
 ```
 
-QSS 会把所有 QPushButton 中 level 属性值为 dangerous 按钮的背景绘制为洋红色，其他按钮的背景色不受这个 QSS 影响。
+QSS 会把所有 QPushButton 中属性 level 值为 dangerous 按钮的背景绘制为洋红色，其他按钮的背景色不受这个 QSS 影响。
+
+> 注意: 程序运行时属性值变化后 QSS 不会自动生效，需要调用 `widget->setStyleSheet("/**/")` 强制刷新 QSS 才行。
+
+属性的值可以用单引号、双引号括起来，如果值没有空格甚至可以不用引号 (不推荐这么做)，以下三种写法都是有效的:
+
+1. `.QPushButton[level="dangerous"]`
+2. `.QPushButton[level='dangerous']`
+3. `.QPushButton[level=dangerous]`
 
 ## 包含选择器
 英语叫做 `Descendant Selector`，descendant 的表达比较到位。
 
 `选择器之间用空格隔开`，作用于 Widget 的 `子Widget`，`子Widget 的 子Widget`，……，子子孙孙，无穷尽也。
-​    
 ```css
 QFrame {
 	background: gray;
@@ -138,7 +137,6 @@ QFrame QPushButton {
 
 ## 子元素选择器
 `选择器之间用 > 隔开`，作用于 Widget 的直接 `子Widget`，注意和包含选择器的区别。
-​    
 ```
 QFrame {
 	background: gray;
@@ -166,8 +164,7 @@ QCheckBox:!checked { color: red }
 ```
 鼠标放到 QPushButton 上时，它的文字为白色，QCheckBox 选中时文字为白色，未选中时为红色。  
 
-伪类选择器还支持链式规则：`选择器:状态1:状态2:状态3`，状态之间使用逻辑与，同时满足条件样式才生效
-​    
+伪类选择器还支持链式规则：`选择器:状态1:状态2:状态3`，状态之间使用逻辑与，同时满足条件样式才生效​
 ```css
 QCheckBox:hover:checked { color: white }
 ```

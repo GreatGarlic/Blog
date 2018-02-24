@@ -66,7 +66,7 @@ tags: [QtBook, Index]
   * 与Layout一起使用时实现动画效果的展开与关闭标签页
 * [多线程编程](/qtbook-thread)
   * [继承 QThread 实现多线程](/qtbook-thread-inheritance)
-  * [线程一中调用线程二中函数的正确姿势](/qtbook-thread-call-in-different-thread)
+  * [线程一中调用线程二中创建的对象的函数的正确姿势](/qtbook-thread-call-in-different-thread)
   * [线程池 QThreadPool](/qtbook-thread-pool)
   * 同步
     * QMutex
