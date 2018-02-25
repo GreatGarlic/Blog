@@ -58,6 +58,7 @@ tags: [QtBook, Index]
   * [按下鼠标拖动窗口](/qtbook-custom-widget-drag-to-move-window)
   * [带阴影的圆形 Label](/qtbook-custom-widget-shadow-round-label)
   * [自定义标题栏无边框阴影窗口](/qtbook-custom-widget-top-window)
+  * [Layout 秘录](/qtbook-custom-widget-layout-tips)
 * 动画
   * QPropertyAnimation
   * 动画插值函数与高级运用

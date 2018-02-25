@@ -278,7 +278,7 @@ tags: Index
 * [字节序 Endian](/java-endian)
 * [测试 Graphics View 的效率](/qt-graphics-view-performance)
 * [测试 Widget 的效率](/qt-widget-performance)
-* [线程一中调用线程二中函数的正确姿势](/qtbook-thread-call-in-different-thread)
+* [线程一中调用线程二中创建的对象的函数的正确姿势](/qtbook-thread-call-in-different-thread)
 * [自定义 QListView](/qt-listview)
 * [观察者模式的 NotificationCenter](/qt-notification-center)
 * [集成自定义类型到 MetaType 系统](/qt-custom-type-metatype)
@@ -287,6 +287,7 @@ tags: Index
 ## QtBook
 * [Border Image](/qtbook-qss-border-image)
 * [Clip 实现复杂绘图效果](/qtbook-paint-clip)
+* [Layout 秘录](/qtbook-custom-widget-layout-tips)
 * [Pixmap](/qtbook-paint-pixmap)
 * [qmake 时复制文件](/qtbook-misc-qmake-copy-file)
 * [QPainter 的状态保存与恢复](/qtbook-paint-status)
