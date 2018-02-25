@@ -125,11 +125,11 @@ GitBook 写 API 文档非常好用，作笔记也不错，甚至于写开源的�
 
 ![](/img/mac/software/gitbook-editor.png)
 
-## SourceTree
+## GitKraken
 
-Git 客户端: Simplicity and power in a beautiful free Git GUI for Windows and Mac. Home Page <https://www.sourcetreeapp.com>.
+Git 客户端: The legendary Git GUI client for Windows, Mac and Linux <https://www.gitkraken.com>.
 
-![](/img/mac/software/source-tree.png)
+![](/img/mac/software/git-kraken.png)
 
 ## GitUp
 
