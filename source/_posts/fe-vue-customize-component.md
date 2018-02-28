@@ -115,6 +115,8 @@ Parent 使用 **props** 给 children 组件传递数据:
 </body>
 ```
 
+> buttonText 的值改变后使用它的 x-button 的属性 text 的值也会变化。
+
 ## 使用 SLOT
 
 上面使用 props 来给组件 x-button 传递按钮的文本，能不能这么 `<x-button>按钮</x-button>` 更直观的创建按钮呢？可以，使用 **SLOT** 就可以了：
@@ -179,7 +181,7 @@ Parent 使用 **props** 给 children 组件传递数据:
 
 ## 组件发射信号
 
-Parent 使用 **props** 给 children 组件传递数据，children 使用 **emit** 把数据响应给 parent:
+Parent 使用 `props` 和 `slot` 给 children 组件传递数据，children 使用 `emit` 把数据响应给 parent:
 
 ```html
 <body>
@@ -259,6 +261,8 @@ Parent 使用 **props** 给 children 组件传递数据，children 使用 **emit
     </script>
 </body>
 ```
+
+> 模版的标签名不一定要是 `template`，也可以是例如 `<script type="html/text">template content</script>`，只要是在网页中不可见的就好。
 
 ## 自定义局部组件
 

@@ -14,7 +14,7 @@ Vuex 是一个专为 Vue.js 应用程序开发的**状态管理模式**。它采
 
 **什么时候使用 Vuex?**
 
-当我们的应用遇到**多个组件共享状态**时可以使用 Vuex，也就是多个组件共享变量时就可以使用 Vuex，共享数据变化时这些组件都同时更行。例如父子组建间通讯使用 props 和 emit，很多时候不够方便，如果这时使用 Vuex 的话，就会很简单（如果是提供给第三方使用的组件库的话，还是需要使用 props 和 emit）。
+当我们的应用遇到**多个组件共享状态**时可以使用 Vuex，也就是多个组件共享变量时就可以使用 Vuex，共享数据变化时这些组件都同时更新。例如父子组建间通讯使用 props 和 emit，很多时候不够方便，如果这时使用 Vuex 的话，就会很简单（如果是提供给第三方使用的组件库的话，还是需要使用 props 和 emit）。
 
 下面介绍 Vuex 的安装，注册和使用:
 
@@ -98,7 +98,7 @@ vue-cli 推荐使用 Axios 与服务器通过 Ajax 通讯:
 
 * 服务器允许跨域，但是有一个缺点，Ajax 的 url 必须要带上服务器的 IP、域名和端口
 
-* 配置 proxyTable 让 vue 代理访问实现跨域，Ajax 的 url 不需要带上服务器的 IP、域名和端口，修改 config/index.js 中的 dev.proxyTable
+* 配置 proxyTable 让 vue 代理访问实现跨域，Ajax 的 url 不需要带上服务器的 IP、域名和端口，修改 config/index.js 中的 `dev.proxyTable`
 
   ```js
   proxyTable: {
@@ -117,11 +117,11 @@ vue-cli 推荐使用 Axios 与服务器通过 Ajax 通讯:
 ```html
 <!-- 文件名: module1.vue -->
 <template>
-    <div>Module 1</div>
+    <div>Module 1 - {{text}}</div>
 </template>
 <script>
     export default {
-
+        props: ['text']
     };
 </script>
 ```
@@ -130,11 +130,11 @@ vue-cli 推荐使用 Axios 与服务器通过 Ajax 通讯:
 <!-- 文件名: Big.vue -->
 <template>
     <div>
-        <module1></module1> <!-- 使用模版 modul1 -->
+        <module1 :text="'Your-Text or bind data'"></module1> <!-- 使用模版 modul1 -->
     </div>
 </template>
 <script>
-    import module1 from './module1';
+    import module1 from './module1'; // 注意不要带 .vue 后缀哦
 
     export default {
         components: {
@@ -144,7 +144,7 @@ vue-cli 推荐使用 Axios 与服务器通过 Ajax 通讯:
 </script>
 ```
 
-> 模版之间的通讯可以使用 props + emit 或则上面的 vuex 的 store。
+> 模版之间的通讯可以使用 `props | slot | emit` 或则上面的 vuex 的 `store`。
 
 ## 路由跳转
 

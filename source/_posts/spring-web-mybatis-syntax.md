@@ -62,6 +62,7 @@ SELECT * FROM user WHERE name like '%'||#{name}||'%'
 
 * `Map`
 * `JavaBean` 中存放多个属性
+* Java 8 编译时使用参数 -parameters
 * `@Param`
 
 ```java

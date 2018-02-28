@@ -161,6 +161,7 @@ tags: Index
 * [Java 读取 Properties 和 Yaml Properties](/java-yaml-properties)
 * [JDBC 和 MyBatis 性能比较](/java-jdbc-mybatis-performance)
 * [MyBatis Collecton](/java-mybatis-collection)
+* [MyBatis 传递多个参数](/java-mybatis-multiple-parameters)
 * [Nginx + Tomcat 使用 Https](/java-tomcat-nginx-https)
 * [Office 文档转为 PDF 和 HTML](/office-to-pdf-html)
 * [OkHttp](/java-okhttp)
