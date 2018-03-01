@@ -33,10 +33,15 @@ Vuex 是一个专为 Vue.js 应用程序开发的**状态管理模式**。它采
    Vue.use(Vuex);
 
    // state 中的 count 即是共享数据
-   export default new Vuex.Store({
-       state: {
-           count: 10
-       }
+   export default new Vuex.Store({ 
+       state: { 
+           count: 0 
+       }, 
+       mutations: { 
+           increase(state) { 
+               state.count++; 
+           } 
+       } 
    });
    ```
 
@@ -55,17 +60,17 @@ Vuex 是一个专为 Vue.js 应用程序开发的**状态管理模式**。它采
    });
    ```
 
-   > new Vue() 中注册的 store, router 在 vue 文件中都可以使用 this 访问，例如 this.$store.state.count, this.$router.push('/hi')。
+   > `new Vue()` 中注册的 store, router 在 vue 文件中都可以使用 this 访问，例如 `this.$store.state.count`, `this.$router.push('/hi')`。
 
 4. 使用 store 访问共享变量，例如在 Hello.vue 中
 
    ```js
    mounted() {
-       this.$store.state.count += 1;
+       this.$store.commit('increase'); // 使用 commit 提交修改，不要直接修改 state 的状态
    }
 
-   例如在其他 vue 文件中访问 count，因为我们已经引入了 Element，就用消息框吧:
-   this.$message(`count value is ${this.$store.state.count}`);
+   例如在其他 vue 文件中访问 count，因为我们已经引入了 iView，就用消息框吧:
+   this.$Message.info(`count value is ${this.$store.state.count}`); 
    ```
 
 ## 与服务器通讯
