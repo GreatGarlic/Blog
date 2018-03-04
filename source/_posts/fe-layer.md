@@ -41,22 +41,27 @@ Layer 是一款近年来备受青睐的 web 弹层组件，她具备全方位的
     <script>
         $(document).ready(function() {
             $('#test1').on('click', function() {
-                layer.open({
+                window.layerIndex = layer.open({
                     type: 1,
                     title: '弹出层',              // [可选]
+                    // closeBtn: 0,              // 不显示关闭按钮
+                    // maxWidth: 1000,           // 最大宽度，默认为 360
                     content: $('#box'),          // 对话框中的内容部分
-                    area: ['600px', '300px'],    // 对话框的大小 [可选]
-                    // skin: 'layui-layer-rim',  // 加上边框 [可选]
-                    shadeClose: false,           // 为 true 时点击遮罩关闭 [可选]
-                    btn: ['确定', '贪婪', '取消'], // 自定义按钮，默认事件为关闭对话框，可以对不同的按钮提供事件处理函数 [可选]
-                    yes: function() {            // [可选]
+                    area: ['600px', '300px'],    // [可选] 对话框的大小，如果不填，则使用 #box 的大小
+                    // skin: 'layui-layer-rim',  // [可选] 加上边框
+                    shadeClose: false,           // [可选] 为 true 时点击遮罩关闭
+                    btn: ['确定', '贪婪', '取消'], // 自定义按钮，btn1, btn2, btn3
+                    btn1: function() {           // [可选] btn1 也可以用 yes
                         layer.msg('啥也不干');    // 确定按钮事件处理
+                        layer.close(window.layerIndex); // 调用关闭弹出对话框
                     },
                     btn2: function() {           // [可选]
                         layer.msg('玩命提示中');
                         return false; // 不返回 false 则对话框会被关闭
-                    }
+                    },
                     // btn3, btn4
+                    success: function() {}, // 弹出对话框时的回调函数，在此进行初始化
+                    end: function() {},     // 关闭对话框时的回调函数，在此进行清理工作
                 });
             });
 
