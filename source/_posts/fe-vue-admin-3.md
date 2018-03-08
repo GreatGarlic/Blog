@@ -402,6 +402,21 @@ const router = new Router({
 });
 ```
 
+```js
+export default new Router({
+    routes: [{
+        path: '/',
+        name: 'Home',
+        component: Home,
+    }, {
+        path: '/school',
+        name: 'school',
+        component: () => import('./subpage/school.vue')
+    }],
+});
+
+```
+
 ## 参考资料
 
 * [Vuex](https://vuex.vuejs.org/zh-cn/intro.html)

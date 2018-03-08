@@ -4,28 +4,59 @@ date: 2017-08-20 17:05:58
 tags: Hexo
 ---
 
-**GitBook** 使用 Markdown 来写文档，官网已经有 5 万多本使用 GitBook 写的书了。现在不少公司都开始用 GitBook 来写项目文档、使用手册等。下面就简要的介绍怎么使用 GitBook:
+GitBook 是一个使用 Markdown 文件，用来写书、说明文档等的工具，它的官网已经有 5 万多本使用 GitBook 写的书了，现在不少公司都开始用 GitBook 来写项目文档、使用手册等。下面就简要的介绍怎么使用 GitBook，首先需要安装下面这些软件:
 
 1. 安装 Git
 2. 安装 Nodejs
 3. 安装 GitBook: `npm install gitbook -g`
-4. 安装 GitBook-Cli: `npm install -g gitbook-cli`
-5. 下载 GitBook Editor, GitBook 官方提供的编辑器: <https://www.gitbook.com/editor><!--more-->
+4. 安装 GitBook-Cli: `npm install gitbook-cli -g`
 
-## 编辑
+## 本地搭建 GitBook
 
-需要的环境已经准备好了，打开 GitBook Editor 就可以开始写了，左边是章节目录，右边是编辑区：
+本地搭建 GitBook 的好处是我们可以自己管理文件的存储，例如可以放到公司的 Git 私服上:
+
+1. 创建目录例如 Pandora 用于存放书的文件，进入目录
+
+2. 创建文件 README.md 和 SUMMARY.md，它们是 GitBook 最重要的 2 个文件，README.md 对书进行介绍，在 SUMMARY.md 中描述书的目录结构，其内容可参考如下:
+
+   README.md:
+
+   ```
+   本书用于介绍 Pandora 项目的使用说明
+   ```
+   SUMMARY.md:
+   ```
+   # Summary
+
+   * [简介](README.md)
+   * [第一章](chapter1/README.md)
+       * [第一节](chapter1/section1.md)
+       * [第二节](chapter1/section2.md)
+   * [第二章](chapter2/README.md)
+       * [第一节](chapter2/section1.md)
+       * [第二节](chapter2/section2.md)
+   * [结束](end/README.md)
+   ```
+
+3. 执行 `gitbook init`:
+
+   会自动创建 SUMMARY.md 中描述的目录结构对应的文件夹和文件，每次执行这个命令都会创建还没有还不存在的文件和文件夹，但是不会影响已经创建的，所以不用担心多次执行 `gitbook init` 导致数据丢失
+
+4. 编辑书的 Markdown 文件，例如 section1.md 等
+
+5. 安装插件 `gitbook install`
+
+5. 执行 `gitbook server .`，在浏览器里访问 <http://localhost:4000> 就可以看到上面写的书了，以后常用的也是这个命令<!--more-->
+
+## 使用在线 GitBook
+
+使用在线的 GitBook 挺方便的，但是由于网络原因，很多时候在国内访问有问题，如无必要不推荐使用这种方式。
+
+下载 GitBook Editor，GitBook 官方提供的编辑器: <https://www.gitbook.com/editor>，并创建一个账号，在里面创建一本书就可以开始写了，左边是章节目录，右边是编辑区：
 
 ![](/img/normal/gitbook-editor.png)
 
-编辑后点击保存，然后同步到 GitBook 的仓库。
-
-## 浏览器中查看
-
-给其他人演示时一般都是用浏览器，而不是打开 GitBook Editor。进入项目的根目录，就是有 **README.md** 和 **SUMMARY.md** 的那个目录
-
-1. 执行命令 `gitbook serve .`
-2. 浏览器里访问 <http://localhost:4000> 
+编辑后点击保存，同步到 GitBook 的仓库。执行 `gitbook server .`，在浏览器里访问 <http://localhost:4000> 就可以看到上面写的书了。
 
 ## 插件
 
@@ -33,7 +64,8 @@ Gitbook 本身功能丰富，但同时可以使用插件来进行个性化定制
 
 ```json
 {
-    "plugins": ["expandable-chapters", "prism", "-highlight", "navigator"],
+    "title": "独孤九剑",
+    "plugins": ["expandable-chapters-interactive", "prism", "-highlight", "navigator"],
     "pluginsConfig": {
         "prism": {
             "css": [
@@ -44,7 +76,7 @@ Gitbook 本身功能丰富，但同时可以使用插件来进行个性化定制
 }
 ```
 
-* [Expandable chapters](https://github.com/DomainDrivenArchitecture/gitbook-plugin-expandable-chapters)
+* [Expandable-Chapters-Interactive](https://plugins.gitbook.com/plugin/expandable-chapters-interactive)
 
   生成 HTML 的章节不能展开和收缩，太多时不方便查看
 
@@ -79,7 +111,82 @@ GitBook 导出 PDF 依赖 **ebook-convert**, calibre 中包含了 ebook-convert�
    * 在项目目录中会生成 **book.pdf**
 
 
+## 修改样式
+
+新建 `styles/website.css`，在其里面修改样式，针对上面 book.json 中的插件，增加样式如下:
+
+```css
+body {
+    font-family: "微软雅黑", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif;
+}
+
+h2 {
+    border-bottom: 1px solid #DDD;
+}
+
+hr, .markdown-section hr {
+    height: 1px;
+}
+
+.markdown-section code {
+    font-size: 1em;
+    padding: 0;
+    padding-top: 0.2em;
+}
+
+.page-wrapper .page-inner {
+    max-width: 1800px;
+    padding-left: 30px;
+    padding-right: 30px;
+}
+
+.navigation.navigation-prev, .navigation.navigation-next {
+    display: none;
+}
+
+/* Night 主题下搜索输入框、目录的样式 */
+.book.color-theme-2 .book-summary #book-search-input {
+	color: #bcc1d2;
+    background: #2d3143;
+    border-bottom: 1px dashed gray;
+}
+
+.book.font-family-1 {
+    font-family: "微软雅黑", "HelveticaNeue-Light", "Helvetica Neue Light", "Helvetica Neue", Helvetica, Arial, sans-serif !important;
+}
+
+.book.color-theme-2 .book-summary ul.summary li a {
+    font-weight: normal !important;
+}
+
+#goTop {
+    display: none;
+}
+
+#anchors-navbar:hover {
+    border: 1px solid #EEE;
+    background: white;
+}
+
+#anchors-navbar {
+    box-shadow: none;
+    border: 1px solid transparent;
+    border-radius: 3px;
+    color: #CCC;
+    right: 30px;
+    top: 10px;
+    background: transparent ;
+}
+
+#anchors-navbar ul {
+    list-style: none;
+    padding: 5px;
+}
+```
+
 ## 参考资料
 
 [GitBook 的使用和常用插件](http://www.tuicool.com/articles/zee2ui)
+
+[GitBook 学习笔记](http://yangjh.oschina.io/gitbook/)
 

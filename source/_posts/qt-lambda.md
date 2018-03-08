@@ -112,7 +112,7 @@ int main(int argc, char *argv[]) {
         qDebug() << text;
     });
 
-    // [3]
+    // [3]: QOverload<> 里面是参数列表，of() 里面是成员函数地址
     QObject::connect(comboBox, QOverload<const QString &>::of(&QComboBox::activated), [](const QString &text) {
         qDebug() << text;
     });

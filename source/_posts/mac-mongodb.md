@@ -23,10 +23,11 @@ MySQL 的结构是: 数据库 > 表 (table) > 记录 (record or row) > 属性 (f
 
   * `mongod --config C:/etc/mongod.conf`
 
-    一般 Windows 才会手动指定配置文件，Linux 和 Mac 都会使用默认的配置文件，下面有介绍
 * 访问 MongoDB: 
   * `mongo`
-  * `mongo --host IP` <!--more-->
+  * `mongo --host IP` 
+  * 使用 IDEA 的插件 `Mongo Plugin`
+  * 漂亮的免费客户端 dbKoda<!--more-->
 
 ## 配置文件
 
@@ -49,17 +50,17 @@ net:
 > 注意：Winows 中 MongoDB 的数据库目录需要我们手动创建，如果目录不存在则会启动失败
 >
 > * 默认的目录为 `C:/data/db`
-> * 上面配置文件的为 `D:/MongoDB/data` 和 `D:/MongoDB/logs`。
+> * 上面配置文件的为 `D:/MongoDB/data` 和 `D:/MongoDB/logs`
 
 配置文件路径:
 
-* Linux: `/etc/mongod.conf`，自动创建，启动时自动使用
+* Linux: `/etc/mongod.conf`，自动创建
 
-* Mac: `/usr/local/etc/mongod.conf`，自动创建，启动时自动使用
+* Mac: `/usr/local/etc/mongod.conf`，自动创建
 
-* Windows: 手动创建并使用 `--config` 参数指定
+* Windows: 手动创建
 
-  Windows 安装 MongoDB 后不会自动生成配置文件，如果要使用，需要我们自己创建，并在启动时使用参数 `--config` 指定
+  Windows 安装 MongoDB 后不会自动生成配置文件，如果要使用，需要我们自己创建
 
 ## 信息
 
@@ -143,19 +144,24 @@ db.movie.find().pretty() // pretty() 格式化查询得到的 JSON
 
 // [2] 条件查询
 db.movie.find({directed_by: 'David Fincher'}) // directed_by 等于 David Fincher
-db.movie.find({directed_by: 'David Fincher', title: 'Seven'}) // 同时满足多个条件
+db.movie.find({directed_by: 'David Fincher', title: 'Seven'}) // AND: 同时满足多个条件
+db.movie.find({$or: [{directed_by: 'David Fincher'}, {title: 'Forrest Gump'}]}) // OR
+// AND 和 OR 一起使用
+db.movie.find({{likes: {$gt: 50}}, $or: [{directed_by: 'David Fincher'}, {title: 'Forrest Gump'}]})
 
 // [3] 范围搜索
 // $gt: 大于，$gte: 大于等于
 // $lt: 小于，$lte: 小于等于
 // $ne: 不等于
+// $in: 属于
 db.movie.find({likes: {$gt: 134360, $lt: 500000}})
 db.movie.find({likes: {$gt: 134360, $lt: 500000}, title: 'Seven'})
+db.movie.find({likes: {$in: [100, 200, 400]}})
 
 // [4] 如果有多个结果，则会按磁盘存储顺序返回第一个
 db.movie.findOne({'title':'Forrest Gump'})
 
-// [5] 分页: 使用 skip() + limit()
+// [5] 分页: 使用 skip() + limit()，但要注意 skip 方法是一条条数据数过去的，百万级时效率很低
 db.movie.find().skip(2).limit(5)
 
 // [6] 只列出需要的属性: 第一个参数是条件，第二个参数是需要显示的属性，1 为输出，0 为不输出
@@ -167,6 +173,9 @@ db.movie.find().count()
 
 // [8] 排序: 1 为升序，-1 为降序
 db.blog.find().sort({byuser: 1, likes: -1}).pretty()
+
+// [9] 查询子文档: http://www.runoob.com/mongodb/mongodb-advanced-indexing.html
+db.users.find({'address.city': 'Los Angeles'})
 ```
 
 ## 更新
@@ -287,6 +296,20 @@ db.mycol.aggregate([{$match: {likes: {$gt: 50}}}, {$group: {_id: '$by_user', num
 | $first    | 根据资源文档的排序获取第一个文档数据         | `db.mycol.aggregate([{$group : {_id : "$by_user", first_url : {$first : "$url"}}}])` |
 | $last     | 根据资源文档的排序获取最后一个文档数据       | `db.mycol.aggregate([{$group : {_id : "$by_user", last_url : {$last : "$url"}}}])` |
 
+## 索引
+
+索引是特殊的数据结构，索引存储在一个易于遍历读取的数据集合中，索引是对数据库表中一列或多列的值进行排序的一种结构。索引通常能够极大的提高查询的效率，如果没有索引，MongoDB 在读取数据时必须扫描集合中的每个文件并选取那些符合查询条件的记录。
+
+语法: `固定前缀 db` + `集合名字` + `函数 ensureIndex()`
+
+```js
+// 1 为升序，-1 为降序，text 为全文索引
+db.col.ensureIndex({title: 1})
+db.col.ensureIndex({title: 1, description: -1})
+db.col.ensureIndex({description: 'text'})  // 建立全文索引 
+db.col.find({$text: {$search: 'Fincher'}}) // 搜索有关键词 Fincher 的文档
+```
+
 ## Java 访问 MongoDB
 
 ```groovy
@@ -400,13 +423,17 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 
 import java.util.List;
 
+/**
+ * PersonRepository 对应集合 person，会自动创建
+ */
 public interface PersonRepository extends MongoRepository<Person, Long> {
+    // Spring Data MongoDB 会自动生成下面 2 个函数
     List<Person> findByFirstName(String firstName);
     List<Person> findByLastName(String lastName);
 }
 ```
 
-访问测试 (测试前先执行 initData() 函数创建数据):
+访问测试 (测试前先执行 initData() 函数创建数据，执行后会自动创建一个名为 person 的集合):
 
 ```java
 import bean.Person;
@@ -475,6 +502,8 @@ XML 配置文件:
     <mongo:repositories base-package="com.xtuer.repository"/>
 </beans>
 ```
+
+> * **writeConcern**: 抛出异常的级别
 
 ## 参考资料
 

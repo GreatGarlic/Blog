@@ -40,6 +40,7 @@ tags: Index
 * [HTML 树的实现](/fe-tree)
 * [HTML5 使用 MQTT](/fe-mqtt)
 * [HTML5 播放器 Video.js](/fe-player)
+* [iView 的 Table 中插入按钮](/iview-table-button)
 * [JavaScript Tips](/fe-js-tips)
 * [JavaScript 里格式化字符串](/fe-string-format)
 * [jQuery 404 时调用的方法](/fe-jquery-404)
@@ -504,6 +505,7 @@ tags: Index
 * [签名验证](/java-sign)
 
 ## Vue
+* [iView 的 Table 中插入按钮](/iview-table-button)
 * [Vue DOM 更新完成后再执行函数](/fe-vue-dom-updated)
 * [Vue Todo](/fe-vue-todo)
 * [Vue 使用 v-for 和设置属性及事件处理](/fe-vue-for-attribute)
