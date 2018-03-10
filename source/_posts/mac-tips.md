@@ -271,6 +271,14 @@ mv srcDir destDir/
 ls `npm root -g`
 ```
 
+## Node 使用淘宝镜像
+
+使用淘宝 NPM 镜像，安装时使用 cnpm 代替 npm:
+
+```
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+```
+
 ## 删除所有 Vmware 的进程
 
 ```

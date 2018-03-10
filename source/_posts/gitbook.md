@@ -128,6 +128,10 @@ hr, .markdown-section hr {
     height: 1px;
 }
 
+.chapter span {
+    font-weight: normal !important;
+}
+
 .markdown-section code {
     font-size: 1em;
     padding: 0;

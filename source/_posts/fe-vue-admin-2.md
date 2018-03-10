@@ -36,11 +36,13 @@ tags: [FE, Vue]
 │       │   ├── index.html
 │       │   ├── index.js
 │       │   ├── index.vue
+│       │   ├── main.vue
 │       │   └── router.js
 │       └── teacher
 │           ├── index.html
 │           ├── index.js
 │           ├── index.vue
+│           ├── main.vue
 │           └── router.js
 ├── static
 ```
@@ -48,6 +50,7 @@ tags: [FE, Vue]
 > * 页面的文件放在 page 目录下，每个单页占用一个目录
 > * 文件名字也修改下，这样看上去比较统一
 >   * App.vue > index.vue
+>   * Home.vue > main.vue
 >   * main.js > index.js
 >   * router/index.js > router.js
 >   * 复制 index.html 到此目录下

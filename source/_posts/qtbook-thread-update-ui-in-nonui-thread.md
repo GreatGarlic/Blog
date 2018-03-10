@@ -1,9 +1,9 @@
 ---
-title: 线程一中调用线程二中创建的对象的函数的正确姿势
+title: 非 UI 线程中更新 UI
 date: 2016-11-08 16:50:49
 tags: Qt
 ---
-Qt 里 `线程一的上下文中` 调用 `线程二的上下文中` 的函数的正确姿势是使用 `信号槽` 或者 `QMetaObject::invokeMethod()`，有意思的是 Qt 4 时线程一中直接调用线程二中的函数，程序会直接奔溃退出，很容易发现问题，但在 Qt 5 里有时候没问题，有时候会在控制台有警告，有时候程序会退出，很是莫名其妙，所以最好的办法就是不要直接调用，下面的程序展示了相关测试代码。
+在非 UI 线程中更新 UI (例如改变 QLabel 的文本) 应该使用 `信号槽` 或者 `QMetaObject::invokeMethod()`，不要直接调用 widget 的函数，例如在非 UI 线程中直接调用 `QLabel::setText(text)` 就有可能让程序崩溃。有意思的是 Qt 4 时程序会直接奔溃退出，很容易发现问题，但在 Qt 5 里有时候没问题，有时候会在控制台有警告，有时候程序会退出，导致问题隐藏的比较深，所以最好的办法就是遵守规则不要直接调用，下面的程序展示了相关测试代码。
 
 > Because of limitations inherited from the low-level libraries on which Qt's GUI support is built, QWidget and its subclasses are not reentrant. One consequence of this is that we cannot directly call functions on a widget from a secondary thread. If we want to, say, change the text of a QLabel from a secondary thread, we can emit a signal connected to QLabel::setText() or call QMetaObject::invokeMethod() from that thread. For example:
 >

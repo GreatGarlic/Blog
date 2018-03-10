@@ -168,6 +168,12 @@ yum install nodejs
 node -v
 ```
 
+使用淘宝 NPM 镜像，安装时使用 cnpm 代替 npm:
+
+```
+npm install -g cnpm --registry=https://registry.npm.taobao.org
+```
+
 ## 安装 MongoDB
 
 详细内容请参考[官方文档](https://docs.mongodb.com/manual/tutorial/install-mongodb-on-red-hat/#configure-the-package-management-system-yum)，安装步骤如下:
