@@ -14,8 +14,8 @@ tags: FE
   * 缺点: 
     * 不是标准的 REST 规范
     * 参数是按照 key/value 的形式发送的，和普通表单的参数形式一样，有兴趣的可以在 Chrome 的 Network 中查看请求的 Headers
-    * 不能传递复杂对象，例如 value 又是一个 Json 对象，只能传递简单的 key/value，也就是作为参数的 Json 对象只能有一层 key/value，不过非特殊情况也够用了，普通表单能做的它都能做
-    * PUT 时参数中需要带上 _method="PUT"，DELETE 时参数中需要带上 _method="DELETE"
+    * 不方便传递复杂对象，例如 value 又是一个 Json 对象，不过估计 90% 的情况简单的 key/value 就够了
+    * PUT 时参数中需要带上 `_method=PUT`，DELETE 时参数中需要带上 `_method=DELETE`
 * Content-Type 为 application/json
   * 优点: 标准的 REST 规范，GET 处理和上面的一样，但是 POST, PUT, DELETE 的参数是序列化后的 JSON 字符串，能够传递复杂的对象
   * 缺点: 
@@ -25,7 +25,7 @@ tags: FE
 
 总结下来，在 SpringMVC 中推荐使用 `application/x-www-form-urlencoded + HiddenHttpMethodFilter` 的方式实现 REST 的请求，就是为了获取参数时比较统一，当需要传递复杂的参数时，例如属性是多层嵌套的对象，Json 对象的数组，这时再使用 application/json 的方式。
 
-为了简化 Rest Ajax 的访问，下面对 jQuery 的 Ajax 进行了简单的封装，例如更新用户名原始实现大致如下:
+为了简化 Rest Ajax 的访问，下面对 jQuery 的 Ajax 进行了简单的封装成插件 `jQuery.rest`，下面的例子展示了更新用户名原始实现和简化后的代码:
 
 ```js
 $.ajax({
@@ -54,7 +54,7 @@ $.rest.update({
 
 <!--more-->
 
-## 测试页面:
+## 更多例子:
 
 ```html
 <!DOCTYPE html>
@@ -123,8 +123,6 @@ $.rest.update({
 ## REST 插件 jquery.rest.js:
 
 ```js
-'use strict';
-
 (function($) {
     /**
      * 执行 REST 请求的 jQuery 插件，不以 sync 开头的为异步请求，以 sync 开头的为同步请求:
@@ -155,6 +153,8 @@ $.rest.update({
      *      $.rest.update({url: '/rest/books/{bookId}', urlParams: {bookId: 23}, data: {name: 'C&S'}, success: function(result) {
      *          console.log(result);
      *      }}, fail: function(failResponse) {});
+     * 提示:
+     *     绝大多数时候不需要传入 fail 的回调函数，已经默认提供了 401，403，404，服务器抛异常时的 500，服务不可达的 502 等错误处理: 弹窗提示和打印错误信息。
      */
     $.rest = {
         /**
@@ -212,10 +212,6 @@ $.rest.update({
             options.async = false;
             this.remove(options);
         },
-        // 默认把错误打印到控制台，可以
-        defaultFail: function(error) {
-            console.error(error.responseText);
-        },
 
         /**
          * 执行 Ajax 请求，不推荐直接调用这个方法.
@@ -241,7 +237,7 @@ $.rest.update({
                 jsonRequestBody: false,
                 contentType    : 'application/x-www-form-urlencoded;charset=UTF-8',
                 success        : function() {},
-                fail           : function(error) { self.defaultFail(error); },
+                fail           : function() {},
                 complete       : function() {}
             };
 
@@ -285,7 +281,30 @@ $.rest.update({
                 contentType: settings.contentType,
                 // 服务器抛异常时，有时 Windows 的 Tomcat 环境下竟然取不到 header X-Requested-With, Mac 下没问题，
                 // 正常请求时都是好的，手动添加 X-Requested-With 为 XMLHttpRequest 后所有环境下正常和异常时都能取到了
-                headers: {'X-Requested-With': 'XMLHttpRequest'}
+                headers: {'X-Requested-With': 'XMLHttpRequest'},
+                // 各种状态的错误可以在此拦截统一处理，弹窗提示，应用里就不需要单一一独处理了
+                statusCode: {
+                    401: function() {
+                        alert( "Token 无效" );
+                    },
+                    403: function() {
+                        alert('权限不够');
+                    },
+                    404: function() {
+                        alert('URL 不存在');
+                    },
+                    500: function(error) {
+                        // 发生 500 错误时服务器抛出异常，在控制台打印出异常信息
+                        console.error(error.responseJSON.data);
+                        alert('服务器抛出异常，请联系管理员\n\n详细错误信息请查看控制台输出 (Chrome 按下快捷键 F12)');
+                    },
+                    502: function() {
+                        // 发生 502 错误时，Tomcat Web 服务器不可到达，一般有 2 个原因
+                        // 1. Nginx 配置出错
+                        // 2. Tomcat 的 Web 服务没启动或者不接收请求
+                        alert('502 错误，服务器不可到达');
+                    }
+                }
             })
             .done(function(data, textStatus, jqXHR) {
                 settings.success(data, textStatus, jqXHR);
@@ -298,6 +317,24 @@ $.rest.update({
                 settings.complete();
             });
         }
+    };
+
+    /**
+     * 执行 Jsonp 请求，服务器端访问回调函数名使用 key 为 'callback'
+     *
+     * @param  {String}   url      请求的 URL
+     * @param  {Function} callback 请求成功的回调函数，参数为服务器端返回的结果
+     * @return 无返回值
+     */
+    $.jsonp = function(url, callback) {
+        $.ajax({
+            url     : url,
+            type    : 'GET',
+            dataType: 'jsonp',
+            success : function(data) {
+                callback && callback(data);
+            }
+        });
     };
 })(jQuery);
 ```
@@ -441,8 +478,6 @@ Result 用于统一服务器端返回的 JSON 格式，例如:
 ```
 
 ```java
-package com.xtuer.bean;
-
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONPObject;
 import lombok.Getter;
@@ -450,52 +485,65 @@ import lombok.Setter;
 
 /**
  * Http Ajax 请求返回时用作返回的对象，FastJson 自动转换为 Json 字符串返回给前端。
+ * 提供了多个变种的 ok() 和 fail() 方法简化创建 Result 对象。
  *
  * 虽然同一个请求在不同情况下返回的 Result 中的 data 类型可能不同，例如 Result<User> findUserByName(String name)，
  * 查询到用户时返回 Result 中 data 是 User 对象，查询不到用户时可返回 Result 中 data 是 String 对象，不过没关系，
- * 在我们的实现中允许这么做，好处是标志出了请求正确响应时返回的数据类型，因为这个是我们最关心的，至于错误的类型，
- * 一般会用 String 描述，前端得到 success 为 false，大多都是把错误信息显示给用户即可。
+ * 在我们的实现中允许这么做，好处是标志出了请求正确响应时返回的数据类型，因为这个才是我们最关心的。
  */
 @Getter
 @Setter
 public final class Result<T> {
-    private boolean success;    // 成功时为 true，失败时为 false
-    private String  message;    // 成功或则失败时的描述信息
-    private Object  data;       // 成功或则失败时的更多详细数据，一般失败时不需要
-    private Integer statusCode; // 状态码，一般是当 success 为 true 或者 false 时不足够表达时可使用
+    private boolean success; // 成功时为 true，失败时为 false
+    private String  message; // 成功或则失败时的描述信息
+    private Object  data;    // 成功或则失败时的更多详细数据，一般失败时不需要
+    private Integer code;    // 状态码，一般是当 success 为 true 或者 false 时不足够表达时才使用，平时忽略即可
 
     public Result(boolean success, String message) {
         this(success, message, null);
     }
 
     public Result(boolean success, String message, Object data) {
+        this(success, message, data, null);
+    }
+
+    public Result(boolean success, String message, Object data, Integer code) {
         this.success = success;
         this.message = message;
         this.data = data;
+        this.code = code;
     }
 
     public static <T> Result<T> ok() {
         return new Result<>(true, "success");
     }
 
-    public static <T> Result<T> ok(String message) {
-        return new Result<>(true, message);
+    public static <T> Result<T> ok(Object data) {
+        return new Result<>(true, "success", data);
     }
 
     public static <T> Result<T> ok(String message, Object data) {
         return new Result<>(true, message, data);
     }
 
+    public static <T> Result<T> ok(String message, Object data, Integer code) {
+        return new Result<>(true, message, data, code);
+    }
+
     public static <T> Result<T> fail() {
         return new Result<>(false, "fail");
     }
 
-    public static <T> Result<T> fail(String message) {
-        return new Result<>(false, message);
+    public static <T> Result<T> fail(Object data) {
+        return new Result<>(false, "fail", data);
     }
 
     public static <T> Result<T> fail(String message, Object data) {
         return new Result<>(false, message, data);
+    }
+
+    public static <T> Result<T> fail(String message, Object data, Integer code) {
+        return new Result<>(false, message, data, code);
     }
 
     /**
@@ -514,15 +562,22 @@ public final class Result<T> {
 
     // 测试
     public static void main(String[] args) {
+        // Result
         Result<User> r1 = Result.ok();
-        Result<User> r2 = Result.ok("Yes", new User("Alice", "Passw0rd"));
+        Result<User> r2 = Result.ok(new User("Alice", "Passw0rd"));
         Result<User> r3 = Result.ok("Yes", new Demo(123456L, "Physics"));
+        Result<User> r4 = Result.ok("Yes", new Demo(123456L, "Physics"), 1024);
 
+        // JSON
         System.out.println(JSON.toJSONString(r1));
         System.out.println(JSON.toJSONString(r2));
         System.out.println(JSON.toJSONString(r3));
+        System.out.println(JSON.toJSONString(r4));
 
         System.out.println(r3.getData());
+
+        // JSONP
+        System.out.println(Result.jsonp("callback", Result.ok("Hello")));
     }
 }
 ```

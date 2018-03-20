@@ -280,10 +280,10 @@ tags: Index
 * [字节序 Endian](/java-endian)
 * [测试 Graphics View 的效率](/qt-graphics-view-performance)
 * [测试 Widget 的效率](/qt-widget-performance)
-* [线程一中调用线程二中创建的对象的函数的正确姿势](/qtbook-thread-call-in-different-thread)
 * [自定义 QListView](/qt-listview)
 * [观察者模式的 NotificationCenter](/qt-notification-center)
 * [集成自定义类型到 MetaType 系统](/qt-custom-type-metatype)
+* [非 UI 线程中更新 UI](/qtbook-thread-update-ui-in-nonui-thread)
 * [鼠标放到 View 的 item 上时显示 tool tip](/qt-item-hover-tooltip)
 
 ## QtBook
@@ -317,6 +317,7 @@ tags: Index
 * [单例的模版＋宏的实现](/qtbook-singleton-5-template-macro)
 * [单例的简单实现](/qtbook-singleton-1-simple)
 * [单播](/qtbook-network-udp-unicast)
+* [右键菜单](/qtbook-custom-widget-context-menu)
 * [多线程编程](/qtbook-thread)
 * [实时动态曲线](/qtbook-paint-realtime-curve)
 * [实现 Steps 路径样式](/qtbook-custom-widget-steps)
