@@ -120,6 +120,7 @@ tags: Index
 * [IDEA 删除 Gradle Module](/gradle-remove-module-from-idea)
 
 ## Hexo
+* [GitBook 使用 Coding.net 的 Pages 访问](/gitbook-coding-net)
 * [GitBook 入门](/gitbook)
 * [Hexo 环境搭建](/hexo-usage)
 * [Hexo 跳过指定文件的渲染](/hexo-skip-render)
