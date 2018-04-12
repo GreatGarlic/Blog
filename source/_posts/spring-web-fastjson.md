@@ -58,6 +58,7 @@ public static class Node {
        </bean>
    </property>
    注意: 这种方式中文会转为 UTF-8 的编码，如 {"id":2,"info":"\u6D77\u9F99"}，不过浏览器里能自动识别
+4. 自定义 FastJsonConfig，只把 Long 转为字符串，中文进行 UTF-8 编码，比方法 3 好一些，请参考 http://sparkgis.com/java/2018/02/springmvc使用fastjson并解决长数值精度丢失问题-原-springmvc使用fastjson并/
 ```
 
 ## TypeReference

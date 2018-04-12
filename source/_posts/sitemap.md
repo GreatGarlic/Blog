@@ -151,6 +151,7 @@ tags: Index
 * [Https PKIX](/https-pkix)
 * [HttpServletResponse 下载文件](/java-response-file)
 * [HttpServletResponse 返回图片](/java-response-image)
+* [IDEA 设置](/java-idea)
 * [Jackson 处理 Json](/util-json)
 * [Java NIO Buffer](/java-nio-buffer)
 * [Java Tips](/java-tips)

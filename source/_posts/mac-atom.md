@@ -29,6 +29,7 @@ Atom 以前很慢，所以一直不想用，在 1.0 版本后启动差不多需�
 | less-autocompile               | 保存的时候把 Less 自动编译为 CSS                             |
 | sublime-style-column-selection | 列编辑                                                       |
 | symbols-view-plus              | Atom 自带的 symbols-view 的增强版                            |
+| symbols-navigator              | 函数显示上比 symbols-view-plus 更清晰                        |
 | atom-history                   | 打开文件的记录                                               |
 | atom-ide-ui                    | 这将在你的 Atom 中呈现 IDE 界面，但是要成为一个完全可工作的 IDE ，你还需要安装你的语言服务器支持。可以选择：ide-html、ide-typescript(TypeScript & JavaScript)、 ide-php、 ide-java、 ide-csharp |
 | split-diff                     | 文件比较工具、合并工具                                       |

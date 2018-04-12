@@ -48,16 +48,14 @@ GitBook 是一个使用 Markdown 文件，用来写书、说明文档等的工�
 
 6. 执行 `gitbook serve`，在浏览器里访问 <http://localhost:4000> 就可以看到上面写的书了，以后常用的也是这个命令，当文件变化后可以在网页中及时看到新的变化
 
-   > Bug: Windows 中 `gitbook serve` 运行后，当文件发生变化时不是自动更新网页而是退出，可以使用下面的脚本来运行 `gitbook serve` 解决这个 Bug：
-   >
-   > ```
-   > @Echo off
-   > :Start
-   > call gitbook serve
-   > goto Start
-   > ```
-   >
-   > <!--more-->
+   > Bug: Windows 中 `gitbook serve` 运行后，当文件发生变化时不是自动更新网页而是退出，可以使用下面的脚本来运行 `gitbook serve` 解决这个问题：
+   ```
+@Echo off
+:Start
+call gitbook serve
+goto Start
+   ```
+   > 把上面的文件保存为 `gs.bat` 放到 GitBook 目录中，运行 `gs.bat` 就可以了。<!--more-->
 
 ## 使用在线 GitBook
 

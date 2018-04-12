@@ -481,6 +481,24 @@ resultType 是指已有类型，例如 int, string, class User 等，SQL 查询�
 
 resultMap 是指我们自己用 XML element `<resultMap>...</resultMap>` 定义的映射。
 
+## 执行多条语句
+
+1. 数据库连接字符串加上 allowMultiQueries=true
+
+   ```
+   jdbc:mysql://office.edu-edu.com:3306/ebag?useUnicode=true&characterEncoding=UTF-8&allowMultiQueries=true
+   ```
+
+2. 直接写多条语句，用 `;` 隔开
+
+   ```sql
+   <!-- 启用或禁用学生 -->
+   <update id="enableStudent">
+       UPDATE clazz_student SET is_enabled=#{enabled} WHERE student_id=#{studentId};
+       UPDATE user SET is_enabled=#{enabled} WHERE id=#{studentId};
+   </update>
+   ```
+
 ## 参考资料
 
 * [Mybatis之批量更新操作](http://my.oschina.net/ckanner/blog/338515)

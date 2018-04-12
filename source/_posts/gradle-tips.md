@@ -445,22 +445,22 @@ Gradle 默认的打包任务 `jar` 不能带上依赖的类，在有依赖 Sprin
 > 如果是可执行的 jar 包，配置 mainClassName 为 jar 包启动运行的类，否则可以忽略掉。
 
 ```groovy
-apply plugin: 'java'
-apply plugin: 'application'
-apply plugin: 'com.github.johnrengelman.shadow'
-
-buildscript {
-    repositories { jcenter() }
-    dependencies { classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.3' }
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '2.0.2'
 }
 
-mainClassName = 'Foo'
-
-jar {
-    manifest { attributes 'Main-Class': mainClassName }
+////////////////////////////////////////////////////////////////////////////////
+//                                [1] [2] 运行、打包                           //
+////////////////////////////////////////////////////////////////////////////////
+// [1.1] 从命令行运行默认类: gradle run
+// [1.2] 从命令行运行某个类: gradle run -DmainClass=Foo
+ext {
+    project.mainClassName = System.getProperty("mainClass", "DefaultMainClass")
 }
 
-// 打包命令: gradle clean shadowJar
+// [2] 打包: gradle clean shadowJar [-DmainClass=Foo]
 shadowJar {
     mergeServiceFiles('META-INF/spring.*')
 }
@@ -495,7 +495,22 @@ war {
 }
 ```
 
+## 设置测试输出的目录
+
+```groovy
+test {
+    // we want display the following test events
+    testLogging {
+        events "PASSED", "STARTED", "FAILED", "SKIPPED"
+    }
+
+    reports.html.destination = "${buildDir}/reports/test"
+}
+```
+
 ## 参考
+
 * [Gradle 替代 Maven](http://my.oschina.net/enyo/blog/369843)
 * [Gretty Hot deployment](http://akhikhl.github.io/gretty-doc/Hot-deployment.html)
-* [Gradle脚本基础全攻略](http://blog.csdn.net/yanbober/article/details/49314255)
+* [Gradle 脚本基础全攻略](http://blog.csdn.net/yanbober/article/details/49314255)
+
