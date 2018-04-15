@@ -27,7 +27,8 @@ MySQL 的结构是: 数据库 > 表 (table) > 记录 (record or row) > 属性 (f
   * `mongo`
   * `mongo --host IP` 
   * 使用 IDEA 的插件 `Mongo Plugin`
-  * 漂亮的免费客户端 dbKoda<!--more-->
+  * 漂亮的免费客户端 dbKoda
+  * 智能的免费客户端 NoSQLBooster for MongoDB (推荐使用)<!--more-->
 
 ## 配置文件
 

@@ -211,6 +211,7 @@ tags: Index
 * [Git Tips](/git-tips)
 * [Https PKIX](/https-pkix)
 * [iTerm ssh 自动登录](/mac-iterm-ssh)
+* [iTerm 设置](/mac-iterm)
 * [Linux Crontab](/linux-crontab)
 * [Mac Homebrew](/mac-homebrew)
 * [Mac Terminal Powerline-Shell](/mac-terminal-powerline)
