@@ -782,3 +782,30 @@ public class Controller {
 }
 ```
 
+## 使用 HTTPS
+
+```cpp
+{
+    HttpClient("https://jk.edu-edu.com/initializeRoom").get([](const QString &response) {
+        qDebug().noquote() << response;
+    });
+}
+```
+
+如上访问 https 的网址时控制台输出如下错误信息
+
+```
+qt.network.ssl: QSslSocket: cannot call unresolved function SSLv23_client_method
+qt.network.ssl: QSslSocket: cannot call unresolved function SSL_CTX_new
+qt.network.ssl: QSslSocket: cannot call unresolved function SSL_library_init
+qt.network.ssl: QSslSocket: cannot call unresolved function ERR_get_error
+qt.network.ssl: QSslSocket: cannot call unresolved function ERR_get_error
+```
+
+解决这个问题只要复制 `libeay32.dll` 和 `ssleay32.dll` 到编译出来的 exe 文件所在目录即可。
+
+但是去哪里找这 2 个文件呢？
+
+* 下载 [OpenSSL](https://www.openssl.org) 源码自己编译
+* 安装如 MongoDB，Git 等，他们都带有这 2 个文件
+

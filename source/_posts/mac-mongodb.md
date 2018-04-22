@@ -1,5 +1,5 @@
 ---
-title: MongoDB 初步接触
+title: MongoDB 初接触
 date: 2018-02-11 22:26:51
 tags: Mac
 ---
@@ -311,6 +311,12 @@ db.col.ensureIndex({description: 'text'})  // 建立全文索引
 db.col.find({$text: {$search: 'Fincher'}}) // 搜索有关键词 Fincher 的文档
 ```
 
+查看查询语句的效率使用 explain 函数
+
+```js
+db.users.find({'address.city': 'Los Angeles'}).explain()
+```
+
 ## Java 访问 MongoDB
 
 ```groovy
@@ -414,7 +420,7 @@ public class Person {
 }
 ```
 
-创建 Repository，继承 MogoRepository，除了默认的方法外，在这里可定义一些访问方法，参考 JPA:
+创建 Repository，继承 MogoRepository，除了默认的方法外，在这里可定义一些访问方法，参考 JPA 的函数命名:
 
 ```java
 package com.xtuer.repository;
@@ -431,6 +437,7 @@ public interface PersonRepository extends MongoRepository<Person, Long> {
     // Spring Data MongoDB 会自动生成下面 2 个函数
     List<Person> findByFirstName(String firstName);
     List<Person> findByLastName(String lastName);
+    // 复杂的如 List<Person> findByFirstNamdAndLastNameAndAgeGreaterThan(String firstName, String lastName, int age);
 }
 ```
 
@@ -506,6 +513,84 @@ XML 配置文件:
 
 > * **writeConcern**: 抛出异常的级别
 
+## Query 进行查询
+
+JPA 的方式简单查询时非常方便，复杂一些的情况就需要使用 MongoTemplate 了。使用 Criteria 创建 Query，PageRequest 进行分页，Sort 进行排序：
+
+```java
+mongoTemplate.findOne(Query.query(Criteria.where("receiverId").is(receiverId)), Document.class, "message");
+```
+
+```java
+// 等价 SQL: SELECT * FROM message_private WHERE receiverId=#{receiverId} AND read=#{read} ORDER BY createdTime DESC LIMIT page*size, size
+
+PageRequest pageable = PageRequest.of(page, size, Sort.by(Sort.Direction.DESC, "createdTime"));
+Criteria criteria = Criteria.where("receiverId").is(receiverId).and("read").is(read);
+List<Message> messages = mongoTemplate.find(Query.query(criteria).with(pageable), Message.class, "message");
+```
+
+多个 OR 条件使用 `Criteria.orOperator` 进行连接，例如下面的这个语句有多个 AND，并且还有多个 OR 条件，OR 中还有 AND：
+
+```java
+// 等价 SQL:
+// SELECT * FROM message_group
+// WHERE (schoolId=#{schoolId} AND createdTime>#{from}) AND (
+//     (type='SCHOOL' AND schoolId=#{schoolId}) OR (type='CLAZZ' AND groupId=#{clazzId}) OR (type='TEAM' AND groupId=#{teamId})
+// )
+// ORDER BY createdTime ASC
+    
+Criteria orCriteria = new Criteria().orOperator(
+    Criteria.where("type").is("SCHOOL").and("schoolId").is(schoolId),
+    Criteria.where("type").is("CLAZZ").and("groupId").is(clazzId),
+    Criteria.where("type").is("TEAM").and("groupId").is(teamId)
+);
+Criteria criteria = Criteria.where("schoolId").is(schoolId).and("createdTime").gt(from).andOperator(orCriteria);
+Sort sortByCreatedTime = Sort.by(Sort.Direction.ASC, "createdTime");
+mongoTemplate.find(Query.query(criteria).with(sortByCreatedTime), Message.class, MESSAGE_GROUP);
+```
+
+上面程序的 MongoDB 查询语句为:
+
+```js
+db.message_group.find(
+{$and: [{schoolId: 1}, {createdTime: {$gt: ISODate("2017-04-09T09:25:26.286Z")}}, {
+    $or: [
+        {$and: [{type: 'SCHOOL'}, {schoolId: 1}]},
+        {$and: [{type: 'CLAZZ'}, {groupId: 1}]},
+        {$and: [{type: 'TEAM'}, {groupId: 2}]},
+    ]
+}]}
+)
+```
+
+## Update 进行更新
+
+使用 `Query` 查询符合条件的记录，用 `Update` 进行更新：
+
+```java
+// 等价 SQL: UPDATE message_private SET read=true WHERE _id=#{receiverId}
+Criteria criteria = Criteria.where("_id").is(messageId).and("receiverId").is(receiverId);
+Update update = Update.update("read", true);
+mongoTemplate.updateFirst(Query.query(criteria), update, MESSAGE_USER);
+```
+
+使用 `updateMulti` 更新符合条件的多个 document。
+
+## Upsert 插入或更新
+
+If no document is found that matches the query, a new document is created and inserted by combining the query document and the update document.
+
+```java
+Document document = new Document().append("receiverId", receiverId).append("time", date);
+mongoTemplate.upsert(Query.query(Criteria.where("receiverId").is(receiverId)), Update.fromDocument(document), MESSAGE_FETCH);
+```
+
+`save` 执行的也是 `upsert` 操作，但是只是使用 `_id` 进行比较，upsert 能够使用 Query 进行查询。
+
+## Remove 进行删除
+
+用 `remove(Query query, String collectionName)` 和 `findAllAndRemove(Query query, String collectionName)` 进行删除。
+
 ## 参考资料
 
 [MongoDB 教程](http://www.runoob.com/mongodb/mongodb-tutorial.html)
@@ -517,4 +602,6 @@ XML 配置文件:
 [MongoDB repositories](https://docs.spring.io/spring-data/mongodb/docs/2.0.5.RELEASE/reference/html/)
 
 [Spring + MongoDB 的整合](https://segmentfault.com/a/1190000005829384)
+
+[MongoTemplate用法笔记](https://blog.csdn.net/qq_32475739/article/details/79194852)
 

@@ -221,15 +221,10 @@ environments {
 ## 使用嵌入式服务器 Tomcat
 
 ```groovy
-apply plugin: 'org.akhikhl.gretty'
-    
-buildscript {
-    repositories {
-        jcenter()
-    }
-    dependencies {
-        classpath 'org.akhikhl.gretty:gretty:1.4.0'
-    }
+plugins {
+    id 'war'
+    id 'java'
+    id 'org.gretty' version '2.1.0'
 }
     
 gretty {
@@ -506,6 +501,12 @@ test {
 
     reports.html.destination = "${buildDir}/reports/test"
 }
+```
+
+## 执行一个具体的测试函数
+
+```groovy
+gradle test --tests UserTest.findUsers
 ```
 
 ## 参考
