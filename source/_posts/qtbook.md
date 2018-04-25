@@ -60,6 +60,7 @@ tags: [QtBook, Index]
   * [自定义标题栏无边框阴影窗口](/qtbook-custom-widget-top-window)
   * [Layout 秘录](/qtbook-custom-widget-layout-tips)
   * [右键菜单](/qtbook-custom-widget-context-menu)
+  * [QTreeView 小集](/qtbook-custom-widget-tree-view)
 * 动画
   * QPropertyAnimation
   * 动画插值函数与高级运用

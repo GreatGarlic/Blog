@@ -38,6 +38,22 @@ tags: Mac
   make install
   ```
 
+* 安装 VIM (默认只安装了 VI，不能高亮搜索，不能语法高亮等)
+
+  * 查看本机是否已经安装 VIM: `rpm -qa | grep vim`
+
+    ```
+    vim-minimal-7.4.629-5.el6.x86_64
+    vim-enhanced-7.4.629-5.el6_8.1.x86_64
+    vim-common-7.4.629-5.el6_8.1.x86_64
+    ```
+
+    如果安装了则会显示上面 3 个包，缺少了的需要进行安装:
+
+    * 缺少 vim-common: `yum -y install vim-common`
+    * 缺少 vim-minimal: `yum -y install vim-minimal`
+    * 缺少 vim-enhanced: `yum -y install vim-enhanced`
+
   <!--more-->
 
 ## 安装 Java
