@@ -296,6 +296,39 @@ view->setModel(model2);
   });
   ```
 
+## 右键菜单
+
+QTreeView 上增加右键菜单很简单，有点困难的可能就是要得到右键点击处的节点，动态显示菜单项：
+
+```cpp
+// [1] 菜单项的 Action
+QAction *createAction = new QAction("创建", view);
+QAction *deleteAction = new QAction("删除", view);
+
+// [2] 设置右键菜单的策略
+view->setContextMenuPolicy(Qt::CustomContextMenu); 
+
+// [3] 显示右键菜单的信号槽
+QObject::connect(view, &QTreeView::customContextMenuRequested, [=] {
+    QMenu menu;
+    
+    // [4] 获取右键菜单点击的树的节点 (QTableView, QListView 里也可以这么用)
+    QPoint posAtViewport = view->viewport()->mapFromGlobal(QCursor::pos());
+    QModelIndex index = view->indexAt(posAtViewport);
+
+    menu.addAction(createAction);
+
+    // [5] 根据节点的特点动态显示菜单项，点击到树的节点时才显示删除菜单项
+    if (index.isValid()) {
+        menu.addAction(deleteAction);
+    }
+
+    menu.exec(QCursor::pos());
+});
+```
+
+> Context menu 中文翻译成了右键菜单其实是不准确的，context menu 的意思很明确，根据右键点击处的环境信息显示相关的菜单，就像我们的这个例子，点击节点的时候显示创建和删除 2 个菜单项，点击非节点时只显示创建的菜单项，而不是一成不变的显示同样的菜单项，context menu 能表达出这个意思，而中文的右键菜单丢失了这个信息。
+
 ## 启用拖拽
 
 QTreeView 已经提供了拖拽的功能，但默认没有启用，启用拖拽如下调用几行代码即可：

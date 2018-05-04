@@ -10,6 +10,8 @@ tags: Java
 
 Snowflake 把时间戳、工作组 ID、工作机器 ID、自增序列号组合在一起，生成一个 64bits 的整数 ID，能够使用 70 年，每台机器每秒可产生约 25 万个 ID。
 
+Snowflake 也有自己的缺点，虽然不同 workId 的机器生成的 ID 永远不会相同，但是同一台机器当把时间往后回拨后，生成的 ID 就会重复，所以需要保持时间是网络同步的。
+
 Snowflake 生成的 ID 的 bit 结构如下:
 
 ![](/img/java/snowflake.png)<!--more-->

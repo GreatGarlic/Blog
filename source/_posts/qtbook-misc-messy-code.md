@@ -29,7 +29,7 @@ Qt5 强制要求源码的编码必须使用 UTF-8，不过，即使我们的源�
 >
 > 使用 HEX 文件编辑器打开文件，如果前 3 个字节为 `EF BB BF` 则说明文件含有 BOM，否则没有 BOM。
 
-## 运行时中文乱码
+## 显示中文乱码
 
 下面的程序只有一个按钮，按钮的文本为 “你好”，使用 MinGW 编译运行，程序没有乱码问题。
 
@@ -67,15 +67,15 @@ int main(int argc, char *argv[]) {
 
   再次编译运行，乱码问题解决了。这种方法在 MinGW 和 VS 中都没问题，但是仔细考虑一下，程序中如果有成百上千的中文字符串，每个地方都要修改，工作量大到让人崩溃。
 
-* 使用 VS 的时候在 main() 函数前添加 pragma 指定程序运行时的编码即可: 
+* 使用 VS 的时候在 main() 函数前添加 pragma 指定程序编译时使用 UTF-8 处理字符串即可: 
 
   ```cpp
+  #ifdef _MSC_BUILD
+  #pragma execution_character_set("utf-8") // 瞅这里: 编译时把程序里的字符串使用 UTF-8 进行处理
+#endif
+  
   #include <QApplication>
   #include <QPushButton>
-
-  #ifdef _MSC_BUILD
-  #pragma execution_character_set("utf-8") // 瞅这里
-  #endif
 
   int main(int argc, char *argv[]) {
       QApplication a(argc, argv);
@@ -86,3 +86,28 @@ int main(int argc, char *argv[]) {
       return a.exec();
   }
   ```
+
+## 读取 UTF-8 文件乱码
+
+能够正常的显示界面上的中文了，但是在 Windows 下读取 UTF-8 的文件仍然会发生乱码，因为如果不指定程序的运行时编码，就使用系统默认的，Windows 默认的编码是 GB2312，所以读取 UTF-8 文件时就默认作为 GB2312 来读取，就发生乱码了。解决这个问题只需要在 main 函数中调用 QTextCodec 指定为 UTF-8 即可：
+
+```cpp
+#ifdef _MSC_BUILD
+#pragma execution_character_set("utf-8") // 瞅这里: 编译时把程序里的字符串使用 UTF-8 进行处理
+#endif
+
+#include <QApplication>
+#include <QPushButton>
+#include <QTextCodec>
+
+int main(int argc, char *argv[]) {
+    QApplication a(argc, argv);
+    QTextCodec::setCodecForLocale(QTextCodec::codecForName("UTF-8"));
+
+    QPushButton b("你好");
+    b.show();
+
+    return a.exec();
+}
+```
+

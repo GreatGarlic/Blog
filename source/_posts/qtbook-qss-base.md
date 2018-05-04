@@ -51,9 +51,12 @@ QLabel {
     font: italic bold 12px arial, sans-serif;
     ```
 
-设置字体用 `font-style`, `font-size`, `font-weight`, `font-family`（和 CSS 一样，如果字体名字有空格则用双引号引起来，多个字体名字间用逗号分隔，如果第一个字体找不到则用第二个，第二个找不到则用第三个，依此类推）
+    设置字体用 `font-style`, `font-size`, `font-weight`, `font-family`（和 CSS 一样，如果字体名字有空格则用双引号引起来，多个字体名字间用逗号分隔，如果第一个字体找不到则用第二个，第二个找不到则用第三个，依此类推）
+
 * 设置文本颜色用 `color`
+
 * 设置背景颜色用 `background-color`
+
 * 设置背景使用 `background`，可以设置如下属性：
     * background-color
     * background-position
@@ -72,6 +75,7 @@ QLabel {
         * 资源文件的路径（`:/` 开头）
         * 绝对路径
         * 相对于可执行文件的相对路径
+
 * 设置背景图片用 `background-image`（先绘制背景色，然后再绘制背景图片，如果背景图片是半透明的就可以看到背景色了），默认水平和垂直重复平铺满整个 widget，同时一起设置的还可以有 `background-repeat`、`background-position`、`background-attachment`
     * background-repeat，可选的值有：
         * repeat-x：水平方向重复
@@ -91,8 +95,11 @@ QLabel {
     * background-attachment，可选的值有：
         * scroll：背景随滚动条滚动
         * fixed：背景不随滚动条滚动
-* 设置背景还可以用 `border-image`，请参考 `Border-Image` 一节
+
+* 设置背景还可以用 `border-image`，请参考 [Border Image](/qtbook-qss-border-image) 一节
+
 * 设置边框用 `border-width`, `border-style`, `border-color`
+
 * 设置边框用 `border`，语法为：
 
     ```css
@@ -101,7 +108,9 @@ QLabel {
     /* 例如：*/
     border: 1px solid gray;
     ```
+
 * 设置圆角边框用 `border-radius`，但是如果给定的半径大于对应边的一半，圆角就没有效果了，在 CSS 里没有这个问题
+
 * 支持渐变 gradient: `qlineargradient`、`qradialgradient`、`qconicalgradient`，渐变的坐标不是用像素表示，而是把渐变的坐标的最小值定义为 0，最大值定义为 1，这种技术又叫 `Normalization`，通俗点说就是用比例表示，开始处用 0 表示，结束处用 1 表示，不管渐变的范围是 200px 还是 500px，按比例都能计算出实际的像素坐标，这样做的好处是，不需要关心渐变的像素坐标范围的具体数值。如果不用 `Normalization` 技术，widget 的大小一变化，就需要修改 QSS 里的坐标值。
 
     ```css
@@ -121,7 +130,8 @@ QLabel {
 
     ![](/img/qtbook/qss/QSS-Base-2.png)
 
-* `Padding` 和 `margin` 参考 `盒子模型` 一节
+* `Padding` 和 `margin` 参考[盒子模型](/qtbook-qss-boxmodel)一节
+
 * 设置图标，如 QToolButton 的图标：
 
     ```css
@@ -131,9 +141,23 @@ QLabel {
     /* 图标文件 */
     qproperty-icon: url(:/resources/tabset-left.png);
     ```
+
 * 设置宽度用 `width`，高度用 `height`，设置 subcontrol 的时候比较有用
+
 * 设置最小宽度用 `min-width`，最小高度用 `min-height`（是 content rectangle 的宽和高）
+
 * 设置最大宽度用 `max-width`，最大高度用 `max-height`
+
 * 遗憾的是，QSS 不支持阴影
+
+* 使用 `qproperty-xxx` 进行设置，因为在 QWidget 及其子类中使用宏 Q_PROPERTY 定义的 WRITE 函数可以在 QSS 中访问：
+
+    * `text-align` 不支持 QLable，但设置 QLabel 的文本居中可以这样：`qproperty-alignment: AlignCenter`
+    * 甚至可以在 QSS 中设置 QLabel，QPushButton 等的文本：`qproperty-text: 'It is amazing'`，太魔性了
+    * 设置 QLabel 的 word wrap: `qproperty-wordWrap: true`
+    * 设置对齐方式：`qproperty-alignment: 'AlignBottom | AlignRight'`
+    * QWidget 及其子类还有很多 Q_PROPERTY 定义的 WRITE 函数，想知道就去查帮助文档吧
+    * 我们也可以使用宏 Q_PROPERTY 定义自己的 WRITE 函数，然后在 QSS 中使用
+    * 不过 `qproperty-xxx` 也不是万能的，在 `:hover, :pressed` 等伪类选择器中不生效
 
 上面的 QSS 的虽然只是基础，但是很重要，大多数的时候都要用到它们，用来修改 QLabel，QPushButton，QFrame，QWidget 等的样式还基本够用了，不过如果要修改复杂一点的 widget 的样式，如 QSpinBox，QScrollBar 等，上面的知识是不够的，要想掌握好 QSS，还必须了解 `QSS 的选择器`，`盒子模型`，`Border-Image`，`Subcontrol` 等，这些在后面都有专门的章节介绍。

@@ -423,6 +423,7 @@ tags: Index
 * [Spring 异步调用](/spring-mvc-async)
 * [Spring 数据绑定之类型转换](/spring-mvc-conversion)
 * [SpringMVC Ajax 拖拽上传文件](/spring-mvc-upload-file-ajax)
+* [SpringMVC 使用 @PathVariable 获取有 . 的 URL 中的变量](/spring-mvc-path-with-dot)
 * [SpringMVC 处理 Ajax 映射](/spring-mvc-ajax)
 * [SpringMVC 接收日期参数](/spring-mvc-to-date)
 * [SpringMVC 数据绑定](/spring-mvc-data-bind)
