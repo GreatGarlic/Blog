@@ -36,6 +36,12 @@ MindNode 是 Mac 上思维导图软件，免费版功能界面极简，支持全
 
 ![](/img/mac/software/mind-node.jpg)
 
+## RestClient Insomnia
+
+[Insomnia](https://insomnia.rest) is a powerful HTTP and GraphQL tool belt: **Free** and **open source** on Mac, Windows, and Linux
+
+![](/img/mac/software/insomnia.png)
+
 ## DoHttp
 
 Simple Http util, helps you make request to web service, 虽然没有 Google 的 Postman 功能强大，但是普通使用足够，体验比 Postman 更好，App Store 里下载。

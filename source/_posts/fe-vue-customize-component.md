@@ -229,6 +229,72 @@ Parent 使用 `props` 和 `slot` 给 children 组件传递数据，children 使�
 > * 信号的名字不能使用驼峰规则命名，例如 `valueChanged` 是无效的
 > * 信号名字的单词间可以用 `-` 分割，例如 `value-changed` 是合法的
 
+## 父组件使用 ref 访问子组件的属性
+
+在 parent 中给 child 定义一个 ref 属性，然后在 parent 你就可以通过 ref 直接访问 child 中 data 和 computed 定义的属性了：
+
+```html
+<body>
+    <div id="app-one">
+        <x-button ref="button"></x-button> - {{value}} <!-- [1] 这里 -->
+        <Button @click="refChild">Button</Button>
+    </div>
+
+    <script>
+        // 点击按钮 count 加 1，让后发射信号，参数为当前的 count 值
+        // parent 监听到 increased 信号，然后调用 valueChanged 函数
+        Vue.component('x-button', {
+            template: '<button @click="increase">Count - {{count}}</button>',
+            data: function() {
+                return {
+                    count: 0
+                };
+            },
+            methods: {
+                increase: function() {
+                    this.count += 1;
+                }
+            }
+        });
+
+        new Vue({
+            el: '#app-one',
+            data: {
+                value: 0
+            },
+            methods: {
+                refChild: function(c) {
+                    console.log(this.$refs['button'].count); // <!-- [2] 这里 -->
+                }
+            }
+        });
+    </script>
+</body>
+```
+
+## Bus 进行组件间通讯
+
+组件之间通讯还可以使用 Bus，其实 Bus 就是一个 Vue 的对象 (`var Bus = new Vue()`)，使用 emit 发射信号和使用 on 注册信号回调函数，典型的观察者模式应用:
+
+1. `Bus.$emit('foo', 123)`
+2. `Bus.$on('foo', (p) => {});`
+
+当 Bus 调用 emit 发射信号的时候，此 Bus 对象使用 on 绑定响应此信号的回调函数会被自动调用，可以参考 <https://www.cnblogs.com/fanlinqiang/p/7756566.html>。
+
+为了方便，可以把 Bus 对象注入到根 Vue 对象中，然后使用 `this.$Bus` 进行访问：
+
+```js
+// [1] 注入
+const Bus = new Vue();
+Vue.prototype.$Bus = Bus;
+
+// [2] 使用
+this.$Bus.$emit('foo', 123);
+this.$Bus.$on('foo', (p) => {});
+```
+
+
+
 ## 简化 template 模版
 
 上面自定义组件的 template 是通过拼接字符串来实现的，如果这个字符串很长时就不好拼接了，可以把其放在 HTML 中的 **template** 元素里，通过 id 来引用，其他的 props, data, methods 等还是和以前的一样用法:

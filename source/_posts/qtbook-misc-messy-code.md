@@ -12,10 +12,17 @@ Qt5 强制要求源码的编码必须使用 UTF-8，不过，即使我们的源�
 通常有下面几种情况导致中文乱码:
 
 * 源码不是 UTF-8 的
-* 源码是 UTF-8 的，但 BOM 导致乱码
+* 源码是 UTF-8 的，但 BOM 导致乱码 (VS 的需要 BOM，而 Linux，Mac 下默认是没有 BOM 的)
 * 非 UTF-8 的运行环境导致乱码
 
 下面来解决 Qt5 的乱码问题。<!--more-->
+
+## 源码使用 UTF-8
+
+为了保证源码是 UTF-8 的，需要把源码保存为 UTF-8 编码的
+
+* QtCreator 的话设置编辑器的编码为 UTF-8 即可：`设置 -> 文本编辑器 -> 行为 > 文件编码，设置默认编码为 UTF-8`
+* 其他编辑器请自行进行相应的设置
 
 ## BOM 问题
 
@@ -29,7 +36,7 @@ Qt5 强制要求源码的编码必须使用 UTF-8，不过，即使我们的源�
 >
 > 使用 HEX 文件编辑器打开文件，如果前 3 个字节为 `EF BB BF` 则说明文件含有 BOM，否则没有 BOM。
 
-## 显示中文乱码
+## 界面显示中文乱码
 
 下面的程序只有一个按钮，按钮的文本为 “你好”，使用 MinGW 编译运行，程序没有乱码问题。
 
@@ -72,8 +79,9 @@ int main(int argc, char *argv[]) {
   ```cpp
   #ifdef _MSC_BUILD
   #pragma execution_character_set("utf-8") // 瞅这里: 编译时把程序里的字符串使用 UTF-8 进行处理
-#endif
-  
+
+  #endif
+
   #include <QApplication>
   #include <QPushButton>
 
@@ -89,7 +97,7 @@ int main(int argc, char *argv[]) {
 
 ## 读取 UTF-8 文件乱码
 
-能够正常的显示界面上的中文了，但是在 Windows 下读取 UTF-8 的文件仍然会发生乱码，因为如果不指定程序的运行时编码，就使用系统默认的，Windows 默认的编码是 GB2312，所以读取 UTF-8 文件时就默认作为 GB2312 来读取，就发生乱码了。解决这个问题只需要在 main 函数中调用 QTextCodec 指定为 UTF-8 即可：
+能够正常的显示界面上的中文了，但是在 Windows 下读取 UTF-8 的文件仍然会发生乱码，因为如果不指定程序的运行时编码，就使用系统默认的，Windows 默认的编码是 GB2312，读取 UTF-8 文件时就默认作为 GB2312 来读取，所以就发生乱码了。解决这个问题只需要在 main 函数中调用 QTextCodec 指定为 UTF-8 即可：
 
 ```cpp
 #ifdef _MSC_BUILD
@@ -106,8 +114,11 @@ int main(int argc, char *argv[]) {
 
     QPushButton b("你好");
     b.show();
-
+    
     return a.exec();
 }
 ```
 
+## 判断程序运行时编码
+
+使用 QTextStream，使用默认的 Codec，写中文到文件，然后使用 Notepad++，或者 Linux 的 file 命令就能看到文件的编码，这个编码就是程序的运行时编码，指定程序的运行时编码调用 `QTextCodec::setCodecForLocale`。
