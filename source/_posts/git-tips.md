@@ -8,14 +8,28 @@ Git 的常用命令
 
 <!--more-->
 
-*   untracked - 新增的文件，Git 根本不知道它的存在
+* untracked - 新增的文件，Git 根本不知道它的存在
+
 * not staged - 被索引过又被修改了的文件
+
 * staged - 通过 git add 后被即将被提交的文件
+
 * git reflog
+
 * 版本回退: git reset --hard versionId
+
+* 放弃修改: git checkout -- filename
+
 * 创建分支: git branch branchName
+
 * 切换分支: git checkout branchName
+
 * 创建并切换分支: git checkout -b branchName
+
+* merge 和 rebase 
+
+    都用于合并分支，但是有区别：rebase 会把提交移动到被合并的分支后面，看不到具体分支的修改
+
 * 使用 git fetch 和 git pull 都可以更新远程仓库的代码到本地，但是它们之间还是有区别
     * git fetch: 从远程获取最新的版本到本地的 tmp 分支上，之后再进行比较，决定是否合并
 

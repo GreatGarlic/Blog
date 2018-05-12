@@ -257,6 +257,10 @@ mv srcDir destDir/
 
 可以使用 **brew cask** 安装 Quick Look 插件，具体请参考 <https://github.com/sindresorhus/quick-look-plugins>。
 
+```
+brew cask install qlcolorcode qlstephen qlmarkdown quicklook-json qlimagesize webpquicklook suspicious-package quicklookase qlvideo
+```
+
 ## Safari 插件
 
 * [油猴 Tampermonkey](/download/tampermonkey.safariextz.zip)
