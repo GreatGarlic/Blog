@@ -61,6 +61,7 @@ tags: [QtBook, Index]
   * [Layout 秘录](/qtbook-custom-widget-layout-tips)
   * [右键菜单](/qtbook-custom-widget-context-menu)
   * [QTreeView 小集](/qtbook-custom-widget-tree-view)
+  * [自定义按钮组](qtbook-custom-widget-group-buttons)
 * 动画
   * QPropertyAnimation
   * 动画插值函数与高级运用

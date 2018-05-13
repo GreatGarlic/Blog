@@ -353,6 +353,7 @@ tags: Index
 * [继承 QThread 实现多线程](/qtbook-thread-inheritance)
 * [网络编程](/qtbook-network)
 * [自定义 Widget 使用 QSS](/qtbook-custom-widget-enable-stylesheet)
+* [自定义按钮组](/qtbook-custom-widget-group-buttons)
 * [自定义标题栏无边框阴影窗口](/qtbook-custom-widget-top-window)
 * [自定义类型与 QVariant](/qtbook-misc-qvariant)
 * [蚂蚁线](/qtbook-paint-ant)
