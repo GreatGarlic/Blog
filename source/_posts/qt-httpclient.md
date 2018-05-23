@@ -58,7 +58,9 @@ int main(int argc, char *argv[]) {
         HttpClient(url).debug(true).remove([](const QString &response) {
             qDebug().noquote() << response;
         });
+    }
 
+    {
         // [[6]] 下载: 直接保存到文件
         HttpClient("http://xtuer.github.io/img/dog.png").debug(true).download("/Users/Biao/Desktop/dog-1.png");
 
@@ -78,7 +80,9 @@ int main(int argc, char *argv[]) {
             file->deleteLater();
             file = NULL;
         }
+    }
 
+    {
         // [[8]] 上传文件
         HttpClient("http://localhost:8080/upload").debug(true).upload(QString("/Users/Biao/Pictures/ade.jpg"));
 
@@ -92,10 +96,15 @@ int main(int argc, char *argv[]) {
         dataFile.open(QIODevice::ReadOnly);
         QByteArray data = dataFile.readAll();
         HttpClient("http://localhost:8080/upload").debug(true).upload(data);
+
+        // [[11]] 上传多个文件文件
+        QStringList paths;
+        paths << "/Users/Biao/Desktop/photo.jpg" << "/Users/Biao/Desktop/project.numbers";
+        HttpClient("http://localhost:8080/uploads").debug(true).upload(paths);
     }
 
     {
-        // [[11]] 共享 QNetworkAccessManager
+        // [[12]] 共享 QNetworkAccessManager
         // 每创建一个 QNetworkAccessManager 对象都会创建一个线程，当频繁的访问网络时，为了节省线程资源，调用 manager()
         // 使用共享的 QNetworkAccessManager，它不会被 HttpClient 删除，需要我们自己不用的时候删除它。
         // 如果下面的代码不传入 QNetworkAccessManager，从任务管理器里可以看到创建了几千个线程。
@@ -120,6 +129,7 @@ int main(int argc, char *argv[]) {
 #include <functional>
 
 class QString;
+class QStringList;
 class QByteArray;
 class QNetworkRequest;
 class QNetworkReply;
@@ -240,7 +250,7 @@ public:
                   std::function<void (const QString &)> errorHandler = NULL);
 
     /**
-     * @brief 上传文件
+     * @brief 上传单个文件
      * @param path 要上传的文件的路径
      * @param successHandler 请求成功的回调 lambda 函数
      * @param errorHandler   请求失败的回调 lambda 函数
@@ -251,13 +261,24 @@ public:
                 const char *encoding = "UTF-8");
 
     /**
-     * @brief 上传数据
+     * @brief 上传单个数据文件
      * @param path 要上传的文件的路径
      * @param successHandler 请求成功的回调 lambda 函数
      * @param errorHandler   请求失败的回调 lambda 函数
      * @param encoding       请求响应的编码
      */
     void upload(const QByteArray &data, std::function<void (const QString &)> successHandler = NULL,
+                std::function<void (const QString &)> errorHandler = NULL,
+                const char *encoding = "UTF-8");
+
+    /**
+     * @brief 上传多个文件
+     * @param paths 要上传的文件的路径
+     * @param successHandler 请求成功的回调 lambda 函数
+     * @param errorHandler   请求失败的回调 lambda 函数
+     * @param encoding       请求响应的编码
+     */
+    void upload(const QStringList &paths, std::function<void (const QString &)> successHandler = NULL,
                 std::function<void (const QString &)> errorHandler = NULL,
                 const char *encoding = "UTF-8");
 private:
@@ -272,6 +293,7 @@ private:
 #include "HttpClient.h"
 
 #include <QDebug>
+#include <QStringList>
 #include <QFile>
 #include <QHash>
 #include <QUrlQuery>
@@ -330,15 +352,15 @@ public:
 
     /**
      * @brief 上传文件或者数据
-     * @param d    HttpClientPrivate 的对象
-     * @param path 要上传的文件的路径(path 和 data 不能同时使用)
-     * @param data 要上传的文件的数据
+     * @param d     HttpClientPrivate 的对象
+     * @param paths 要上传的文件的路径(path 和 data 不能同时使用)
+     * @param data  要上传的文件的数据
      * @param successHandler 请求成功的回调 lambda 函数
      * @param errorHandler   请求失败的回调 lambda 函数
      * @param encoding       请求响应的编码
      */
     static void upload(HttpClientPrivate *d,
-                       const QString &path, const QByteArray &data,
+                       const QStringList &paths, const QByteArray &data,
                        std::function<void (const QString &)> successHandler,
                        std::function<void (const QString &)> errorHandler,
                        const char *encoding);
@@ -506,7 +528,8 @@ void HttpClient::upload(const QString &path,
                         std::function<void (const QString &)> successHandler,
                         std::function<void (const QString &)> errorHandler,
                         const char *encoding) {
-    HttpClientPrivate::upload(d, path, QByteArray(), successHandler, errorHandler, encoding);
+    QStringList paths = (QStringList() << path);
+    HttpClientPrivate::upload(d, paths, QByteArray(), successHandler, errorHandler, encoding);
 }
 
 // 上传数据
@@ -514,12 +537,19 @@ void HttpClient::upload(const QByteArray &data,
                         std::function<void (const QString &)> successHandler,
                         std::function<void (const QString &)> errorHandler,
                         const char *encoding) {
-    HttpClientPrivate::upload(d, QString(), data, successHandler, errorHandler, encoding);
+    HttpClientPrivate::upload(d, QStringList(), data, successHandler, errorHandler, encoding);
+}
+
+void HttpClient::upload(const QStringList &paths,
+                        std::function<void (const QString &)> successHandler,
+                        std::function<void (const QString &)> errorHandler,
+                        const char *encoding) {
+    HttpClientPrivate::upload(d, paths, QByteArray(), successHandler, errorHandler, encoding);
 }
 
 // 上传文件或者数据的实现
 void HttpClientPrivate::upload(HttpClientPrivate *d,
-                               const QString &path, const QByteArray &data,
+                               const QStringList &paths, const QByteArray &data,
                                std::function<void (const QString &)> successHandler,
                                std::function<void (const QString &)> errorHandler,
                                const char *encoding) {
@@ -537,33 +567,42 @@ void HttpClientPrivate::upload(HttpClientPrivate *d,
         multiPart->append(textPart);
     }
 
-    if (!path.isEmpty()) {
-        // path 不为空时，上传文件
-        QFile *file = new QFile(path);
-        file->setParent(multiPart); // we cannot delete the file now, so delete it with the multiPart
+    if (paths.size() > 0) {
+        // 上传文件
+        QString inputName = paths.size() == 1 ? "file" : "files"; // 一个文件时为 file，多个文件时为 files
 
-        // 如果文件打开失败，则释放资源返回
-        if(!file->open(QIODevice::ReadOnly)) {
-            QString errorMessage = QString("打开文件失败[%2]: %1").arg(path).arg(file->errorString());
+        for (const QString &path : paths) {
+            if (!path.isEmpty()) {
+                // path 不为空时，上传文件
+                QFile *file = new QFile(path);
+                file->setParent(multiPart); // we cannot delete the file now, so delete it with the multiPart
 
-            if (debug) {
-                qDebug().noquote() << errorMessage;
+                // 如果文件打开失败，则释放资源返回
+                if(!file->open(QIODevice::ReadOnly)) {
+                    QString errorMessage = QString("打开文件失败[%2]: %1").arg(path).arg(file->errorString());
+
+                    if (debug) {
+                        qDebug().noquote() << errorMessage;
+                    }
+
+                    if (NULL != errorHandler) {
+                        errorHandler(errorMessage);
+                    }
+
+                    multiPart->deleteLater();
+                    return;
+                }
+
+                // 文件上传的参数名为 file，值为文件名
+                // 服务器是 Java 的则用 form-data
+                // 服务器是 PHP  的则用 multipart/form-data
+                QString   disposition = QString("form-data; name=\"%1\"; filename=\"%2\"").arg(inputName).arg(file->fileName());
+                QHttpPart filePart;
+                filePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(disposition));
+                filePart.setBodyDevice(file);
+                multiPart->append(filePart);
             }
-
-            if (NULL != errorHandler) {
-                errorHandler(errorMessage);
-            }
-
-            multiPart->deleteLater();
-            return;
         }
-
-        // 文件上传的参数名为 file，值为文件名
-        QString   disposition = QString("form-data; name=\"file\"; filename=\"%1\"").arg(file->fileName());
-        QHttpPart filePart;
-        filePart.setHeader(QNetworkRequest::ContentDispositionHeader, QVariant(disposition));
-        filePart.setBodyDevice(file);
-        multiPart->append(filePart);
     } else {
         // 上传数据
         QString   disposition = QString("form-data; name=\"file\"; filename=\"no-name\"");
@@ -649,6 +688,7 @@ QNetworkRequest HttpClientPrivate::createRequest(HttpClientPrivate *d, HttpMetho
             qDebug().noquote() << "参数:" << d->json;
         } else if (postForm || upload) {
             QList<QPair<QString, QString> > paramItems = d->params.queryItems();
+            QString buffer; // 避免多次调用 qDebug() 输入调试信息，每次 qDebug() 都有可能输出行号等
 
             // 按键值对的方式输出参数
             for (int i = 0; i < paramItems.size(); ++i) {
@@ -656,11 +696,14 @@ QNetworkRequest HttpClientPrivate::createRequest(HttpClientPrivate *d, HttpMetho
                 QString value = paramItems.at(i).second;
 
                 if (0 == i) {
-                    qDebug().noquote() << QString("参数: %1=%2").arg(name).arg(value);
+                    buffer += QString("参数: %1=%2\n").arg(name).arg(value);
                 } else {
-                    qDebug().noquote() << QString("     %1=%2").arg(name).arg(value);
+                    buffer += QString("     %1=%2\n").arg(name).arg(value);
                 }
+            }
 
+            if (!buffer.isEmpty()) {
+                qDebug().noquote() << buffer;
             }
         }
     }
@@ -775,9 +818,20 @@ public class Controller {
                              @RequestParam(required = false) String password) throws IOException {
         System.out.println("Username: " + username + ", Password: " + password);
         System.out.println(file.getOriginalFilename());
-        file.transferTo(new File("/Users/Biao/Desktop/" + System.currentTimeMillis() + "-" + file.getOriginalFilename()));
+        file.transferTo(new File("/Users/Biao/Desktop/" + file.getOriginalFilename()));
 
         return Result.ok("OK", file.getOriginalFilename());
+    }
+    
+    @RequestMapping(value = "/uploads", method = RequestMethod.POST)
+    @ResponseBody
+    public String uploadFile(@RequestParam("files") MultipartFile[] files) throws IOException {
+        for (MultipartFile file : files) {
+            System.out.println(file.getOriginalFilename());
+            file.transferTo(new File("/Users/Biao/Desktop/" + file.getOriginalFilename()));
+        }
+
+        return "Success";
     }
 }
 ```
