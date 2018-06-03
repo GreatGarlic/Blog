@@ -332,6 +332,7 @@ tags: Index
 * [广播](/qtbook-network-udp-broadcast)
 * [拖拽鼠标画矩形](/qtbook-paint-mouse-selection)
 * [按下鼠标拖动窗口](/qtbook-custom-widget-drag-to-move-window)
+* [操作图像像素，实现各种效果](/qtbook-paint-image)
 * [数据库](/qtbook-db)
 * [数据库常用操作](/qtbook-db-common)
 * [数据库访问工具 DBUtl](/qtbook-db-util)

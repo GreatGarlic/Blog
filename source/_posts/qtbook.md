@@ -36,7 +36,7 @@ tags: [QtBook, Index]
   * [襁褓中的系统界面](/qtbook-paint-osui)
   * 仿射变换原理
   * 巧妙的运用clip实现复杂效果
-  * 访问QImage的像素，用算法实现各种效果的原理与实例，例如镜面反射
+  * [操作图像像素，实现各种效果](/qtbook-paint-image)
 * [Qt Style Sheet (QSS)](/qtbook-qss)
   * [QSS 基础](/qtbook-qss-base)
   * [加载 QSS](/qtbook-qss-load)

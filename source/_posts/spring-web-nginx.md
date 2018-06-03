@@ -125,3 +125,36 @@ http {
 
 1. 测试配置文件语法：`sudo /Applications/MAMP/Library/bin/nginxctl -t`
 2. 重新加载配置文件：`sudo /Applications/MAMP/Library/bin/nginxctl -s reload`
+
+## Web Socket 的负载均衡
+
+Nginx 还能够对 Web Socket 进行负载均衡，例如配置如下:
+
+```
+http {
+    map $http_upgrade $connection_upgrade {
+        default upgrade;
+        '' close;
+    }
+
+    upstream websocket {
+        server 127.0.0.1:3721;
+        server 127.0.0.1:3722;
+    }
+
+    server {
+        listen 8020;
+        proxy_connect_timeout 7d; # 连接的超时时间
+        proxy_send_timeout 7d;
+        proxy_read_timeout 7d;
+
+        location / {
+            proxy_pass http://websocket;
+            proxy_http_version 1.1;
+            proxy_set_header Upgrade $http_upgrade;
+            proxy_set_header Connection $connection_upgrade;
+        }
+    }
+}
+```
+

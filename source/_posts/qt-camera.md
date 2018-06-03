@@ -4,7 +4,13 @@ date: 2017-08-08 10:33:40
 tags: Qt
 ---
 
-可以使用 OpenCV 来操作摄像头，不过 Qt5 已经自带了调用系统摄像头的功能，使用起来很方便，主要是使用下面 3 个类:
+可以使用 OpenCV 来操作摄像头，不过 Qt5 已经自带了调用系统摄像头的功能，在 `.pro` 文件中增加下面的模块:
+
+```cpp
+QT += multimedia multimediawidgets
+```
+
+主要是使用下面 3 个类，使用起来很方便:
 
 * QCamera
 * QCameraViewfinder

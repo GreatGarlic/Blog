@@ -12,43 +12,30 @@ tags: [Misc, Gradle]
 <!--more-->
 
 ```java
-group 'com.xtuer'
-version '1.0'
-
-apply plugin: 'java'
-apply plugin: 'maven'
-apply plugin: 'application'
-apply plugin: 'com.github.johnrengelman.shadow'
-
-/* 打 Jar 包 */
-buildscript {
-    repositories { jcenter() }
-    dependencies { classpath 'com.github.jengelman.gradle.plugins:shadow:1.2.2' }
+plugins {
+    id 'java'
+    id 'application'
+    id 'com.github.johnrengelman.shadow' version '2.0.2'
 }
 
-mainClassName = 'Main'
-
-jar {
-    manifest { attributes 'Main-Class': mainClassName }
+////////////////////////////////////////////////////////////////////////////////
+//                                [1] [2] 运行、打包                           //
+////////////////////////////////////////////////////////////////////////////////
+// [1.1] 从命令行运行默认类: gradle run
+// [1.2] 从命令行运行某个类: gradle run -DmainClass=Foo
+ext {
+    project.mainClassName = System.getProperty("mainClass", "DefaultMainClass")
 }
 
+// [2] 打包: gradle clean shadowJar [-DmainClass=Foo]
 shadowJar {
     mergeServiceFiles('META-INF/spring.*')
 }
 
-/* 解决设置版本不起作用问题 */
-tasks.withType(JavaCompile) {
-    sourceCompatibility = '1.8'
-    targetCompatibility = '1.8'
-}
-
-[compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
-
 ////////////////////////////////////////////////////////////////////////////////
-//                                   Maven 依赖                               //
+//                                 [3] Maven 依赖                             //
 ////////////////////////////////////////////////////////////////////////////////
 repositories {
-    mavenLocal()
     mavenCentral()
 }
 
@@ -70,6 +57,18 @@ dependencies {
             "commons-dbcp:commons-dbcp:$dbcpVersion"
     )
 
-    testCompile "junit:junit:4.12"
+    compileOnly 'org.projectlombok:lombok:1.16.18'
+    testCompile 'junit:junit:4.12'
+}
+
+////////////////////////////////////////////////////////////////////////////////
+//                                    JVM                                     //
+////////////////////////////////////////////////////////////////////////////////
+sourceCompatibility = JavaVersion.VERSION_1_8
+targetCompatibility = JavaVersion.VERSION_1_8
+[compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+tasks.withType(JavaCompile) {
+    options.compilerArgs << '-Xlint:unchecked' << '-Xlint:deprecation'
 }
 ```
