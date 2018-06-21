@@ -330,6 +330,7 @@ tags: Index
 * [实用正则表达式](/qtbook-misc-regex)
 * [带阴影的圆形 Label](/qtbook-custom-widget-shadow-round-label)
 * [广播](/qtbook-network-udp-broadcast)
+* [异形按钮组](/qtbook-custom-widget-abnormity-buttons)
 * [拖拽鼠标画矩形](/qtbook-paint-mouse-selection)
 * [按下鼠标拖动窗口](/qtbook-custom-widget-drag-to-move-window)
 * [操作图像像素，实现各种效果](/qtbook-paint-image)

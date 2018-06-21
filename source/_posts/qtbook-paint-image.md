@@ -335,3 +335,27 @@ void ImageEffects::map(QImage *image, std::function<QRgb (int r, int g, int b, i
 }
 ```
 
+使用就很直接了，例如使用 QComboBox 切换不同的效果:
+
+```cpp
+connect(ui->comboBox, QOverload<const QString &>::of(&QComboBox::currentIndexChanged), [this] (const QString &text) {
+    if ("原始图片" == text) {
+        pixmap = QPixmap::fromImage(image);
+    } else if ("灰度效果" == text) {
+        pixmap = QPixmap::fromImage(ImageEffects::gray(image));
+    } else if ("复古效果" == text) {
+        pixmap = QPixmap::fromImage(ImageEffects::siepa(image));
+    } else if ("红色蒙版" == text) {
+        pixmap = QPixmap::fromImage(ImageEffects::red(image));
+    } else if ("反转效果" == text) {
+        pixmap = QPixmap::fromImage(ImageEffects::invert(image));
+    } else if ("变亮图片" == text) {
+        pixmap = QPixmap::fromImage(ImageEffects::brightness(image, 70));
+    } else if ("变暗图片" == text) {
+        pixmap = QPixmap::fromImage(ImageEffects::brightness(image, -70));
+    }
+
+    ui->label->setPixmap(pixmap);
+});
+```
+

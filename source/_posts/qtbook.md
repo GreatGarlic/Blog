@@ -35,8 +35,7 @@ tags: [QtBook, Index]
   * [九宫格绘图](/qtbook-paint-nine-patch-painter)
   * [襁褓中的系统界面](/qtbook-paint-osui)
   * 仿射变换原理
-  * 巧妙的运用clip实现复杂效果
-  * [操作图像像素，实现各种效果](/qtbook-paint-image)
+  * [操作图像像素，实现各种效果](/qtbook-paint-image/)
 * [Qt Style Sheet (QSS)](/qtbook-qss)
   * [QSS 基础](/qtbook-qss-base)
   * [加载 QSS](/qtbook-qss-load)
@@ -62,6 +61,7 @@ tags: [QtBook, Index]
   * [右键菜单](/qtbook-custom-widget-context-menu)
   * [QTreeView 小集](/qtbook-custom-widget-tree-view)
   * [自定义按钮组](/qtbook-custom-widget-group-buttons)
+  * [异形按钮组](/qtbook-custom-widget-abnormity-buttons)
 * 动画
   * QPropertyAnimation
   * 动画插值函数与高级运用

@@ -35,6 +35,7 @@ Atom 以前很慢，所以一直不想用，在 1.0 版本后启动差不多需�
 | split-diff                     | 文件比较工具、合并工具                                       |
 | git-time-machine               | 可以和 Git 仓库里任意版本进行比较，快捷键为 `Alt+T`          |
 | git-log                        | 显示提交记录                                                 |
+|hey-pane|Split 后可以按下 `CMD + Shift + K` 使得放大当前的 pane|
 | OOOOOOOOOOOOOOOO               | OOO                                                          |
 
 ## 快捷键
@@ -138,3 +139,9 @@ First possibility, **recommended** : you can create a `.jshintrc` in you home di
 }
 ```
 
+## 书签
+
+当文档比较大时，跳转不方便，可以使用书签来进行跳转：
+
+* 按下 `CMD + F2` 给当前行添加书签
+* 按下 `CTL + F2` 显示所有书签，点击书签就会跳转到书签所在行

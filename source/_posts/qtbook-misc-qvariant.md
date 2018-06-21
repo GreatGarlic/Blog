@@ -85,7 +85,7 @@ int main(int argc, char *argv[]) {
 
 ## 信号槽中使用自定义类型
 
-如果 connect 的类型是 **Qt::DirectConnection**，那么不需要做什么，自定义类型的对象可以直接在信号槽中作为参数，但是如果 connect 的类型是 **Qt::QueuedConnection**，自定义类型除了使用宏 **Q_DECLARE_METATYPE()** 声明外，还必须调用 **qRegisterMetaType** 注册后才可以:
+如果 connect 的类型是 **Qt::DirectConnection**，也就是同一个线程中使用，那么不需要做什么，自定义类型的对象可以直接在信号槽中作为参数，但是如果 connect 的类型是 **Qt::QueuedConnection**，自定义类型除了使用宏 **Q_DECLARE_METATYPE()** 声明外，还必须调用 **qRegisterMetaType** 注册后才可以:
 
 ```cpp
 qRegisterMetaType<User>(); // 注意: qRegisterMetaType 是函数，不是宏

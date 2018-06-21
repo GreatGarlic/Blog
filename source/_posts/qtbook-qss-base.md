@@ -62,8 +62,8 @@ QLabel {
     * background-position
     * ~~background-size~~
     * background-repeat
-    * ~~background-origin~~
-    * ~~background-clip~~
+    * background-origin
+    * background-clip
     * background-attachment
     * background-image 
 
