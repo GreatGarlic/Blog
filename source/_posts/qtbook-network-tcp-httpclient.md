@@ -1,10 +1,10 @@
 ---
 title: Qt 访问网络的 HttpClient
 date: 2016-09-17 19:51:56
-tags: Qt
+tags: QtBook
 ---
 
-Qt 使用 `QNetworkAccessManager` 访问网络，这里对其进行了简单的封装，使用流行的 Fluent 风格 API，访问网络的代码可以简化为:
+Qt 使用 `QNetworkAccessManager` 访问 HTTP 服务，这里对其进行了简单的封装，使用流行的 Fluent 风格 API，访问网络的代码可以简化为:
 
 ```cpp
 HttpClient("http://localhost:8080/rest").get([](const QString &response) {
@@ -16,6 +16,7 @@ HttpClient("http://localhost:8080/rest").get([](const QString &response) {
 更多的使用方法请参考 `main()` 里的例子。HttpClient 的实现为 `HttpClient.h` 和 `HttpClient.cpp` 部分。
 
 ## main.cpp
+
 `main()` 函数里展示了 `HttpClient` 的使用示例。
 
 ```cpp
