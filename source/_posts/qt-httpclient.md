@@ -860,6 +860,8 @@ qt.network.ssl: QSslSocket: cannot call unresolved function ERR_get_error
 
 但是去哪里找这 2 个文件呢？
 
+* 如果安装的是 MinGW 的 Qt，那么在 Qt 安装目录的 `<Qt>/Tools/mingw530_32/opt/bin` 文件夹下能找到它们
+
 * 下载 [OpenSSL](https://www.openssl.org) 源码自己编译
 * 安装如 MongoDB，Git 等，他们都带有这 2 个文件
 

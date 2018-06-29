@@ -10,10 +10,18 @@ tags: DB
 
 ## datetime
 1. 允许为空值，可以自定义值，系统不会自动修改其值
+
 2. 不可以设定默认值，所以在不允许为空值的情况下，必须手动指定 `datetime` 字段的值才可以成功插入数据
+
 3. 虽然不可以设定默认值，但是可以在指定 `datetime` 字段的值的时候使用 `now()` 变量来自动插入系统的当前时间
 
-> 结论: `datetime 类型适合用来记录数据的原始的创建时间`，因为无论你怎么更改记录中其他字段的值，datetime 字段的值都不会改变，除非你手动更改它。
+4. datetime 列创建的格式为
+
+   ```sql
+   `created_time` datetime DEFAULT NULL COMMENT '创建时间'
+   ```
+
+> 结论: `datetime 类型适合用来记录数据原始的创建时间`，因为无论你怎么更改记录中其他字段的值，datetime 字段的值都不会改变，除非你手动更改它。
 
 ## timestamp
 1. 允许为空值，但是不可以自定义值，所以为空值时没有任何意义
@@ -23,7 +31,7 @@ tags: DB
 5. TIMESTAMP列创建后的格式是
 
     ```sql
-    `a` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+    `updated_time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT '更新时间'
     ```
 
 > 结论: `timestamp 类型适合用来记录数据的最后修改时间`，因为只要你更改了记录中其他字段的值，timestamp字段的值都会被自动更新。
