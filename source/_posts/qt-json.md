@@ -184,16 +184,18 @@ QJsonValue(object, QJsonObject({"avatar":"Sparta"}))
 #ifndef JSON_H
 #define JSON_H
 
+#include <QJsonArray>
+#include <QJsonValue>
 #include <QJsonObject>
 #include <QJsonDocument>
 
 struct JsonPrivate;
 
 /**
- * Qt 的 Json API 读写多层次的属性不够方便，这个类的目的就是能够使用带 "." 的路径格式访问 Json 的属性，例如
+ * Qt 的 JSON API 读写多层次的属性不够方便，这个类的目的就是能够使用带 "." 的路径格式访问 Json 的属性，例如
  * "id" 访问的是根节点下的 id，"user.address.street" 访问根节点下 user 的 address 的 street 的属性。
  *
- * Json 例子：
+ * JSON 例子 (JSON 的 key 必须用双引号括起来，值有不同的类型，数值类型不用双引号括起来，字符类型的才用)：
  * {
  *     "id": 18191,
  *     "user": {
@@ -205,38 +207,44 @@ struct JsonPrivate;
  *     }
  * }
  *
- * 访问 id:     Json.getInt("id")，返回 18191
- * 访问 street: Json.getString("user.address.street")，返回 "Wiessenstrasse"
- * 访问 childrenNames: Json.getStringList("user.childrenNames") 得到字符串列表("Alice", "Bob", "John")
- * 设置 "user.address.postCode" 则可以使用 Json.set("user.address.postCode", "056231")
+ * 创建 Json 对象: Json json(jsonString) or Json json(jsonFilePath, true)
+ * 保存 Json 对象到文件: json.save("xxx.json")
+ *
+ * 访问 id:     json.getInt("id")，返回 18191
+ * 访问 street: json.getString("user.address.street")，返回 "Wiessenstrasse"
+ * 访问 childrenNames: json.getStringList("user.childrenNames") 得到字符串列表("Alice", "Bob", "John")
+ * 设置 "user.address.postCode" 则可以使用 json.set("user.address.postCode", "056231")
  *
  * 如果读取的属性不存在，则返回指定的默认值，如 "database.username.firstName" 不存在，
- * 调用 Json.getString("database.username.firstName", "defaultName")，由于要访问的属性不存在，
+ * 调用 json.getString("database.username.firstName", "defaultName")，由于要访问的属性不存在，
  * 得到的是一个空的 QJsonValue，所以返回我们指定的默认值 "defaultName"。
  *
  * 如果要修改的属性不存在，则会自动的先创建属性，然后设置它的值。
  *
- * 注意: Json 文件要使用 UTF-8 编码。
+ * 注意: JSON 文件要使用 UTF-8 编码。
  */
 class Json {
 public:
     /**
-     * 使用 Json 字符串或者从文件读取 Json 内容创建 Json 对象。
-     * 如果 fromFile 为 true，则 jsonOrJsonFilePath 为文件的路径
-     * 如果 fromFile 为 false，则 jsonOrJsonFilePath 为 Json 的字符串内容
+     * 使用 JSON 字符串或者从文件读取 JSON 内容创建 Json 对象。
+     * 如果 fromFile 为 true， 则 jsonOrJsonFilePath 为 JSON 文件的路径
+     * 如果 fromFile 为 false，则 jsonOrJsonFilePath 为 JSON 的字符串内容
      *
-     * @param jsonOrJsonFilePath Json 的字符串内容或者 Json 文件的路径
-     * @param fromFile 为 true，则 jsonOrJsonFilePath 为文件的路径，为 false 则 jsonOrJsonFilePath 为 Json 的字符串内容
+     * @param jsonOrJsonFilePath JSON 的字符串内容或者 JSON 文件的路径
+     * @param fromFile 为 true，则 jsonOrJsonFilePath 为 JSON 文件的路径，为 false 则 jsonOrJsonFilePath 为 JSON 的字符串内容
      */
     explicit Json(const QString &jsonOrJsonFilePath = "{}", bool fromFile = false);
     ~Json();
+
+    bool isValid() const;        // JSON 是否有效，有效的 JSON 返回 true，否则返回 false
+    QString errorString() const; // JSON 无效时的错误信息
 
     /**
      * 读取路径 path 对应属性的整数值
      *
      * @param path 带 "." 的路径格
      * @param def 如果要找的属性不存在时返回的默认值
-     * @param fromNode 从此节点开始查找，如果为默认值，则从 Json 的根节点开始查找
+     * @param fromNode 从此节点开始查找，如果为默认值 QJsonObject()，则从 Json 的根节点开始查找
      * @return 整数值
      */
     int         getInt(const QString &path, int def = 0, const QJsonObject &fromNode = QJsonObject()) const;
@@ -245,26 +253,32 @@ public:
     QString     getString(const QString &path, const QString &def = QString(), const QJsonObject &fromNode = QJsonObject()) const;
     QStringList getStringList(const QString &path, const QJsonObject &fromNode = QJsonObject()) const;
 
-    QJsonArray  getJsonArray(const QString &path, const QJsonObject &fromNode = QJsonObject()) const;
-    QJsonValue  getJsonValue(const QString &path, const QJsonObject &fromNode = QJsonObject()) const;
+    QJsonArray  getJsonArray( const QString &path, const QJsonObject &fromNode = QJsonObject()) const;
+    QJsonValue  getJsonValue( const QString &path, const QJsonObject &fromNode = QJsonObject()) const;
     QJsonObject getJsonObject(const QString &path, const QJsonObject &fromNode = QJsonObject()) const;
 
     /**
      * @brief 设置 path 对应的 Json 属性的值
-     * @param path path 带 "." 的路径格
+     * @param path  path 带 "." 的路径格
      * @param value 可以是整数，浮点数，字符串，QJsonValue, QJsonObject 等，具体请参考 QJsonValue 的构造函数
      */
     void set(const QString &path, const QJsonValue &value);
     void set(const QString &path, const QStringList &strings);
 
     /**
-     * @brief 把 Json 保存到文件
+     * @brief 把 JSON 保存到 path 指定的文件
      *
      * @param path 文件的路径
+     * @param pretty 为 true 时格式化 JSON 字符串，为 false 则使用压缩格式去掉多余的空白字符
      */
-    void save(const QString &path, QJsonDocument::JsonFormat format = QJsonDocument::Indented);
+    void save(const QString &path, bool pretty = true) const;
 
-    QString toString(QJsonDocument::JsonFormat format = QJsonDocument::Indented) const;
+    /**
+     * @brief 把 Json 对象转换为 JSON 字符串
+     * @param pretty 为 true 时格式化 JSON 字符串，为 false 则使用压缩格式去掉多余的空白字符
+     * @return Json 对象的字符串表示
+     */
+    QString toString(bool pretty = true) const;
 
 public:
     JsonPrivate *d;
@@ -276,25 +290,25 @@ public:
 ## Json.cpp
 ```cpp
 #include "Json.h"
+
+#include <QDebug>
 #include <QFile>
 #include <QTextStream>
-#include <QDebug>
-#include <QJsonArray>
-#include <QJsonValue>
-#include <QJsonDocument>
 #include <QRegularExpression>
 #include <QJsonParseError>
 
-/***********************************************************************************************************************
- *                                                     JsonPrivate                                                     *
- **********************************************************************************************************************/
+/*-----------------------------------------------------------------------------|
+ |                         JsonPrivate implementation                          |
+ |----------------------------------------------------------------------------*/
 struct JsonPrivate {
     JsonPrivate(const QString &jsonOrJsonFilePath, bool fromFile);
 
     void setValue(QJsonObject &parent, const QString &path, const QJsonValue &newValue);
     QJsonValue getValue(const QString &path, const QJsonObject &fromNode) const;
 
-    QJsonObject root; // Json 的根节点
+    QJsonObject root;    // Json 的根节点
+    bool valid = true;   // Json 是否有效
+    QString errorString; // Json 无效时的错误信息
 };
 
 JsonPrivate::JsonPrivate(const QString &jsonOrJsonFilePath, bool fromFile) {
@@ -307,7 +321,10 @@ JsonPrivate::JsonPrivate(const QString &jsonOrJsonFilePath, bool fromFile) {
         if (file.open(QIODevice::ReadOnly | QIODevice::Text)) {
             json = file.readAll();
         } else {
-            qDebug() << QString("Cannot open the file: %1").arg(jsonOrJsonFilePath);
+            valid = false;
+            errorString = QString("Cannot open the file: %1").arg(jsonOrJsonFilePath);
+            qDebug() << errorString;
+            return;
         }
     } else {
         json = jsonOrJsonFilePath.toUtf8();
@@ -316,60 +333,82 @@ JsonPrivate::JsonPrivate(const QString &jsonOrJsonFilePath, bool fromFile) {
     // 解析 Json
     QJsonParseError error;
     QJsonDocument jsonDocument = QJsonDocument::fromJson(json, &error);
-    root = jsonDocument.object();
 
-    if (QJsonParseError::NoError != error.error) {
-        qDebug() << error.errorString() << ", Offset: " << error.offset;
+    if (QJsonParseError::NoError == error.error) {
+        root = jsonDocument.object();
+    } else {
+        valid = false;
+        errorString = QString("%1\nOffset: %2").arg(error.errorString()).arg(error.offset);
+        qDebug() << errorString;
     }
 }
 
 // 使用递归+引用设置 Json 的值，因为 toObject() 等返回的是对象的副本，对其修改不会改变原来的对象，所以需要用引用来实现
 void JsonPrivate::setValue(QJsonObject &parent, const QString &path, const QJsonValue &newValue) {
-    const int indexOfDot = path.indexOf('.');
+    const int indexOfDot   = path.indexOf('.');     // 第一个 . 的位置
     const QString property = path.left(indexOfDot); // 第一个 . 之前的内容，如果 indexOfDot 是 -1 则返回整个字符串
-    const QString subPath = (indexOfDot>0) ? path.mid(indexOfDot+1) : QString(); // 第一个 . 后面的内容
+    const QString restPath = (indexOfDot>0) ? path.mid(indexOfDot+1) : QString(); // 第一个 . 后面的内容
 
-    QJsonValue subValue = parent[property];
+    QJsonValue fieldValue = parent[property];
 
-    if(subPath.isEmpty()) {
-        subValue = newValue;
+    if(restPath.isEmpty()) {
+        // 找到要设置的属性
+        fieldValue = newValue;
     } else {
-        QJsonObject obj = subValue.toObject();
-        setValue(obj, subPath, newValue);
-        subValue = obj;
+        // 路径中间的属性，递归访问它的子属性
+        QJsonObject obj = fieldValue.toObject();
+        setValue(obj, restPath, newValue);
+        fieldValue = obj; // 因为 QJsonObject 操作的都是对象的副本，所以递归结束后需要保存起来再次设置回 parent
     }
 
-    parent[property] = subValue;
+    parent[property] = fieldValue; // 如果不存在则会创建
 }
 
 // 读取属性的值，如果 fromNode 为空，则从跟节点开始访问
 QJsonValue JsonPrivate::getValue(const QString &path, const QJsonObject &fromNode) const {
-    QJsonObject parent(fromNode.isEmpty() ? root : fromNode);
+    // 1. 确定搜索的根节点，如果 fromNode 为空则搜索的根节点为 root
+    // 2. 把 path 使用分隔符 . 分解成多个属性名字
+    // 3. 从搜索的根节点开始向下查找到倒数第二个属性名字对应的 QJsonObject parent
+    //    如 "user.address.street"，要设置的属性为 street，它的 parent 是 address
+    // 4. 返回 parent 中属性名为倒数第一个属性名字对应的属性值
 
-    QStringList tokens = path.split(QRegularExpression("\\."));
-    int size = tokens.size();
+    // [1] 确定搜索的根节点，如果 fromNode 为空则搜索的根节点为 root
+    // [2] 把 path 使用分隔符 . 分解成多个属性名字
+    QJsonObject parent = fromNode.isEmpty() ? root : fromNode;
+    QStringList names  = path.split(QRegularExpression("\\."));
 
-    // 定位到要访问的属性的 parent，
-    // 如 "user.address.street"，要访问的属性 "street" 的 parent 是 "address"
+    // [3] 从搜索的根节点开始向下查找到倒数第二个属性名字对应的 QJsonObject parent
+    int size = names.size();
     for (int i = 0; i < size - 1; ++i) {
         if (parent.isEmpty()) {
             return QJsonValue();
         }
 
-        parent = parent.value(tokens.at(i)).toObject();
+        parent = parent.value(names.at(i)).toObject();
     }
 
-    return parent.value(tokens.last());
+    // [4] 返回 parent 中属性名为倒数第一个属性名字对应的属性值
+    return parent.value(names.last());
 }
 
-/***********************************************************************************************************************
- *                                                         Json                                                        *
- **********************************************************************************************************************/
+/*-----------------------------------------------------------------------------|
+ |                             Json implementation                             |
+ |----------------------------------------------------------------------------*/
 Json::Json(const QString &jsonOrJsonFilePath, bool fromFile) : d(new JsonPrivate(jsonOrJsonFilePath, fromFile)) {
 }
 
 Json::~Json() {
     delete d;
+}
+
+// JSON 是否有效，有效的 JSON 返回 true，否则返回 false
+bool Json::isValid() const {
+    return d->valid;
+}
+
+// JSON 无效时的错误信息
+QString Json::errorString() const {
+    return d->errorString;
 }
 
 int Json::getInt(const QString &path, int def, const QJsonObject &fromNode) const {
@@ -420,14 +459,15 @@ void Json::set(const QString &path, const QJsonValue &value) {
 void Json::set(const QString &path, const QStringList &strings) {
     QJsonArray array;
 
-    foreach (const QString &str, strings) {
+    for (const QString &str : strings) {
         array.append(str);
     }
 
     d->setValue(d->root, path, array);
 }
 
-void Json::save(const QString &path, QJsonDocument::JsonFormat format) {
+// 把 JSON 保存到 path 指定的文件
+void Json::save(const QString &path, bool pretty) const {
     QFile file(path);
 
     if (!file.open(QIODevice::WriteOnly | QIODevice::Truncate | QIODevice::Text)) {
@@ -435,10 +475,13 @@ void Json::save(const QString &path, QJsonDocument::JsonFormat format) {
     }
 
     QTextStream out(&file);
-    out << QJsonDocument(d->root).toJson(format);
+    out << toString(pretty);
+    out.flush();
+    file.close();
 }
 
-QString Json::toString(QJsonDocument::JsonFormat format) const {
-    return QJsonDocument(d->root).toJson(format);
+// 把 Json 对象转换为 JSON 字符串
+QString Json::toString(bool pretty) const {
+    return QJsonDocument(d->root).toJson(pretty ? QJsonDocument::Indented : QJsonDocument::Compact);
 }
 ```
