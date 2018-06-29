@@ -305,7 +305,7 @@ tags: Index
 * [Qt Creator 简介](/qtbook-qtcreator)
 * [Qt 杂谈](/qtbook)
 * [Qt 程序简单打包](/qtbook-misc-deploy)
-* [Qt 访问网络的 HttpClient](/qtbook-network-tcp-httpclient)
+* [Qt 访问网络的 HttpClient](/qtbook-network-http-httpclient)
 * [Qt5 乱码与 BOM](/qtbook-misc-messy-code)
 * [QTreeView 小集](/qtbook-custom-widget-tree-view)
 * [Single Application](/qtbook-misc-single-application)

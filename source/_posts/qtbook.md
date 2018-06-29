@@ -89,8 +89,9 @@ tags: [QtBook, Index]
     * [广播：Broadcast](/qtbook-network-udp-broadcast)
     * [组播：Multicast](/qtbook-network-udp-multicast)
   * TCP 编程
+  * HTTP 编程
     * 访问 HTTP 服务
-    * [访问 HTTP 服务的 HttpClient](/qtbook-network-tcp-httpclient)
+    * [访问 HTTP 服务的 HttpClient](/qtbook-network-http-httpclient)
 * [单例 Singleton](/qtbook-singleton/)
   * [单例的简单实现](/qtbook-singleton-1-simple)
   * [单例的智能指针实现](/qtbook-singleton-2-auto-pointer)
