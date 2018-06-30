@@ -107,5 +107,6 @@ tags: [QtBook, Index]
   * [Qt 程序简单打包](/qtbook-misc-deploy)
   * [创建使用动态链接库](/qtbook-misc-shared-library)
   * [自定义类型与 QVariant](/qtbook-misc-qvariant)
+  * 枚举与 Flags
 
 

@@ -288,6 +288,17 @@ view->setModel(model2);
   });
   ```
 
+* 被选中节点变化后，view 的 selectionModel 发射信号 `void currentChanged(const QModelIndex &current, const QModelIndex &previous)`：
+
+  ```cpp
+  connect(view->selectionModel(), &QItemSelectionModel::currentChanged,
+              [this](const QModelIndex &index) {
+      qDebug() << index.data().toString();
+  });
+  ```
+
+  > 此信号是非常有用的，例如要显示选中节点的信息，如果使用 clicked 来实现，则点击节点的时候能够正确的显示出选中节点的信息，但是当删除被选中的节点时，其他节点自动变为被选中状态，但这时被选中节点的信息并没有显示出来，因为这时没有发射信号 clicked，而使用 selectionModel 的 currentChanged 的话就能正确处理这种情况。此外和节点选中状态变化还有相关的信号还有 **currentRowChanged**、**currentColumnChanged**、**selectionChanged** 等，更详细的信息请阅读帮助文档。
+
 * 编辑树的节点，model 发射信号 `void QStandardItemModel::itemChanged(QStandardItem *item)` ：
 
   ```cpp
@@ -328,6 +339,25 @@ QObject::connect(view, &QTreeView::customContextMenuRequested, [=] {
 ```
 
 > Context menu 中文翻译成了右键菜单其实是不准确的，context menu 的意思很明确，根据右键点击处的环境信息显示相关的菜单，就像我们的这个例子，点击节点的时候显示创建和删除 2 个菜单项，点击非节点时只显示创建的菜单项，而不是一成不变的显示同样的菜单项，context menu 能表达出这个意思，而中文的右键菜单丢失了这个信息。
+>
+> 需要注意的是，获取鼠标点击处的 index 参考的坐标是 viewport 的，而不是 tree view 的。
+
+## 插入节点
+
+在选中的节点位置前插入一个节点，关键是找到这个节点的父节点和它在父节点中的位置，如果父节点有效则插入到父节点下，否则就插入到 model 中 (即成为第一级节点)：
+
+```cpp
+QModelIndex current = view->selectionModel()->currentIndex(); // 当前选中的节点
+QModelIndex parent  = current.parent();
+
+if (current.isValid() && parent.isValid()) {
+    model->itemFromIndex(parent)->insertRow(current.row(), new QStandardItem("new node"));
+} else if (current.isValid()) {
+    model->insertRow(current.row(), new QStandardItem("new node"));
+}
+```
+
+> 提示：如果一行中有多列，即同一行中有多个 item，所有 item 的 parent 都是同一个，即为 column 为 0 的 item。
 
 ## 启用拖拽
 

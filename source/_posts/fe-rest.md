@@ -149,8 +149,8 @@ $.rest.update({
      *          console.log(result);
      *      }});
      *
-     *      // url 中的 bookId 会被替换为 urlParams 中的 bookId
-     *      $.rest.update({url: '/rest/books/{bookId}', urlParams: {bookId: 23}, data: {name: 'C&S'}, success: function(result) {
+     *      // url 中的 bookId 会被替换为 pathVariables 中的 bookId
+     *      $.rest.update({url: '/rest/books/{bookId}', pathVariables: {bookId: 23}, data: {name: 'C&S'}, success: function(result) {
      *          console.log(result);
      *      }}, fail: function(failResponse) {});
      * 提示:
@@ -166,7 +166,7 @@ $.rest.update({
          *
          * @param {Json} options 有以下几个选项:
          *               {String}   url       请求的 URL        (必选)
-         *               {Json}     urlParams URL 中的变量，例如 /rest/users/{id}，其中 {id} 为要被 urlParams.id 替换的部分(可选)
+         *               {Json}     pathVariables URL 中的变量，例如 /rest/users/{id}，其中 {id} 为要被 pathVariables.id 替换的部分(可选)
          *               {Json}     data      请求的参数         (可选)
          *               {Boolean}  jsonRequestBody 是否使用 application/json 的方式进行请求，默认为 false 不使用(可选)
          *               {Function} success   请求成功时的回调函数(可选)
@@ -219,7 +219,7 @@ $.rest.update({
          * @param {Json} options 有以下几个选项:
          *               {String}   url        请求的 URL        (必选)
          *               {String}   httpMethod 请求的方式，有 GET, PUT, POST, DELETE (必选)
-         *               {Json}     urlParams  URL 中的变量      (可选)
+         *               {Json}     pathVariables URL 中的变量      (可选)
          *               {Json}     data       请求的参数        (可选)
          *               {Boolean}  async      默认为异步方式     (可选)
          *               {Boolean}  jsonRequestBody 是否使用 application/json 的方式进行请求，默认为 false 不使用(可选)
@@ -261,13 +261,13 @@ $.rest.update({
                 }
             }
 
-            // 替换 url 中的变量，例如 /rest/users/{id}, 其中 {id} 为要被 settings.urlParams.id 替换的部分
-            if (settings.urlParams) {
+            // 替换 url 中的变量，例如 /rest/users/{id}, 其中 {id} 为要被 settings.pathVariables.id 替换的部分
+            if (settings.pathVariables) {
                 settings.url = settings.url.replace(/\{\{|\}\}|\{(\w+)\}/g, function(m, n) {
                     // m 是正则中捕捉的组 $0，n 是 $1，function($0, $1, $2, ...)
                     if (m == '{{') { return '{'; }
                     if (m == '}}') { return '}'; }
-                    return settings.urlParams[n];
+                    return settings.pathVariables[n];
                 });
             }
 
@@ -281,37 +281,35 @@ $.rest.update({
                 contentType: settings.contentType,
                 // 服务器抛异常时，有时 Windows 的 Tomcat 环境下竟然取不到 header X-Requested-With, Mac 下没问题，
                 // 正常请求时都是好的，手动添加 X-Requested-With 为 XMLHttpRequest 后所有环境下正常和异常时都能取到了
-                headers: {'X-Requested-With': 'XMLHttpRequest'},
-                // 各种状态的错误可以在此拦截统一处理，弹窗提示，应用里就不需要单一一独处理了
-                statusCode: {
-                    401: function() {
-                        alert( "Token 无效" );
-                    },
-                    403: function() {
-                        alert('权限不够');
-                    },
-                    404: function() {
-                        alert('URL 不存在');
-                    },
-                    500: function(error) {
-                        // 发生 500 错误时服务器抛出异常，在控制台打印出异常信息
-                        console.error(error.responseJSON.data);
-                        alert('服务器抛出异常，请联系管理员\n\n详细错误信息请查看控制台输出 (Chrome 按下快捷键 F12)');
-                    },
-                    502: function() {
-                        // 发生 502 错误时，Tomcat Web 服务器不可到达，一般有 2 个原因
-                        // 1. Nginx 配置出错
-                        // 2. Tomcat 的 Web 服务没启动或者不接收请求
-                        alert('502 错误，服务器不可到达');
-                    }
-                }
+                headers: {'X-Requested-With': 'XMLHttpRequest'}
             })
             .done(function(data, textStatus, jqXHR) {
                 settings.success(data, textStatus, jqXHR);
             })
             .fail(function(jqXHR, textStatus, failThrown) {
                 // data|jqXHR, textStatus, jqXHR|failThrown
-                settings.fail(jqXHR, textStatus, failThrown);
+                const status = jqXHR.status;
+
+                if (401 == status) {
+                    alert('401: Token 无效');
+                } else if (403 == status) {
+                    alert('403: 权限不够');
+                } else if (404 == status) {
+                    alert('404: URL 不存在');
+                } else if (500 == status) {
+                    // 发生 500 错误时服务器抛出异常，在控制台打印出异常信息
+                    console.error(jqXHR.responseJSON.data);
+                    alert(`500: 发生异常，${jqXHR.responseJSON.message}\n\n详细错误信息请查看控制台输出 (Chrome 按下快捷键 F12)`);
+                } else if (502 == status) {
+                    // 发生 502 错误时，Tomcat Web 服务器不可访问，一般有 2 个原因
+                    // 1. Nginx 配置出错
+                    // 2. Tomcat 的 Web 服务没启动或者不接收请求
+                    alert('502: 服务不可访问');
+                } else if (504 == status) {
+                    alert('504: Gateway Timeout\n\n' + jqXHR.responseText);
+                } else {
+                    settings.fail(jqXHR, textStatus, failThrown);
+                }
             })
             .always(function() {
                 settings.complete();
@@ -331,6 +329,7 @@ $.rest.update({
             url     : url,
             type    : 'GET',
             dataType: 'jsonp',
+            jsonp   : 'callback',
             success : function(data) {
                 callback && callback(data);
             }

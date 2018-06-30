@@ -57,6 +57,12 @@ set mouse=a
 syntax on
 ```
 
+## Bat
+
+Bat 是语法高亮的 cat (Clone of cat with syntax highlighting and Git integration), 主页为 <https://github.com/sharkdp/bat>，可以使用 brew 安装: `brew install bat`，可以在 `.bash_profile` 里给其设置别名为 cat 用于替代 cat: `alias cat="bat"`:
+
+![](https://camo.githubusercontent.com/9d3d89364f2cc83ace8f29646a6236bc15ea1da0/68747470733a2f2f696d6775722e636f6d2f724773646e44652e706e67)
+
 ## 查看使用端口的 PID
 
 `lsof -n -P | grep :80`
