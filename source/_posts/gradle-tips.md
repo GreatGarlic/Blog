@@ -224,24 +224,24 @@ environments {
 plugins {
     id 'war'
     id 'java'
-    id 'org.gretty' version '2.1.0'
+    id 'org.gretty' version '2.2.0'
 }
     
 gretty {
-    port = 8080
+    httpPort    = 8080
     contextPath = ''
-    servletContainer = 'tomcat7'
+    servletContainer = 'tomcat8'
 }
 ```
 
 ```groovy
 // gretty 的更多配置
 gretty {
-    httpPort    = 8080
-    debugPort   = httpPort + 1
-    servicePort = httpPort + 2
-    statusPort  = httpPort + 3
-    httpsPort   = httpPort + 4
+    httpPort     = 8080
+    debugPort    = httpPort + 1
+    servicePort  = httpPort + 2
+    statusPort   = httpPort + 3
+    httpsPort    = httpPort + 4
     httpsEnabled = true
     contextPath  = ''
     jvmArgs = ['-Xmx1024M', '-XX:PermSize=128M', '-XX:MaxPermSize=256M']
@@ -292,16 +292,32 @@ gretty {
 
 ```groovy
 gretty {
-    port = 80
+    httpPort = 80
     contextPath = '/'
-    servletContainer = 'tomcat7'
+    servletContainer = 'tomcat8'
     
     managedClassReload      = true
     recompileOnSourceChange = false // 禁止自动编译过度频繁的进行热部署
 }
 ```
 
+## 使用 JNDI
+
+参考 [JNDI 数据源](https://qtdebug.com/misc-jndi-datasource):
+
+```groovy
+gretty {
+    port = 8080
+    contextPath = ''
+    servletContainer  = 'tomcat7'
+    enableNaming      = true // 启用 JNDI
+    contextConfigFile = 'tomcat-context.xml'
+    serverConfigFile  = 'tomcat.xml'
+}
+```
+
 ## 多模块工程
+
 * `parent` 是父模块
 * `mix1` 和 `mix2` 是子模块
 
