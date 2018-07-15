@@ -28,9 +28,6 @@ tags: Index
 * [允许其他机器访问 MySQL](/mysql-wan)
 * [数据库常用基础](/db-tips)
 
-## Default
-* [qtbook-custom-widget-model-view-programming](/qtbook-custom-widget-model-view-programming)
-
 ## FE
 * [Atom 常用插件和快捷键](/mac-atom)
 * [Bootstrap Progress Bar](/fe-bootstrap-progressbar)
@@ -285,6 +282,7 @@ tags: Index
 * [去掉 png 图片的 iCCP 警告](/qt-png-iccp-warning)
 * [去掉 Windows 中控件的虚线框](/qt-no-focus-rect)
 * [字节序 Endian](/java-endian)
+* [模型视图编程](/qtbook-custom-widget-model-view-programming)
 * [测试 Graphics View 的效率](/qt-graphics-view-performance)
 * [测试 Widget 的效率](/qt-widget-performance)
 * [自定义 QListView](/qt-listview)
@@ -298,6 +296,7 @@ tags: Index
 * [Clip 实现复杂绘图效果](/qtbook-paint-clip)
 * [Layout 秘录](/qtbook-custom-widget-layout-tips)
 * [Pixmap](/qtbook-paint-pixmap)
+* [QLineEdit 中增加按钮](/qtbook-custom-widget-lineedit-with-button)
 * [qmake 时复制文件](/qtbook-misc-qmake-copy-file)
 * [QPainter 的状态保存与恢复](/qtbook-paint-status)
 * [QSS](/qtbook-qss)
