@@ -22,7 +22,7 @@ tags: [Java, Util]
 ## Gradle 依赖
 
 ```groovy
-compile 'org.jodconverter:jodconverter-spring:4.1.0'
+compile 'org.jodconverter:jodconverter-spring:4.2.0'
 ```
 
 ## Spring 配置文件
@@ -35,9 +35,13 @@ compile 'org.jodconverter:jodconverter-spring:4.1.0'
        xsi:schemaLocation="
             http://www.springframework.org/schema/beans
             http://www.springframework.org/schema/beans/spring-beans.xsd">
-    <bean id="converterBean" class="org.jodconverter.spring.JodConverterBean"/>
+    <bean id="converterBean" class="org.jodconverter.spring.JodConverterBean">
+        <!--<property name="officeHome" value=""/>-->
+    </bean>
 </beans>
 ```
+
+> Linux 和 Windows 需要设置 officeHome，即 LibreOffice 的安装目录。
 
 ## 转换代码
 

@@ -46,7 +46,7 @@ QLabel {
 
     ```css
     font: [font-style] [font-variant] [font-weight] [font-size] [font-family]
-
+    
     /* 按顺序设置，可以忽略其中某些值，例如：*/
     font: italic bold 12px arial, sans-serif;
     ```
@@ -104,7 +104,7 @@ QLabel {
 
     ```css
     border: border-width border-style border-color
-
+    
     /* 例如：*/
     border: 1px solid gray;
     ```
@@ -137,7 +137,7 @@ QLabel {
     ```css
     /* 图标大小 */
     icon-size: 20px 20px;
-
+    
     /* 图标文件 */
     qproperty-icon: url(:/resources/tabset-left.png);
     ```
@@ -155,7 +155,12 @@ QLabel {
     * `text-align` 不支持 QLable，但设置 QLabel 的文本居中可以这样：`qproperty-alignment: AlignCenter`
     * 甚至可以在 QSS 中设置 QLabel，QPushButton 等的文本：`qproperty-text: 'It is amazing'`，太魔性了
     * 设置 QLabel 的 word wrap: `qproperty-wordWrap: true`
-    * 设置对齐方式：`qproperty-alignment: 'AlignBottom | AlignRight'`
+    * 设置对齐方式：
+      * `qproperty-alignment: 'AlignCenter's`
+      * `qproperty-alignment: 'AlignBottom | AlignRight'`
+    * 设置按钮:
+      * 设置 flat: `qproperty-flat: true`
+      * 设置图标: `qproperty-icon: url(:/resources/tabset-left.png)`
     * QWidget 及其子类还有很多 Q_PROPERTY 定义的 WRITE 函数，想知道就去查帮助文档吧
     * 我们也可以使用宏 Q_PROPERTY 定义自己的 WRITE 函数，然后在 QSS 中使用
     * 不过 `qproperty-xxx` 也不是万能的，在 `:hover, :pressed` 等伪类选择器中不生效

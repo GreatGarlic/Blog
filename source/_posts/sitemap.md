@@ -207,6 +207,7 @@ tags: Index
 ## Mac
 * [Atom 常用插件和快捷键](/mac-atom)
 * [CentOS 7 简单使用](/mac-centos7)
+* [CentOS7 安装 LibreOffice](/mac-centos7-libreoffice)
 * [ForkLift 记住 FTP 密码](/mac-forklift)
 * [Git Tips](/git-tips)
 * [Https PKIX](/https-pkix)

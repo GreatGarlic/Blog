@@ -6,10 +6,16 @@ tags: Qt
 
 QtCreator 中创建的 Qt Designer Form Class 包含三个文件: **.h**, **.cpp**, **.ui**，例如我们创建了一个 Form Class **Widget**，则包含下面三个文件：Widget.h, Widget.cpp, Widget.ui，其中的类名为 Widget，如果想要把其重命名为 **MyWidget**，则可以按照下面几步进行：
 
-* 文件重命名为 MyWidget.h, MyWidget.cpp, MyWidget.ui
-* 修改 MyWidget.ui 中的 objectName
-* 重构 MyWidget.h 中的类名 Ui::Widget 和 Widget，同时也可修改 #ifndef 的名字
-* 修改 MyWidget.cpp 中的 #include
+* 文件重命名：
+  * Widget.h -> MyWidget.h
+  * Widget.cpp -> MyWidget.cpp
+  * Widget.ui -> MyWidget.ui
+* 修改 MyWidget.ui 中的 objectName 为 MyWidget
+* 重构 MyWidget.h 中的类名:
+  * Ui::MyWidget -> Ui::Widget
+  * MyWidget -> Widget
+* 修改 MyWidget.h 中 #ifndef 的名字: WIDGET_H -> MYWIDGET_H
+* 修改 MyWidget.cpp 中的 `#include "ui_Widget.h"` -> `#include "ui_MyWidget.h"`
 
 <!--more-->
 

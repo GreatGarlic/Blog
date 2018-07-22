@@ -37,7 +37,6 @@ Vue.component('com-name', {
 
 <head>
     <meta charset="utf-8">
-    <script src="http://cdn.bootcss.com/jquery/1.9.1/jquery.min.js"></script>
     <script src="http://cdn.staticfile.org/vue/2.0.3/vue.js"></script>
 </head>
 
@@ -116,6 +115,30 @@ Parent 使用 **props** 给 children 组件传递数据:
 ```
 
 > buttonText 的值改变后使用它的 x-button 的属性 text 的值也会变化。
+
+组件中的 props 除了使用字符串数组外，还可以使用对象的方式:
+
+```js
+props: {
+    html: String,
+    attachments: Array,
+    closable: { type: Boolean, default: false } // 默认为不可关闭
+}
+```
+
+## 访问兄弟组件的数据
+
+在父组件中给兄弟组件定义一个 ref，子组件可以通过父组件的 ref 访问兄弟组件的数据:
+
+```js
+<template>
+    <Com1 ref="com1" />
+    <Com2 />
+</template>
+
+// 在 Com2 的函数中可以使用 ref 访问 Com1 的数据:
+this.$parent.$refs.com1.count
+```
 
 ## 使用 SLOT
 
@@ -366,3 +389,28 @@ this.$Bus.$on('foo', (p) => {});
     </script>
 </body>
 ```
+## 使用 v-model 双向绑定
+
+双向绑定的 v-model 只是一个语法糖，相当于同时使用 v-bind:value 和 v-on:input，也可以使用组件的 model 对象自定义 v-bind 的属性和 v-on 的事件名字，可参考 [v-model 指令在组件中怎么玩](https://juejin.im/post/598bf7a3f265da3e252a1d6a) 了解更多:
+
+```js
+props: {
+    html: String,
+    attachments: Array,
+    closable: { type: Boolean, default: false } // 默认为不可关闭
+},
+model: {
+    prop: 'html', // props 中定义的变量
+    event: 'editingFinished' // this.$emit('editingFinished', something) 发射的事件名字
+}
+```
+
+`v-model` 只是一个语法糖，实际的含义是：
+
+```html
+<a-select
+    v-bind:value="parentValue"
+    v-on:input="parentValue = arguments[0]">
+</a-select>
+```
+

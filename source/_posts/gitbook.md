@@ -195,6 +195,20 @@ hr, .markdown-section hr {
     list-style: none;
     padding: 5px;
 }
+
+/* 滚动条样式 */
+::-webkit-scrollbar {
+    width:  5px;
+    height: 5px;
+}
+
+::-webkit-scrollbar-track {
+    background: #ddd;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #888;
+}
 ```
 
 ## 参考资料
