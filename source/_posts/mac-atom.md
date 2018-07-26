@@ -36,7 +36,30 @@ Atom 以前很慢，所以一直不想用，在 1.0 版本后启动差不多需�
 | git-time-machine               | 可以和 Git 仓库里任意版本进行比较，快捷键为 `Alt+T`          |
 | git-log                        | 显示提交记录                                                 |
 |hey-pane|Split 后可以按下 `CMD + Shift + K` 使得放大当前的 pane|
+|bracket-colorizer|匹配的括号使用不同的颜色高亮|
+|nyan-indent|使用不同的颜色高亮不同的缩进|
+|sync-settings|备份和恢复配置和插件|
+|better-git-blame|Git Blame: 显示每一行代码都是谁写的|
+|goto-definition|函数跳转 (如在 HTML 里跳转到 JS 的函数定义)|
 | OOOOOOOOOOOOOOOO               | OOO                                                          |
+
+> 提示：如果插件因为墙的原因从 Atom 里安装失败，还可以下载源码，然后本地安装:
+>
+> 1. 打开 CMD
+> 2. `cd /Users/${UserName}/.atom/packages`
+> 3. `git clone <源地址>`
+> 4. `cd 插件的目录`
+> 5. `apm install`
+
+## 使用阿里的插件仓库
+
+Atom 默认的插件仓库国内访问比较慢，可以使用阿里的:
+
+1. 代开文件 `${UserHome}/.atom/.apmrc`
+
+   如果没有这个文件，新创建一个
+
+2. 修改内容为 `registry=https://registry.npm.taobao.org/`
 
 ## 快捷键
 
